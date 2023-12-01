@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .a{
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="a">Variables</h1>
+    <script>
+        var a=document.querySelector("h1")
+        a.addEventListener("click",function(){
+            console.log("Hi")
+            a.innerHTML="How Are you"
+            a.style.color="red"
+            a.style.backgroundColor="Yellow"
+        })
+        console.log(a)
+    </script>
+</body>
+</html>

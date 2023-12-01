@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="4specificity.css">
+    <style>
+        .favorite{
+            color:red;
+            font-weight: bold;
+        }
+
+        .favorite{
+            color: green;
+        }
+    </style>
+    <!--Color green as we wrote it at last after link tag-->
+    <title>Specificity</title>
+</head>
+<body>
+    <ul id="summer-drinks">
+        <li>Mountain-dew</li>
+        <li class="favorite"">Appy Fizz</li>
+        <li>Jeeru</li>
+    </ul>
+</body>
+</html>

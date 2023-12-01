@@ -1,0 +1,15 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 15 px 30 px;
+    font-size: 17px;
+    padding: 8px;
+}
+.container{
+    background-color: aqua;
+    padding: 5px 20px 15px 20px;
+    border: 1px solid olive;
+    border-radius: 4px;
+}

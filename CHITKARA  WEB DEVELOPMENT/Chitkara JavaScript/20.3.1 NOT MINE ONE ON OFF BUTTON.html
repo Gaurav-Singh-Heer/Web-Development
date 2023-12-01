@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>On/Off Button</title>
+  <style>
+    /* Optional: Add some styling to make it look like a button */
+    .onoffbutton {
+      padding: 20px;
+      margin: 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: 1px solid black;
+      width: 70px;
+      height: 50px;
+      font-size: 30px;
+    }
+    .on {
+      background-color: green;
+      color: white;
+      border: 1px solid black;
+      width: 70px;
+      height: 50px;
+      font-size: 30px;
+    }
+
+    .off {
+      background-color: red;
+      color: white;
+      border: 1px solid black;
+      width: 70px;
+      height: 50px;
+      font-size: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="onOffButton" class="onoffbutton on" onclick="toggleButton()">On</div>
+  <script>
+    function toggleButton() {
+      var button = document.getElementById("onOffButton");
+
+      if (button.classList.contains("on")) {
+        button.innerHTML = "Off";
+        button.classList.remove("on");
+        button.classList.add("off");}
+      else {
+        button.innerHTML = "On";
+        button.classList.remove("off");
+        button.classList.add("on");
+      }
+    }
+  </script>
+
+</body>
+</html>

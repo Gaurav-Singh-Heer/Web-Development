@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS GRID</title>
+    <style>
+        .container{
+            display:grid;
+            grid-template-columns: repeat(3,1fr);
+            grid-auto-rows: 100px;           /* to fix our height  */
+            grid-auto-columns: 50px;             /* to fix our width  */
+            grid-gap:20px
+            
+        }
+        .items{
+            background-color: lightcoral;
+            border: 3px green solid;
+            border-radius: 3px
+            ;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">                   <!--div.container>div.items*5> -->
+        <div class="items">Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda debitis nisi aliquam iure, commodi enim minima praesentium reprehenderit neque consequatur obcaecati possimus sapiente iusto adipisci itaque quisquam ullam ex accusamus voluptate cum consequuntur vero quos voluptates? Consequatur nesciunt quibusdam incidunt veniam blanditiis dolorum expedita cupiditate minima doloremque, quidem maiores voluptates deserunt in doloribus earum vel harum magni sint! Quo obcaecati modi dolores consequatur similique repellat beatae? Similique natus sapiente dicta blanditiis id? Dolore consectetur sunt dignissimos amet quis voluptate molestiae nulla alias facere reprehenderit fugiat vero commodi excepturi, tenetur quas a ipsa explicabo asperiores. Aut dolore, quisquam reprehenderit quo, natus alias ipsa aspernatur excepturi asperiores provident rem maiores illum accusamus amet beatae omnis fugiat, voluptates quos qui at ipsum exercitationem nostrum. Explicabo alias earum in sed libero voluptas, perferendis itaque repudiandae possimus excepturi sint illum provident sit similique ullam fugiat rerum recusandae. Distinctio ad molestias assumenda deleniti beatae autem officia ratione hic, excepturi enim rerum aperiam est ipsa vel sequi nisi repellat magnam a consequuntur porro veniam. Repudiandae ratione tempora doloribus rem placeat quis, architecto minus consequatur earum explicabo maiores. Corporis repudiandae repellat reiciendis laudantium maiores architecto quisquam dolore obcaecati eaque aut delectus dolores distinctio mollitia aliquam, eligendi voluptatibus id.</div>
+        <div class="items">Dabba 2</div>
+        <div class="items">Dabba 3</div>
+        <div class="items">Dabba 4</div>
+        <div class="items">Dabba 5</div>
+    </div>                            
+</body>
+</html>

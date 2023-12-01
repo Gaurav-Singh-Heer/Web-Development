@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    img{
+        max-width: 100%;
+        height: auto;
+    }
+    a{
+        opacity: 1;
+    }
+    a:hover{
+        opacity: 0.5;
+    }
+    @media only screen and (max-width:600px) {
+        body{
+            background: lightgreen;
+        }
+    }    
+    a{
+        animation: bouncing 0.5s ease 0s infinite alternate both;
+        background: rgba(112, 64, 9, 0.806); 
+        position: relative;
+        display: inline-block;
+        padding: 1em 2em 1em;
+        border-radius: 50%;
+        margin-top: 100px;
+        cursor: pointer;
+
+    }
+    @keyframes bouncing {
+        0%{
+            bottom: 0px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.507);
+        }
+        100%{
+            bottom: 50px;
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.128);
+        }
+        
+    }
+</style>
+<body bgcolor="lightblue">
+    <a>Hello let's Code</a>
+    <div>
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font: 14px Georgia,serif;
+    background: gray;
+}
+
+article,
+aside,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section{
+    display: block;
+}
+h2{
+    font: 24px Georgia;
+    margin: 0 0 10px 0;
+}
+h3{
+    margin: 0 0 8px 0;
+}
+p{
+    margin: 0 0 20px 0;
+}
+
+#fluid-wrap{
+    width: 70%;
+    margin: 60px auto;
+    padding: 20px;
+    background: greenyellow;
+    overflow: hidden;
+}
+
+#sidebar{
+    width: 35%;
+    float: left;
+}
+
+#sidebar ul{
+    list-style: none;
+}
+
+#sidebar ul li a{
+    color: darkcyan;
+    text-decoration: none;
+    padding: 3px 0;
+    display: block;
+}
+
+@media all and (min-width:1001px){
+        #sidebar ul li a:a after{               /* after means name should be diplayed after "Email:" */
+        content:"("attr(data-email)")";
+        font-size: 11px;
+        font-style: italic;
+        color: deeppink;
+    }
+}
+
+@media all and (max-width:1000px) and (min-width:700px){
+    #sidebar ul li a:after{
+        content:"Email:";                     /* before means "Email:" should be diplayed after name */
+        font-style: italic;
+        color: deeppink;
+    }
+}
+/* TO SEE EMAIL WRITTEN PAGE SHOULD BE BETWEEN 750-1000PX */
+#main-content{
+    width: 65%;
+    float: right;
+}

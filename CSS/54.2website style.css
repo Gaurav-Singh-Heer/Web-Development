@@ -1,0 +1,9 @@
+*{
+    box-sizing: border-box;
+    list-style: none;
+}
+header{
+    padding: 50px;
+    text-align: center;
+    background: lightgray;
+}

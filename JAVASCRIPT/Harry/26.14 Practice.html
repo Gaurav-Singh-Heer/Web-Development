@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DOM Search</title>
+</head>
+<body>
+	<header>
+		<h1>PRACTICE</h1>
+	</header>
+	<form>
+		<label for="nameInput">Name:</label>
+		<input type="text" id="nameInput" name="fullName">
+		<input type="submit" value="Submit">
+	  </form>
+	  
+	  <script>
+		const fullNameInputs = document.getElementsByName('fullName');
+		fullNameInputs[0].style.backgroundColor = 'red';
+	  </script>
+	
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS GRID</title>
+    <style>
+        .container{
+            display:grid;
+            grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
+/*By this as many boxes can come in line will come  It also enhances better view at moblie  */
+            grid-auto-rows: minmax(100px,auto);                /*tp fix our height*/
+             /* minimum hamara box itne size ka rahe aur maximum apne content kei hisaab sei ho skta hai */
+            grid-auto-columns: minmax(100px,auto);             /* to fix our width  */
+            row-gap: 20px;
+            column-gap:120px;
+            
+        }
+        .items{
+            background-color: lightcoral;
+            border: 3px green solid;
+            border-radius: 3px
+            ;
+        }
+        
+        #item-1{
+            grid-row-start: 1;
+            grid-row-end: 3;
+        }
+        .item-1-container{
+            display: grid;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">                   <!--div.container>div.items*5> -->
+        <div class="items item-1-container" id="item-1">
+            <div class="nested-item">Dabbe mein Dabba 1</div> <!-- div.nested-item{Dabbe mein Dabba $}*3 -->
+            <div class="nested-item">Dabbe mein Dabba 2</div>
+            <div class="nested-item">Dabbe mein Dabba 3</div>      
+        </div>
+        <div class="items" id ="item-2">Dabba 2</div>
+        <div class="items">Dabba 3</div>
+        <div class="items">Dabba 4</div>
+        <div class="items">Dabba 5</div>
+    </div>                            
+</body>
+</html>

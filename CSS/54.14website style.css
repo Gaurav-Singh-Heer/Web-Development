@@ -1,0 +1,66 @@
+*{
+    box-sizing: border-box;
+    list-style: none;
+}
+
+body{
+    margin: 0px;
+}
+
+header{
+    padding: 50px;
+    text-align: center;
+    background: rgb(3, 147, 104);
+
+    color: white;
+}
+
+header h1{
+    font-size: 40px;
+}
+nav{
+    
+    background-color: black;
+    overflow: hidden;  /*TO MAKE ELEMENT VISIBLE AGAIN*/
+}
+nav a{
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 14px;
+    float: left;/* BY THIS ELEMENET IS NOT VISIBLE AS IT IS REMOVED FROM NORMAL FLOW*/
+}
+section{
+    text-align: center;
+    padding-top: 40px;
+   /* height: 100vh;*/
+}
+/* section#aman{
+    padding-top: 50px;
+    height: 200vh;
+} */
+
+
+section:nth-child(even){/* SELECTING PATRICULARLY SECTION THAT ARE COMING IN EVEN */
+    background-color: lightsalmon;
+
+}
+
+iframe{     /*GAVE SPACE IN BETWEEN COLLEGE REVIEW VIDEOS*/
+    padding: 0px 5px;        /*MEANS 5px is padding we want to give in left-right*/
+}                            /* MENAS 0px is padding we want to give in top-bottom*/
+img{
+    padding: 0px 20px;       /*MEANS 20px is padding we want to give in left-right*/
+}                            /* MENAS 0px is padding we want to give in top-bottom*/
+
+h2{
+    padding-bottom: 40px;
+}
+
+footer a{
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 14px;
+    float: left;/* BY THIS ELEMENET IS NOT VISIBLE AS IT IS REMOVED FROM NORMAL FLOW*/
+}

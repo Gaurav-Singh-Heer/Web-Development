@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        padding: 0 20px 30px 0;
+        line-height: 1.4;
+    }
+
+    .flex-container{
+        display: flex;
+        width: 100%;                             /* width: 100px;        SO ERROR WAS COMING        */
+        height: 750px;                         /*  height: 500px;  */
+        border: 20px deeppink solid;
+        flex-wrap: wrap;
+        align-content: space-around  ;
+    }          
+    .flex-item{
+        width: 150px;
+        height: 150px;                              
+        background-color: lightblue;
+        border: 2px solid darkblue;
+        text-align: center;
+        font-size: 2em;
+        color: white;
+        font-weight: bold;
+        line-height: 1.4;
+    }
+    
+    #flex-item-1{
+        background-color: lightpink;
+    }
+    #flex-item-2{
+        background-color: lightgreen;
+    }
+    #flex-item-3{
+        background-color: lightsalmon;
+        order: 5;                         /*THIS WILL PLACE 3 AT 5*/
+    }
+    #flex-item-4{
+        background-color: gold;
+    }
+    #flex-item-5{
+        background-color: lightgrey;
+        order: 6;
+        /* JITNA BADA ORDER HOGA UTNA PICHE HAMARA WOH ELEMENT HOGA */
+    }
+
+</style>
+<body>
+    <div class="flex-container">
+        <div class="flex-item" id="flex-item-1">Dabba 1</div>
+        <div class="flex-item" id="flex-item-2">Dabba 2</div>
+        <div class="flex-item" id="flex-item-3">Dabba 3</div>
+        <div class="flex-item" id="flex-item-4">Dabba 4</div>
+        <div class="flex-item" id="flex-item-5">DAbba 5</div>
+
+    </div>
+</body>
+</html>

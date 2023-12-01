@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" type="image" href="Quiz_Solution_icon.png">
+    <style>
+        body{
+            background-image: linear-gradient(45deg,rgb(6, 226, 241),rgb(178, 4, 231),rgb(53, 231, 18));/* 0 deg=default Top*/
+        }
+        td.correct{
+            text-align: center;
+            text-decoration: solid;
+        }
+        thead.Marks{
+            background-color: lightseagreen;
+        }
+        td#A{
+            background-color: lightpink;
+        }
+        td#B{
+            background-color: lightcoral;
+        }
+        td#C{
+            background-color: lightgrey;
+        }
+        td#D{
+            background-color: lightskyblue;
+        }
+        td#E{
+            background-color: lightslategrey;
+        }
+        thead.Grade{
+            background-color: greenyellow;
+        }
+        tr#Z{
+            background-color: deeppink;
+        }
+        tr#Y{
+            background-color: orange;
+        }
+        tr#X{
+            background-color: grey;
+        }
+        tr#W{
+            background-color: aqua;
+        }
+        @media (min-width:600px) and (max-width:800px) {
+            body{
+                background-image: linear-gradient(45deg, rgb(174, 0, 255),rgb(60, 83, 118),rgb(114, 193, 161) );
+            } 
+        }
+        @media (min-width:100px) and (max-width:600px) {
+            body{
+                background-image: linear-gradient(45deg,rgb(102, 255, 0),blue,green);/* 0 deg=default Top*/
+            } 
+        }
+    </style>
+</head>
+<body>
+    <!-- <p> 
+        <table border="10" bordercolor="grey" width="100%" height="250px"  cellpadding="20">
+            <caption><h1><u>SOLUTIONS</u></h1></caption>
+            <thead class="Marks">
+                <th>S.NO.</th>
+                <th>CORRECT OPTION</th>
+                <th>DIFFICULTY LEVEL</th>
+            </thead>
+            
+            <tr>
+                <td id="A">1)</td>
+                <td id="A" class="correct">d) Both 0x and 0X</td>   
+                <td id="A" class="correct">EASY</td>
+            </tr>
+            <tr>
+                <td id="B">2)</td>
+                <td id="B" class="correct">c) Division by zero</td>
+                <td id="B" class="correct">EASY</td>
+            </tr>
+            <tr>
+                <td id="C">3)</td>
+                <td id="C" class="correct">d) Displays “Infinity”</td>   
+                <td id="C" class="correct">EASY</td>
+            </tr>
+            <tr>
+                <td id="D"">4)</td>
+                <td id="D" class="correct">a) Dynamic variable</td>
+                <td id="D" class="correct">HARD</td>
+            </tr>
+            <tr>
+                <td id="E">5)</td>
+                <td id="E" class="correct">d) toFixed()</td>   
+                <td id="E" class="correct">MEDIUM</td>
+            </tr>
+            <tr>
+                <td id="A">6)</td>
+                <td id="A" class="correct">c) substr()</td>
+                <td id="A" class="correct">MEDIUM</td>
+            </tr>
+            <tr>
+                <td id="B">7)</td>
+                <td id="B" class="correct">c) Function/Method</td>   
+                <td id="B" class="correct">HARD</td>
+            </tr>
+            <tr>
+                <td id="C">8)</td>
+                <td id="C" class="correct">a) valueOf()</td>
+                <td id="C" class="correct">HARD</td>
+            </tr>
+            <tr>
+                <td id="D">9)</td>
+                <td id="D" class="correct">a) Both are equal in the value and data type</td>  
+                <td id="D" class="correct">EASY</td> 
+            </tr>
+            <tr>
+                <td id="E">10)</td>
+                <td id="E" class="correct">a) The local element</td>
+                <td id="E" class="correct">MEDIUM</td>
+            </tr>
+            <tr>
+                <td id="A">11)</td>
+                <td id="A" class="correct">a) if(a!==null)</td>
+                <td id="A" class="correct">HARD</td>   
+            </tr>
+            <tr>
+                <td id="B">12)</td>
+                <td id="B" class="correct">d) Declaration statements</td>
+                <td id="B" class="correct">MEDIUM</td>
+            </tr>
+            <tr>
+                <td id="C">13)</td>
+                <td id="C" class="correct">d) Both human.toString() and String(human)</td>
+                <td id="C" class="correct">HARD</td>
+            </tr>
+            <tr>
+                <td id="D">14)</td>
+                <td id="D" class="correct">a) Function literal</td>   
+                <td id="D" class="correct">MEDIUM</td>
+            </tr>
+            <tr>
+                <td id="E">15)</td>
+                <td id="E" class="correct">d) stand-alone expressions</td>
+                <td id="E" class="correct">MEDIUM</td>
+            </tr>
+            <tr>
+                <td id="A">16)</td>
+                <td id="A" class="correct">a) Invocation expression</td>   
+                <td id="A" class="correct">EASY</td>
+            </tr>
+            <tr>
+                <td id="B">17)</td>
+                <td id="B" class="correct">d) Ignores the statements</td>
+                <td id="B" class="correct">MEDIUM</td>
+            </tr>
+            <tr>
+                <td id="C">18)</td>
+                <td id="C" class="correct">c) Object Creation Expression</td>
+                <td id="C" class="correct">EASY</td>
+            </tr>
+            <tr>
+                <td id="D">19)</td>
+                <td id="D" class="correct">a) in</td>  
+                <td id="D" class="correct">HARD</td> 
+            </tr>
+            <tr>
+                <td id="E">20)</td>
+                <td id="E" class="correct">d) use strict</td>
+                <td id="E" class="correct">EASY</td>
+            </tr>
+        </table>      
+        
+    </p>  -->
+    <div>
+        <table border="10" bordercolor="grey" width="100%" height="250px"  cellpadding="20">
+            <caption><h2><u>SEE IN WHICH CATEGORY YOU BELONG</u></h2></caption>
+            <thead class="Grade">
+                <th>S.NO.</th>
+                <th>GRADE</th>
+                <th>REMARKS</th>
+                <th>MARKS</th>
+            </thead>
+            <tr id="Z">
+                <td>1)</td>
+                <td>A1</td>
+                <td>OUTSTANDING</td>
+                <td>20</td>
+            </tr>
+            <tr id="Y">
+                <td>2)</td>
+                <td>A2</td>
+                <td>EXCELLENT</td>
+                <td>17-19</td>
+            </tr>
+            <tr id="X">
+                <td>3)</td>
+                <td>B1</td>
+                <td>VERY GOOD</td>
+                <td>14-16</td>
+            </tr>
+            <tr id="W">
+                <td>4)</td>
+                <td>B2</td>
+                <td>GOOD</td>
+                <td>11-13</td>
+            </tr>
+            <tr id="Z">
+                <td>5)</td>
+                <td>C1</td>
+                <td>AVERAGE</td>
+                <td>9-10</td>
+            </tr>
+            <tr id="Y">
+                <td>6)</td>
+                <td>C2</td>
+                <td>POOR</td>
+                <td>7-8</td>
+            </tr>
+            <tr id="X">
+                <td>7)</td>
+                <td>D1</td>
+                <td>VERY-POOR</td>
+                <td>5-6</td>
+            </tr>
+            <tr id="W">
+                <td>8)</td>
+                <td>D2</td>
+                <td>FAIL</td>
+                <td>0-5</td>
+            </tr>
+
+
+        </table>     
+    </div>
+</body>
+</html>

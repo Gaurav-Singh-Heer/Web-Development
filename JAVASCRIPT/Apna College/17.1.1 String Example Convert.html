@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Fixing Capitalization</h2>
+    <div class="output">
+
+        <ul>
+        </ul>
+        
+    </div>
+<!--JS TO CAPITALIZE 1ST LETTER OF LIST-->
+    <script>
+        const list=document.querySelector('.output ul');
+        list.innerHTML='';
+        let cities=['mumBai','DELhi','JaIPuR','gOa']     
+
+        for(let i=0;i<cities.length;i++){
+            let firstAlphabet=cities[i].slice(0,1);      //USING SLICING TO ACCESS 1ST LETTER OF EACH WORD            
+            //CHANGING ALL ALPHABETS OF WORD TO LOWER CASE
+            let lowerCaseCity=cities[i].toLowerCase();
+            //REPLACING 1ST LETTER OF WORD TO UPPERCASE
+            lowerCaseCity=lowerCaseCity.replace(firstAlphabet,firstAlphabet.toUpperCase());
+
+            //FOCUSING NOW ON OUTPUT
+            let listItem=document.createElement('li');
+            listItem.textContent=lowerCaseCity;
+            list.appendChild(listItem);
+        }
+    </script>
+</body>
+</html>

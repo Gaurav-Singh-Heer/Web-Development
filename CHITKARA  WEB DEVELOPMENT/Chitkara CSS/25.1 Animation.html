@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>amination effect</title>
+    <style>
+        .container{
+            background-color: greenyellow;
+        }
+        .box{
+            background-color: burlywood;
+            width: 150px;
+            height: 150px;
+            position:relative; 
+            animation-fill-mode: forwards;
+            /* animation-name: gagan; */
+            animation-name: gagan2;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+        }
+        @keyframes gagan{
+            from{
+                background-color: aqua;
+                left:0px;
+            }
+            to{
+                background-color: blue;
+                left:70%;
+            }
+        }
+        @keyframes gagan2{
+            0%{
+                left: 0px;
+                top:0px
+            }
+            25%{
+                left: 250px;
+                top: 0px;
+            }
+            50%{
+                left: 250px;
+                top: 250px;
+            }
+            75%{
+                left: 0px;
+                top: 250px;
+            }
+            100%{
+                left:0px;
+                top:0px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">This is the box</div>
+        <!-- <div class="box">This is the box</div>
+        <div class="box">This is the box</div> -->
+    </div>
+</body>
+</html>

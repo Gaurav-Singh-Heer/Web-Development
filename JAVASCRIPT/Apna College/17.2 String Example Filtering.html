@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Filtering greeting messages</h2>
+    <div class="output">
+
+        <ul>
+        </ul>
+        
+    </div>
+<!--JS TO FIND SENTENCE IN LIST THAT CONTAINS WORD HOLI-->
+    <script>
+        const list=document.querySelector('.output ul');
+        list.innerHTML='';
+        let greetings=['Happy Birthday!',
+            'A Happy Holi to all of you guys',
+            'A Happy Holi to all the family',
+            'Holi Mubarak ho',
+            'Get well soon',
+            'Happy Anniversary Mom Dad!'] ;             // write ;   OR NOT no harm
+
+        for(let i=0;i<greetings.length;i++){
+            //Checking Holi Present or Not
+            if (greetings[i].indexOf("Holi")!==-1){      //!== means should not be equal to eqaul to
+                let listItem=document.createElement('li');
+                listItem.textContent=greetings[i]
+                list.appendChild(listItem);
+            }
+        }
+    </script>
+</body>
+</html>

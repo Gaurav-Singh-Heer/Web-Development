@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let car = {
+        name: "Swift",
+        model: 500,
+        color: "white",
+        };
+        document.write(car.name+"<br>"); // Using dot notation
+        document.write(car["name"]+"<br>"); // Using bracket notation
+
+        let prp=Object.entries(car)         //entries give key,value
+        console.log(prp)
+        document.write(prp+"<br>")
+
+        //length of array
+        for (let i of prp){
+            document.write(i+"<br>")
+        }
+        document.write("DOneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+        for(let b of prp){
+            document.write(`${b[0]} : ${b[1]}`+"<br>")
+        }
+        document.write("DOneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+        for (let[key,value]of prp){
+            document.write(`${key}.${val}`);
+        }
+        
+    </script>
+</body>
+</html>

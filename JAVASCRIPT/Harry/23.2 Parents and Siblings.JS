@@ -1,0 +1,1 @@
+console.log(document.body.firstElementChild.nextElementSibling); // <div class="second">second</div>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="container">
+    <p class="message">Hello World!</p>
+  </div>
+  <script>
+    const container = document.querySelector('.container');
+
+    if (container.matches('.message')) {
+      console.log('The element matches the selector');
+    } else {
+      console.log('The element does not match the selector');
+    }
+  </script>
+  
+</body>
+</html>

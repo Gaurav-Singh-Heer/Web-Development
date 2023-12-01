@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        a{
+            animation: bouncing 0.5s ease 0s infinite alternate both ;
+            /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+            background: rgb(117, 204, 137);
+            border-radius: 50%;
+            display: inline-block;
+            position: relative;
+            padding: 1em 2em 1em;
+        }
+        @keyframes bouncing{
+            0%{
+                bottom: 0px;
+                box-shadow: 0 0 0 rgb(0, 0, 0, 0.5);
+            }
+            100%{
+                bottom: 50px;
+                box-shadow: 0 0 0 rgb(0, 0, 0, 0.1);
+            }
+        }
+        div#End{
+            background: rgb(48, 145, 218);
+            width: 50px;
+            height: 50px;
+            overflow: hidden;
+            transition: width 2s,height 4s;
+            order: 1px solid black;
+        }
+        div#End:hover{
+            background: lightpink;
+            width: 300px;
+            height: 110px;
+        }
+        @media only screen and (max-width:700px) {
+            body{
+                background: lightgray;
+            }
+        }
+
+    </style>
+</head>
+<body >
+    <div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <a>Hello India!!</a>
+    </div>
+    <div align="center">
+        <br>
+        <br>
+        <br>
+        <br>
+        <a>Hello India!!</a>
+    </div>
+    <div align="right">
+        <br>
+        <br>
+        <br>
+        <br>
+        <a>Hello India!!</a>
+    </div>
+    <div align="center">
+        <br>
+        <br>
+        <br>
+        <br>
+        <a>Hello India!!</a>
+    </div>
+    <div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <a>Hello India!!</a>
+    </div>
+    <div id="End">
+        <p>Click ME!!!</p>
+        <p>Created with &#128147; By Gaurav</p>
+        <p>Thanks For Watching</p>
+    </div>
+</body>
+</html>

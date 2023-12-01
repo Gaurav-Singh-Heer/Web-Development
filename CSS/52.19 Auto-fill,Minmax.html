@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS GRID</title>
+    <style>
+        .container{
+            display:grid;
+            grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
+/*By this as many boxes can come in line will come  It also enhances better view at moblie  */
+            grid-auto-rows: minmax(100px,auto);                /*tp fix our height*/
+             /* minimum hamara box itne size ka rahe aur maximum apne content kei hisaab sei ho skta hai */
+            grid-auto-columns: minmax(100px,auto);             /* to fix our width  */
+            grid-gap:20px
+            
+        }
+        .items{
+            background-color: lightcoral;
+            border: 3px green solid;
+            border-radius: 3px
+            ;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">                   <!--div.container>div.items*5> -->
+        <div class="items">Dabba 1</div>
+        <div class="items">Dabba 2</div>
+        <div class="items">Dabba 3</div>
+        <div class="items">Dabba 4</div>
+        <div class="items">Dabba 5</div>
+    </div>                            
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @media (min-width:0px) and (max-width:640px) {
+                div.flex-container{
+                    display: flex;
+                    flex-direction: column;
+                }
+                div.flex2{
+                    display: flex;
+                    flex-wrap: wrap;
+                    flex-direction: column;
+                }
+                #flex-item-1{
+                    background-color: lightcoral;
+                }
+                #flex-item-2{
+                    background-color: lightpink;
+                }
+                #flex-item-3{
+                    background-color: lightgreen;
+                }
+                #flex-item-4{
+                    background-color: lightseagreen;
+                }
+                #flex-item-5{
+                    background-color: lightslategrey;
+                }
+        }
+        @media only screen and (min-width:640px) {
+                
+            
+            div.flex-container{
+                display: flex;
+                flex-direction: row;
+            }
+            div.flex2{
+                display: flex;
+                flex-direction: row;
+
+            }
+            #flex-item-1{
+                background-color: lightcoral;
+            }
+            #flex-item-2{
+                background-color: lightpink;
+            }
+            #flex-item-3{
+                background-color: lightgreen;
+            }
+            #flex-item-4{
+                background-color: lightseagreen;
+            }
+            #flex-item-5{
+                background-color: lightslategrey;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="flex-container">
+        <div class="flex-item" id="flex-item-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis dolore quidem maxime placeat. Reprehenderit ipsa incidunt sunt deserunt aut, nihil officia rem voluptate nemo, non tenetur voluptates, consectetur et saepe.</div>
+        <div class="flex-item" id="flex-item-2">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi, quod! Doloribus recusandae nostrum dolore, molestias vitae at omnis ullam provident libero? Excepturi repellendus eligendi voluptatum fugit iure possimus animi doloribus?</div>
+        <div class="flex-item" id="flex-item-3">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio sint nulla eligendi voluptates quas facilis, esse distinctio natus sapiente. Labore at provident consectetur ea. Unde placeat id eos possimus eum.</div>
+        <div class="flex-item" id="flex-item-4"><img src="Harry-Potter.jpg" width="300px" alt=""></div>
+        <div class="flex-item" id="flex-item-3">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio sint nulla eligendi voluptates quas facilis, esse distinctio natus sapiente. Labore at provident consectetur ea. Unde placeat id eos possimus eum.</div>
+    </div>
+</body>
+</html>

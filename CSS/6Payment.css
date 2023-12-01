@@ -1,0 +1,32 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 15 px 30 px;
+    font-size: 17px;
+    padding: 8px;
+}
+.container{
+    background-color: aqua;
+    padding: 5px 20px 15px 20px;
+    border: 1px solid olive;
+    border-radius: 4px;
+}
+input[type="text"]
+input[type="email"]
+input[type="number"]
+input[type="password"]
+input[type="date"]
+select,
+textarea{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid gold;
+    border-radius: 5px;
+    margin: 10px;
+}
+fieldset{
+    background-color:grey;
+    border: 1px solid orange;
+}

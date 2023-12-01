@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>confirm</title>
+<style>
+        div p{
+            color: aqua;
+            text-shadow: 3px 2px 4px rgba(63, 63, 146, 0.908);
+            font-size: 30px;
+                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <p>introduction to confirm in javascript</p>
+    </div>
+    <script>
+        let deletepost=confirm("Do you rellay want to delete this post"," ");
+        // console.log(deletepost);
+        if(deletepost)
+            {console.log("your post has been deleted");}
+        else
+            {console.log("your post has not been deleted")}
+
+
+    age=prompt("enter your age : ")
+    Age=Number(age)
+    if(age < 18)
+    {console.log("you are not allowed in a club")}
+    else
+    {console.log("you are allowed in a club")}        
+    </script>
+</body>
+</html>
