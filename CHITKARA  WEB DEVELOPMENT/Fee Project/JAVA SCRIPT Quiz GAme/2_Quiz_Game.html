@@ -6,6 +6,69 @@
     <link rel="stylesheet" href="Style2.css">
     <link rel="icon" type="image" href="Quiz_icon.png">
     <style>
+         section.header{
+            background-color: rgb(36, 65, 89);
+            height: 50px;
+            color: white;
+            display: flex;
+            justify-content: space-around;
+        }
+        div.List ul{
+            display: flex;
+            list-style: none;
+        }
+        div.List ul li{
+            margin: 0px 20px;
+        }
+        div.List ul li a{
+            text-decoration: none;
+            color: white;
+        }
+        div.List ul li a:hover{
+            font-size: 1.1rem;
+            color: hotpink;
+        }
+        div.footer{
+            background-color: rgb(36, 70, 72);
+            display: flex;
+            justify-content: space-between;
+            height: 160px;
+            width: auto;
+            margin: 30px 20px 0px 20px;
+        }
+        div.flex1 ul li{
+            list-style: none;
+            margin: 10px 50px 10px 50px;
+        }
+        div.flex1 ul li a{
+            text-decoration: none;
+            color: white;
+        }
+        div.flex1 ul li a:hover{
+            font-size: 1.1rem;
+            color: hotpink;
+        }
+        div.footer div.Title {
+            color: darkgray;
+            opacity: 0.7;
+            margin: 50px 10px 50px 10px;
+        }
+        div.copyright{
+            float: right;
+        }
+        div.copyright p a{
+            text-decoration: none;
+            color: white;
+            opacity: 0.7;
+        }
+        div.copyright p a:hover{
+            opacity: 0.3;
+        }
+        div.extra{
+            opacity: 0.8;
+            color: tan;
+            font-size: large;
+        }
         p.dark1{
             background-color: darkcyan;
             border: 1px solid black;
@@ -47,11 +110,30 @@
             height: 50px;
             overflow:hidden;
             border-radius: 20%;
+        }
+        div.surprise{
+            display: flex;
+            justify-content: space-between;
         }
     </style>
         
 </head>
 <body background="Quiz_img - Copy.webp">
+    <header>
+        <section class="header">
+            <div class="Title">
+                <h3>Quiz Game</h3>
+            </div>
+            <div class="List">
+                <ul>
+                    <li><a href="Index.html">Home</a></li>
+                    <li><a href="About.html">About</a></li>
+                    <li><a href="Services.html">Services</a></li>
+                    <li><a href="Terms And Conditions.html">Terms and Condition</a></li>
+                </ul>
+            </div>
+        </section>
+    </header>
     <div class="Top">
         <div class="h1" id="Top2" style="height: 150px; background-color: lightblue;"align="center">   
             <h1>WELCOME</h1> 
@@ -59,24 +141,26 @@
             <h1>QUIZ GAME</h1>
         </div> 
     </div>
-
+    
     <div class="h2" style="height: 30px; background-color: lightcoral;">
         <h2>SELECT THE CORRECT OPTION</h2>
     </div>
     <div class="h3" style="height: 30px; "align="right">
         <h3>Maximum marks:1*20=20</h3>
     </div>
-    <div align="right">
-        <a id="up" href="#a2" name="a1"><h3>GO TO BOTTOM</h3></a> 
-    </div>
-    <div id="dark1" class="dark1" align="right">
-        <p class="dark1">Normal Mode</p>
-    </div>
-    <div id="dark2" class="dark2" align="right">
-        <p class="dark2">Normal Mode</p>
-    </div>
-    <div id="dark3" class="dark3" align="right">
-        <p class="dark3">Normal Mode</p>
+    <div class="surprise">
+        <div id="dark1" class="dark1" align="right">
+            <p class="dark1">Normal Mode</p>
+        </div>
+        <div id="dark2" class="dark2" align="right">
+            <p class="dark2">Normal Mode</p>
+        </div>
+        <div id="dark3" class="dark3" align="right">
+            <p class="dark3">Normal Mode</p>
+        </div>
+        <div class="goto">
+            <a id="up" href="#a2" name="a1"><h3>GO TO BOTTOM</h3></a> 
+        </div>
     </div>
     <div id="mcqs" style="color: black;">
         <b>1. Which of the following option is used as hexadecimal literal beginning?</b>
@@ -308,15 +392,41 @@
         <a id="up" href="#a1" name="a2" align="right"><h3>GO TO TOP</h3></a>
     </div>
     </div>    
-        <div class="End" >
-            <a id="extra" href="#">FAQ's</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a id="extra" href="#">Contact us </a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a id="extra" href="#">Term of Use</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a id="extra" href="#">Privacy Policy</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a id="extra" href="#">Refund Policy</a>
-            <a id="extra" class="copyright" href="#">&copy;2023|Quiz by PG-22</a>&nbsp;&nbsp;|&nbsp;&nbsp; 
+    </form>    
+    <footer>
+        <div class="footer">
+            <div class="Title">
+                <span class="Team"><p>Made By PG22 </p></span>
+            </div>
+            <div class="flex1">
+                <ul>
+                    <li><a href="Index.html">Home</a></li>
+                    <li><a href="About.html">About</a></li>
+                    <li><a href="Services.html">Services</a></li>
+                    <li><a href="Terms And Conditions.html">Terms and Condition</a></li>
+                </ul>
+            </div>
+            <div class="flex1">
+                <ul>
+                    <li><a href="Index.html">Home</a></li>
+                    <li><a href="About.html">About</a></li>
+                    <li><a href="Services.html">Services</a></li>
+                    <li><a href="Terms And Conditions.html">Terms and Condition</a></li>
+                </ul>
+            </div>
+            <div class="flex1">
+                <ul>
+                    <li><a href="Index.html">Home</a></li>
+                    <li><a href="About.html">About</a></li>
+                    <li><a href="Services.html">Services</a></li>
+                    <li><a href="Terms And Conditions.html">Terms and Condition</a></li>
+                </ul>
+            </div>
         </div>
-    </form>          
+    </footer>
+    <div class="copyright">
+        <p><a href="#">pg22@gmail.com|&copy;All rights reserved</a></p>
+    </div>        
     <script src="2 TRY.JS">
     </script>     
 </body>

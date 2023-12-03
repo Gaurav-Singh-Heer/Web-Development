@@ -3,35 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Services</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Condensed:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Condensed:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         body{
             font-family: 'Roboto',sans-serif;
-        }
-        img{
-            width: 200px;
-            height: 180px;
-        }
-        div#Login{
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 10px 10px 10px;
-            margin: 150px 200px 100px 300px;
-            width: 500px;
-            height: 180px;
-            border: 5px black solid;
-            background-color: beige;
-        }
-        div.google img{
-            width: 200px;
-            height: 30px;
-        }
-        div.google img:hover{
-            opacity: 0.7;
-            size: 1.1rem;
         }
         section.header{
             background-color: rgb(36, 65, 89);
@@ -93,12 +71,57 @@
         }
         div.extra{
             opacity: 0.8;
-            color: tan;
+            color: rgb(46 65 56 / 45%);
             font-size: large;
+        }
+        div.image{
+            display: flex;
+            justify-content: space-between;
+            margin: 100px 80px;
+        }
+        img.one{
+            margin: 20px 30px;
+            height: 400px ;
+            opacity: 0.6;
+            width: 500px;
+            transform: rotate(-35deg);
+        }
+        img.two{
+            margin: 20px 30px;
+            opacity: 0.8;
+            transform: rotate(-35deg);
+        }
+        div.paragraph{
+            width: 50%;
+            position: absolute;
+            top: 150px;
+            margin: 10px 50px ;
+        }
+        div.support{
+            display: flex;
+            justify-content: space-evenly;
+            background-color: rgb(86, 60, 49);
+            width: 90%;
+            margin: 10px 50px;
+        }
+        div.support div.sp1 ul{
+            list-style: none;
+        }
+        div.support div.sp1 ul li a{
+            text-decoration: none;
+            color: black;
+        }
+        div.support div.sp1 ul li a:hover{
+            color: hotpink;
+            text-decoration: underline;
+        }
+        div.support div.sp1 ul li.num:hover{
+            color: aqua;
+            text-decoration: underline;
         }
     </style>
 </head>
-<body bgcolor="lightgreen">
+<body bgcolor="lightsalmon">
     <header>
         <section class="header">
             <div class="Title">
@@ -115,30 +138,38 @@
         </section>
     </header>
     <div class="extra">
-        <p>Login this page and your test will get start</p>
+        <p>Our Services</p>
     </div>
-    <form action="" method="post">              
-        <div id="Login" align="center">
-            <div>
-                <img src="Login Flex.webp" alt="">
+    <div class="content">
+        <div class="image">
+            <img class="one" src="Services1.jpeg" alt="">
+            <img class="two" src="Services2.jpeg" alt="">
+        </div>
+        <div class="paragraph">
+            <p>
+                A quiz game is an engaging and interactive form of entertainment that revolves around asking and answering questions. Whether played on a traditional stage with a quizmaster or through digital platforms, quiz games test participants' knowledge across diverse categories such as general knowledge, science, history, sports, and pop culture. The format can vary, accommodating individual players or teams, and questions often range in difficulty levels to cater to a broad audience.
+                In live quiz events, participants may use buzzers, introducing an element of competition and quick thinking as individuals or teams vie to be the first to respond. Scoring systems typically award points for correct answers, sometimes varying based on question difficulty. Time limits may add urgency to decision-making, preventing participants from lingering too long on a single question.
+                Digital quiz games offer additional features, including multimedia elements, interactive graphics, and sound effects, enhancing the overall gaming experience. Many digital platforms also include multiplayer options, enabling real-time competition among participants.
+                Quiz games are adaptable and find a place in various settings, from casual social gatherings to formal events. They serve as both an entertaining pastime and an educational tool, encouraging participants to broaden their knowledge while having fun. Whether on a mobile app, in a pub, at school, or in a corporate setting, quiz games provide a versatile and enjoyable way to test and expand one's knowledge base.
+            </p>
+        </div>
+        <div class="support">
+            <div class="sp1">
+                <ul>
+                    <li>Our Contact:-</li>
+                    <li class="num">1800-999-999</li>
+                </ul>
             </div>
-            
-            <div>
-                <p>
-                    UserName*: <input type="text" name="name" required>
-                </p> 
-                <p>
-                    password*: <input type="password" name="password" required><br>
-                    <br>
-                    <br>
-                    <a href="2_Quiz_Game.html"><input type="submit" value="Login">_</a> &nbsp;&nbsp;No account <a href="SignUp.html">Create One!</a>
-                    <div class="google">
-                        <a href="https://www.google.com/"><img src="google.jpeg" alt=""></a>
-                    </div>
-                </p>
+            <div class="sp1">
+                <ul>
+                    <li>Our Gmail:-</li>
+                    <li><a href="#">quiz2k23@gmail.com</a></li>
+                </ul>
             </div>
         </div>
-    </form>    
+    </div>
+    
+    
     <footer>
         <div class="footer">
             <div class="Title">
