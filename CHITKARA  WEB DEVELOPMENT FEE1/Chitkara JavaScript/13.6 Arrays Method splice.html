@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Variables</h1>
+    <script>
+        let fruits=["Apple","Orange","Banana"];
+        fruits.splice(0,1);
+        console.log(fruits);
+
+
+        let fruits1=["Apple","Orange","Banana","Mango"];
+        fruits1.splice(2,3,"Lemon","Kiwi");
+        console.log(fruits1);
+
+        let num=[551, 22, 3, 14, 5, 6, 7, 8, 229]
+        num.splice(2, 3, 1021, 1022, 1023, 1024, 1025) //AS 2, 3 so elements at index 2 to next 3 which are 3, 14, 5 
+        console.log(num)
+        //AS 2, 3 so elements at index 2 to next 3 which are 3, 14, 5
+        //are replaced by 1021, 1022, 1023, 1024, 1025
+
+        let number=[551, 22, 3, 14, 5, 6, 7, 8, 229]
+        let deletedValues=number.splice(2, 4, 1021, 1022, 1023, 1024, 1025)
+        console.log(number)
+        console.log(deletedValues)
+        //AS 2, 4 so elements at index 2 to next 4 which are 3, 14, 5, 6
+        //are replaced by 1021, 1022, 1023, 1024, 1025
+    </script>
+</body>
+</html>

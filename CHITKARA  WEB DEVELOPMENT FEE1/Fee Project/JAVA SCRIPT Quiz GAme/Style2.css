@@ -1,0 +1,138 @@
+.copyright{
+    float: right;
+}
+
+div.End{
+    background-color: black;
+    height: 25px;
+}
+div.End:hover{
+    color: blue;
+}
+a[href="#"]{
+    color: white;
+}
+a[href^="S"]{
+    color: darkblue;
+}
+a#extra:hover {  
+    color: lightgreen;
+}
+a#solutions:hover{
+    color: orange;
+}
+a#up{
+    color: rgb(65, 6, 110);
+}
+a#up:hover{
+    color: rgb(116, 232, 0);
+}
+a.bounce{
+    animation: bouncing 0.5s ease 0s infinite alternate both;
+    border-radius: 50%;
+    background-color: lightgreen;
+    display: inline-block;
+    position: relative;
+    padding: 1em 2em 1em;
+    margin-top: 10px;
+}
+@keyframes bouncing{
+    0%{
+        bottom: 0px;
+        box-shadow: 0 0 0 rgb(0, 0, 0, 0.5);
+    }
+    100%{
+        bottom: 30px;
+        box-shadow: 0 0 0 rgb(0, 0, 0, 0.1);
+    }
+}
+a{
+    opacity: 1;
+}
+a:hover{
+    opacity: 0.5;
+}
+a#extra{
+    opacity: 1;
+}
+a#extra:hover{
+    opacity: 0.5;
+}
+@media (min-width:501px) and (max-width:800px) {
+    body{
+        background: lightpink;
+    } 
+}
+@media (min-width:100px) and (max-width:500px) {
+    body{
+        background-image: linear-gradient(45deg,rgb(102, 255, 0),blue,green);/* 0 deg=default Top*/
+    } 
+}
+@media (min-width:350px) and (max-width:450px) {
+    div.h2{
+        font-size: small;
+        background: lightcoral;
+    } 
+}
+@media (min-width:160px) and (max-width:350px) {
+    div.h2{
+        font-size: small;
+        margin-bottom: 50px;
+        background: lightcoral;
+    } 
+}
+@media (min-width:100px) and (max-width:158px) {
+    div.h2{
+        margin-bottom: 80px;
+        background: lightcoral;
+    } 
+}
+@media (min-width:100px) and (max-width:250px) {
+    div.h1{
+        margin-bottom: 60px;
+        background: lightblue;
+    } 
+}
+div#Answer {
+    border: 1px solid black;
+    width: 50px;
+    height: 35px;
+    background: rgb(0, 255, 76);
+    transition: width 2s, height 4s;
+    overflow:hidden;
+}
+
+div#Answer:hover {
+    width: 300px;
+    height: 50px;
+}
+@media (min-width:100px) and (max-width:350px) {
+    div#Answer:hover{
+        width: 100px;
+        height: 50px;
+    } 
+}
+@media (min-width:801px) and (max-width:1500px) {
+    div.dark1{
+        display: none;
+    } 
+    div.dark2{
+        display: none;
+    } 
+}
+@media (min-width:100px) and (max-width:500px) {
+    div.dark1{
+        display: none;
+    } 
+    div.dark3{
+        display: none;
+    } 
+}
+@media (min-width:501px) and (max-width:800px) {
+    div.dark2{
+        display: none;
+    } 
+    div.dark3{
+        display: none;
+    } 
+}

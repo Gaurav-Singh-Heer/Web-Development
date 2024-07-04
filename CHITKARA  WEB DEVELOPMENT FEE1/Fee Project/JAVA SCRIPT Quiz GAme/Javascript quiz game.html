@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAVASCRIPT QUIZ GAME</title>
+    <link rel="stylesheet" href="Style.css">
+    <link rel="icon" type="image" href="Quiz_icon.png">
+    <style>
+        section.header{
+            background-color: rgb(36, 65, 89);
+            height: 50px;
+            color: white;
+            display: flex;
+            justify-content: space-around;
+        }
+        div.List ul{
+            display: flex;
+            list-style: none;
+        }
+        div.List ul li{
+            margin: 0px 20px;
+        }
+        div.List ul li a{
+            text-decoration: none;
+            color: white;
+        }
+        div.List ul li a:hover{
+            font-size: 1.1rem;
+            color: hotpink;
+        }
+        div.footer{
+            background-color: rgb(36, 70, 72);
+            display: flex;
+            justify-content: space-between;
+            height: 160px;
+            width: auto;
+            margin: 30px 20px 0px 20px;
+        }
+        div.flex1 ul li{
+            list-style: none;
+            margin: 10px 50px 10px 50px;
+        }
+        div.flex1 ul li a{
+            text-decoration: none;
+            color: white;
+        }
+        div.flex1 ul li a:hover{
+            font-size: 1.1rem;
+            color: hotpink;
+        }
+        div.footer div.Title {
+            color: darkgray;
+            opacity: 0.7;
+            margin: 50px 10px 50px 10px;
+        }
+        div.copyright{
+            float: right;
+        }
+        div.copyright p a{
+            text-decoration: none;
+            color: white;
+            opacity: 0.7;
+        }
+        div.copyright p a:hover{
+            opacity: 0.3;
+        }
+        div.extra{
+            opacity: 0.8;
+            color: tan;
+            font-size: large;
+        }
+    </style>
+</head>
+<body background="Quiz_img - Copy.webp">
+    <header>
+        <section class="header">
+            <div class="Title">
+                <h3>Quiz Game</h3>
+            </div>
+            <div class="List">
+                <ul>
+                    <li><a href="Index.html">Home</a></li>
+                    <li><a href="">About</a></li>
+                    <li><a href="">Services</a></li>
+                    <li><a href="">Terms and Condition</a></li>
+                </ul>
+            </div>
+        </section>
+    </header>
+    <div class="paragraph">
+        <p></p>
+    </div>
+    <div class="Top">
+        <div class="h1" id="Top2" style="height: 150px; background-color: lightblue;"align="center">   
+            <h1>WELCOME</h1> 
+            <h1>TO</h1> 
+            <h1>QUIZ GAME</h1>
+        </div> 
+    </div>
+
+    <div class="h2" style="height: 30px; background-color: lightcoral;">
+        <h2>SELECT THE CORRECT OPTION</h2>
+    </div>
+    <div class="h3" style="height: 30px; "align="right">
+        <h3>Maximum marks:1*20=20</h3>
+    </div>
+    <div align="right">
+        <a id="up" href="#a2" name="a1"><h3>GO TO BOTTOM</h3></a> 
+    </div>
+    <div style="color: black;">
+        <b>1. Which of the following option is used as hexadecimal literal beginning?</b>
+        <p>
+            <input type ="radio" name="1" id="00">a) 00<br>
+            <input type ="radio" name="1" id="0x">b) 0x<br>
+            <input type ="radio" name="1" id="0X">c) 0X<br>
+            <input type ="radio" name="1" id="Both 0x and 0X">d) Both 0x and 0X<br>
+        </p>
+        <b>2. In the JavaScript, which one of the following is not considered as an error_______</b>
+        <p>
+            <input type ="radio" name="2"  id="Missing of semicolons">a) Missing of semicolons<br>
+            <input type ="radio" name="2"  id="Syntax error">b) Syntax error<br>
+            <input type ="radio" name="2"  id="Division by zero">c) Division by zero<br>
+            <input type ="radio" name="2"  id="Missing of Bracket">d) Missing of Bracket<br>
+        </p>
+        <b>3. When there is an indefinite or an infinite value during an arithmetic computation in a program, then JavaScript prints____________
+        </b>
+        <p>
+            <input type ="radio" name="3"  id="Prints an overflow error">a) Prints an overflow error<br>
+            <input type ="radio" name="3"  id="Prints an exception error">b) Prints an exception error<br>
+            <input type ="radio" name="3"  id="Prints the value as such">c) Prints the value as such<br>
+            <input type ="radio" name="3"  id="Displays “Infinity”">d) Displays “Infinity”<br>
+        </p>
+        <b>4. Which of the following type of a variable is volatile?</b>
+        <p>
+            <input type ="radio" name="4"  id="Dynamic variable">a) Dynamic variable<br>
+            <input type ="radio" name="4"  id="Mutable variable">b) Mutable variable<br>
+            <input type ="radio" name="4"  id="Volatile variable">c) Volatile variable<br>
+            <input type ="radio" name="4"  id="Immutable variable">d) Immutable variable<br>
+        </p>
+        <b>5. Which of the following given functions of the Number Object formats a number with a different number of digits to the right of the decimal?</b>
+        <p>
+            <input type ="radio" name="5"  id="toPrecision()">a) toPrecision()<br>
+            <input type ="radio" name="5"  id="toFixed()">b) toFixed()<br>
+            <input type ="radio" name="5"  id="toExponential()">c) toExponential()<br>
+            <input type ="radio" name="5"  id="toLocaleString()">d) toLocaleString()<br>
+        </p>
+        <b>6. Which of the following function of the String object returns the character in the string starting at the specified position via the specified number of characters?</b>
+        <p>
+            <input type ="radio" name="6"  id="split()">a) split()<br>
+            <input type ="radio" name="6"  id="slice()">b) slice()<br>
+            <input type ="radio" name="6"  id="substr()">c) substr()<br>
+            <input type ="radio" name="6"  id="search()">d) search()<br>
+        </p>
+        <b>7. Which one of the following is the correct way for calling the JavaScript code?</b>
+        <p>
+            <input type ="radio" name="7"  id="Triggering Event">a) Triggering Event<br>
+            <input type ="radio" name="7"  id="Preprocessor">b) Preprocessor<br>
+            <input type ="radio" name="7"  id="Function/Method">c) Function/Method<br>
+            <input type ="radio" name="7"  id="RMI">d) RMI<br>
+        </p>
+        <b>8. Which of the following number object function returns the value of the number?</b>
+        <p>
+            <input type ="radio" name="8"  id="valueOf()">a) valueOf()<br>
+            <input type ="radio" name="8"  id="toString()">b) toString()<br>
+            <input type ="radio" name="8"  id="toLocaleString()">c) Function/Method<br>
+            <input type ="radio" name="8"  id="DtoPrecision()">d) DtoPrecision()<br>
+        </p>
+        <b>9. In JavaScript the x===y statement implies that____________</b>
+        <p>
+            <input type ="radio" name="9"  id="Both are equal in the value and data type">a) Both are equal in the value and data type<br>
+            <input type ="radio" name="9"  id="Both are not same at all">b) Both are not same at all<br>
+            <input type ="radio" name="9"  id="Both are x and y are equal in value only">c) Both are x and y are equal in value only<br>
+            <input type ="radio" name="9"  id="Both x and y are equal in value, type and reference address as well">d) Both x and y are equal in value, type and reference address as well<br>
+        </p>
+        <b>10. Which of the following variables takes precedence over the others if the names are the same?</b>
+        <p>
+            <input type ="radio" name="10"  id="The local element">a) The local element<br>
+            <input type ="radio" name="10"  id="Global variable">b) Global variable<br>
+            <input type ="radio" name="10"  id="The two of the above">c) The two of the above<br>
+            <input type ="radio" name="10"  id="None">d) None<br>
+        </p>
+        <b>11. Choose the correct snippet from the following to check if the variable “a” is not equal the “NULL”_______</b>
+        <p>
+            <input type ="radio" name="11"  id="if(a!==null)">a) if(a!==null)<br>
+            <input type ="radio" name="11"  id="if (a!)">b) if (a!)<br>
+            <input type ="radio" name="11"  id="if(a!=null)">c) if(a!=null)<br>
+            <input type ="radio" name="11"  id="if(a!null)">d) if(a!null)<br>
+        </p>
+        <b>12. The “function” and ” var” are known as________</b>
+        <p>
+            <input type ="radio" name="12"  id="Keywords">a) Keywords<br>
+            <input type ="radio" name="12"  id="Data types">b) Data types<br>
+            <input type ="radio" name="12"  id="Prototypes">c) Prototypes<br>
+            <input type ="radio" name="12"  id="Declaration statements">d) Declaration statements<br>
+        </p>
+        <b>13.  Suppose we have a text “human” that we want to convert into string without using the “new” operator. Which is the correct way from the following to do so___________</b>
+        <p>
+            <input type ="radio" name="13"  id="String newvariable=”human”">a) String newvariable=”human”<br>
+            <input type ="radio" name="13"  id="String(human)">b) String(human)<br>
+            <input type ="radio" name="13"  id="toString()">c) toString()<br>
+            <input type ="radio" name="13"  id="Both human.toString() and String(human)">d) Both human.toString() and String(human)<br>
+        </p>
+        <b>14.  In JavaScript, what will be used for calling the function definition expression_______</b>
+        <p>
+            <input type ="radio" name="14"  id="Function literal">a) Function literals<br>
+            <input type ="radio" name="14"  id="Function calling">b) Function calling<br>
+            <input type ="radio" name="14"  id="Function prototype">c) Function prototype<br>
+            <input type ="radio" name="14"  id="Function declaration">d) Function declaration<br>
+        </p>
+        <b>15.  Which of the following one is the property of the primary expression_________ </b>
+        <p>
+            <input type ="radio" name="15"  id="contains variable references alone">a) contains variable references alone<br>
+            <input type ="radio" name="15"  id="Contains only keywords">b) Contains only keywords<br>
+            <input type ="radio" name="15"  id="basic expressions containing all necessary functions">c) basic expressions containing all necessary functions<br>
+            <input type ="radio" name="15"  id="stand-alone expressions">d) stand-alone expressionsDeclaration statements<br>
+        </p>
+        <b>16.  Which one of the following is used for the calling a function or a method in the JavaScript__________</b>
+        <p>
+            <input type ="radio" name="16"  id="Invocation expression">a) Invocation expression<br>
+            <input type ="radio" name="16"  id="Functional expression">b) Functional expression<br>
+            <input type ="radio" name="16"  id="Property Access Expression">c) Property Access Expression<br>
+            <input type ="radio" name="16"  id="Primary expression">d) Primary expression<br>
+        </p>
+        <b>17. When interpreter encounters an empty statements, what it will do_________</b>
+        <p>
+            <input type ="radio" name="17"  id="Throws an error">a) Throws an error<br>
+            <input type ="radio" name="17"  id="Prompts to complete the statement">b) Prompts to complete the statement<br>
+            <input type ="radio" name="17"  id="Shows a warning">c) Shows a warning<br>
+            <input type ="radio" name="17"  id="Ignores the statements">d) Ignores the statements<br>
+        </p>
+        <b>18.  The “new Point(3,2)”, is a kind of _______ expression</b>
+        <p>
+            <input type ="radio" name="18"  id="Invocation Expression">a) Invocation Expression<br>
+            <input type ="radio" name="18"  id="Primary Expression">b) Primary Expression<br>
+            <input type ="radio" name="18"  id="Object Creation Expression">c) Object Creation Expression<br>
+            <input type ="radio" name="18"  id="Constructor Calling Expression">d) Constructor Calling Expression<br>
+        </p>
+        <b>19.  Which one of the following operator is used to check weather a specific property exists or not__________</b>
+        <p>
+            <input type ="radio" name="19"  id="in">a) in<br>
+            <input type ="radio" name="19"  id="exist">b) exist<br>
+            <input type ="radio" name="19"  id="Exists">c) Exists<br>
+            <input type ="radio" name="19"  id="within">d) within<br>
+        </p>
+        <b>20.  Which one of the following is not a keyword__________</b>
+        <p>
+            <input type ="radio" name="20"  id="with">a) with<br>
+            <input type ="radio" name="20"  id="if">b) if<br>
+            <input type ="radio" name="20"  id="debugger">c) debugger<br>
+            <input type ="radio" name="20"  id="use strict">d) use strict<br>
+        </p>
+        <p><h4>**To view solutions click on SOLUTION and give  marks  accordingly**</h4>
+        <a id="solutions" class="bounce" target="_blank" href="SOLUTIONS.html"><h2>SUBMIT</h2></a>
+        </p>
+    <div align="right">
+        <a id="up" href="#a1" name="a2" align="right"><h3>GO TO TOP</h3></a>
+    </div>
+    </div>    
+    </form>   
+    <footer>
+        <div class="footer">
+            <div class="Title">
+                <span class="Team"><p>Made By PG22 </p></span>
+            </div>
+            <div class="flex1">
+                <ul>
+                    <li><a href="Index.html">Home</a></li>
+                    <li><a href="">About</a></li>
+                    <li><a href="">Services</a></li>
+                    <li><a href="">Terms and Condition</a></li>
+                </ul>
+            </div>
+            <div class="flex1">
+                <ul>
+                    <li><a href="Index.html">Home</a></li>
+                    <li><a href="">About</a></li>
+                    <li><a href="">Services</a></li>
+                    <li><a href="">Terms and Condition</a></li>
+                </ul>
+            </div>
+            <div class="flex1">
+                <ul>
+                    <li><a href="Index.html">Home</a></li>
+                    <li><a href="">About</a></li>
+                    <li><a href="">Services</a></li>
+                    <li><a href="">Terms and Condition</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <div class="copyright">
+        <p><a href="#">pg22@gmail.com|&copy;All rights reserved</a></p>
+    </div>            
+</body>
+</html>

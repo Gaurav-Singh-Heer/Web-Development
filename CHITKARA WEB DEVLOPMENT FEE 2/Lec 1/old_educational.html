@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            font-family: 'Roboto';
+            background-color: cadetblue;
+            /* margin: 0;
+            padding: 0; */
+        }
+        nav ul {
+            display: flex;
+            justify-content: space-around;
+            background-color: cornsilk;
+            /* padding: 1rem;
+            margin: 0; */
+        }
+        nav ul li{
+            list-style: none;
+        }
+        nav ul li a{
+            text-decoration: none;
+            /* color: black; */
+        }
+        h2{
+            text-align: center;
+        }
+        table,th,td{
+            border: 1px black solid;
+            border-collapse:collapse ;
+            caption-side: top;  /* padding: 0.5rem; */
+            text-align: center;
+        }
+        table{
+            margin: 2vw;
+            /* margin: 2vw auto;
+            width: 90%; */
+            align-items: center;
+        }
+        /* caption {
+            caption-side: top;
+        } */
+        div#table {
+            display: flex;
+            justify-content: space-around;
+            /* flex-wrap: wrap; */
+        }
+    </style>
+</head>
+<header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="Contact.html">Contact</a></li>
+            <li><a href="Educational.html">About Me</a></li>
+            <li><a href="Form.html">Form</a></li>
+        </ul>
+    </nav>
+</header>
+<body>
+    <div id="table">
+        <table>
+            <caption><h3>Educational Background</h3></caption>
+            <tr>
+                <th>Name of Institution</th>
+                <th>Year of passing</th>
+                <th>Percentage</th>
+                <th>Class</th>
+            </tr>
+            <tr>
+                <td>Chitkara University</td>
+                <td>2027</td>
+                <td>98</td>
+                <td>BE(CSE)</td>
+            </tr>
+            <tr>
+                <td>GNKSS</td>
+                <td>2023</td>
+                <td>88</td>
+                <td>12th</td>
+            </tr>
+            <tr>
+                <td>Manav Mangal Smart School</td>
+                <td>2021</td>
+                <td>87</td>
+                <td>10th</td>
+            </tr>
+        </table>
+
+        <table>
+            <caption><h3>Skills</h3></caption>
+            <tr>
+                <th>Language Known For DSA</th>
+                <th>Language For Development</th>
+                <th>Achievements</th>
+            </tr>
+            <tr>
+                <td>Python</td>
+                <td>Html</td>
+                <td>5 Star Python</td>
+            </tr>
+            <tr>
+                <td>C:Programming</td>
+                <td>CSS</td>
+                <td>4 Star in C</td>
+            </tr>
+            <tr>
+                <td>C++</td>
+                <td>JS</td>
+                <td>5 Star in C++</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

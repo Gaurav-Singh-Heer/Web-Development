@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div.flex-container{
+            display: flex;
+            justify-content: center;
+        }
+        #flex-item-1{
+            background-color: lightcoral;
+            overflow: scroll;                          
+            width: 120px;                               /*   THESE 3 ARE IMPORTANT   */
+            height: 50px;                               /*       TO USE              */
+            border: 2px solid tomato;                 /*   overflow:scroll;        */
+        }
+        #flex-item-2{
+            background-color: lightpink;
+        }
+        #flex-item-3{
+            background-color: lightgreen;
+        }
+        #flex-item-4{
+            background-color: lightseagreen;
+        }
+        #flex-item-5{
+            background-color: lightslategrey;
+        }
+    </style>
+</head>
+<body>
+    <div class="flex-container" >
+        <div class="flex-item" id="flex-item-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. In obcaecati nostrum voluptatum cupiditate explicabo. Facere, totam ab. Nihil, et ad iusto dicta beatae veniam blanditiis nostrum? Illo enim nihil saepe.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta fuga accusamus et, sed laborum necessitatibus dolores quo illum quisquam aperiam est vel doloremque nihil. Similique animi sit possimus modi incidunt.</div>
+        <div class="flex-item" id="flex-item-2">2</div>
+        <div class="flex-item" id="flex-item-3">3</div>
+        <div class="flex-item" id="flex-item-4">4</div>
+        <div class="flex-item" id="flex-item-5">5</div>
+
+    </div>
+</body>
+</html>

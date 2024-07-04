@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Item Click and Hover Example</title>
+    <style>
+        ul {
+            list-style-type: none; /* Remove default bullets */
+            padding: 0; /* Remove default padding */
+        }
+
+        li {
+            padding: 10px;
+            background-color: #f0f0f0;
+            margin-bottom: 5px;
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
+
+        li:hover {
+            background-color: #d0d0d0; /* Change background color on hover */
+            cursor: pointer; /* Change cursor to pointer on hover */
+        }
+
+        li.active {
+            background-color: #b0b0b0; /* Darker background color for active item */
+        }
+    </style>
+</head>
+<body>
+    <ul id="myList">
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+    </ul>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const listItems = document.querySelectorAll('#myList li');
+
+            listItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    // Remove 'active' class from all list items
+                    listItems.forEach(li => li.classList.remove('active'));
+
+                    // Add 'active' class to the clicked list item
+                    item.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

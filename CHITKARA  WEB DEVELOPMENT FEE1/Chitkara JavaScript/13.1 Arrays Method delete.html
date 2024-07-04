@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let fruits=["Apple","Orange","Banana"];
+        delete fruits[1];                 //Array Length Remains Same
+        console.log(fruits);
+        
+        n=prompt("Enter a Value")
+        n=parseInt(n)
+        j=[]
+        for(let i=0;i<=n;i++){
+            k=prompt("Enter data")
+            j.push(k)
+        }
+        document.write(j+"<br>")
+        // delete j[1];
+        // document.write(j)
+        j.splice(2,1);
+        document.write(j)
+    </script>
+</body>
+</html>

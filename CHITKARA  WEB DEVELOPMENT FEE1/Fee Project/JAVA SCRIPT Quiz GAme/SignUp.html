@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Condensed:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body{
+            font-family: 'Roboto',sans-serif;
+        }
+        div#SignUp{
+            padding: 10px 10px 10px 10px;
+            margin: 100px 200px 100px 320px;
+            width: 500px;
+            height: 300px;
+            border: 5px black solid;
+            background-color: beige;
+        }
+        section.header{
+            background-color: rgb(36, 65, 89);
+            height: 50px;
+            color: white;
+            display: flex;
+            justify-content: space-around;
+        }
+        div.List ul{
+            display: flex;
+            list-style: none;
+        }
+        div.List ul li{
+            margin: 0px 20px;
+        }
+        div.List ul li a{
+            text-decoration: none;
+            color: white;
+        }
+        div.List ul li a:hover{
+            font-size: 1.1rem;
+            color: hotpink;
+        }
+        div.footer{
+            background-color: rgb(36, 70, 72);
+            display: flex;
+            justify-content: space-between;
+            height: 160px;
+            width: auto;
+            margin: 30px 20px 0px 20px;
+        }
+        div.flex1 ul li{
+            list-style: none;
+            margin: 10px 50px 10px 50px;
+        }
+        div.flex1 ul li a{
+            text-decoration: none;
+            color: white;
+        }
+        div.flex1 ul li a:hover{
+            font-size: 1.1rem;
+            color: hotpink;
+        }
+        div.footer div.Title {
+            color: darkgray;
+            opacity: 0.7;
+            margin: 50px 10px 50px 10px;
+        }
+        div.copyright{
+            float: right;
+        }
+        div.copyright p a{
+            text-decoration: none;
+            color: white;
+            opacity: 0.7;
+        }
+        div.copyright p a:hover{
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body bgcolor="lightcoral">
+    <header>
+        <section class="header">
+            <div class="Title">
+                <h3>Quiz Game</h3>
+            </div>
+            <div class="List">
+                <ul>
+                    <li><a href="Index.html">Home</a></li>
+                    <li><a href="About.html">About</a></li>
+                    <li><a href="Services.html">Services</a></li>
+                    <li><a href="Terms And Conditions.html">Terms and Condition</a></li>
+                </ul>
+            </div>
+        </section>
+    </header>
+    <form action="" method="post">    
+        <div id="SignUp" align="center">
+            <h2>Enter Details</h2>
+            <p>Name: * <input type="text" name="name" required></p> 
+            <p> Email: *<input type="email" name="email" id="email" required></p>
+            <p>
+                Password: <input type="password" name="cvv" id="cvv" required>
+                <p style="font-size: small; color: red;">*Enter A Strong Password</p>
+            </p>
+            <p>
+                Cofirm password: <input type="password" name="cvv" id="cvv" required>
+                <br>
+                <br>
+                <a href="Index.html"><input type="submit" value="Create">_</a></a> &nbsp;&nbsp;Already having an account <a href="Index.html">Login!</a>
+            </p>
+        </div>
+    </form>   
+    <footer>
+        <div class="footer">
+            <div class="Title">
+                <span class="Team"><p>Made By PG22 </p></span>
+            </div>
+            <div class="flex1">
+                <ul>
+                    <li><a href="Index.html">Home</a></li>
+                    <li><a href="About.html">About</a></li>
+                    <li><a href="Services.html">Services</a></li>
+                    <li><a href="Terms And Conditions.html">Terms and Condition</a></li>
+                </ul>
+            </div>
+            <div class="flex1">
+                <ul>
+                    <li><a href="Index.html">Home</a></li>
+                    <li><a href="About.html">About</a></li>
+                    <li><a href="Services.html">Services</a></li>
+                    <li><a href="Terms And Conditions.html">Terms and Condition</a></li>
+                </ul>
+            </div>
+            <div class="flex1">
+                <ul>
+                    <li><a href="Index.html">Home</a></li>
+                    <li><a href="About.html">About</a></li>
+                    <li><a href="Services.html">Services</a></li>
+                    <li><a href="Terms And Conditions.html">Terms and Condition</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <div class="copyright">
+        <p><a href="#">pg22@gmail.com|&copy;All rights reserved</a></p>
+    </div>            
+</body>
+</html>

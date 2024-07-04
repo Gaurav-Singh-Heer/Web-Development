@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p.a{
+            background-color: cyan;
+            border: 1px solid black;
+            width: 70px;
+            height: 50px;
+            font-size: 30px;
+        }
+        p.b{
+            background-color: cyan;
+            border: 1px solid black;
+            width: 70px;
+            height: 50px;
+            font-size: 30px;
+        }
+        div.c{
+            border: 1px solid black;
+            width: 100px;
+            height: 100px;
+            background: rgb(0, 255, 76);
+            overflow:hidden;
+            border-radius: 50%;
+        }
+        div.d{
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <div class="c"></div>
+    <div class="d"><p class="a">ON</p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+        <p class="b">OFF<p>
+    </div>
+    <script>
+        var a=document.querySelector("p.a")
+        var c=document.querySelector("div.c")
+        a.addEventListener("click",function(){
+            console.log("Hi")
+            c.innerHTML="How Are you"
+            c.style.color="green"
+            c.style.backgroundColor="green"
+        })
+        var b=document.querySelector("p.b")
+        b.addEventListener("click",function(){
+            console.log("Hi")
+            c.innerHTML="How Are you"
+            c.style.color="red"
+            c.style.backgroundColor="red"
+        })
+        console.log(a)
+    </script>
+</body>
+</html>

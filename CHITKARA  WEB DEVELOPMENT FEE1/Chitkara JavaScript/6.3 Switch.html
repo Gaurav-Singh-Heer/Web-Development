@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greetings</title>
+</head>
+<body>
+    <h1>Details of Fruits</h1>
+
+    <script>
+        var age=prompt("Grade kya hai bhaiya: ");
+        switch(age){
+            case "f":
+            case "F":
+                document.write("BELOW AVERAGE");
+                break;   
+            case "e":
+            case "E":
+                document.write("AVERAGE");
+                break;  
+            case "d":
+            case "D":
+                document.write("GOOD");
+                break;            
+            case "C":
+            case "c":
+                document.write("VERY GOOD");
+                break;    
+            case "b":
+            case "B":
+                document.write("EXCELLENT");
+                break;     
+            case "A":
+            case "a":
+                document.write("OUTSTANDING");
+                break;
+              
+            default:
+                document.write(`${age} FAIL`)     //  Used backtick[above tab button] not cotes
+                break;
+        }
+    </script>
+</body>
+</html>
+<!-- Output in Inspect Console -->
