@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alkatra:wght@400..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <style>
+        body{
+            font-family: 'Roboto';
+            background-color: cadetblue;
+            /* margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center; */
+        }
+        /* header {
+            width: 100%;
+        } */
+        ul {
+            display: flex;
+            justify-content: space-around;
+            background-color: rgb(198, 191, 163);
+            /* padding: 1em 0;
+            margin: 0; */
+        }
+        ul li{
+            list-style: none;
+        }
+        ul li a{
+            text-decoration: none;
+        }
+        /* form {
+            background-color: white;
+            padding: 2em;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+            margin-top: 2em;
+        } */
+        .line{
+            display: flex;
+            justify-content: space-around;
+            /* justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 1.5em; */
+        }
+        /* .line div {
+            flex: 1 1 calc(50% - 1em);
+            display: flex;
+            flex-direction: column;
+        }
+        .line div label {
+            margin-bottom: 0.5em;
+        }
+        .line div input {
+            padding: 0.5em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .line div input[type="radio"] {
+            flex: none;
+            width: auto;
+            margin-right: 0.5em;
+        } */
+        div.button{
+            display: flex;
+            justify-content: center;
+            margin: 1.2vw;
+            /* display: flex;
+            justify-content: space-between; */
+        }
+        div.map{
+            margin: 2vw;
+            /* margin: 2em 0;
+            width: 80%;
+            max-width: 600px; */
+        }
+        input{
+            margin: 1.2vw;
+        }
+        button{
+            margin: 1.2vw;
+            padding: 0.5vw 1vw;
+            cursor: pointer;
+            /* padding: 0.5em 1em;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            background-color: cadetblue;
+            color: white;
+            font-size: 1em; */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Contact.html">Contact</a></li>
+                <li><a href="Educational.html">About Me</a></li>
+                <li><a href="Form.html">Form</a></li>
+            </ul>
+        </nav>
+    </header>
+    <form>
+        <div class="line">
+            <div>
+                <label for="fname">First Name:</label>
+                <input type="text" id="fname" name="fname">
+            </div>
+            <div>
+                <label for="lname">Last Name:</label>
+                <input type="text" id="lname" name="lname">
+            </div>
+        </div>
+        <div class="line">
+            <div>
+                <label for="gen">Gender:</label>
+                <input type="radio" id="gen_male" name="gen" value="male">Male
+                <input type="radio" id="gen_female" name="gen" value="female">Female
+            </div>
+            <div>
+                <label for="mail">Email:</label>
+                <input type="email" id="mail" name="mail">
+            </div>
+        </div>
+        <div class="line">
+            <div>
+                <label for="pnum">Phone No:</label>
+                <input type="tel" id="pnum" name="pnum">
+            </div>
+            <div>
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age">
+            </div>
+        </div>
+        <div class="line">
+            <div>
+                <label for="fathername">Father's Name:</label>
+                <input type="text" id="fathername" name="fathername">
+            </div>
+            <div>
+                <label for="mothername">Mother's Name:</label>
+                <input type="text" id="mothername" name="mothername">
+            </div>
+        </div>
+        <div class="line">
+            <div>
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob">
+            </div>
+            <div>
+                <label for="pass">Password:</label>
+                <input type="password" id="pass" name="pass">
+            </div>
+        </div>
+        <div class="button">
+            <button type="reset">Reset</button>
+            <button type="submit" class="sub">Submit</button>
+        </div>
+    </form>
+    <div class="map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d109744.22709409756!2d76.68831110219125!3d30.732254421405457!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fed0be66ec96b%3A0xa5ff67f9527319fe!2sChandigarh!5e0!3m2!1sen!2sin!4v1719828803620!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+</body>
+</html>

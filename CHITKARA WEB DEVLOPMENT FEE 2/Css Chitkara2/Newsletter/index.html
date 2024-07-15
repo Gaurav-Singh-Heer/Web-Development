@@ -1,0 +1,149 @@
+<!-- Create a news letter website. The website will be 2 pages long as off now. Both the pages should have a logo. the homepage will have a banner styating that it is a newsletter website. Contact details needed in the footer. The gallery page should have at least 10 news snippets with image and content. 
+please submit by eod.
+Proper background is needed in the project for both the pages. 
+color schematic should be kept into account while making the project.
+placement of components should be kept into account as well. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="logo.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alkatra:wght@400..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        header{
+            height: 8vh;
+            background-color: #000000;
+        }
+        header nav ul{
+            display: flex;
+            justify-content: space-evenly;
+            padding: 2vh;
+        }
+        header nav ul li{
+            font-size: large;
+            list-style: none;
+        }
+        header nav ul li a{
+            text-decoration: none;
+        }
+        footer{
+            height: 5vh;
+            background-color: #000000;
+        }
+        footer nav ul {
+            display: flex;
+            justify-content: space-evenly;
+            padding: 1vh 1vh 0vh;
+            color: #f3b456;
+        }
+        footer nav ul li{
+            font-size: large;
+            list-style: none;
+        }
+        footer nav ul li a{
+            text-decoration: none;
+        }
+        body{
+            background-image: linear-gradient(#DEF9C4, #9CDBA6,#50B498,#468585);
+            background-repeat: no-repeat;
+            font-family: 'Roboto';
+        }
+        #heading{
+            font-weight: bold;
+            margin-left: 35%;
+            font-size: 5rem;
+            /* background-color: aquamarine; */
+        }
+        #pic{
+            border-radius: 50%;
+            border: 3px white solid;
+            /* align-content: right; */
+            margin: 0px 0px 0px 30vw ;
+        }
+        #news1{
+            display: flex;
+            justify-content: space-evenly;
+        }
+        #news1 #content p#heading {
+            position: relative;
+            font-size: 2rem;
+            width: 150%;
+            max-width: 40vw;
+            padding: 1vw 1vw 0;
+            /* text-align: justify; */
+            color: black;
+            margin-right: 10vw;
+            /* border: 2px black solid; */
+            left: -15vw;
+        }
+        #news1 #content p#content{
+            font-size: 1rem;
+            width: 75%;
+            max-width: 40vw;
+            padding: 3vw;
+            text-align: justify;
+            color: black;
+
+        }
+        #news1 img {
+            width: 53vw;
+            padding: 0px;
+            height: 80vh;
+            border-radius: 6%;
+            margin: 2vh;
+        }
+        header img {
+            height: 6vh;
+            width: 9vh;
+            position: absolute;
+            top: 1vh;
+            left: 1vh;
+        }
+    </style>
+</head>
+<header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="">News</a></li>
+        </ul>
+    </nav>
+    <img src="logo.jpg" alt="">
+</header>
+<body id="content">
+    <h1 id="heading">Newsletter</h1>
+    <div id="news1">
+         <img src="https://th.bing.com/th/id/OIP.C1apy0-oWBgo8iYH3avYfwHaEo?w=295&h=184&c=7&r=0&o=5&dpr=1.5&pid=1.7" alt="">
+        <div id="content">
+            <p id="heading">Chinese drone soars over Mount Everest, captures stunning aerial footage</p>
+            <p id="content">Describing Mount Everest's conditions as ‘harsh’ is a vast understatement—comparable to calling the ocean ‘damp.’ This formidable peak is an unlikely setting for a consumer-grade drone, yet the DJI Mavic 3, crafted by Chinese drone manufacturer DJI, has surpassed all expectations.
+            <br>
+            <br>
+            At an elevation of 3,500 meters above base camp up to the summit of Mount Everest, the drone achieved a breathtaking aerial perspective never seen before. Working in partnership with the Chinese photography platform 8KRAW, this remarkable accomplishment highlighted the capabilities of the DJI Mavic 3.
+            <br>
+            <br>
+            In a video posted by @yicaichina on X platform, the drone smoothly flies above the snowy peaks of Everest, set against a backdrop of clear blue skies. At one point, climbers can be seen, and the camera traces the path down to the base camp, where numerous tents are scattered across the terrain.
+            </p>
+        </div>
+       
+
+    </div>
+<footer>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="">News</a></li>
+            <li>Made with ❤️ By GSH</li>
+        </ul>
+    </nav>
+</footer>
+</body>
+</html>

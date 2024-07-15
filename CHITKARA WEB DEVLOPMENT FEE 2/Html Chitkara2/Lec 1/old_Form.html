@@ -1,0 +1,148 @@
+<!-- First name ,last name ,id ,email,course,gender,6 questions -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            font-family: 'Roboto';
+            background-color: cadetblue;
+        }
+        nav ul {
+            display: flex;
+            justify-content: space-around;
+            background-color: cornsilk;
+        }
+        nav ul li{
+            list-style: none;
+        }
+        nav ul li a{
+            text-decoration: none;
+        }
+        h2{
+            text-align: center;
+        }
+        table,th,td{
+            border: 1px black solid;
+            border-collapse:collapse ;
+            caption-side: top;
+            text-align: center;
+        }
+        table{
+            margin: 2vw;
+            align-items: center;
+        }
+        div#table {
+            display: flex;
+            justify-content: space-around;
+        }
+        ul {
+            display: flex;
+            justify-content: space-around;
+        }
+        nav{
+            background-color: lightgoldenrodyellow;
+        }
+        .content{
+            margin: 10px;
+        }
+    </style>
+</head>
+<header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="Contact.html">Contact</a></li>
+            <li><a href="Educational.html">About Me</a></li>
+            <li><a href="Form.html">Form</a></li>
+        </ul>
+    </nav>
+</header>
+<body>
+    <form action="">
+        <div class="content">
+            <label for="FName">FIRST NAME</label>
+            <input id="FName" type="text" name="F_name" value="F_value">
+            <label for="LName">LAST NAME</label>
+            <input id="LName" type="text" name="L_name" value="L_value">
+            <label for="S_id"> Student ID</label>
+            <input id="S_id" type="text" name="S_id" value="S_id">
+        </div>
+
+        <div class="content">
+            <label for="Email">Email</label>
+            <input id="Email" type="text" name="Email" value="Email">
+            <label for="Gender">Gender</label>
+            <select name="course_type" id="Gender">
+                <option value="">--Select a Gender--</option> <!--IMP so that user can see that he has to select card-->
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+        </div>
+
+        <div class="content">
+            <select name="course_type" id="course_type">
+                <option value="">--Select a Course--</option> <!--IMP so that user can see that he has to select card-->
+                <option value="Btech">Btech</option>
+                <option value="Bca">BCA</option>
+                <option value="Mca">MCA</option>
+                <option value="Bba">BBA</option>
+                <option value="Mba">MBA</option>
+            </select>
+        </div>
+    </form>
+    <h2>QUESTIONS</h2>
+    <div class="ques1">
+        
+        Q1:Which of the following is the largest planet in our solar system?<br>
+        <input type="radio" name="Ans1">A) Earth<br>
+        <input type="radio" name="Ans1">B) Mars<br>
+        <input type="radio" name="Ans1">C) Jupiter<br>
+        <input type="radio" name="Ans1">D) Saturn<br>
+    </div>
+    <div class="ques2">
+        Q2:Which of the following is the capital of India?<br>
+        <input type="radio" name="Ans2">A) Delhi<br>
+        <input type="radio" name="Ans2">B) Mumbai<br>
+        <input type="radio" name="Ans2">C) Chandigarh<br>
+        <input type="radio" name="Ans2">D) Shimla<br>
+    </div>
+    <div class="ques3">
+        Q3:Which of the following is the planet in our solar system with life?<br>
+        <input type="radio" name="Ans3">A) Earth<br>
+        <input type="radio" name="Ans3">B) Mars<br>
+        <input type="radio" name="Ans3">C) Jupiter<br>
+        <input type="radio" name="Ans3">D) Saturn<br>
+    </div>
+    <div class="ques4">
+        Q4:Which of the following is the 4th planet in our solar system?<br>
+        <input type="radio" name="Ans4">A) Earth<br>
+        <input type="radio" name="Ans4">B) Mars<br>
+        <input type="radio" name="Ans4">C) Jupiter<br>
+        <input type="radio" name="Ans4">D) Saturn<br>
+    </div>
+    <div class="ques5">
+        Q5:Which of the following is the largest Mountain?<br>
+        <input type="radio" name="Ans5">A) Mount Everest<br>
+        <input type="radio" name="Ans5">B) K2<br>
+        <input type="radio" name="Ans5">C) Kailash<br>
+        <input type="radio" name="Ans5">D) Arravli Hills<br>
+    </div>
+    <div class="ques6">
+        Q6:Which of the following is the 9th planet in our solar system?<br>
+        <input type="radio" name="Ans6">A) Pluto<br>
+        <input type="radio" name="Ans6">B) Mars<br>
+        <input type="radio" name="Ans6">C) Jupiter<br>
+        <input type="radio" name="Ans6">D) Saturn<br>
+    </div>
+    <button><a href="index.html">RESET</a></button>
+    <button><a href="index.html">SUBMIT</a></button>
+</body>
+<footer>
+    <nav>
+        content3
+    </nav>
+</footer>
+</html>
