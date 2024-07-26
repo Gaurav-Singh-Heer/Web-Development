@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starbucks Clone</title>
+    <style>
+        /* CSS styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #00698f;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .nav {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        .nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .nav a:hover {
+            color: #ccc;
+        }
+        .hero {
+            background-image: url('https://images.unsplash.com/photo-1556740714-6451ff62b2e6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80');
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero h1 {
+            color: #fff;
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            color: #fff;
+            font-size: 24px;
+        }
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+        .menu-item {
+            margin: 20px;
+            width: 200px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .menu-item img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+        }
+        .menu-item h2 {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+        .menu-item p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .menu-item button {
+            background-color: #00698f;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .menu-item button:hover {
+            background-color: #004d7f;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Starbucks Clone</h1>
+    </header>
+    <nav class="nav">
+        <ul>
+            <li><a href="#">Menu</a></li>
+            <li><a href="#">Rewards</a></li>
+            <li><a href="#">Stores</a></li>
+        </ul>
+    </nav>
+    <div class="hero">
+        <h1>Welcome to Starbucks</h1>
+        <p>Find your favorite coffee and more</p>
+    </div>
+    <div class="menu">
+        <div class="menu-item">
+            <img src="https://images.unsplash.com/photo-1556740714-6451ff62b2e6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="Coffee">
+            <h2>Coffee</h2>
+            <p>Our signature coffee, roasted to perfection</p>
+            <button>Add to Cart</button>
+        </div>
+        <div class="menu-item">
+            <img src="https://images.unsplash.com/photo-1556740714-6451ff62b2e6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="Tea">
+            <h2>Tea</h2>
+            <p>Our selection of loose-leaf teas, steeped to perfection</p>
+            <button>Add to Cart</button>
+        </div>
+        <!-- Add more menu items as needed -->
+    </div>
+</body>
+</html>

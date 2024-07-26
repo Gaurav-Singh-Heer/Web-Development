@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="img/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <title>Brewster</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            scroll-behavior: smooth;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1em;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        header a {
+            color: #fff;
+            text-decoration: none;
+        }
+        header nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        header nav ul li {
+            margin: 0 10px;
+        }
+        header nav ul li a {
+            text-decoration: none;
+            color: #9f9f9f;
+            font-weight: bold;
+            transition: color 0.3s;
+            font-family: 'Oswald', sans-serif;
+        }
+        header nav ul li a:hover {
+            color: #fff;
+        }
+        img.logo {
+            height: 50px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2em;
+        }
+        .textBox {
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .textBox h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .textBox p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #666;
+        }
+        .learn-more {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .learn-more:hover {
+            background-color: #444;
+        }
+        .imgBox {
+            width: 80%;
+            margin: 20px auto;
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+        }
+        .brewster {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s;
+            /* max-width: 40vh; */
+            max-width: 21vw;
+            padding: 2vw;
+        }
+        .brewster:hover {
+            transform: scale(1.05);
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 1em;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+        footer nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        footer nav ul li {
+            margin: 0 10px;
+        }
+        footer nav ul li a {
+            text-decoration: none;
+            color: #9b9b9b;
+            font-weight: bold;
+            transition: color 0.3s;
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+        }
+        footer nav ul li a:hover {
+            color: #fff;
+        }
+        footer .footer-info span {
+            
+            color: #017143;
+        }
+        span {
+            color: #714901;
+        }
+
+
+        #mainImage{
+            display: none;
+        }
+        @media (max-width: 768px) {
+            header nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            header nav ul li {
+                margin: 10px 0;
+            }
+            footer nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            footer nav ul li {
+                margin: 10px 0;
+            }
+            .hidden {
+                display: none;
+            }
+            #mainImage {
+                display: grid;
+                padding: 2vw;
+                border-radius: 7%;
+                object-fit: cover;
+            }
+        }
+        @media (min-width:334px) and (max-width: 444px){
+            .hidden {
+                display: none;
+            }
+            #mainImage {
+                display: grid;
+                padding: 2vw;
+                border-radius: 7%;
+                object-fit: cover;
+                max-width: 20vw;
+                margin-right: -1vw;
+            }
+        }
+        @media (min-width:150px) and (max-width: 334px){
+            .hidden {
+                display: none;
+            }
+            #mainImage {
+                display: grid;
+                padding: 2vw;
+                border-radius: 7%;
+                object-fit: cover;
+                max-width: 18vw;
+                margin-right: -1vw;
+            }
+        }
+    </style>
+</head>
+
+<header>
+    <a href="index.html">
+        <img src="img/logo.png" alt="brewster logo" class="logo" />
+    </a>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+<body>
+    <main>
+        <section class="content">
+            <div class="textBox">
+                <h2>
+                    It's not just Coffee <br />
+                    It's <span>Brewster</span>
+                </h2>
+                <p>
+                    At Brewster, we are more than just a coffee company – we are a community of coffee enthusiasts,
+                    passionate about bringing people together and serving exceptional coffee experiences. Our journey
+                    began in 1971 when we opened our first store in Seattle, Washington. Since then, we have grown to
+                    become a global brand with thousands of stores in over 80 countries, yet our core values and
+                    commitment to quality have remained unchanged.
+                </p>
+                <button class="learn-more" onclick="window.location.href='about.html'">Learn More</button>
+            </div>
+            <div class="imgBox">
+                <a href="menu.html"><img src="img/Footerimg.jpg" class="brewster" id="mainImage" alt="Brewster coffee" /></a>
+                <a href="index.html"><img src="img/Footerimg2.jpg" class="brewster" id="mainImage" alt="Brewster coffee" /></a>
+                <a href="menu.html"><img src="img/Footerimg.jpg" class="brewster" id="mainImage" alt="Brewster coffee" /></a>
+                <a href="menu.html"><img src="img/Footerimg.jpg" class="brewster hidden" id="hoverImage1" alt="Brewster coffee" /></a>
+                <a href="index.html"><img src="img/Footerimg2.jpg" class="brewster hidden" id="hoverImage1" alt="Brewster coffee" /></a>
+                <a href="menu.html"><img src="img/Footerimg.jpg" class="brewster hidden" id="hoverImage1" alt="Brewster coffee" /></a>
+                
+            </div>
+        </section>
+    </main>
+</body>
+<footer>
+    <nav>
+        <ul>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="footer-info">
+        <p>&copy; 2024 Brewster Coffee | Made with ❤️ by <span>Gaurav Singh Heer</span></p>
+    </div>
+</footer>
+
+</html>
