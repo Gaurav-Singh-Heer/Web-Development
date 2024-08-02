@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Rolls-Royce official site showcasing luxury cars. Explore bespoke collections, discover models, and more.">
+    <meta name="keywords" content="Rolls-Royce, luxury cars, bespoke collections, automotive, high-end vehicles">
+    <title>ROADSTER</title>
+    <link rel="icon" href="img/logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:wght@100;300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styles */
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5vh 2vw;
+            background-color: #000;
+            box-shadow: 0 0.5vh 1vh rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: #333;
+        }
+
+        header nav ul {
+            display: flex;
+            font-size: 1.4rem;
+            gap: 2vw;
+            list-style: none;
+        }
+
+        header nav ul li {
+            position: relative;
+        }
+
+        header nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            transition: color 0.3s ease, padding-bottom 0.3s ease;
+            font-size: 1rem;
+            padding-bottom: 0.5rem;
+        }
+
+        header nav ul li a:hover,
+        header nav ul li a:focus {
+            color: #ccc;
+            border-bottom: 2px solid #ccc;
+        }
+
+        /* Logo Styles */
+        .logo {
+            height: 8vh;
+        }
+
+        /* Mobile Menu Styles */
+        .menu-toggle {
+            display: none;
+        }
+
+        .navbar-toggle {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            header nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                gap: 1vw;
+                background-color: #000;
+                padding: 1rem 0;
+                margin-top: 1rem;
+            }
+
+            .menu-toggle:checked+.navbar-toggle+nav ul {
+                display: flex;
+            }
+
+            .navbar-toggle {
+                display: block;
+                background-color: #000;
+                border: none;
+                color: #fff;
+                font-size: 1.5rem;
+                cursor: pointer;
+                margin-left: auto;
+                padding: 0.5rem;
+            }
+
+            header nav ul li a {
+                padding: 1rem;
+                font-size: 1.2rem;
+            }
+        }
+
+
+        /* Main Container Styles */
+        .container {
+            text-align: center;
+        }
+
+        .container img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Main Content Styles */
+        main {
+            padding: 3vh 4vw;
+        }
+
+        section.cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            gap: 2vw;
+            margin: 4vh 0;
+        }
+
+        .card {
+            background-color: #222;
+            padding: 2vw;
+            border-radius: 0.5vw;
+            width: calc(33.333% - 2vw);
+            box-shadow: 0 0.5vh 1vh rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 2vw;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 1vh 2vh rgba(0, 0, 0, 0.5);
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5vw;
+        }
+
+        .card h3 {
+            font-family: 'Oswald', sans-serif;
+            margin: 1vh 0;
+            font-size: 2rem;
+        }
+
+        .card p {
+            font-size: 1rem;
+            text-align: justify;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #111;
+            color: #888;
+            padding: 2vh 4vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .footer-sections {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2vw;
+            margin-bottom: 2vh;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin: 1vh 0;
+        }
+
+        .footer-section h3 {
+            color: #fff;
+            margin-bottom: 1vh;
+            font-size: 1.2rem;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin: 0.5vh 0;
+        }
+
+        .footer-section ul li a {
+            text-decoration: none;
+            color: #888;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #fff;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1vw;
+            margin: 2vh 0;
+        }
+
+        .social-link {
+            color: #888;
+            font-size: 2rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: #fff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2vh;
+        }
+
+        .footer-bottom p {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header nav ul {
+                font-size: 1.2rem;
+                gap: 1.5vw;
+            }
+
+            .card {
+                width: calc(50% - 2vw);
+            }
+
+            section#home h2 {
+                font-size: 3rem;
+            }
+
+            section#home p {
+                font-size: 1.4rem;
+            }
+
+            .footer-sections {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header nav ul {
+                font-size: 1rem;
+                gap: 1vw;
+            }
+
+            .card {
+                width: 100%;
+                margin-bottom: 4vw;
+            }
+
+            section#home h2 {
+                font-size: 2.2rem;
+            }
+
+            section#home p {
+                font-size: 1.2rem;
+            }
+
+            .footer-sections {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        .slider-frame {
+            overflow: hidden;
+            /* height: 60vh; */
+            /* Ensure this is uncommented or set a height in the parent container */
+            width: 100%;
+            margin: 20px auto;
+        }
+
+        @keyframes slide_animation {
+            0% {
+                left: 0;
+            }
+
+            10% {
+                left: 0;
+            }
+
+            20% {
+                left: -100vw;
+            }
+
+            30% {
+                left: -100vw;
+            }
+
+            40% {
+                left: -200vw;
+            }
+
+            50% {
+                left: -200vw;
+            }
+
+            60% {
+                left: -100vw;
+            }
+
+            70% {
+                left: -100vw;
+            }
+
+            80% {
+                left: 0;
+            }
+
+            90% {
+                left: 0;
+            }
+
+            100% {
+                left: 0;
+            }
+        }
+
+        .slider-images {
+            width: 300vw;
+            /* 3 images * 100vw each */
+            height: 100%;
+            /* Responsive height */
+            margin: 0;
+            position: relative;
+            animation-name: slide_animation;
+            animation-duration: 15s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+            animation-play-state: running;
+        }
+
+        .img-container {
+            height: 100%;
+            width: 100vw;
+            position: relative;
+            float: left;
+        }
+
+        .img-container img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="img/logo.png" alt="Rolls-Royce Logo" class="logo fade-in">
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="navbar-toggle" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </label>
+        <nav id="navbar">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="vehicles.html">Models</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Boutique</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="slider-frame">
+        <div class="slider-images">
+            <div class="img-container">
+                <img src="img/Rolls-Royce.png" alt="Rolls Royce">
+            </div>
+            <div class="img-container">
+                <img src="img/Discovery.png" alt="G Wagon">
+            </div>
+            <div class="img-container">
+                <img src="img/Range Rover.png" alt="Rolls Royce 2">
+            </div>
+        </div>
+    </div>
+
+    <main class="content">
+        <section id="home" class="fade-in">
+            <h2>Welcome to ROADSTER</h2>
+            <p>Experience the epitome of luxury and craftsmanship. Explore our bespoke collections, discover our latest
+                models, and indulge in the Rolls-Royce experience.</p>
+        </section>
+
+        <section id="models" class="cards fade-in">
+            <div class="card">
+                <img src="img/Caynne.jpg" alt="Porsche Cayenne" aria-label="Porsche Cayenne">
+                <h3>Porsche Cayenne</h3>
+                <p>The Porsche Cayenne is a luxury SUV known for its exceptional performance and sleek design. When it
+                    comes to depreciation, the Cayenne's value tends to hold up relatively well compared to other luxury
+                    SUVs.</p>
+            </div>
+
+            <div class="card">
+                <img src="img/Defender.jpg" alt="Defender" aria-label="Defender">
+                <h3>Defender</h3>
+                <p>Formidable in presence. Extraordinary in craftsmanship. Experience the freedom to go anywhere,
+                    effortlessly, with this enhanced icon.</p>
+            </div>
+
+            <div class="card">
+                <img src="img/G Wagon.jpg" alt="G Wagon" aria-label="G Wagon">
+                <h3>G Wagon</h3>
+                <p>Exquisite materials meet commanding design. An avant-garde ego designed to defy boundaries, wherever
+                    it presents itself.</p>
+            </div>
+            <div class="card">
+                <img src="https://th.bing.com/th/id/R.cb9c9a36e9082051c003ebe27a330535?rik=jMmsRF87e4kUXA&riu=http%3a%2f%2fwww.9to5carwallpapers.com%2fwp-content%2fuploads%2f2014%2f03%2fBlack-Nissan-GTR-2014-HD-Wallpaper.jpg&ehk=zuJ8m%2bG50dU4wuxynA8q6%2bCdAfK0QafyZ69MiJDBu98%3d&risl=&pid=ImgRaw&r=0"
+                    alt="Porsche Cayenne" aria-label="Porsche Cayenne">
+                <h3>Nissan Gtr</h3>
+                <p>The Porsche Cayenne is a luxury SUV known for its exceptional performance and sleek design. When it
+                    comes to depreciation, the Cayenne's value tends to hold up relatively well compared to other luxury
+                    SUVs.</p>
+            </div>
+
+            <div class="card">
+                <img src="https://th.bing.com/th/id/OIP.lpcyC7MYanpLgP5CfrCnnAAAAA?rs=1&pid=ImgDetMain" alt="Defender"
+                    aria-label="Defender">
+                <h3>Porche 911</h3>
+                <p>Formidable in presence. Extraordinary in craftsmanship. Experience the freedom to go anywhere,
+                    effortlessly, with this enhanced icon.</p>
+            </div>
+
+            <div class="card">
+                <img src="https://wallpaperaccess.com/full/4607330.jpg" alt="G Wagon" aria-label="G Wagon">
+                <h3>Dodge Challenger</h3>
+                <p>Exquisite materials meet commanding design. An avant-garde ego designed to defy boundaries, wherever
+                    it presents itself.</p>
+            </div>
+        </section>
+    </main>
+    <main class="content">
+        <section id="home" class="fade-in">
+            <h2>Team Luxury Ride Is Dedicated To Delivering Excellence</h2>
+            <p>Our team of highly skilled technicians is specially trained to provide your
+                car with personalized care and luxurious services.</p>
+        </section>
+
+        <section id="models" class="cards fade-in">
+            <div class="card">
+                <img src="https://luxuryride.in/_next/image?url=https%3A%2F%2Fapi.luxuryride.in%2Fpublic%2Fcms-page%2Flogo-1689576586076-34833431-service.png&w=1080&q=75"
+                    alt="Porsche Cayenne" aria-label="Porsche Cayenne">
+                <h3>Service</h3>
+                <p>The Porsche Cayenne is a luxury SUV known for its exceptional performance and sleek design. When it
+                    comes to depreciation, the Cayenne's value tends to hold up relatively well compared to other luxury
+                    SUVs.</p>
+            </div>
+
+            <div class="card">
+                <img src="https://luxuryride.in/_next/image?url=https%3A%2F%2Fapi.luxuryride.in%2Fpublic%2Fcms-page%2Flogo-1689576602597-687233883-car-care.png&w=1080&q=75"
+                    alt="Defender" aria-label="Defender">
+                <h3>Car Care</h3>
+                <p>Formidable in presence. Extraordinary in craftsmanship. Experience the freedom to go anywhere,
+                    effortlessly, with this enhanced icon.</p>
+            </div>
+
+            <div class="card">
+                <img src="https://www.mercservicing.co.uk/wp-content/uploads/2022/06/istockphoto-1150258911-612x612-1-500x383.jpg"
+                    alt="G Wagon" aria-label="G Wagon">
+                <h3>Service Pakages</h3>
+                <p>Exquisite materials meet commanding design. An avant-garde ego designed to defy boundaries, wherever
+                    it presents itself.</p>
+            </div>
+            <div class="card">
+                <img src="https://vincss.net/wp-content/uploads/2023/11/img-13.png" alt="Porsche Cayenne"
+                    aria-label="Porsche Cayenne">
+                <h3>Extended Warranty</h3>
+                <p>The Porsche Cayenne is a luxury SUV known for its exceptional performance and sleek design. When it
+                    comes to depreciation, the Cayenne's value tends to hold up relatively well compared to other luxury
+                    SUVs.</p>
+            </div>
+
+            <div class="card">
+                <img src="https://luxuryride.in/_next/image?url=https%3A%2F%2Fapi.luxuryride.in%2Fpublic%2Fcms-page%2Flogo-1689576674197-711371842-car-insurance.png&w=1080&q=75"
+                    alt="Defender" aria-label="Defender">
+                <h3>Car Insurance</h3>
+                <p>Formidable in presence. Extraordinary in craftsmanship. Experience the freedom to go anywhere,
+                    effortlessly, with this enhanced icon.</p>
+            </div>
+
+            <div class="card">
+                <img src="https://luxuryride.in/_next/image?url=https%3A%2F%2Fapi.luxuryride.in%2Fpublic%2Fcms-page%2Flogo-1689576685055-256281450-car-loan.png&w=1080&q=75"
+                    alt="G Wagon" aria-label="G Wagon">
+                <h3>Car Loan</h3>
+                <p>Exquisite materials meet commanding design. An avant-garde ego designed to defy boundaries, wherever
+                    it presents itself.</p>
+            </div>
+        </section>
+    </main>
+
+</body>
+<footer>
+    <div class="footer-content">
+        <div class="footer-sections">
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press Releases</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <ul>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Complaints</a></li>
+                    <li><a href="#">Legal</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Discover</h3>
+                <ul>
+                    <li><a href="#">Find a Dealer</a></li>
+                    <li><a href="#">Pre-Owned</a></li>
+                    <li><a href="#">EU Tyre Labels</a></li>
+                    <li><a href="#">Whispers</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <ul class="social-links">
+                    <li><a href="#" class="social-link"><i class="fab fa-facebook"></i></a></li>
+                    <li><a href="#" class="social-link"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="#" class="social-link"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="#" class="social-link"><i class="fab fa-linkedin"></i></a></li>
+                    <li><a href="#" class="social-link"><i class="fab fa-youtube"></i></a></li>
+                    <li><a href="#" class="social-link"><i class="fas fa-envelope"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Rolls-Royce Motor Cars. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Check</title>
+    <link rel="icon" href="logo.png">
+</head>
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #1B262C;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        background-color: #BBE1FA;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        width: 350px;
+        max-width: 90%;
+    }
+
+    .container h2 {
+        color: #1B262C;
+        margin-bottom: 20px;
+    }
+
+    .input-field {
+        margin: 15px 0;
+    }
+
+    .input-field input {
+        padding: 12px;
+        width: 100%;
+        border: 1px solid #3282B8;
+        border-radius: 8px;
+        box-sizing: border-box;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .input-field input:focus {
+        border-color: #0F4C75;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+        outline: none;
+    }
+
+    .button {
+        padding: 12px 20px;
+        background-color: #3282B8;
+        color: #BBE1FA;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 20px;
+        width: 100%;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .button:hover {
+        background-color: #0F4C75;
+        transform: scale(1.05);
+    }
+
+    .container .footer {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #1B262C;
+    }
+
+    .message {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #1B262C;
+    }
+
+    header {
+        background-color: #000;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        position: absolute;
+        top: 0px;
+        width: 100%;
+    }
+
+    header img {
+        height: 40px;
+        width: 60px;
+        border-radius: 50%;
+    }
+
+    header nav a {
+        color: #f3b456;
+        text-decoration: none;
+        margin: 0 15px;
+    }
+
+    header nav a:hover {
+        text-decoration: underline;
+    }
+
+    footer {
+        background-color: #000;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
+    }
+
+
+    footer img {
+        height: 40px;
+        width: 60px;
+        border-radius: 50%;
+    }
+
+    footer nav a {
+        color: #f3b456;
+        text-decoration: none;
+        margin: 0 15px;
+    }
+
+    footer nav a:hover {
+        text-decoration: underline;
+    }
+
+    @media (min-width: 10px) and (max-width: 500px) {
+        footer {
+            display: flex;
+            flex-direction: column;
+            gap: 6vh;
+            margin-bottom: 0px;
+        }
+    }
+</style>
+<header>
+    <img src="logo.png" alt="Logo">
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="mailto:gaurav1574.be23@chitkara.edu.in">Contact Us</a>
+    </nav>
+</header>
+
+<body>
+    <div class="container">
+        <h2>Enter Your Location</h2>
+        <div class="input-field">
+            <input type="text" id="location" placeholder="Enter your location">
+        </div>
+        <div class="input-field" id="username-field" style="display:none;">
+            <input type="text" id="username" placeholder="Enter your username">
+        </div>
+        <div class="input-field" id="password-field" style="display:none;">
+            <input type="password" id="password" placeholder="Enter your password">
+        </div>
+        <button class="button" id="submitButton" onclick="checkLocation()">Submit</button>
+        <div class="footer">
+            <p>&copy; 2024 Location Check</p>
+        </div>
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        const validLocations = ["punjab", "haryana", "chandigarh"];
+        const validUsername = "gaurav_1574";
+        const validPassword = "gaurav@1574";
+
+        function checkLocation() {
+            const location = document.getElementById('location').value.toLowerCase().trim();
+            const usernameField = document.getElementById('username-field');
+            const passwordField = document.getElementById('password-field');
+            const submitButton = document.getElementById('submitButton');
+            const messageDiv = document.getElementById('message');
+
+            if (validLocations.includes(location)) {
+                usernameField.style.display = 'block';
+                passwordField.style.display = 'block';
+                submitButton.onclick = checkCredentials;
+            } else {
+                // messageDiv.innerText = "Access denied.";
+                // messageDiv.style.color = "red";
+                alert("Access Denied");
+            }
+        }
+
+        function checkCredentials() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const location = document.getElementById('location').value.toLowerCase().trim();
+            const messageDiv = document.getElementById('message');
+
+            if (username === "" || password === "") {
+                messageDiv.innerText = "Please enter both username and password.";
+                messageDiv.style.color = "red";
+                return;
+            }
+
+            if (username === validUsername && password === validPassword) {
+                let mapUrl;
+                switch (location) {
+                    case "punjab":
+                        mapUrl = "https://www.google.com/maps?q=punjab";
+                        break;
+                    case "haryana":
+                        mapUrl = "https://www.google.com/maps?q=haryana";
+                        break;
+                    case "chandigarh":
+                        mapUrl = "https://www.google.com/maps?q=chandigarh";
+                        break;
+                }
+                window.location.href = mapUrl;
+            } else {
+                // messageDiv.innerText = "Wrong credentials.";
+                // messageDiv.style.color = "red";
+                alert("Wrong Credentials");
+            }
+        }
+    </script>
+</body>
+<footer>
+    <img src="logo.png" alt="Logo">
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="mailto:gaurav1574.be23@chitkara.edu.in">Contact Us</a>
+    </nav>
+    <span>Made with ❤️ By GSH</span>
+</footer>
+
+</html>

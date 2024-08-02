@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        /* USED THIS <-- #021526 #03346E #6EACDA #E2E2B6 --> COLOR PALETTE FOR */
+        body {
+            background: linear-gradient(135deg, #021526, #03346E);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            color: #fff;
+        }
+
+        .calculator-container {
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 2.5em;
+            color: #E2E2B6;
+            margin-bottom: 20px;
+        }
+
+        .calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 220px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .calculator input,
+        .calculator button {
+            padding: 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            transition: transform 0.2s;
+        }
+
+        .calculator input {
+            grid-column: span 4;
+            text-align: right;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .calculator button {
+            background: #6EACDA;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .calculator button:hover {
+            background: #E2E2B6;
+            color: #021526;
+            transform: scale(1.05);
+        }
+
+        button.clear {
+            grid-column: span 2;
+            background: #ff4b4b;
+        }
+
+        button.clear:hover {
+            background: #cc0000;
+        }
+
+        button.equals {
+            grid-column: span 2;
+            background: #28a745;
+        }
+
+        button.equals:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calculator-container">
+        <h3>Let's Calculate 😆</h3>
+        <div class="calculator">
+            <input type="text" id="result" readonly>
+            <button onclick="appendToResult(1)">1</button>
+            <button onclick="appendToResult(2)">2</button>
+            <button onclick="appendToResult(3)">3</button>
+            <button onclick="appendToResult('+')">+</button>
+            <button onclick="appendToResult(4)">4</button>
+            <button onclick="appendToResult(5)">5</button>
+            <button onclick="appendToResult(6)">6</button>
+            <button onclick="appendToResult('-')">-</button>
+            <button onclick="appendToResult(7)">7</button>
+            <button onclick="appendToResult(8)">8</button>
+            <button onclick="appendToResult(9)">9</button>
+            <button onclick="appendToResult('*')">*</button>
+            <button onclick="clearResult()" class="clear">C</button>
+            <button onclick="appendToResult(0)">0</button>
+            <button onclick="appendToResult('/')">/</button>
+            <button onclick="calculateResult()" class="equals">=</button>
+        </div>
+    </div>
+    <script>
+        function appendToResult(value) {
+            document.getElementById('result').value += value;
+        }
+
+        function clearResult() {
+            document.getElementById('result').value = '';
+        }
+
+        function calculateResult() {
+            var result = document.getElementById('result').value;
+            var calculatedResult = eval(result);
+            document.getElementById('result').value = calculatedResult;
+        }
+    </script>
+</body>
+
+</html>

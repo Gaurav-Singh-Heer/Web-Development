@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Rolls-Royce official site showcasing luxury cars. Explore bespoke collections, discover models, and more.">
+    <meta name="keywords" content="Rolls-Royce, luxury cars, bespoke collections, automotive, high-end vehicles">
+    <title>ROADSTER</title>
+    <link rel="icon" href="img/logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:wght@100;300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styles */
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5vh 2vw;
+            background-color: #000;
+            box-shadow: 0 0.5vh 1vh rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: #333;
+        }
+
+        header nav ul {
+            display: flex;
+            font-size: 1.4rem;
+            gap: 2vw;
+            list-style: none;
+        }
+
+        header nav ul li {
+            position: relative;
+        }
+
+        header nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            transition: color 0.3s ease, padding-bottom 0.3s ease;
+            font-size: 1rem;
+            padding-bottom: 0.5rem;
+        }
+
+        header nav ul li a:hover,
+        header nav ul li a:focus {
+            color: #ccc;
+            border-bottom: 2px solid #ccc;
+        }
+
+        /* Logo Styles */
+        .logo {
+            height: 8vh;
+        }
+
+        /* Mobile Menu Styles */
+        .menu-toggle {
+            display: none;
+        }
+
+        .navbar-toggle {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            header nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                gap: 1vw;
+                background-color: #000;
+                padding: 1rem 0;
+                margin-top: 1rem;
+            }
+
+            .menu-toggle:checked+.navbar-toggle+nav ul {
+                display: flex;
+            }
+
+            .navbar-toggle {
+                display: block;
+                background-color: #000;
+                border: none;
+                color: #fff;
+                font-size: 1.5rem;
+                cursor: pointer;
+                margin-left: auto;
+                padding: 0.5rem;
+            }
+
+            header nav ul li a {
+                padding: 1rem;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Main Container Styles */
+        .container {
+            text-align: center;
+        }
+
+        .container img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Main Content Styles */
+        main {
+            padding: 3vh 4vw;
+        }
+
+        section.cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            gap: 2vw;
+            margin: 4vh 0;
+        }
+
+        .card {
+            background-color: #222;
+            padding: 2vw;
+            border-radius: 0.5vw;
+            width: calc(33.333% - 2vw);
+            box-shadow: 0 0.5vh 1vh rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 2vw;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 1vh 2vh rgba(0, 0, 0, 0.5);
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5vw;
+        }
+
+        .card h3 {
+            font-family: 'Oswald', sans-serif;
+            margin: 1vh 0;
+            font-size: 2rem;
+        }
+
+        .card p {
+            font-size: 1rem;
+            text-align: justify;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #111;
+            color: #888;
+            padding: 2vh 4vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .footer-sections {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2vw;
+            margin-bottom: 2vh;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin: 1vh 0;
+        }
+
+        .footer-section h3 {
+            color: #fff;
+            margin-bottom: 1vh;
+            font-size: 1.2rem;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin: 0.5vh 0;
+        }
+
+        .footer-section ul li a {
+            text-decoration: none;
+            color: #888;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #fff;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1vw;
+            margin: 2vh 0;
+        }
+
+        .social-link {
+            color: #888;
+            font-size: 2rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: #fff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2vh;
+        }
+
+        .footer-bottom p {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header nav ul {
+                font-size: 1.2rem;
+                gap: 1.5vw;
+            }
+
+            .card {
+                width: calc(50% - 2vw);
+            }
+
+            section#home h2 {
+                font-size: 3rem;
+            }
+
+            section#home p {
+                font-size: 1.4rem;
+            }
+
+            .footer-sections {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header nav ul {
+                font-size: 1rem;
+                gap: 1vw;
+            }
+
+            .card {
+                width: 100%;
+                margin-bottom: 4vw;
+            }
+
+            section#home h2 {
+                font-size: 2.2rem;
+            }
+
+            section#home p {
+                font-size: 1.2rem;
+            }
+
+            .footer-sections {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Slider Styles */
+        .slider-frame {
+            overflow: hidden;
+            width: 100%;
+            margin: 20px auto;
+        }
+
+        @keyframes slide_animation {
+            0% {
+                left: 0;
+            }
+
+            10% {
+                left: 0;
+            }
+
+            20% {
+                left: -100vw;
+            }
+
+            30% {
+                left: -100vw;
+            }
+
+            40% {
+                left: -200vw;
+            }
+
+            50% {
+                left: -200vw;
+            }
+
+            60% {
+                left: -100vw;
+            }
+
+            70% {
+                left: -100vw;
+            }
+
+            80% {
+                left: 0;
+            }
+
+            90% {
+                left: 0;
+            }
+
+            100% {
+                left: 0;
+            }
+        }
+
+        .slide-images {
+            display: flex;
+            position: relative;
+            width: 100%;
+            animation: 107s slide_animation infinite;
+        }
+
+        .slide-images img {
+            width: 100vw;
+            height: 70vh;
+        }
+
+        .slide-dot-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .slide-dot {
+            width: 15px;
+            height: 15px;
+            background-color: grey;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .slide-dot.active,
+        .slide-dot:hover {
+            background-color: white;
+        }
+
+        .slider-frame {
+            overflow: hidden;
+            width: 100%;
+            height: 60vh;
+            /* Set a specific height for the slider */
+            margin: 20px auto;
+        }
+
+        .slider-images {
+            width: 300vw;
+            /* 3 images * 100vw each */
+            height: 100%;
+            /* Ensure the height is 100% to fit the frame */
+            margin: 0;
+            position: relative;
+            animation-name: slide_animation;
+            animation-duration: 15s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+            animation-play-state: running;
+        }
+
+        .img-container {
+            height: 100%;
+            width: 100vw;
+            position: relative;
+            float: left;
+        }
+
+        .img-container img {
+            height: 100%;
+            /* Maintain the height to fit the frame */
+            width: 100%;
+            object-fit: cover;
+            /* Ensure the image covers the entire container */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <a href="index.html"><img src="img/logo.png" alt="Rolls-Royce Logo" class="logo"></a>
+        <input type="checkbox" id="menu-toggle" class="menu-toggle" aria-label="Menu Toggle">
+        <label for="menu-toggle" class="navbar-toggle"><i class="fas fa-bars"></i></label>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#models">Models</a></li>
+                <li><a href="#collections">Collections</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Slider -->
+        <div class="slider-frame">
+            <div class="slide-images">
+                <img src="img/Rolls-Royce.png" alt="Rolls-Royce Slide 1">
+                <img src="img/Discovery.png" alt="Rolls-Royce Slide 2">
+                <img src="img/Range Rover.png" alt="Rolls-Royce Slide 3">
+            </div>
+        </div>
+        <div class="slide-dot-container">
+            <div class="slide-dot active" onclick="currentSlide(1)"></div>
+            <div class="slide-dot" onclick="currentSlide(2)"></div>
+            <div class="slide-dot" onclick="currentSlide(3)"></div>
+        </div>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Home Section -->
+            <section id="home">
+                <h2>Welcome to Rolls-Royce</h2>
+                <p>Discover the world of luxury, bespoke craftsmanship, and timeless elegance.</p>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="cards">
+                <div class="card">
+                    <img src="img/Caynne.jpg" alt="About Rolls-Royce">
+                    <h3>About Us</h3>
+                    <p>Rolls-Royce is renowned for creating the most exquisite luxury vehicles in the world. Discover
+                        our history, philosophy, and commitment to perfection.</p>
+                </div>
+                <div class="card">
+                    <img src="img/Defender.jpg" alt="Rolls-Royce Heritage">
+                    <h3>Our Heritage</h3>
+                    <p>Explore the rich heritage of Rolls-Royce, from our groundbreaking innovations to our iconic
+                        models that have set the standard for luxury and performance.</p>
+                </div>
+                <div class="card">
+                    <img src="img/G Wagon.jpg" alt="Rolls-Royce Craftsmanship">
+                    <h3>Craftsmanship</h3>
+                    <p>Each Rolls-Royce is a masterpiece of bespoke craftsmanship. Learn about the meticulous process
+                        and the artisans behind our extraordinary vehicles.</p>
+                </div>
+            </section>
+
+            <!-- Models Section -->
+            <section id="models" class="cards">
+                <div class="card">
+                    <img src="img/Caynne.jpg" alt="Model 1">
+                    <h3>Phantom</h3>
+                    <p>The Rolls-Royce Phantom is the pinnacle of luxury and refinement, offering an unparalleled
+                        driving experience and an exquisite interior.</p>
+                </div>
+                <div class="card">
+                    <img src="img/Defender.jpg" alt="Model 2">
+                    <h3>Ghost</h3>
+                    <p>The Rolls-Royce Ghost combines contemporary design with advanced technology, creating a vehicle
+                        that is both elegant and dynamic.</p>
+                </div>
+                <div class="card">
+                    <img src="img/G Wagon.jpg" alt="Model 3">
+                    <h3>Wraith</h3>
+                    <p>The Rolls-Royce Wraith is a bold and powerful grand tourer, designed for those who seek adventure
+                        and exhilaration in every journey.</p>
+                </div>
+                <div class="card">
+                    <img src="https://th.bing.com/th/id/R.cb9c9a36e9082051c003ebe27a330535?rik=jMmsRF87e4kUXA&riu=http%3a%2f%2fwww.9to5carwallpapers.com%2fwp-content%2fuploads%2f2014%2f03%2fBlack-Nissan-GTR-2014-HD-Wallpaper.jpg&ehk=zuJ8m%2bG50dU4wuxynA8q6%2bCdAfK0QafyZ69MiJDBu98%3d&risl=&pid=ImgRaw&r=0"
+                        alt="Model 1">
+                    <h3>Phantom</h3>
+                    <p>The Rolls-Royce Phantom is the pinnacle of luxury and refinement, offering an unparalleled
+                        driving experience and an exquisite interior.</p>
+                </div>
+                <div class="card">
+                    <img src="https://th.bing.com/th/id/OIP.lpcyC7MYanpLgP5CfrCnnAAAAA?rs=1&pid=ImgDetMain"
+                        alt="Model 2">
+                    <h3>Ghost</h3>
+                    <p>The Rolls-Royce Ghost combines contemporary design with advanced technology, creating a vehicle
+                        that is both elegant and dynamic.</p>
+                </div>
+                <div class="card">
+                    <img src="https://wallpaperaccess.com/full/4607330.jpg" alt="Model 3">
+                    <h3>Wraith</h3>
+                    <p>The Rolls-Royce Wraith is a bold and powerful grand tourer, designed for those who seek adventure
+                        and exhilaration in every journey.</p>
+                </div>
+            </section>
+
+            <!-- Collections Section -->
+            <section id="collections" class="cards">
+                <div class="card">
+                    <img src="img/collection1.jpg" alt="Collection 1">
+                    <h3>Bespoke Collection</h3>
+                    <p>Experience the ultimate in personalization with our Bespoke Collection, where your imagination is
+                        the only limit to what you can create.</p>
+                </div>
+                <div class="card">
+                    <img src="img/collection2.jpg" alt="Collection 2">
+                    <h3>Limited Editions</h3>
+                    <p>Discover our exclusive Limited Editions, each one a unique expression of luxury and
+                        craftsmanship, designed to be cherished for generations.</p>
+                </div>
+                <div class="card">
+                    <img src="img/collection3.jpg" alt="Collection 3">
+                    <h3>Heritage Collection</h3>
+                    <p>Explore our Heritage Collection, featuring meticulously restored classics that celebrate the
+                        timeless elegance and enduring legacy of Rolls-Royce.</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-sections">
+                    <!-- Footer About Section -->
+                    <div class="footer-section">
+                        <h3>About Rolls-Royce</h3>
+                        <p>Rolls-Royce Motor Cars is a British luxury automobile maker. The marque has a long history of
+                            excellence in design, engineering, and craftsmanship.</p>
+                    </div>
+                    <!-- Footer Links Section -->
+                    <div class="footer-section">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#models">Models</a></li>
+                            <li><a href="#collections">Collections</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <!-- Footer Social Media Section -->
+                    <div class="footer-section">
+                        <h3>Follow Us</h3>
+                        <div class="social-links">
+                            <a href="https://facebook.com" class="social-link" aria-label="Facebook"><i
+                                    class="fab fa-facebook"></i></a>
+                            <a href="https://twitter.com" class="social-link" aria-label="Twitter"><i
+                                    class="fab fa-twitter"></i></a>
+                            <a href="https://instagram.com" class="social-link" aria-label="Instagram"><i
+                                    class="fab fa-instagram"></i></a>
+                            <a href="https://linkedin.com" class="social-link" aria-label="LinkedIn"><i
+                                    class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Rolls-Royce Motor Cars. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        window.onscroll = function () {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 0);
+        };
+
+        let slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            const slides = document.querySelectorAll('.slide-images img');
+            const dots = document.querySelectorAll('.slide-dot');
+
+            slides.forEach((slide, index) => {
+                slide.style.display = index === slideIndex ? 'block' : 'none';
+                dots[index].classList.toggle('active', index === slideIndex);
+            });
+
+            slideIndex = (slideIndex + 1) % slides.length;
+            setTimeout(showSlides, 5000); // Change image every 5 seconds
+        }
+
+        function currentSlide(n) {
+            slideIndex = n - 1;
+            showSlides();
+        }
+    </script>
+</body>
+
+</html>

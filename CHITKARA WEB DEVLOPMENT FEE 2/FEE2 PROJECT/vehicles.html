@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description"
+            content="Rolls-Royce official site showcasing luxury cars. Explore bespoke collections, discover models, and more.">
+        <meta name="keywords"
+            content="Rolls-Royce, luxury cars, bespoke collections, automotive, high-end vehicles">
+        <title>ROADSTER</title>
+        <link rel="icon" href="img/logo.png" type="image/png">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:wght@100;300;400;500;700&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styles */
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5vh 2vw;
+            background-color: #000;
+            box-shadow: 0 0.5vh 1vh rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: #333;
+        }
+
+        header nav ul {
+            display: flex;
+            font-size: 1.4rem;
+            gap: 2vw;
+            list-style: none;
+        }
+
+        header nav ul li {
+            position: relative;
+        }
+
+        header nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            transition: color 0.3s ease, padding-bottom 0.3s ease;
+            font-size: 1rem;
+            padding-bottom: 0.5rem;
+        }
+
+        header nav ul li a:hover,
+        header nav ul li a:focus {
+            color: #ccc;
+            border-bottom: 2px solid #ccc;
+        }
+
+        /* Logo Styles */
+        .logo {
+            height: 8vh;
+        }
+
+        /* Mobile Menu Styles */
+        .menu-toggle {
+            display: none;
+        }
+
+        .navbar-toggle {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            header nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                gap: 1vw;
+                background-color: #000;
+                padding: 1rem 0;
+                margin-top: 1rem;
+            }
+
+            .menu-toggle:checked+.navbar-toggle+nav ul {
+                display: flex;
+            }
+
+            .navbar-toggle {
+                display: block;
+                background-color: #000;
+                border: none;
+                color: #fff;
+                font-size: 1.5rem;
+                cursor: pointer;
+                margin-left: auto;
+                padding: 0.5rem;
+            }
+
+            header nav ul li a {
+                padding: 1rem;
+                font-size: 1.2rem;
+            }
+        }
+
+        .slider-frame {
+            overflow-x: hidden;
+            overflow-y: hidden;
+            /* height: 60vh; */
+            /* Ensure this is uncommented or set a height in the parent container */
+            width: 100%;
+            margin: 20px auto;
+            height: 100vh;
+
+        }
+
+        @keyframes slide_animation {
+            0% {
+                left: 0;
+            }
+
+            10% {
+                left: 0;
+            }
+
+            20% {
+                left: -100vw;
+            }
+
+            30% {
+                left: -100vw;
+            }
+
+            40% {
+                left: -200vw;
+            }
+
+            50% {
+                left: -200vw;
+            }
+
+            60% {
+                left: -100vw;
+            }
+
+            70% {
+                left: -100vw;
+            }
+
+            80% {
+                left: 0;
+            }
+
+            90% {
+                left: 0;
+            }
+
+            100% {
+                left: 0;
+            }
+        }
+
+        figure {
+            position: relative;
+        }
+
+        figcaption {
+            position: absolute;
+            color: #fff;
+            bottom: 5rem;
+            font-size: 2rem;
+            font-weight: 900;
+            right: 8rem;
+            opacity: 0.7;
+
+        }
+
+        .slider-images {
+            width: 300vw;
+            /* 3 images * 100vw each */
+            height: 100%;
+            /* Responsive height */
+            margin: 0;
+            position: relative;
+            animation-name: slide_animation;
+            animation-duration: 15s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+            animation-play-state: running;
+        }
+
+        .img-container {
+            height: 100%;
+            width: 100vw;
+            position: relative;
+            float: left;
+        }
+
+        .img-container img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        footer {
+            background-color: #111;
+            color: #888;
+            padding: 2vh 4vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .footer-sections {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2vw;
+            margin-bottom: 2vh;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin: 1vh 0;
+        }
+
+        .footer-section h3 {
+            color: #fff;
+            margin-bottom: 1vh;
+            font-size: 1.2rem;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin: 0.5vh 0;
+        }
+
+        .footer-section ul li a {
+            text-decoration: none;
+            color: #888;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #fff;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1vw;
+            margin: 2vh 0;
+        }
+
+        .social-link {
+            color: #888;
+            font-size: 2rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: #fff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2vh;
+        }
+
+        .footer-bottom p {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header nav ul {
+                font-size: 1.2rem;
+                gap: 1.5vw;
+            }
+
+            .card {
+                width: calc(50% - 2vw);
+            }
+
+            section#home h2 {
+                font-size: 3rem;
+            }
+
+            section#home p {
+                font-size: 1.4rem;
+            }
+
+            .footer-sections {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header nav ul {
+                font-size: 1rem;
+                gap: 1vw;
+            }
+
+            .card {
+                width: 100%;
+                margin-bottom: 4vw;
+            }
+
+            section#home h2 {
+                font-size: 2.2rem;
+            }
+
+            section#home p {
+                font-size: 1.2rem;
+            }
+
+            .footer-sections {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        .container {
+            /* display: flex; */
+            /* gap: 20px; */
+            padding-left: 2rem;
+            padding-right: 2rem;
+            padding-bottom: 8rem;
+            
+            
+        }
+        
+        .section {
+            width: 100%;
+            /* border-bottom: 2px white solid; */
+            /* padding-bottom: 20px;
+            padding-top: 20px; */
+            padding: 2em;
+            display: flex;
+            flex-direction: column;
+            /* box-shadow: 0 5px 10px -7px white;     */
+            margin-top: 2rem;
+            /* border-radius: 5px; */           /*yha se section ka border change kr lena*/
+            background-color: #ffffff;      /*yha se section ka background change kr lena*/
+        }
+        
+        .section h2 {
+            color: #000;
+            margin-top: 0.1em;
+            margin-bottom: 1.5em;
+            font-size: xx-large;
+            text-align: center;
+        }
+        
+        /* .car-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        } */
+        .car-list {
+            display: flex;
+            gap: 5vh;
+            flex-wrap: wrap;
+            
+        }
+        
+        .car-item {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            /* padding: 10px; */
+            /* border: 1px solid #ddd; */
+            border-radius: 5px;
+            width: 31%;
+            height: auto;
+            justify-content: space-evenly;
+            display: flex;
+            justify-content: center;
+            transition: 0.5s ease;
+        }
+        
+        .car-item:hover {
+            transform: scale(1.1);
+            /* filter: drop-shadow(0 0 1.02rem rgb(255, 255, 255)); */
+        }
+        
+        .car-img {
+            filter: grayscale(0%);
+            width: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+        
+        .car-item:hover .car-img {
+            /* transform: scale(1.05); */
+            filter: grayscale(100%);
+        }
+        
+        .car-details {
+            display: none;
+            flex-direction: column;
+            
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: 1s ease;
+        }
+        
+        .car-item:hover .car-details {
+            display: flex;
+        }
+        
+        .car-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .car-price {
+            color: #777;
+        }
+        
+        .car-button {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .car-button:hover {
+            background-color: #0069d9;
+        }
+        
+        .car-image {
+            width: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        
+        .car-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .car-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .car-price {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .car-description {
+            color: #777;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-button {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .action-button:hover {
+            background-color: #0069d9;
+        }
+        @media (max-width: 1221px) {
+            .car-list {
+                display: flex;
+                gap: 5vh;
+                flex-direction: column;
+            }
+                .car-item {
+                    position: relative;
+                    overflow: hidden;
+                    transition: transform 0.3s ease;
+                    /* padding: 10px; */
+                    /* border: 1px solid #ddd; */
+                    border-radius: 5px;
+                    width: 100%;
+                    height: auto;
+                    justify-content: space-evenly;
+                    display: flex;
+                    justify-content: center;
+                    transition: 0.5s ease;
+                }
+        }
+        @media (max-width: 847px) {
+            .car-list {
+                display: flex;
+                gap: 5vh;
+                flex-direction: column;
+            }
+                .car-item {
+                    position: relative;
+                    overflow: hidden;
+                    transition: transform 0.3s ease;
+                    /* padding: 10px; */
+                    /* border: 1px solid #ddd; */
+                    border-radius: 5px;
+                    width: 100%;
+                    height: auto;
+                    justify-content: space-evenly;
+                    display: flex;
+                    justify-content: center;
+                    transition: 0.5s ease;
+                }
+        }
+    </style>
+    </head>
+
+    <body>
+        <header>
+            <img src="img/logo.png" alt="Rolls-Royce Logo" class="logo fade-in">
+            <input type="checkbox" id="menu-toggle" class="menu-toggle">
+            <label for="menu-toggle" class="navbar-toggle"
+                aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </label>
+            <nav id="navbar">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Models</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Boutique</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div class="slider-frame">
+            <div class="slider-images">
+                <div class="img-container">
+                    <figure>
+                        <img src="img/Rolls-Royce.png" alt="Rolls Royce">
+                        <figcaption>ROLLS ROYCE</figcaption>
+                    </figure>
+                </div>
+                <div class="img-container">
+                    <figure>
+                        <img src="img/Discovery.png" alt="G Wagon">
+                        <figcaption>LAND ROVER</figcaption>
+                    </figure>
+                </div>
+                <div class="img-container">
+                    <figure>
+                        <img src="img/Range Rover.png" alt="Rolls Royce 2">
+                        <figcaption>RANGE ROVER</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+        <main>
+            <div class="container">
+                <div class="section">
+                    <h2>MERCEDES</h2>
+                    <div class="car-list">
+                        <div class="car-item">
+                            <img src="img/Mercerdies/Gwagon.jpg" alt="Car 1"
+                                class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">G63 AMG</div>
+                                <div class="car-price">₹3.28 crore</div>
+                                <p class="car-description">The epitome of
+                                    elegance and luxury.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                        <div class="car-item">
+                            <img src="img/Mercerdies/Mecedes Gt63Pro.jpeg"
+                                alt="Car 1" class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">GT 63Pro</div>
+                                <div class="car-price">₹3.30 Crore</div>
+                                <p class="car-description">A statement of
+                                    ultimate luxury.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                        <div class="car-item">
+                            <img src="img/Mercerdies/Mercedes AMG.png"
+                                alt="Car 1" class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">AMG</div>
+                                <div class="car-price">₹3.10 Crore</div>
+                                <p class="car-description">The most powerful and
+                                    dynamic Rolls-Royce ever.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <h2>RANGE ROVER</h2>
+                    <div class="car-list">
+                        <div class="car-item">
+                            <img src="img/Range-rover/Defender110.jpg"
+                                alt="Car 1" class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">Defender</div>
+                                <div class="car-price">₹1.50 Crore</div>
+                                <p class="car-description">The epitome of
+                                    elegance and luxury.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                        <div class="car-item">
+                            <img src="img/Range-rover/Range Rover Sport.jpg"
+                                alt="Car 1" class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">Sports</div>
+                                <div class="car-price">₹5.30 Crore</div>
+                                <p class="car-description">A statement of
+                                    ultimate luxury.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                        <div class="car-item">
+                            <img src="img/Range-rover/Range Rover Velar.jpg"
+                                alt="Car 1" class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">Vellar</div>
+                                <div class="car-price">₹ 3.30 Crore</div>
+                                <p class="car-description">The most powerful and
+                                    dynamic Rolls-Royce ever.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <h2>ROLLS ROYCE</h2>
+                    <div class="car-list">
+                        <div class="car-item">
+                            <img src="img/ROLLS ROYCE/Black Cullinian.png"
+                                alt="Car 1" class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">Ghost</div>
+                                <div class="car-price">₹ 3.30 Crore</div>
+                                <p class="car-description">The epitome of
+                                    elegance and luxury.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                        <div class="car-item">
+                            <img src="img/ROLLS ROYCE/Black Ghost.png"
+                                alt="Car 1" class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">Black Badge Ghost </div>
+                                <div class="car-price">₹ 3.30 Crore</div>
+                                <p class="car-description">A statement of
+                                    ultimate luxury.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                        <div class="car-item">
+                            <img src="img/ROLLS ROYCE/Phantom.png" alt="Car 1"
+                                class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">Phantom</div>
+                                <div class="car-price">₹7.30 Crore</div>
+                                <p class="car-description">The most powerful and
+                                    dynamic Rolls-Royce ever.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                        <div class="car-item">
+                            <img src="img/ROLLS ROYCE/Spectre.jpg" alt="Car 1"
+                                class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">Spectre</div>
+                                <div class="car-price">₹4.30 Crore</div>
+                                <p class="car-description">The most powerful and
+                                    dynamic Rolls-Royce ever.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <h2>T0YOTA</h2>
+                    <div class="car-list">
+                        <div class="car-item">
+                            <img src="img/Toyota/Fortuner .jpg" alt="Car 1"
+                                class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">Fortuner</div>
+                                <div class="car-price">₹40 Lakhs</div>
+                                <p class="car-description">The epitome of
+                                    elegance and luxury.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                        <div class="car-item">
+                            <img src="img/Toyota/Land Cruiser.jpg" alt="Car 1"
+                                class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">Land Cruiser</div>
+                                <div class="car-price">₹58 Lakhs</div>
+                                <p class="car-description">A statement of
+                                    ultimate luxury.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                        <div class="car-item">
+                            <img src="img/Toyota/legender.jpg" alt="Car 1"
+                                class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">Legender</div>
+                                <div class="car-price">₹ 45 Lakhs</div>
+                                <p class="car-description">The most powerful and
+                                    dynamic Rolls-Royce ever.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                        <div class="car-item">
+                            <img src="img/Toyota/Vellfire.jpg" alt="Car 1"
+                                class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">Vellfire/div>
+                                    <div class="car-price">₹1.30 Crore</div>
+                                    <p class="car-description">The most powerful
+                                        and dynamic Rolls-Royce ever.</p>
+                                    <button class="car-button">Learn
+                                        More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <h2>MORRIS GARAGES</h2>
+                    <div class="car-list">
+                        <div class="car-item">
+                            <img src="img/MG/Mg Astor .jpg" alt="Car 1"
+                                class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">Astor</div>
+                                <div class="car-price">₹18 Lakhs</div>
+                                <p class="car-description">The epitome of
+                                    elegance and luxury.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                        <div class="car-item">
+                            <img src="img/MG/Mg Hetor.jpg" alt="Car 1"
+                                class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">MG Hector</div>
+                                <div class="car-price">₹22 Lakhs</div>
+                                <p class="car-description">A statement of
+                                    ultimate luxury.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                        <div class="car-item">
+                            <img src="img/MG/MG_GLOSTER_BLACKSTORM.jpg"
+                                alt="Car 1" class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">Gloster blackstorm</div>
+                                <div class="car-price">₹43.87 lakh</div>
+                                <p class="car-description">The most powerful and
+                                    dynamic Rolls-Royce ever.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <h2>TESLA</h2>
+                    <div class="car-list">
+                        <div class="car-item">
+                            <img src="img/tesla/Model S.png" alt="Car 1"
+                                class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">Model S</div>
+                                <div class="car-price">₹1 Crore</div>
+                                <p class="car-description">The epitome of
+                                    elegance and luxury.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                        <div class="car-item">
+                            <img src="img/tesla/Tesla CyberTruck.png"
+                                alt="Car 1" class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">CyberTruck</div>
+                                <div class="car-price">₹ 1.30 Crore</div>
+                                <p class="car-description">A statement of
+                                    ultimate luxury.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                        <div class="car-item">
+                            <img src="img/tesla/Tesla Y.jpg" alt="Car 1"
+                                class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">Model Y</div>
+                                <div class="car-price">₹70 Lakhs</div>
+                                <p class="car-description">The most powerful and
+                                    dynamic Rolls-Royce ever.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                        <div class="car-item">
+                            <img src="img/tesla/tesla_model_x.jpg" alt="Car 1"
+                                class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">Model X</div>
+                                <div class="car-price">₹2.30 Crore</div>
+                                <p class="car-description">The most powerful and
+                                    dynamic Rolls-Royce ever.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section">
+                    <h2>DODGE</h2>
+                    <div class="car-list">
+                        <div class="car-item">
+                            <img src="img/Dodge/Challenger.jpg" alt="Car 1"
+                                class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">Challenger</div>
+                                <div class="car-price">₹32 Lakhs</div>
+                                <p class="car-description">The epitome of
+                                    elegance and luxury.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                        <div class="car-item">
+                            <img src="img/Dodge/Charger.jpg" alt="Car 1"
+                                class="car-img">
+                            <div class="car-details">
+                                <div class="car-title">Charger</div>
+                                <div class="car-price">₹40 Lakhs</div>
+                                <p class="car-description">A statement of
+                                    ultimate luxury.</p>
+                                <button class="car-button">Learn More</button>
+                            </div>
+                        </div>
+                        <!-- <div class="car-item">
+                    <img src="img/Rolls-Royce.png" alt="Car 1" class="car-img">
+                    <div class="car-details">
+                        <div class="car-title">Dodge Challenger</div>
+                        <div class="car-price">₹ 3.30 Crore</div>
+                        <p class="car-description">The most powerful and dynamic Rolls-Royce ever.</p>
+                        <button class="car-button">Learn More</button>
+                    </div>
+                </div> -->
+                    </div>
+                </div>
+            </main>
+            <!-- <footer>
+        <div class="footer-content">
+            <div class="footer-sections">
+                <div class="footer-section">
+                    <h3>About Rolls-Royce</h3>
+                    <ul>
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Media Center</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Rolls-Royce. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer> -->
+        </body>
+        <footer>
+            <div class="footer-content">
+                <div class="footer-sections">
+                    <div class="footer-section">
+                        <h3>Company</h3>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Press Releases</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Customer Service</h3>
+                        <ul>
+                            <li><a href="#">FAQs</a></li>
+                            <li><a href="#">Complaints</a></li>
+                            <li><a href="#">Legal</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Discover</h3>
+                        <ul>
+                            <li><a href="#">Find a Dealer</a></li>
+                            <li><a href="#">Pre-Owned</a></li>
+                            <li><a href="#">EU Tyre Labels</a></li>
+                            <li><a href="#">Whispers</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Connect</h3>
+                        <ul class="social-links">
+                            <li><a href="#" class="social-link"><i
+                                        class="fab fa-facebook"></i></a></li>
+                            <li><a href="#" class="social-link"><i
+                                        class="fab fa-twitter"></i></a></li>
+                            <li><a href="#" class="social-link"><i
+                                        class="fab fa-instagram"></i></a></li>
+                            <li><a href="#" class="social-link"><i
+                                        class="fab fa-linkedin"></i></a></li>
+                            <li><a href="#" class="social-link"><i
+                                        class="fab fa-youtube"></i></a></li>
+                            <li><a href="#" class="social-link"><i
+                                        class="fas fa-envelope"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Rolls-Royce Motor Cars. All Rights
+                        Reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+    </html>
