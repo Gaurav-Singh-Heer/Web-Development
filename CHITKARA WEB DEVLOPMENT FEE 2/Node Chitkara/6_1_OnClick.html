@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Image Example</title>
+</head>
+
+<body>
+    <h1>Change Image Example</h1>
+    <img id="myImage" src="https://starlit-gelato-bf5da9.netlify.app/img/Discovery.png" alt="Initial Image" width="300">
+    <br>
+    <button onclick="changeImage()">Change Image</button>
+
+    <!-- Link to the external JavaScript file -->
+    <script>
+        function changeImage() {
+            // Get the image element by its ID
+            var img = document.getElementById('myImage');
+
+            // Set a new image source
+            img.setAttribute('src', 'https://starlit-gelato-bf5da9.netlify.app/img/Rolls-Royce.png');
+        }
+
+    </script>
+</body>
+
+</html>

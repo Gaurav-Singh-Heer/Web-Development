@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Readability -->
+    <!-- Error Handling -->
+    <!-- Conciseness -->
+    <script>
+        async function myFunction() {
+            try {
+                const result = await new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        resolve("Operation successful!");
+                    }, 2000);
+                });
+
+                console.log(result);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        myFunction();
+    </script>
+</body>
+</html>

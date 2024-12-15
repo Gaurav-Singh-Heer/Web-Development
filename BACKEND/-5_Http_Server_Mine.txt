@@ -1,0 +1,124 @@
+-------------------------------------------------------------------------------------------------
+-> npm init
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "5_1_Http_Server.js",
+  "scripts": {
+    "start": "node 5_3_Http_Server_html.js",
+    "hello":"node 1_1_Hello.js"
+  },
+  "author": "Gaurav",
+  "license": "ISC",
+  "description": ""
+}
+
+D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND>npm start
+
+> backend@1.0.0 start
+> node 5_3_Http_Server_html.js
+
+Server listening on port no 8080
+Terminate batch job (Y/N)? y
+
+-------------------------------------------------------------------------------------------------
+http package is used to make server
+const http=require("http");
+
+-------------------------------------------------------------------------------------------------
+const myServer=http.createServer((req,res)=>{});
+
+This arrow function is responsible to process our incoming request.
+This callback function has 2 arguments/parameters:
+1) req-> For request
+2) res-> For response 
+
+Whenever there is incoming call/request at our server it runs this callback function:-
+
+req, First argument will have all information about the request (user,userIP,userRequest)
+res, To send response
+
+-------------------------------------------------------------------------------------------------
+    console.log(req.headers);
+- console.log(req.headers) logs all HTTP headers received in the request.
+- Useful for debugging header-related issues.
+- Helps verify authorization tokens or cookies.
+- Displays content type, user agent, and host information.
+- Identifies custom headers sent by the client.
+- Tracks header data for API debugging.
+- Validates header presence in incoming requests.
+- Useful during CORS configuration debugging.
+- Shows details about request origin or referrer.
+- Ensures headers align with server expectations.
+
+-------------------------------------------------------------------------------------------------
+
+console.log(req)
+
+req, here is whole object which stores the type of request coming, what it want to access and 
+who is the user accessing it
+
+------------------------------------------------------------------------------------------------
+
+Created a server to log data Whenever opened
+
+const http=require("http")
+const fs=require("fs")
+
+const myServer=http.createServer((req,res)=>{
+    const log=`${Date.now()}: New Request Received\n`;
+    fs.appendFile('5_6_log.txt',log,(err,data)=>{
+        res.end("Hello From Server");
+    }); // not using synchronous as if all thread in work user has to wait
+})
+
+myServer.listen(8000,()=>console.log("Server Started!"));
+
+/*
+    appendFile automatically creates file when server is opened
+
+    By default, 2 entries are logged each time
+*/
+
+-----------------------------------------------------------------------------------------------
+
+const log=`${Date.now()}:${req.url} New Request Received\n`;
+
+${req.url} , used to check the site url visited
+
+Output in 5_7_log.txt:-
+
+1733930264964: New Request Received
+1733930264995: New Request Received
+1733930398209:/about New Request Received
+1733930398238:/favicon.ico New Request Received
+1733930451480:/contact New Request Received
+1733930451514:/favicon.ico New Request Received
+
+------------------------------------------------------------------------------------------------
+
+=> URL Switch
+
+const http=require("http")
+const fs=require("fs")
+
+const myServer=http.createServer((req,res)=>{
+    const log=`${Date.now()}:${req.url} New Request Received\n`;
+    fs.appendFile('5_8_log.txt',log,(err,data)=>{
+        switch(req.url){
+            case '/':
+                res.end("HomePage");
+            break
+            case '/about':
+                res.end("I am Gaurav Singh Heer");
+            break
+            default:
+                res.end("404 Not found");
+            break
+        }
+    }); // not using synchronous as if all thread in work user has to wait
+})
+
+myServer.listen(8000,()=>console.log("Server Started!"));
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------

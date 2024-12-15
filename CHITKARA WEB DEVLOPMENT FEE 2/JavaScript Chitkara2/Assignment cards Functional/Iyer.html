@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shreyas Iyer - Card Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .details-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+        ul {
+            margin-left: 20px;
+            color: #555;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="details-container">
+        <h1 id="card-title">Shreyas Iyer</h1>
+        <p id="card-description">
+            <strong>Early Life and Background:</strong><br>
+            Shreyas Iyer was born on December 6, 1994, in Mumbai, Maharashtra, India. He is a right-handed batsman known for his stylish and aggressive batting. Iyer showed promise early in his career and was a key player in Mumbai’s domestic setup.
+            <br><br>
+            <strong>Domestic Career:</strong><br>
+            Iyer began his domestic career with Mumbai in the 2014-15 Ranji Trophy season. His impressive performances in domestic cricket, including his ability to score big runs, earned him recognition and opportunities in the Indian Premier League (IPL).
+            <br><br>
+            <strong>International Career:</strong><br>
+            <strong>Debut and Early Years:</strong><br>
+            Shreyas Iyer made his international debut for India in a T20I against Zimbabwe on June 18, 2016. His performances in domestic cricket led to his inclusion in the Indian squad for various formats, and he quickly became a mainstay in the Indian middle order.
+            <br><br>
+            <strong>Rise to Prominence:</strong><br>
+            Iyer gained prominence with his consistent performances in the IPL, particularly with the Delhi Capitals, where he was appointed captain. His leadership and batting prowess were crucial in his team’s performances and he earned praise for his all-round abilities.
+            <br><br>
+            <strong>Achievements and Awards:</strong>
+            <ul>
+                <li>Named Captain of Delhi Capitals in IPL</li>
+                <li>Scored a memorable century in his debut Test series against New Zealand</li>
+                <li>Consistent performer in domestic cricket and IPL</li>
+            </ul>
+            <br>
+            <strong>Personal Life:</strong><br>
+            Shreyas Iyer is known for his work ethic and dedication to the game. He has a strong following on social media and is admired for his calm demeanor on and off the field.
+            <br><br>
+            <strong>Legacy:</strong><br>
+            Iyer is regarded as one of the promising young talents in Indian cricket. His ability to adapt to various formats and his potential as a future captain make him a significant figure in the Indian cricketing landscape.
+            <br><br>
+            <strong>External Links:</strong>
+            <ul>
+                <li><a href="https://www.shreyasiyer.com" target="_blank">Official Website</a></li>
+                <li><a href="https://twitter.com/shreyas41" target="_blank">Twitter</a></li>
+                <li><a href="https://www.instagram.com/shreyas41/" target="_blank">Instagram</a></li>
+            </ul>
+        </p>
+        <button onclick="window.history.back()">Go Back</button>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        document.getElementById('card-title').textContent = params.get('title') || 'Shreyas Iyer';
+        document.getElementById('card-description').innerHTML = document.getElementById('card-description').innerHTML.replace(/\n/g, '<br>');
+    </script>
+</body>
+</html>

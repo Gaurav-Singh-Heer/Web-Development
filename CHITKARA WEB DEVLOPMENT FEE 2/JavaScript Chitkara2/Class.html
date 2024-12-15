@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    class Person{
+        constructor(name, age){     //constructors are the properties
+            this.name = name;
+            this.age = age;
+        }
+        sayHello(){
+            console.log(`The name of person is ${this.name} and age of the person is ${this.age} years old.`);
+        }
+    }
+
+
+    const person1 = new Person("John", 30);
+    const person2 = new Person("Jane", 25);
+
+    //use the objects
+    person1.sayHello();
+    person2.sayHello();
+</script>
+</body>
+</html>

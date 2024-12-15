@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rishabh Pant - Card Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .details-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+        ul {
+            margin-left: 20px;
+            color: #555;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="details-container">
+        <h1 id="card-title">Rishabh Pant</h1>
+        <p id="card-description">
+            <strong>Early Life and Background:</strong><br>
+            Rishabh Pant was born on October 4, 1997, in Roorkee, Uttarakhand, India. Known for his aggressive batting style and wicket-keeping skills, Pant quickly rose through the ranks in domestic cricket and the Indian Premier League (IPL).
+            <br><br>
+            <strong>Domestic Career:</strong><br>
+            Pant made his debut for Delhi in the domestic circuit and became one of the most exciting young talents in Indian cricket. His performances in the IPL, especially for the Delhi Capitals, showcased his explosive batting and earned him a spot in the national team.
+            <br><br>
+            <strong>International Career:</strong><br>
+            <strong>Debut and Early Years:</strong><br>
+            Pant made his international debut for India in a T20I against England on February 1, 2017. He soon became known for his fearless approach and ability to change the course of a game with his batting.
+            <br><br>
+            <strong>Rise to Prominence:</strong><br>
+            Pant's breakthrough came during the 2018-19 Test series in Australia, where he played a crucial role in India's historic Test series win. He scored a match-winning 159* in the Sydney Test, which was instrumental in sealing the series for India.
+            <br><br>
+            <strong>Achievements and Awards:</strong>
+            <ul>
+                <li>ICC Emerging Player of the Year: 2018</li>
+                <li>Notable performances in Test series against Australia and England</li>
+                <li>Indian Premier League (IPL) performances, including multiple match-winning innings for Delhi Capitals</li>
+            </ul>
+            <br>
+            <strong>Personal Life:</strong><br>
+            Rishabh Pant is known for his dynamic personality and commitment to fitness. He is engaged to his long-time partner Isha Negi, and the couple is known for their public appearances and support for each other.
+            <br><br>
+            <strong>Legacy:</strong><br>
+            Pant is regarded as one of the most exciting young talents in international cricket. His aggressive batting and ability to perform under pressure have made him a key player for India in all formats.
+            <br><br>
+            <strong>External Links:</strong>
+            <ul>
+                <li><a href="https://twitter.com/rishabpant" target="_blank">Twitter</a></li>
+                <li><a href="https://www.instagram.com/rishabpant" target="_blank">Instagram</a></li>
+            </ul>
+        </p>
+        <button onclick="window.history.back()">Go Back</button>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        document.getElementById('card-title').textContent = params.get('title') || 'Rishabh Pant';
+        document.getElementById('card-description').innerHTML = document.getElementById('card-description').innerHTML.replace(/\n/g, '<br>');
+    </script>
+</body>
+</html>

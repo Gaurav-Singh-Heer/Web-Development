@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Account</title>
+</head>
+<body>
+    <script>
+        class BankAccount {
+            constructor(accountHolder, accountNo, initialAmount) {
+                this.accountHolder = accountHolder;
+                this.accountNo = accountNo;
+                this.balance = initialAmount;
+            }
+
+            displayAccountInfo() {
+                console.log(`Account Holder: ${this.accountHolder}`);
+                console.log(`Account Number: ${this.accountNo}`);
+                console.log(`Current Balance: ₹${this.balance}`);
+            }
+
+            deposit(amount) {
+                this.balance += amount;
+                console.log(`Deposited ₹${amount}. New Balance: ₹${this.balance}`);
+            }
+
+            withdraw(amount) {
+                if (amount > this.balance) {
+                    console.log(`Insufficient funds. Withdrawal of ₹${amount} failed.`);
+                } else {
+                    this.balance -= amount;
+                    console.log(`Withdrew ₹${amount}. New Balance: ₹${this.balance}`);
+                }
+            }
+        }
+
+        const account1 = new BankAccount("Arshiya", 123456789, 200);
+        account1.displayAccountInfo();
+        account1.deposit(200);
+        account1.withdraw(150);
+        account1.withdraw(600);
+        const account2 = new BankAccount("Agam", 123450775, 1200);
+        account2.displayAccountInfo();
+        account2.deposit(200);
+        account2.withdraw(150);
+        account2.withdraw(600);
+        const account3 = new BankAccount("Gaurav", 123453518, 1900);
+        account3.displayAccountInfo();
+        account3.deposit(200);
+        account3.withdraw(150);
+        account3.withdraw(600);
+    </script>
+</body>
+</html>

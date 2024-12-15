@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental</title>
+    <link rel="stylesheet" href="rent.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <img src="img/logo2.png" alt="Logo" class="logo fade-in">
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="navbar-toggle" aria-label="Open menu">☰</label>
+        <nav id="navbar">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Cars</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="rental-details">
+            <h2>Rental Details</h2>
+            <div class="car-info">
+                <img src="./img/Kia/Kia Seltos.jpg" alt="BMW X5" class="car-image">
+                <div class="car-description">
+                    <h3>Kia Seltos</h3>
+                    <p>A luxury SUV with unmatched comfort and style, perfect for long drives and city trips.</p>
+                </div>
+            </div>
+            <div class="rental-info">
+                <span>Rental Days:</span>
+                <input type="number" value="1" min="1" id="rental-hours" onchange="updatePrice()">
+            </div>
+        </section>
+
+        <section class="price-summary">
+            <h2>Price Summary</h2>
+            <div class="summary-item">
+                <span>Base Price:</span>
+                <span>₹7500/day</span>
+            </div>
+            <div class="summary-item">
+                <span>Rental Days:</span>
+                <span><span id="rental-days">1</span> day(s)</span>
+            </div>
+            <div class="summary-item">
+                <span>Total Price:</span>
+                <span id="total-price">₹7500</span>
+            </div>
+            <button class="proceed-btn" onclick="openPaymentModal()">Proceed to Payment</button>
+        </section>
+    </main>
+
+    <!-- Payment Modal -->
+    <div class="modal" id="payment-modal" style="display: none;">
+        <div class="modal-content">
+            <h2>Select Payment Method</h2>
+            <div class="payment-options">
+                <div class="option" onclick="selectPaymentOption('Credit Card')">Credit Card</div>
+                <div class="option" onclick="selectPaymentOption('UPI')">UPI</div>
+            </div>
+
+            <div id="payment-form-container">
+                <!-- Payment Form will be injected here -->
+            </div>
+            <button class="close-btn" onclick="closePaymentModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Initial values
+        const basePricePerDay = 7500;
+        let rentalDays = 1;
+
+        // Update price based on rental days
+        function updatePrice() {
+            rentalDays = parseInt(document.getElementById("rental-hours").value);
+            document.getElementById("rental-days").innerText = rentalDays;
+
+            const totalPrice = basePricePerDay * rentalDays;
+            document.getElementById("total-price").innerText = `₹${totalPrice}`;
+            document.getElementById("modal-total-price").innerText = totalPrice;
+        }
+
+        // Open Payment Modal
+        function openPaymentModal() {
+            document.getElementById("payment-modal").style.display = "flex";
+        }
+
+        // Close Payment Modal
+        function closePaymentModal() {
+            document.getElementById("payment-modal").style.display = "none";
+        }
+
+        // Select Payment Option and Inject Form
+        function selectPaymentOption(paymentMethod) {
+            const formContainer = document.getElementById('payment-form-container');
+            formContainer.innerHTML = '';  // Clear previous forms
+
+            let formHtml = '';
+
+            if (paymentMethod === 'Credit Card') {
+                formHtml = `
+                    <div class="payment-form">
+                        <input type="text" placeholder="Card Number" required>
+                        <div class="expiry-cvv">
+                            <input type="text" placeholder="MM/YY" required>
+                            <input type="text" placeholder="CVV" required>
+                        </div>
+                        <button class="pay-btn" onclick="processPayment()">Pay Now</button>
+                    </div>
+                `;
+            } else if (paymentMethod === 'UPI') {
+                const upiId = 'equestrianboy5037@oksbi';  // Replace with actual UPI ID
+                const totalPrice = basePricePerDay * rentalDays;
+
+                // Generate UPI Payment URL
+                const upiUrl = `upi://pay?pa=${upiId}&pn=Car Rental&am=${totalPrice}&cu=INR`;
+
+                formHtml = `
+                    <div class="payment-form">
+                        <p>Scan the QR code or click the button below to pay via UPI.</p>
+                        <a href="${upiUrl}" target="_blank" class="pay-btn">Pay with UPI</a>
+                    </div>
+                `;
+            }
+
+            formContainer.innerHTML = formHtml;
+            document.querySelectorAll('.option').forEach(option => option.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Process the payment
+        function processPayment() {
+            alert('Payment processed successfully!');
+            closePaymentModal();
+        }
+
+        // Initialize the default price
+        document.addEventListener("DOMContentLoaded", updatePrice);
+    </script>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="heading">Bill</div>
+    <button class="generate">Generate</button>
+    <script>
+        const btn = document.getElementsByClassName('generate')[0];
+        const heading = document.getElementsByClassName('heading')[0];
+
+        // Simulate an API that returns a user's data
+        function getUserData(userId){
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    if(userId === 1){
+                        resolve({ name: "John Doe", email: "john@example.com" });
+                    } else {
+                        reject("User not found!");
+                    }
+                }, 2000);
+            });
+        }
+
+        function getUserOrders(userId){
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    if(userId === 1){
+                        resolve({ pName: "Tablet", price: 25000, quantity: 1 });
+                    } else {
+                        reject("Order not found!");
+                    }
+                }, 2000);
+            });
+        }
+
+        async function getUserDataAndOrders(userId) {
+            try {
+                const userData = await getUserData(userId);
+                const userorder = await getUserOrders(userId);
+
+                // Wrap the order in an array to use map and reduce
+                const userorderArray = [userorder];
+
+                // Generate bill
+                const billHtml = `
+                <h2>Bill for ${userData.name}</h2>
+                <table>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                    ${userorderArray.map(order => `
+                    <tr>
+                        <td>${order.pName}</td>
+                        <td>${order.quantity}</td>
+                        <td>${order.price}</td>
+                        <td>${order.quantity * order.price}</td>
+                    </tr>
+                    `).join('')}
+                    <tr>
+                        <td colspan="3">Subtotal:</td>
+                        <td>$${userorderArray.reduce((acc, order) => acc + order.quantity * order.price, 0)}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">Tax (8%):</td>
+                        <td>$${(userorderArray.reduce((acc, order) => acc + order.quantity * order.price, 0) * 0.08).toFixed(2)}</td>
+                    </tr>
+                </table>
+                `;
+
+                heading.innerHTML = billHtml;
+            } 
+            catch(error) {
+                heading.innerHTML = `Error: ${error}`;
+            }
+        }
+
+        // Add event listener to the button
+        btn.addEventListener('click', () => {
+            getUserDataAndOrders(1);
+        });
+    </script>
+</body>
+</html>

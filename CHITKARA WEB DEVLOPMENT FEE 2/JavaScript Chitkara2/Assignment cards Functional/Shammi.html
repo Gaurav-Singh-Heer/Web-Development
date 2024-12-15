@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohammed Shami - Card Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .details-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+        ul {
+            margin-left: 20px;
+            color: #555;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="details-container">
+        <h1 id="card-title">Mohammed Shami</h1>
+        <p id="card-description">
+            <strong>Early Life and Background:</strong><br>
+            Mohammed Shami was born on September 9, 1990, in Amroha, Uttar Pradesh, India. He is known for his fast bowling and has been an integral part of the Indian cricket team. Shami began his cricketing journey in domestic cricket and quickly made a name for himself with his pace and skill.
+            <br><br>
+            <strong>Domestic Career:</strong><br>
+            Shami made his first-class debut for Bengal in 2010 and soon became known for his ability to swing the ball both ways. His impressive performances in domestic cricket earned him a spot in the Indian Premier League (IPL), where he played for teams like Kolkata Knight Riders and Delhi Capitals.
+            <br><br>
+            <strong>International Career:</strong><br>
+            <strong>Debut and Early Years:</strong><br>
+            Mohammed Shami made his international debut for India in an ODI against Pakistan on January 6, 2013. He quickly gained recognition for his pace and ability to bowl in the death overs.
+            <br><br>
+            <strong>Rise to Prominence:</strong><br>
+            Shami's performance in the 2015 ICC Cricket World Cup was notable, as he played a key role in India's bowling attack. His ability to take crucial wickets and maintain a consistent line and length made him a valuable asset for the team.
+            <br><br>
+            <strong>Achievements and Awards:</strong>
+            <ul>
+                <li>Notable performances in the 2015 ICC Cricket World Cup</li>
+                <li>Consistent performer in Test and ODI formats for India</li>
+                <li>Strong performances in the IPL, contributing significantly to his teams</li>
+            </ul>
+            <br>
+            <strong>Personal Life:</strong><br>
+            Mohammed Shami is married to Hasin Jahan, and they have a daughter. Despite facing some personal challenges, Shami has remained focused on his cricket career and continues to be a key player for the Indian team.
+            <br><br>
+            <strong>Legacy:</strong><br>
+            Shami is regarded as one of the premier fast bowlers in India. His ability to deliver crucial spells and his impact in all formats of the game have established him as a leading figure in Indian cricket.
+            <br><br>
+            <strong>External Links:</strong>
+            <ul>
+                <li><a href="https://twitter.com/MohammadShami11" target="_blank">Twitter</a></li>
+                <li><a href="https://www.instagram.com/mohammadshami_11/" target="_blank">Instagram</a></li>
+            </ul>
+        </p>
+        <button onclick="window.history.back()">Go Back</button>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        document.getElementById('card-title').textContent = params.get('title') || 'Mohammed Shami';
+        document.getElementById('card-description').innerHTML = document.getElementById('card-description').innerHTML.replace(/\n/g, '<br>');
+    </script>
+</body>
+</html>

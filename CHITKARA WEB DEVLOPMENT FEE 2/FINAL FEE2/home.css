@@ -1,0 +1,517 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* logo fade-in css yha pe hai */
+/* .logo-pop-up{
+        position: absolute;
+        top: 30%;
+        left: 35%;
+    } */
+
+#pop-up-image {
+    width: 200px;
+    /* Set the width of the logo */
+}
+
+.logo-pop-up {
+    position: absolute;
+    top: 40%;
+    /* Center the logo vertically */
+    left: 43%;
+    /* Center the logo horizontally */
+    animation: fade-in 2s ease forwards;
+    /* Apply the animation */
+    z-index: 1000;
+    /* Ensure it's above other elements */
+}
+
+/* Keyframes for the animation */
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) translateZ(-500px);
+        /* Start small and far back */
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.5) translateZ(0);
+        /* Scale up and come forward */
+    }
+
+    100% {
+        transform: translateY(1000px);
+        opacity: 0;
+        transform: scale(5) translateZ(0);
+        /* Scale up further and fade out */
+    }
+}
+
+
+/* /div delay for initial 3 seconds */
+/* Initially hide the container */
+.wrapper {
+    opacity: 0;
+    transition: opacity 1s ease;
+    /* Smooth transition for opacity */
+}
+
+/* Class to reveal the wrapper */
+.wrapper.visible {
+    opacity: 1;
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5vh 2vw;
+    background-color: #000;
+    box-shadow: 0 0.5vh 1vh rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+header.scrolled {
+    background-color: #333;
+}
+
+header nav ul {
+    display: flex;
+    font-size: 1.4rem;
+    gap: 2vw;
+    list-style: none;
+}
+
+header nav ul li {
+    position: relative;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    transition: color 0.3s ease, padding-bottom 0.3s ease;
+    font-size: 1rem;
+    padding-bottom: 0;
+}
+
+li.active {
+    text-decoration: underline;
+    transform: scale(1.2);
+    color: #ff7782;
+}
+
+li.active:hover{
+    text-decoration: none;
+}
+
+li.active a{
+    color: #ffaeb5;
+}
+
+header nav ul li a:hover,
+header nav ul li a:focus {
+    color: #ff7782;
+    transform: scale(1);
+}
+
+
+/* Logo Styles */
+.logo {
+    height: 8vh;
+}
+
+/* Mobile Menu Styles */
+.menu-toggle,
+.navbar-toggle {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header nav ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 1vw;
+        background-color: #000;
+        padding: 1rem 0;
+        margin-top: 1rem;
+    }
+
+    .menu-toggle:checked+.navbar-toggle+nav ul {
+        display: flex;
+    }
+
+    .navbar-toggle {
+        display: block;
+        background-color: #000;
+        border: none;
+        color: #fff;
+        font-size: 1rem;
+        cursor: pointer;
+        margin-left: auto;
+        padding: 0;
+    }
+
+    header nav ul li a {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    overflow-y: auto;
+}
+
+.container img {
+    width: 100%;
+    height: auto;
+}
+
+/* Main Content Styles */
+main {
+    padding: 3vh 4vw;
+}
+
+.card-slider {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.slider-container {
+    overflow: hidden;
+    width: 100%;
+}
+
+.slider-track {
+    padding: 2vw 2vw;
+    display: flex;
+    gap: 1rem;
+    transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+    will-change: transform;
+}
+
+.card {
+    flex: 0 0 25%;
+    margin-right: 2vw;
+    background-color: #222;
+    padding: 2vw;
+    border-radius: 0.5vw;
+    box-shadow: 0 1vh 2vh rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5vw;
+}
+
+/* Navigation buttons */
+.prev,
+.next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+    z-index: 1;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.prev:hover,
+.next:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+/* Card hover effects */
+.card:hover {
+    transform: translateY(-1vh) scale(1.03);
+    filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.5));
+}
+
+/* Responsive Cards */
+@media (max-width: 1024px) {
+    .card {
+        flex: 0 0 45%;
+    }
+
+    .logo-pop-up {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .card {
+        flex: 0 0 90%;
+    }
+}
+
+/* Features section */
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 90vw;
+    width: 100%;
+    margin: 7vh auto;
+}
+
+.features img {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    border-radius: 0.5vw;
+}
+
+.list {
+    padding: 2rem 0;
+    font-size: x-large;
+    opacity: 0;
+    transform: translateX(-100px);
+    transition: all 0.5s ease-out;
+    list-style-type: square;
+}
+
+.features.hovered .list {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+}
+
+/* Home Section */
+#home {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 5vh 4vw;
+}
+
+#home h1 {
+    font-size: 7vh;
+    color: #ffffff;
+}
+
+#home p {
+    font-size: 3.5vh;
+    color: #ffffff;
+}
+
+.home-element {
+    opacity: 0;
+    transform: translateY(100px);
+    transition: all 0.5s ease-out;
+}
+
+.div4.hovered #home .home-element {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Slider */
+.slider-frame {
+    overflow: hidden;
+    width: 100%;
+}
+
+.slider-images {
+    width: 300vw;
+    height: 100%;
+    margin: 0;
+    position: relative;
+    animation-name: slide_animation;
+    animation-duration: 15s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-play-state: running;
+}
+
+.img-container {
+    height: 100%;
+    width: 100vw;
+    position: relative;
+    float: left;
+}
+
+.img-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* Description Section */
+.description {
+    max-width: 90vw;
+    width: 100%;
+    margin: 10vh auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.description h1 {
+    font-size: 8vh;
+}
+
+.description p {
+    font-size: 2.5vh;
+}
+
+#heading-id {
+    opacity: 0;
+    transform: translateY(-100px);
+    transition: all 0.5s ease-out 0.5s;
+}
+
+#desc-para {
+    opacity: 0;
+    transform: translateY(-100px);
+    transition: all 0.5s ease-out;
+}
+
+.description.hovered #heading-id {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.description.hovered #desc-para {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Footer Styles */
+footer {
+    background-color: #111;
+    color: #888;
+    padding: 2vh 4vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-content {
+    max-width: 1200px;
+    width: 100%;
+}
+
+.footer-sections {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2vw;
+    margin-bottom: 2vh;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin: 1vh 0;
+}
+
+.footer-section h3 {
+    color: #fff;
+    margin-bottom: 1vh;
+    font-size: 1.2rem;
+    font-family: 'Oswald', sans-serif;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin: 0.5vh 0;
+}
+
+.footer-section ul li a {
+    text-decoration: none;
+    color: #888;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #fff;
+}
+
+.social-links {
+    display: flex;
+    gap: 1vw;
+    margin: 2vh 0;
+}
+
+.social-link {
+    color: #888;
+    font-size: 2rem;
+    transition: color 0.3s ease;
+}
+
+.social-link:hover {
+    color: #fff;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 2vh;
+}
+
+.footer-bottom p {
+    font-size: 1rem;
+    color: #888;
+}
+
+/* Hover Effects for Scroll Animation */
+.div1.hovered #home .home-element,
+.div2.hovered #home .home-element,
+.div3.hovered #home .home-element,
+.div4.hovered #home .home-element {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.features.hovered .list,
+.description.hovered #heading-id,
+.description.hovered #desc-para {
+    opacity: 1;
+    transform: translateX(0);
+}

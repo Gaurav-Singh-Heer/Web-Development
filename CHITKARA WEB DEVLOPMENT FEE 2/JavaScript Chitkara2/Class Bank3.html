@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Account</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #0F4C75;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: #1B262C;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            color: #BBE1FA;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 94%;
+            padding: 10px;
+            border: 2px solid #3282B8;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #3282B8;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0F4C75;
+        }
+
+        #accountInfo {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        #accountInfo p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        #accountInfo p strong {
+            color: #0F4C75;
+        }
+
+        .error {
+            color: red;
+            font-size: 16px;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bank Account Information</h1>
+    
+    <form id="accountForm">
+        <label for="accountHolderName">Enter Account Holder's Name:</label>
+        <input type="text" id="accountHolderName" name="accountHolderName" required>
+        <button type="submit">Show Details</button>
+    </form>
+
+    <div id="accountInfo"></div>
+
+    <script>
+        class BankAccount {
+            constructor(accountHolder, accountNo, initialAmount) {
+                this.accountHolder = accountHolder;
+                this.accountNo = accountNo;
+                this.balance = initialAmount;
+            }
+
+            displayAccountInfo() {
+                return `
+                    <p><strong>Account Holder:</strong> ${this.accountHolder}</p>
+                    <p><strong>Account Number:</strong> ${this.accountNo}</p>
+                    <p><strong>Current Balance:</strong> ₹${this.balance}</p>
+                `;
+            }
+
+            deposit(amount) {
+                this.balance += amount;
+                console.log(`Deposited ₹${amount}. New Balance: ₹${this.balance}`);
+            }
+
+            withdraw(amount) {
+                if (amount > this.balance) {
+                    console.log(`Insufficient funds. Withdrawal of ₹${amount} failed.`);
+                } else {
+                    this.balance -= amount;
+                    console.log(`Withdrew ₹${amount}. New Balance: ₹${this.balance}`);
+                }
+            }
+        }
+
+        const accounts = [
+            new BankAccount("Arshiya", 123456789, 200),
+            new BankAccount("Agam", 123450775, 1200),
+            new BankAccount("Gaurav", 123453518, 1900)
+        ];
+
+        document.getElementById('accountForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('accountHolderName').value;
+            const account = accounts.find(acc => acc.accountHolder.toLowerCase() === name.toLowerCase());
+
+            const accountInfoDiv = document.getElementById('accountInfo');
+
+            if (account) {
+                accountInfoDiv.innerHTML = account.displayAccountInfo();
+                accountInfoDiv.classList.remove('error');
+            } else {
+                accountInfoDiv.innerHTML = `<p class="error">No account found for the name "${name}".</p>`;
+            }
+        });
+    </script>
+</body>
+</html>

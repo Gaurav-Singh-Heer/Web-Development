@@ -1,0 +1,52 @@
+<!-- 
+ XMLHttpRequest: neeed to mention when we have to retieve the data without reload.
+ AJAX USED IN API
+ jsonplaceholder: to get data from so and so place
+
+  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button class="btn">Load data</button>
+    <div class="info" id="output"></div> <!-- Add id here for the div -->
+    <script>
+        // Get the button element
+        const button = document.querySelector('.btn');
+
+        // Add an event listener to the button
+        button.addEventListener('click', function() {
+            // Create a new XMLHttpRequest object
+            const xhr = new XMLHttpRequest();
+
+            // Configure it: GET-request for a specific URL
+            xhr.open('GET', 'https://jsonplaceholder.typicode.com/posts', true);
+
+            // When the request is successful, process the response
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const data = JSON.parse(xhr.responseText);
+                    let output = `<ul>`;
+                    data.forEach(function(post) { // Fixed typo in `forEach`
+                        output += `<li><strong>${post.title}</strong>: ${post.body}</li>`;
+                    });
+                    output += `</ul>`;
+                    document.getElementById('output').innerHTML = output; // Fixed the incorrect use of backticks and the id name
+                }
+            };
+
+            // Handle request errors
+            xhr.onerror = function() {
+                console.error('Request failed');
+            };
+
+            // Send the request
+            xhr.send();
+        });
+    </script>
+</body>
+</html>

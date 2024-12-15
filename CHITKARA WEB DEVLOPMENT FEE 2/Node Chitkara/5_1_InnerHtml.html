@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h1>The Element Object</h1>
+    <h2>The innerHTML Property</h2>
+
+    <ul id="myList">
+        <li>Coffee</li>
+        <li>Tea</li>
+    </ul>
+
+    <p>The HTML content of the ul element "myList" is:</p>
+    <p id="demo"></p>
+
+    <script>
+        let html = document.getElementById("myList").innerHTML;
+        document.getElementById("demo").innerHTML = html;
+    </script>
+
+</body>
+
+</html>

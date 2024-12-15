@@ -1,0 +1,134 @@
+HTTP Methods:-
+
+GET
+POST
+PUT
+PATCH
+DELETE
+-------------------------------------------------------------------------------------------------
+
+HTTP GET        
+
+By default our browser do GET data
+
+When you want to get some data from the server
+
+When our server gets GET Request then our server goes to database and reads the data and whatever
+data comes from the database is sent to the client.
+
+Means whenever i will do HTTP GET request on our server then our expectation is to get some data.
+
+Example:- When u open ur browser and when u enter any url after putting it in the browser ,
+          when u press enter then browser always creates get request to our server by default.
+
+
+To Check it:-
+
+Go to any browser Youtube or Leetcode
+
+Search any vedio or questions
+
+then after opening it 
+
+1)-> Do right click
+2)-> Inspect
+3)-> Network
+4)-> Refresh Site
+5)-> click on description
+
+Output Got Their:
+
+Request URL:                    https://leetcode.com/problems/binary-tree-maximum-path-sum/description/
+Request Method:                 GET
+Status Code:                    200 OK
+Remote Address:                 [2606:4700:9b07:34d2:3064:64b:823c:3ec]:443
+Referrer Policy:                strict-origin-when-cross-origin
+
+
+Here, Request Method:                 GET
+
+means browser works for us to get data
+
+-------------------------------------------------------------------------------------------------
+
+HTTP POST
+
+When you want to send and mutate some data in server
+
+Send data means , Like when u open any social media website then there we have a form for sign in 
+|                or sign up or any feedback form. At these form we type our data and send to the 
+|                server. 
+|                So, when we want to send our data at a server and we expect that this data will
+|                be entered at the database
+
+Mutation means, To change data or add data. 
+
+So, when you want to send and mutate some data in the server the we do POST request.
+
+Let's say we have a social media website and user will sign up over there. His data(Phone no, 
+mail,password) will be sent to the server using POST request because by this post request we 
+will understand that we have to create something.
+
+So, in the database we will set query to create user at the database, This is it's username and 
+this is password.
+
+Whenever we submit our data at the forms(HTML Form) they create a post request
+
+Let's say we have a form with:-
+
+Email,Phone,Password
+CREATE ACCOUNT
+
+when we will at our data and then click on CREATE ACCOUNT. Then this will create a post request
+and in it's body it will send {Form Data} along.
+
+Our server will see that this is post Request
+
+
+To Check it:-
+
+Open facebook.com (Login)
+
+Then after opening it 
+
+1)-> Do right click
+2)-> Inspect
+3)-> Network
+4)-> Click on Preserve Log
+4)-> Fill any email and password (Wrong)
+5)-> click on login/?privacy
+
+Output Got Their:
+
+Request URL:                            https://www.facebook.com/login/?privacy_mutation_token=eyJ0eXBlIjowLCJjcmVhdGlvbl90aW1lIjoxNzM0MDQ3ODk4LCJjYWxsc2l0ZV9pZCI6MzgxMjI5MDc5NTc1OTQ2fQ%3D%3D&next
+Request Method:                         POST
+Status Code:                            200 OK
+Remote Address:                         [2a03:2880:f12f:83:face:b00c:0:25de]:443
+Referrer Policy:                        origin-when-cross-origin
+
+Here,  Request Method:                         POST
+
+Means, As we here entered the data so it's a Post Request
+
+At Network->At Payload, we Have Encrypted Form data
+-------------------------------------------------------------------------------------------------
+
+HTTP PUT:-
+
+Like in GATE form when we have to add Passport size photo or any PDF File then there we do PUT 
+request.
+
+-------------------------------------------------------------------------------------------------
+
+HTTP PATCH:-
+
+This means to change something, Like we already have some entry in database. Like I am already
+a user at Facebook and I want to change my name. Then For this we use Patch Request.
+
+-------------------------------------------------------------------------------------------------
+
+HTTP DELETE:-
+
+This is used when we want to DELETE our account Facebook.
+
+-------------------------------------------------------------------------------------------------

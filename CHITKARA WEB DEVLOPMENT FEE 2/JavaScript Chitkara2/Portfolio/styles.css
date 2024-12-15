@@ -1,0 +1,37 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #1b262c;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+main {
+    padding: 20px;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+footer {
+    background-color: #1b262c;
+    color: white;
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .card {
+        display: flex;
+    }
+}

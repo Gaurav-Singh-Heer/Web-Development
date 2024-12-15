@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add and Remove Element Example</title>
+    <style>
+        /* Optional: Add some basic styling */
+        .container {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Add and Remove Element Example</h1>
+    <div class="container">
+        <!-- Existing content can be here -->
+        <p>Existing paragraph</p>
+    </div>
+    <button onclick="addElement()">Add Paragraph</button>
+    <button onclick="removeElement()">Remove Last Paragraph</button>
+
+    <script>
+        function addElement() {
+            // Create a new paragraph element
+            var newElement = document.createElement("p");
+            newElement.textContent = "I'm a new paragraph!";
+            
+            // Get the first element with the class 'container'
+            var container = document.getElementsByClassName("container")[0];
+            
+            // Append the new element to the container
+            if (container) {
+                container.appendChild(newElement);
+            } else {
+                console.log('Container element not found.');
+            }
+        }
+
+        function removeElement() {
+            // Get the first element with the class 'container'
+            var container = document.getElementsByClassName("container")[0];
+            
+            // Check if there are child elements to remove
+            if (container && container.children.length > 0) {
+                // Remove the last child element
+                container.removeChild(container.lastChild);
+            } else {
+                console.log('No elements to remove or container element not found.');
+            }
+        }
+    </script>
+</body>
+
+</html>

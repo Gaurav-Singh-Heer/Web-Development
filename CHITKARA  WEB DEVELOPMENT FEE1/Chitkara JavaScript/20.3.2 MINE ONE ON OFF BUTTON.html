@@ -24,7 +24,7 @@
             width: 100px;
             height: 100px;
             overflow:hidden;
-            border-radius: 50%;
+            border-radius: 15%;
         }
         /* div.d{
             display: flex;
@@ -41,16 +41,16 @@
         a.addEventListener("click",function(){
             if (a.style.color=="red"){
                 console.log("Hi")
-                // a.innerHTML="How Are you"
+                a.innerHTML="Dark Mode"
                 a.style.color="green"
-                a.style.backgroundColor="green"
+                a.style.backgroundColor="lightgreen"
                 document.body.style.backgroundColor="black"
             }
             else {
                 console.log("Hi")
                 a.innerHTML="Light Mode"
                 a.style.color="red"
-                a.style.backgroundColor="red"
+                a.style.backgroundColor="pink"
                 document.body.style.backgroundColor="gold"
             }
         })

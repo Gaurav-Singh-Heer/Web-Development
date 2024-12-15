@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee Dashboard</title>
+    <!-- Font Awesome Cdn Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <!-- Chart.js Link -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="employee.css" />
+</head>
+
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <div class="logo">
+                <img src="img/Dyanmic-logo.png" alt="logo">
+                <span>Dynamic</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i>Home</a></li>
+                    <li><a href="#"><i class="fas fa-user"></i>Profile</a></li>
+                    <li><a href="#"><i class="fas fa-wallet"></i>Wallet</a></li>
+                    <li><a href="#"><i class="fas fa-chart-bar"></i>Analytics</a></li>
+                    <li><a href="#"><i class="fas fa-tasks"></i>Tasks</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i>Settings</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i>Help</a></li>
+                </ul>
+            </nav>
+            <a href="#" class="logout"><i class="fas fa-sign-out-alt"></i>Log out</a>
+        </nav>
+
+        <section class="main">
+            <div class="main-top">
+                <h1>Skills</h1>
+                <img src="img/person.png" alt="Person">
+            </div>
+
+            <div class="main-skills">
+                <div class="card">
+                    <h3>You</h3>
+                    <h4>Front-End</h4>
+                    <div class="circle-container">
+                        <svg class="progress-circle" width="100" height="100">
+                            <circle class="background-circle" cx="50" cy="50" r="45"></circle>
+                            <circle class="foreground-circle" cx="50" cy="50" r="45"></circle>
+                        </svg>
+                        <div class="progress-text">0%</div>
+                    </div>
+                    <div class="project-label">Projects Assigned</div>
+                </div>
+                <div class="card">
+                    <h3>Gaurav</h3>
+                    <h4>Back-End</h4>
+                    <div class="circle-container">
+                        <svg class="progress-circle" width="100" height="100">
+                            <circle class="background-circle" cx="50" cy="50" r="45"></circle>
+                            <circle class="foreground-circle" cx="50" cy="50" r="45"></circle>
+                        </svg>
+                        <div class="progress-text">0%</div>
+                    </div>
+                    <div class="project-label">Projects Assigned</div>
+                </div>
+                <div class="card">
+                    <h3>Agam</h3>
+                    <h4>Database</h4>
+                    <div class="circle-container">
+                        <svg class="progress-circle" width="100" height="100">
+                            <circle class="background-circle" cx="50" cy="50" r="45"></circle>
+                            <circle class="foreground-circle" cx="50" cy="50" r="45"></circle>
+                        </svg>
+                        <div class="progress-text">0%</div>
+                    </div>
+                    <div class="project-label">Projects Assigned</div>
+                </div>
+            </div>
+
+            <div class="graph-container">
+                <canvas id="progressGraph" width="400" height="200"></canvas>
+            </div>
+
+            <section class="main-course">
+                <h1>My Tasks</h1>
+                <div class="course-box">
+                    <ul>
+                        <li class="active">In progress</li>
+                        <li>Pending</li>
+                        <li>Queued</li>
+                    </ul>
+                    <div class="course">
+                        <div class="box">
+                            <h3>Cafe</h3>
+                            <p>80% - progress</p>
+                            <button>continue</button>
+                            <i class="fab fa-html5 html"></i>
+                        </div>
+                        <div class="box">
+                            <h3>Cafe</h3>
+                            <p>50% - progress</p>
+                            <button>continue</button>
+                            <i class="fab fa-css3-alt css"></i>
+                        </div>
+                        <div class="box">
+                            <h3>E-commerce</h3>
+                            <p>30% - progress</p>
+                            <button>continue</button>
+                            <i class="fab fa-js-square js"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="main-course">
+                <h1>My Attendance</h1>
+                <div class="course-box2">
+                    <ul>
+                        <li class="active">This month</li>
+                        <li>Last month</li>
+                    </ul>
+                    <div class="course">
+                        <div class="calendar">
+                            <div class="month">
+                                <h2>October 2024</h2>
+                            </div>
+                            <div class="days-of-week">
+                                <div>Sun</div>
+                                <div>Mon</div>
+                                <div>Tue</div>
+                                <div>Wed</div>
+                                <div>Thu</div>
+                                <div>Fri</div>
+                                <div>Sat</div>
+                            </div>
+                            <div class="days">
+                                <div class="day"></div> <!-- Empty for starting the month on Monday -->
+                                <div class="day present">1</div>
+                                <div class="day absent">2</div>
+                                <div class="day present">3</div>
+                                <div class="day present">4</div>
+                                <div class="day present">5</div>
+                                <div class="day absent">6</div>
+                                <div class="day present">7</div>
+                                <div class="day present">8</div>
+                                <div class="day absent">9</div>
+                                <div class="day present">10</div>
+                                <div class="day present">11</div>
+                                <div class="day present">12</div>
+                                <div class="day present">13</div>
+                                <div class="day present">14</div>
+                                <div class="day present">15</div>
+                                <div class="day present">16</div>
+                                <div class="day present">17</div>
+                                <div class="day present">18</div>
+                                <div class="day present">19</div>
+                                <div class="day present">20</div>
+                                <div class="day present">21</div>
+                                <div class="day present">22</div>
+                                <div class="day present">23</div>
+                                <div class="day present">24</div>
+                                <div class="day present">25</div>
+                                <div class="day present">27</div>
+                                <div class="day present">28</div>
+                                <div class="day present">29</div>
+                                <div class="day present">30</div>
+                                <div class="day present">31</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </div>
+
+    <!-- <script src="employee.js"></script> -->
+    <script>
+        // Circle Progress Bar Animation
+        function setupProgressCircles(progressValues) {
+            document.querySelectorAll('.progress-circle').forEach((circle, index) => {
+                let radius = circle.querySelector('.foreground-circle').r.baseVal.value;
+                let circumference = 2 * Math.PI * radius;
+
+                // Set the stroke dash properties
+                circle.querySelector('.foreground-circle').style.strokeDasharray = `${circumference} ${circumference}`;
+                circle.querySelector('.foreground-circle').style.strokeDashoffset = circumference - (progressValues[index] / 100) * circumference;
+                circle.parentElement.querySelector('.progress-text').textContent = `${progressValues[index]}%`;
+            });
+        }
+
+        // Chart.js Graph
+        function setupChart() {
+            var ctx = document.getElementById('progressGraph').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['2020', '2021', '2022', '2023', '2024'], // X-axis labels (Years)
+                    datasets: [{
+                        label: 'Progress Percentage',
+                        data: [30, 45, 60, 75, 90], // Y-axis data (Increment in Percentage)
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Years'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Progress (%)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Dynamic Button Text Change
+        function setupButtons() {
+            const buttons = document.querySelectorAll('.course .box button');
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    button.textContent = 'Completed'; // Change text on click
+                    button.disabled = true; // Optionally disable the button
+                });
+            });
+        }
+
+        // Initialize all functionalities
+        function init() {
+            const progress = [70, 50, 40]; // Example progress values for You, Gaurav, Agam
+            setupProgressCircles(progress);
+            setupChart();
+            setupButtons();
+        }
+
+        // Call the init function on page load
+        window.onload = init;
+        // Update Progress Function (Optional for dynamic updates)
+        function updateProgress(circleSelector, percent) {
+            const circle = document.querySelector(circleSelector + ' .foreground-circle');
+            const text = document.querySelector(circleSelector + ' .progress-text');
+            const radius = circle.r.baseVal.value;
+            const circumference = 2 * Math.PI * radius;
+
+            circle.style.strokeDasharray = circumference;
+            const offset = circumference - (percent / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+
+            text.textContent = `${percent}%`; // Ensure percentage is displayed correctly
+        }
+
+        // Example: Update progress dynamically (optional)
+        // updateProgress('.progress-circle', 50); // Call this function as needed
+    </script>
+</body>
+</html>

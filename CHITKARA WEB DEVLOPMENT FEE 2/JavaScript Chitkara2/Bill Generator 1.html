@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Generator</title>
+</head>
+<body>
+    <button id="btn-get-data">Get User Data</button>
+    <div id="bill"></div>
+
+    <script>
+        const btnGetData = document.getElementById('btn-get-data');
+        const billDiv = document.getElementById('bill');
+
+        function getUserData(userId) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    if (userId === 1) {
+                        resolve({ name: "John Doe", email: "john@example.com" });
+                    } else {
+                        reject("User not found!");
+                    }
+                }, 2000);
+            });
+        }
+
+        function getUserOrders(userId) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    if (userId === 1) {
+                        resolve(["Order 1", "Order 2", "Order 3"]);
+                    } else {
+                        reject("No orders found for this user!");
+                    }
+                }, 2000);
+            });
+        }
+
+        // Add event listener to the button
+        btnGetData.addEventListener('click', () => {
+            // Get user data and orders
+            getUserData(1).then(userData => {
+                billDiv.innerHTML = `User: ${userData.name}, Email: ${userData.email}`;
+                return getUserOrders(1);
+            }).then(orders => {
+                billDiv.innerHTML += `<br>Orders: ${orders.join(", ")}`;
+            }).catch(error => {
+                billDiv.innerHTML = `Error: ${error}`;
+            });
+        });
+    </script>
+</body>
+</html>

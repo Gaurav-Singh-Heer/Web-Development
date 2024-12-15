@@ -1,0 +1,404 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+    background-color: #141414;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5vh 2vw;
+    background-color: #000;
+    box-shadow: 0 0.5vh 1vh rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+/* Header Scrolled State */
+header.scrolled {
+    background-color: #333;
+}
+
+/* Navigation Styles */
+header nav ul {
+    display: flex;
+    font-size: 1.4rem;
+    gap: 2vw;
+    list-style: none;
+}
+
+/* Navigation List Item Styles */
+header nav ul li {
+    position: relative;
+}
+
+/* Navigation Link Styles */
+header nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    transition: color 0.3s ease, padding-bottom 0.3s ease;
+    font-size: 1rem;
+    padding-bottom: 0.5rem;
+}
+
+/* Navigation Link Hover and Focus Styles */
+header nav ul li a:hover,
+header nav ul li a:focus {
+    color: #ff7782;
+    transform: scale(1);
+}
+
+
+/* Logo Styles */
+.logo {
+    height: 8vh;
+}
+
+/* Mobile Menu Toggle (Hidden by Default) */
+.menu-toggle {
+    display: none;
+}
+
+.navbar-toggle {
+    display: none;
+}
+
+/* Responsive Header and Navigation for Mobile Devices */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header nav ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 1vw;
+        background-color: #000;
+        padding: 1rem 0;
+        margin-top: 1rem;
+    }
+
+    .menu-toggle:checked+.navbar-toggle+nav ul {
+        display: flex;
+    }
+
+    .navbar-toggle {
+        display: block;
+        background-color: #000;
+        border: none;
+        color: #fff;
+        font-size: 1.5rem;
+        cursor: pointer;
+        margin-left: auto;
+        padding: 0.5rem;
+    }
+
+    header nav ul li a {
+        padding: 1rem;
+        font-size: 1.2rem;
+    }
+}
+
+/* Slider Frame Styles */
+.slider-frame {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width: 100%;
+    margin: 20px auto;
+    height: auto;
+}
+
+/* Slider Animation */
+@keyframes slide_animation {
+
+    12.5%,
+    100%
+    {
+        left: 0;
+    }
+
+    25%,
+    37.5%,
+    87.5% {
+        left: -100vw;
+    }
+
+    50%,
+    75% {
+        left: -200vw;
+    }
+
+    62.5% {
+        left: -300vw;
+    }
+}
+
+/* Figure Styles */
+figure {
+    position: relative;
+}
+
+/* Figcaption Styles */
+figcaption {
+    position: absolute;
+    color: #fff;
+    bottom: 0rem;
+    font-size: 2rem;
+    font-weight: 900;
+    right: 2rem;
+    opacity: 0.7;
+}
+
+/* Slider Images Container */
+.slider-images {
+    width: 400vw;
+    /* 4 images * 100vw each */
+    height: 100%;
+    margin: 0;
+    position: relative;
+    animation-name: slide_animation;
+    animation-duration: 25s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-play-state: running;
+}
+
+/* Image Container Styles */
+.img-container {
+    height: 100%;
+    width: 100vw;
+    position: relative;
+    float: left;
+}
+
+/* Image Styles */
+.img-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #111;
+    color: #888;
+    padding: 2vh 4vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Footer Content Container */
+.footer-content {
+    max-width: 1200px;
+    width: 100%;
+}
+
+/* Footer Sections Container */
+.footer-sections {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2vw;
+    margin-bottom: 2vh;
+}
+
+/* Individual Footer Section */
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin: 1vh 0;
+}
+
+/* Footer Section Title */
+.footer-section h3 {
+    color: #fff;
+    margin-bottom: 1vh;
+    font-size: 1.2rem;
+    font-family: 'Oswald', sans-serif;
+}
+
+/* Footer Section List */
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* Footer Section List Item */
+.footer-section ul li {
+    margin: 0.5vh 0;
+}
+
+/* Footer Section List Item Link */
+.footer-section ul li a {
+    text-decoration: none;
+    color: #888;
+    transition: color 0.3s ease;
+}
+
+/* Footer Section List Item Link Hover */
+.footer-section ul li a:hover {
+    color: #fff;
+}
+
+/* Social Links Container */
+.social-links {
+    display: flex;
+    gap: 1vw;
+    margin: 2vh 0;
+}
+
+/* Social Link Icon */
+.social-link {
+    color: #888;
+    font-size: 2rem;
+    transition: color 0.3s ease;
+}
+
+/* Social Link Icon Hover */
+.social-link:hover {
+    color: #fff;
+}
+
+/* Footer Bottom Section */
+.footer-bottom {
+    text-align: center;
+    margin-top: 2vh;
+}
+
+/* Footer Bottom Text */
+.footer-bottom p {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* Responsive Footer Sections for Mobile Devices */
+@media (max-width: 768px) {
+    header nav ul {
+        font-size: 1.2rem;
+        gap: 1.5vw;
+    }
+
+    .footer-sections {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    header nav ul {
+        font-size: 1rem;
+        gap: 1vw;
+    }
+
+    .footer-sections {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .img-container img {
+        height: 700px;
+        width: 100%;
+        object-fit: cover;
+    }
+}
+
+
+/*                  FOR SECTION 2                */
+.bold-section {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 50px;
+    background-color: #ffffff;
+    color: #000;
+}
+
+.bold-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.text-content {
+    width: 45%;
+}
+
+.image-content {
+    width: 45%;
+}
+
+.bold-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.bold-item h2 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.bold-item p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: justify;
+}
+/* For screens smaller than 780px */
+@media (max-width: 780px) {
+    .bold-section {
+        padding: 20px; /* Adjust padding for smaller screens */
+    }
+
+    .bold-item {
+        flex-direction: column; /* Stack items vertically */
+        gap: 20px; /* Reduce gap between items */
+    }
+
+    .text-content, .image-content {
+        width: 100%; /* Full width for both content areas */
+    }
+
+    .text-content {
+        order: 2; /* Move text content below the image */
+    }
+
+    .image-content {
+        order: 1; /* Keep image content above the text */
+    }
+
+    .bold-item img {
+        width: 100%; /* Ensure images fill their container */
+        height: auto; /* Maintain aspect ratio */
+    }
+
+    .bold-item h2 {
+        font-size: 24px; /* Adjust font size for better readability */
+    }
+
+    .bold-item p {
+        font-size: 14px; /* Slightly smaller font size for better fit */
+        text-align: justify;
+    }
+}

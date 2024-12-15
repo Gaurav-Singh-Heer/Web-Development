@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h1>The Element Object</h1>
+    <h2>The querySelectorAll() Method</h2>
+
+    <p>Set the background color of the first element (in "myDIV") with class="example":</p>
+
+    <div id="myDIV" style="border:1px solid black">
+        <h2 class="example">A Heading</h2>
+        <p class="example">A paragraph.</p>
+    </div>
+
+    <script>
+        const element = document.getElementById("myDIV");
+        const list = element.querySelectorAll(".example");
+        list[0].style.backgroundColor = "red";
+    </script>
+
+</body>
+
+</html>

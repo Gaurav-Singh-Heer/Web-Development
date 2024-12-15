@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Memory Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1B262C;
+            font-family: Arial, sans-serif;
+            color: #BBE1FA;
+        }
+
+        .game-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .card {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #3282B8;
+            border: 2px solid #0F4C75;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 2rem;
+            color: #1B262C;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card .hidden {
+            display: none;
+        }
+
+        .card.matched {
+            background-color: #BBE1FA;
+            color: #3282B8;
+            pointer-events: none;
+        }
+
+        /* .game-board:after {
+            content: "";
+            clear: both;
+            display: table;
+        } */
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Emoji Memory Game</h1>
+        <div class="game-board" id="game-board"></div>
+    </div>
+    <script>
+        const emojis = ['🍎', '🥦', '🍉', '🍇', '🍍', '🍄', '🌸','🥝'];
+        const cards = [...emojis, ...emojis];
+        let flippedCards = [];
+        let matchedCards = [];
+        let clickDisabled = false;
+
+        function createCard(emoji) {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.innerHTML = `<span class="hidden">${emoji}</span>`;
+            card.addEventListener('click', () => flipCard(card));
+            return card;
+        }
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function flipCard(card) {
+            if (clickDisabled || card === flippedCards[0]) {
+                return;
+            }
+            card.firstChild.classList.remove('hidden');
+            flippedCards.push(card);
+            if (flippedCards.length === 2) {
+                clickDisabled = true;
+                setTimeout(() => {
+                    const [card1, card2] = flippedCards;
+                    if (card1.firstChild.textContent === card2.firstChild.textContent) {
+                        matchedCards.push(card1, card2);
+                        card1.classList.add('matched');
+                        card2.classList.add('matched');
+                        if (matchedCards.length === cards.length) {
+                            alert("Congratulations!! YOU WON!");
+                        }
+                    } else {
+                        card1.firstChild.classList.add('hidden');
+                        card2.firstChild.classList.add('hidden');
+                    }
+                    flippedCards = [];
+                    clickDisabled = false;
+                }, 1000);
+            }
+        }
+
+        function initGame() {
+            const gameBoard = document.getElementById('game-board');
+            const shuffledCards = shuffle(cards);
+            shuffledCards.forEach(emoji => {
+                const card = createCard(emoji);
+                gameBoard.appendChild(card);
+            });
+        }
+
+        initGame();
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "cwh-web-development",
+  "version": "1.0.0",
+  "description": "This is the best for web dev by harry",
+  "main": "63_1_Intro_Json.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "awesome"
+  ],
+  "author": "gaurav",
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^17.0.1",
+    "nodemon": "^3.1.7",
+    "pug": "^3.0.3",
+    "slugify": "^1.6.6"
+  }
+}

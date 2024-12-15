@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROMISES</title>
+    <style>
+        .status {
+            font-size: 1.5em;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript Promises</h1>
+
+    <div id="promiseStatus" class="status">Initialized</div>
+
+    <!-- Initialised -->
+    <div id="initialized">Promise State: Initialized</div>
+    <!-- Fulfilled -->
+    <div id="fulfilled" style="display:none; color: green;">Promise State: Fulfilled</div>
+    <!-- Rejected -->
+    <div id="rejected" style="display:none; color: red;">Promise State: Rejected</div>
+
+    <script>
+        // Create a new promise that randomly resolves or rejects
+        const myPromise = new Promise((resolve, reject) => {
+            document.getElementById("promiseStatus").innerText = "Promise Initialized";
+            
+            let condition = Math.random() > 0.5;  // 50% chance for success or failure
+
+            setTimeout(() => {
+                if (condition) {
+                    resolve("Promise resolved successfully!");
+                } else {
+                    reject("Promise rejected.");
+                }
+            }, 2000);  // Simulate a delay of 2 seconds
+        });
+
+        // Handling the promise
+        myPromise
+            .then((message) => {
+                document.getElementById("promiseStatus").innerText = message;
+                document.getElementById("fulfilled").style.display = "block";
+                document.getElementById("rejected").style.display = "none";
+            })
+            .catch((error) => {
+                document.getElementById("promiseStatus").innerText = error;
+                document.getElementById("fulfilled").style.display = "none";
+                document.getElementById("rejected").style.display = "block";
+            });
+    </script>
+</body>
+</html>

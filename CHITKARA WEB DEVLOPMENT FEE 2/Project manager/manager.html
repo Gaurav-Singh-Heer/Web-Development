@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="manager.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <style>
+        .attendance {
+            position: relative;
+            display: inline-block;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+
+        .circle {
+            width: 40px;
+            height: 40px;
+        }
+
+        .hover-info {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            top: 50px;
+            left: 0;
+        }
+
+        .attendance:hover .hover-info {
+            display: block;
+        }
+
+        .calendar {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .calendar.active {
+            display: block;
+        }
+
+        .calendar-days {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .calendar-day {
+            width: 25px;
+            height: 25px;
+            margin: 2px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            color: white;
+        }
+
+        .present-day {
+            background-color: #4CAF50;
+        }
+
+        .absent-day {
+            background-color: #F44336;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo"><img src="img/Dyanmic-logo.png" alt=""> Dynamic</div>
+            <nav>
+                <ul>
+                    <li><i class="fas fa-tachometer-alt"></i><a href="#">Dashboard</a></li>
+                    <li><i class="fas fa-chart-line"></i><a href="#">Analytics</a></li>
+                    <li><i class="fas fa-sitemap"></i><a href="#">Organization</a></li>
+                    <li><i class="fas fa-users"></i><a href="#">Employees</a></li>
+                    <li><i class="fas fa-calendar-alt"></i><a href="#">Calendar</a></li>
+                    <li><i class="fas fa-file-alt"></i><a href="#">Reports</a></li>
+                    <li><i class="fas fa-file"></i><a href="#">Files</a></li>
+                    <li><i class="fas fa-address-book"></i><a href="#">Directory</a></li>
+                    <li><i class="fas fa-cogs"></i><a href="#">Elements</a></li>
+                    <li><i class="fab fa-google"></i><a href="#">Google</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            <header>
+                <input type="text" class="search-bar" placeholder="Search...">
+                <div class="profile-icon">
+                    <img src="img/person.png" alt="Profile">
+                </div>
+            </header>
+
+            <div class="dashboard">
+                <h1>Manager Dashboard</h1>
+
+                <div class="stats-cards">
+                    <div class="card">
+                        <h3>4,267</h3>
+                        <p>New Users</p>
+                    </div>
+                    <div class="card">
+                        <h3>20,050+</h3>
+                        <p>Total Clients</p>
+                    </div>
+                    <div class="card">
+                        <h3>200+</h3>
+                        <p>Projects Made</p>
+                    </div>
+                    <div class="card">
+                        <h3>$677.89</h3>
+                        <p>Revenue This Month</p>
+                    </div>
+                </div>
+
+                <div class="user-table">
+                    <div class="user-row header">
+                        <div class="id">ID</div>
+                        <div class="name">NAME</div>
+                        <div class="title">TITLE</div>
+                        <div class="status">TEAM</div>
+                        <div class="attemdance">ATTENDANCE</div>
+                        <div class="role">ROLE</div>
+                    </div>
+
+                    <!-- Example User Row -->
+                    <div class="user-row">
+                        <div class="id">#01</div>
+                        <div class="name">
+                            <img src="img/Agam.jpg" alt="Agam"> Agam <br> Agam@example.com
+                        </div>
+                        <div class="title">Software Engineer</div>
+                        <div class="status"><span class="red">Red</span></div>
+                        <div class="attendance">
+                            <svg class="circle" width="40" height="40">
+                                <circle cx="20" cy="20" r="15" stroke="red" stroke-width="4" fill="none"></circle>
+                            </svg>
+                            <span class="hover-info">10/30 Present</span>
+                            <!-- Calendar Div -->
+                            <div class="calendar">
+                                <div class="calendar-days">
+                                    <!-- Days will be populated by JS -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="role"><a href="#">Edit</a></div>
+                    </div>
+                    <div class="user-row">
+                        <div class="id">#02</div>
+                        <div class="name">
+                            <img src="img/Aryan.jpg" alt="Aryan"> Aryan <br> Aryan@example.com
+                        </div>
+                        <div class="title">Software Engineer</div>
+                        <div class="status"><span class="red">Red</span></div>
+                        <div class="attendance">
+                            <svg class="circle" width="40" height="40">
+                                <circle cx="20" cy="20" r="15" stroke="red" stroke-width="4" fill="none"></circle>
+                            </svg>
+                            <span class="hover-info">10/30 Present</span>
+                            <!-- Calendar Div -->
+                            <div class="calendar">
+                                <div class="calendar-days">
+                                    <!-- Days will be populated by JS -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="role"><a href="#">Edit</a></div>
+                    </div>
+
+                    <div class="user-row">
+                        <div class="id">#03</div>
+                        <div class="name">
+                            <img src="img/Gaurav.jpg" alt="Gaurav"> Gaurav <br> gaurav@example.com
+                        </div>
+                        <div class="title">Software Engineer</div>
+                        <div class="status"><span class="red">Red</span></div>
+                        <div class="attendance">
+                            <svg class="circle" width="40" height="40">
+                                <circle cx="20" cy="20" r="15" stroke="red" stroke-width="4" fill="none"></circle>
+                            </svg>
+                            <span class="hover-info">10/30 Present</span>
+                            <!-- Calendar Div -->
+                            <div class="calendar">
+                                <div class="calendar-days">
+                                    <!-- Days will be populated by JS -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="role"><a href="#">Edit</a></div>
+                    </div>
+
+                    <div class="user-row">
+                        <div class="id">#04</div>
+                        <div class="name">
+                            <img src="img/Arshiya.jpg" alt="Arshiya"> Arshiya <br> Arshiya@example.com
+                        </div>
+                        <div class="title">Software Engineer</div>
+                        <div class="status"><span class="green">Green</span></div>
+                        <div class="attendance">
+                            <svg class="circle" width="40" height="40">
+                                <circle cx="20" cy="20" r="15" stroke="red" stroke-width="4" fill="none"></circle>
+                            </svg>
+                            <span class="hover-info">10/30 Present</span>
+                            <!-- Calendar Div -->
+                            <div class="calendar">
+                                <div class="calendar-days">
+                                    <!-- Days will be populated by JS -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="role"><a href="#">Edit</a></div>
+                    </div>
+
+                    <div class="user-row">
+                        <div class="id">#05</div>
+                        <div class="name">
+                            <img src="img/Agam.jpg" alt="Agam"> Agam <br> john@example.com
+                        </div>
+                        <div class="title">Software Engineer</div>
+                        <div class="status"><span class="green">Green</span></div>
+                        <div class="attendance">
+                            <svg class="circle" width="40" height="40">
+                                <circle cx="20" cy="20" r="15" stroke="red" stroke-width="4" fill="none"></circle>
+                            </svg>
+                            <span class="hover-info">10/30 Present</span>
+                            <!-- Calendar Div -->
+                            <div class="calendar">
+                                <div class="calendar-days">
+                                    <!-- Days will be populated by JS -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="role"><a href="#">Edit</a></div>
+                    </div>
+
+                    <div class="user-row">
+                        <div class="id">#06</div>
+                        <div class="name">
+                            <img src="img/Aryan.jpg" alt="Aryan"> Aryan <br> Aryan@example.com
+                        </div>
+                        <div class="title">Software Engineer</div>
+                        <div class="status"><span class="green">Green</span></div>
+                        <div class="attendance">
+                            <svg class="circle" width="40" height="40">
+                                <circle cx="20" cy="20" r="15" stroke="red" stroke-width="4" fill="none"></circle>
+                            </svg>
+                            <span class="hover-info">10/30 Present</span>
+                            <!-- Calendar Div -->
+                            <div class="calendar">
+                                <div class="calendar-days">
+                                    <!-- Days will be populated by JS -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="role"><a href="#">Edit</a></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateAttendance() {
+            const attendanceCircles = document.querySelectorAll('.attendance');
+
+            attendanceCircles.forEach(attendance => {
+                const presentDays = Math.floor(Math.random() * 30) + 1;
+                const absentDays = 30 - presentDays;
+                const strokeColor = presentDays > 15 ? 'green' : 'red';
+
+                attendance.querySelector('circle').setAttribute('stroke', strokeColor);
+
+                const hoverInfo = attendance.querySelector('.hover-info');
+                hoverInfo.innerText = `${presentDays}/30 Present`;
+
+                const calendarDaysContainer = attendance.querySelector('.calendar-days');
+                calendarDaysContainer.innerHTML = '';
+
+                for (let i = 1; i <= 30; i++) {
+                    const day = document.createElement('div');
+                    day.classList.add('calendar-day');
+
+                    if (i <= presentDays) {
+                        day.classList.add('present-day');
+                        day.setAttribute('title', `Day ${i}: Present`);
+                    } else {
+                        day.classList.add('absent-day');
+                        day.setAttribute('title', `Day ${i}: Absent`);
+                    }
+
+                    day.innerText = i;
+                    calendarDaysContainer.appendChild(day);
+                }
+
+                // Add click event listener to toggle calendar visibility
+                const circleSvg = attendance.querySelector('svg.circle');
+                circleSvg.addEventListener('click', function () {
+                    const calendarDiv = attendance.querySelector('.calendar');
+                    calendarDiv.classList.toggle('active');  // Toggle 'active' class to show/hide calendar
+                });
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            updateAttendance();
+        });
+    </script>
+</body>
+
+</html>

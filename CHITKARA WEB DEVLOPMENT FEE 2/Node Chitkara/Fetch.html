@@ -1,0 +1,70 @@
+<!-- 
+ do the exact thong that ajax do but is the latest version of ajax and also fetch use 
+ promises and ajax dont 
+ diff b/w ajax and fetch:
+ - ajax can be sometimes very trichy and we have write a lot of code
+ -ajax don't use promise but fetch uses.
+ -ajax doesn't work with cross domain, but fetch will do.
+ -If we have made request and cancel the request we can do it with ajax not fetch using keyword ' '.\
+ - old browser may or may not support fetch but they support ajax.
+ 
+ THEN:
+ first then will check for the response and bring back the response in the form of object.
+ the next then will display the data how you want.
+ -->
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Fetch Data</h3>
+    <button id="displaybtn">Display data</button> <!-- Corrected typo in 'button' -->
+    <table id="tableData" style="width:100%; margin-top:20px;">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <script>
+        document.getElementById('displaybtn').addEventListener('click', () => { // Fixed typo in 'click'
+            fetch('https://fakestoreapi.com/products')
+                .then(response => {
+                    // Check if the response is OK (status code 200-299)
+                    if (!response.ok) {
+                        throw new Error(`Network response was not ok`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    let tableBody = document.getElementById('tableData').getElementsByTagName('tbody')[0];
+                    let rows = '';
+
+                    // Loop through the data and create table rows
+                    data.forEach(product => {
+                        rows += `
+                        <tr>
+                            <td>${product.title}</td>
+                            <td>$${product.price.toFixed(2)}</td>
+                            <td><img src="${product.image}" alt="${product.title}" style="width:100px; height:auto;"></td>
+                        </tr>`;
+                    });
+
+                    // Insert the rows into the table body
+                    tableBody.innerHTML = rows;
+                })
+                .catch(error => {
+                    console.error(`There has been a problem with your fetch operation:`, error);
+                });
+        });
+    </script>
+</body>
+</html>

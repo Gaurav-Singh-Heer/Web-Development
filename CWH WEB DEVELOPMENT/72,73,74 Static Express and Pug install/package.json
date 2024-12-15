@@ -1,0 +1,15 @@
+{
+  "name": "72-static-express",
+  "version": "1.0.0",
+  "description": "For express",
+  "main": "72_1_Static_Files_and_Pug.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gaurav",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1",
+    "pug": "^3.0.3"
+  }
+}

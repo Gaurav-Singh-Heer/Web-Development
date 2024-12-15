@@ -1,0 +1,102 @@
+Our node JS architecture starts with client
+
+Client Sends request to the server
+server is running on NodeJS
+
+All request Goes in Event Queue Then it goes in Event Loop(It is a type of loop or machine check 
+whether any request has came or not)
+
+If Any request is in Event Queue, Event Loop picks it and runs it on FIFO principle
+
+(FIFO means, User sent request First will get output First )
+
+Work of Event Loop->To watch event Queue and pick request one by one from queue
+
+Request we picked can be of two type:-
+1) Blocking Operations (Synchronous task)
+2) Non Blocking Operations (Asynchronous task)
+
+If Request is Non-Blocking:
+    Request is picked from queue will be processed and response will be sent to the user
+
+    Request->Event Queue->Event Loop->Response 
+
+If Request is Blocking: 
+    Request is sent to thread pool 
+
+    thread pool-> It is a pool that has thread(worker), these thread is responsible for fulfilling 
+    our blocking Operations
+
+    Blocking Operations says to thread pool that i need a thread(worker)
+    Thread Pool will check whether it has thread or not (As we have limited worker thread)
+    If thread available it is assigned that Operation
+    when work is complete it comes back to thread pool and will return the result  
+
+    Request->Event Queue->Event Loop->Thread Pool->Response
+
+    ***By default we have 4 Threads ***
+
+    If all Threads/worker are busy and 5th user came it has to wait till any one gets free
+
+    Scalability issue is-> If we made any site or server and many users came at the same time 
+|                           Then many users have to wait which will increase the waiting time 
+|                           and lead to starvation
+
+
+Default Thread Pool Size->4
+Max Thread Pool Size->Depends on machine to machine, The server we are buying/renting the number
+|                     of core in that server that much number of thread
+
+If core size is 8
+Then, Max Thread Pool Size ->8 (it can't be 9)
+
+------------------------------------------------------------------------------------------------
+
+const fs=require("fs")
+const os=require("os")
+
+console.log(os.cpus().length)
+
+// Output -> 8
+
+So, Max Core size I can take is 8
+
+------------------------------------------------------------------------------------------------
+const fs=require("fs")
+
+console.log("1")
+
+// Blocking...
+const result = fs.readFileSync("./3_3_Contact.txt","utf-8");
+console.log(result)
+
+console.log("2")
+
+Output:-
+1
+Gaurav Singh Heer: +91628111111111
+Saurav Singh Heer: +91628222222222
+2
+
+-------------------------------------------------------------------------------------------------
+
+const fs=require("fs")
+
+console.log("1")
+
+//Non Blocking...
+fs.readFile("./3_3_Contact.txt","utf-8",(err,result)=>{
+    console.log(result);
+});
+
+console.log("2")
+console.log("3")
+console.log("4")
+
+Output:-
+1
+2
+3
+4
+Gaurav Singh Heer: +91628111111111
+Saurav Singh Heer: +91628222222222

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ravindra Jadeja - Card Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .details-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+        ul {
+            margin-left: 20px;
+            color: #555;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="details-container">
+        <h1 id="card-title">Ravindra Jadeja</h1>
+        <p id="card-description">
+            <strong>Early Life and Background:</strong><br>
+            Ravindra Jadeja was born on December 6, 1988, in Jamnagar, Gujarat, India. Known for his all-round abilities, Jadeja made a mark in cricket from a young age. His skills as a left-arm spinner and an explosive lower-order batsman quickly caught the attention of selectors.
+            <br><br>
+            <strong>Domestic Career:</strong><br>
+            Jadeja's domestic career began with Saurashtra, where he showcased his all-round capabilities. His performances in domestic cricket, especially with the ball, earned him a spot in the Indian Premier League (IPL) and the national team.
+            <br><br>
+            <strong>International Career:</strong><br>
+            <strong>Debut and Early Years:</strong><br>
+            Ravindra Jadeja made his international debut for India in an ODI against Sri Lanka on February 8, 2009. His versatility as a bowler, batsman, and fielder quickly made him an integral part of the team.
+            <br><br>
+            <strong>Rise to Prominence:</strong><br>
+            Jadeja's performances in both Test and limited-overs formats have been notable. He is renowned for his exceptional fielding skills and his ability to contribute with both bat and ball. His role in India's victory in the 2013 ICC Champions Trophy was crucial.
+            <br><br>
+            <strong>Achievements and Awards:</strong>
+            <ul>
+                <li>ICC Player of the Year: 2013</li>
+                <li>ICC Champions Trophy Winner: 2013</li>
+                <li>Indian Premier League (IPL) Champion with Chennai Super Kings (2010, 2011, 2018, 2021)</li>
+                <li>Notable Test Match performances, including a historic 5-wicket haul in the 2018 Test series in Australia</li>
+            </ul>
+            <br>
+            <strong>Personal Life:</strong><br>
+            Ravindra Jadeja is known for his commitment to fitness and his passion for the game. He married Rivaba Solanki in 2016, and the couple has a daughter named Nidhi.
+            <br><br>
+            <strong>Legacy:</strong><br>
+            Jadeja is regarded as one of the best all-rounders in modern cricket. His contributions across formats and his exceptional skills in the field have made him a valuable asset to Indian cricket.
+            <br><br>
+            <strong>External Links:</strong>
+            <ul>
+                <li><a href="https://twitter.com/imjadeja" target="_blank">Twitter</a></li>
+                <li><a href="https://www.instagram.com/jaddu33/" target="_blank">Instagram</a></li>
+            </ul>
+        </p>
+        <button onclick="window.history.back()">Go Back</button>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        document.getElementById('card-title').textContent = params.get('title') || 'Ravindra Jadeja';
+        document.getElementById('card-description').innerHTML = document.getElementById('card-description').innerHTML.replace(/\n/g, '<br>');
+    </script>
+</body>
+</html>

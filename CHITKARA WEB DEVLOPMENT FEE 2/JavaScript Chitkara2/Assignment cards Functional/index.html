@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Catalogue</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #1B262C;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            color: #BBE1FA;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .container {
+            column-count: 4;
+            column-gap: 20px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .card {
+            background-color: #0F4C75;
+            border: 1px solid #3282B8;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: inline-block;
+            width: 100%;
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            break-inside: avoid;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .card-title {
+            font-weight: 500;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #000;
+        }
+
+        .card-description {
+            font-weight: 400;
+            font-size: 1em;
+            color: #BBE1FA;
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                column-count: 3;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                column-count: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Catalogue</h1>
+    <div class="container">
+        <div class="card" data-title="Virat Kohli" data-description="Details about Virat Kohli" data-page="Virat.html">
+            <img src="https://cdn.zeebiz.com/sites/default/files/2022/11/05/209096-virat-kohli-7-pti.jpg"
+                alt="Card 1 Image">
+            <div class="card-title">Virat Kohli</div>
+            <div class="card-description">This is a brief description of Virat Kohli.</div>
+        </div>
+        <div class="card" data-title="Rohit Sharma" data-description="Details about Rohit Sharma" data-page="Rohit.html">
+            <img src="https://th.bing.com/th/id/OIP.u4Gbxs6tFRg9zczGomcBNQHaE8?w=264&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7"
+                alt="Card 2 Image">
+            <div class="card-title">Rohit Sharma</div>
+            <div class="card-description">This is a brief description of Rohit Sharma.</div>
+        </div>
+        <div class="card" data-title="Shikhar Dhawan" data-description="Details about Shikhar Dhawan" data-page="Shikhar.html">
+            <img src="https://th.bing.com/th/id/OIP.On2VA-3CHlyddSH5sc2edQHaEK?w=274&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7"
+                alt="Card 3 Image">
+            <div class="card-title">Shikhar Dhawan</div>
+            <div class="card-description">This is a brief description of Shikhar Dhawan.</div>
+        </div>
+        <div class="card" data-title="MS Dhoni" data-description="Details about MS Dhoni" data-page="Dhoni.html">
+            <img src="https://th.bing.com/th/id/OIP.lxgzRlx7wB8ejLAkFysa0gHaJ3?w=131&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7"
+                alt="Card 4 Image">
+            <div class="card-title">MS Dhoni</div>
+            <div class="card-description">This is a brief description of MS Dhoni.</div>
+        </div>
+        <div class="card" data-title="KL Rahul" data-description="This is a brief description of KL Rahul" data-page="Rahul.html">
+            <img src="https://th.bing.com/th/id/OIP.osvlLsgYfeZknRZe8v7v0gHaEK?w=314&h=184&c=7&r=0&o=5&dpr=1.5&pid=1.7" alt="KL Rahul Image">
+            <div class="card-title">KL Rahul</div>
+            <div class="card-description">This is a brief description of KL Rahul.</div>
+        </div>
+        <div class="card" data-title="Jasprit Bumrah" data-description="This is a brief description of Jasprit Bumrah" data-page="Bumrah.html">
+            <img src="https://th.bing.com/th/id/OIP.W0nySTTFwBKUBHuzP7g2gAHaEK?w=278&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7" alt="Jasprit Bumrah Image">
+            <div class="card-title">Jasprit Bumrah</div>
+            <div class="card-description">This is a brief description of Jasprit Bumrah.</div>
+        </div>
+        <div class="card" data-title="Hardik Pandya" data-description="This is a brief description of Hardik Pandya" data-page="Pandya.html">
+            <img src="https://wallpaperaccess.com/full/6978633.jpg" alt="Hardik Pandya Image">
+            <div class="card-title">Hardik Pandya</div>
+            <div class="card-description">This is a brief description of Hardik Pandya.</div>
+        </div>
+        <div class="card" data-title="Shreyas Iyer" data-description="This is a brief description of Shreyas Iyer" data-page="Iyer.html">
+            <img src="https://th.bing.com/th/id/OIP.LjCh6RbTZdJqSuUPnFk5YQHaE8?w=232&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7" alt="Shreyas Iyer Image">
+            <div class="card-title">Shreyas Iyer</div>
+            <div class="card-description">This is a brief description of Shreyas Iyer.</div>
+        </div>
+        <div class="card" data-title="Ambati Rayudu" data-description="This is a brief description of Ambati Rayudu" data-page="Rayudu.html">
+            <img src="https://th.bing.com/th/id/OIP.nQgdPg_LtDLqrTJuVRzHQAHaFj?w=247&h=185&c=7&r=0&o=5&dpr=1.5&pid=1.7" alt="Ambati Rayudu Image">
+            <div class="card-title">Ambati Rayudu</div>
+            <div class="card-description">This is a brief description of Ambati Rayudu.</div>
+        </div>
+        <div class="card" data-title="Ravindra Jadeja" data-description="This is a brief description of Ravindra Jadeja" data-page="Jadeja.html">
+            <img src="https://th.bing.com/th/id/OIP.EAbKqH4Xq25tb1JXbtkATwHaEK?w=274&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7" alt="Ravindra Jadeja Image">
+            <div class="card-title">Ravindra Jadeja</div>
+            <div class="card-description">This is a brief description of Ravindra Jadeja.</div>
+        </div>
+        <div class="card" data-title="Rishabh Pant" data-description="This is a brief description of Rishabh Pant" data-page="Pant.html">
+            <img src="https://th.bing.com/th/id/OIP.ffexuWEkUzozRmCIzJ-lawHaFj?w=266&h=200&c=7&r=0&o=5&dpr=1.5&pid=1.7" alt="Rishabh Pant Image">
+            <div class="card-title">Rishabh Pant</div>
+            <div class="card-description">This is a brief description of Rishabh Pant.</div>
+        </div>
+        <div class="card" data-title="Mohammed Shami" data-description="This is a brief description of Mohammed Shami" data-page="Shammi.html">
+            <img src="https://wallpapercave.com/wp/wp5118565.jpg" alt="Mohammed Shami Image">
+            <div class="card-title">Mohammed Shami</div>
+            <div class="card-description">This is a brief description of Mohammed Shami.</div>
+        </div>        
+    </div>
+
+    <script>
+        document.querySelector('.container').addEventListener('click', (e) => {
+            const card = e.target.closest('.card');
+            if (card) {
+                const title = card.dataset.title;
+                const description = card.dataset.description;
+                const page = card.dataset.page;
+                window.location.href = `${page}?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`;
+            }
+        });
+    </script>
+</body>
+
+</html>

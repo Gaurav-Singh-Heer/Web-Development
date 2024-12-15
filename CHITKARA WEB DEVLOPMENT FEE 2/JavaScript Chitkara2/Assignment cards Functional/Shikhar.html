@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shikhar Dhawan - Card Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .details-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+        ul {
+            margin-left: 20px;
+            color: #555;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="details-container">
+        <h1 id="card-title">Shikhar Dhawan</h1>
+        <p id="card-description">
+            <strong>Early Life and Background:</strong><br>
+            Shikhar Dhawan was born on December 5, 1985, in Delhi, India. He started playing cricket at a young age and quickly made a name for himself in domestic cricket. Dhawan was known for his aggressive batting style and his ability to play long innings.
+            <br><br>
+            <strong>Domestic Career:</strong><br>
+            Dhawan began his domestic career with Delhi and soon became a key player for the team. His consistent performances in domestic cricket earned him a spot in the Indian Premier League (IPL), where he has been a standout performer for various franchises, including Sunrisers Hyderabad and Delhi Capitals.
+            <br><br>
+            <strong>International Career:</strong><br>
+            <strong>Debut and Early Years:</strong><br>
+            Shikhar Dhawan made his international debut for India in 2010 in an ODI against Australia. He quickly established himself as a reliable opener in the Indian team, known for his flamboyant batting and ability to score runs quickly.
+            <br><br>
+            <strong>Rise to Stardom:</strong><br>
+            Dhawan gained prominence with his outstanding performance in the 2013 ICC Champions Trophy, where he was the tournament's highest run-scorer. He continued to be a key player for India in both ODIs and T20Is, known for his powerful hitting and consistency at the top of the order.
+            <br><br>
+            <strong>Captaincy:</strong><br>
+            While Dhawan has not captained the Indian national team, he has led various teams in the IPL and has been a crucial player for his franchises.
+            <br><br>
+            <strong>Personal Life:</strong><br>
+            Shikhar Dhawan is married to Ayesha Mukherjee, and the couple has a son named Zoravar. Dhawan is also known for his philanthropic activities and his involvement in community service.
+            <br><br>
+            <strong>Achievements and Awards:</strong>
+            <ul>
+                <li>ICC Champions Trophy Player of the Tournament: 2013</li>
+                <li>Most Runs in ICC Champions Trophy 2013</li>
+                <li>Indian Premier League (IPL) Titles: Multiple as a key player</li>
+            </ul>
+            <br>
+            <strong>Legacy:</strong><br>
+            Shikhar Dhawan is known for his aggressive batting and his ability to play impactful innings in crucial matches. His contributions to Indian cricket, especially in limited-overs formats, have made him a celebrated player.
+            <br><br>
+            <strong>External Links:</strong>
+            <ul>
+                <li><a href="https://www.shikhardhawan.com" target="_blank">Official Website</a></li>
+                <li><a href="https://twitter.com/SDhawan25" target="_blank">Twitter</a></li>
+                <li><a href="https://www.instagram.com/shikhardofficial/" target="_blank">Instagram</a></li>
+            </ul>
+        </p>
+        <button onclick="window.history.back()">Go Back</button>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        document.getElementById('card-title').textContent = params.get('title') || 'Shikhar Dhawan';
+        document.getElementById('card-description').innerHTML = document.getElementById('card-description').innerHTML.replace(/\n/g, '<br>');
+    </script>
+</body>
+</html>

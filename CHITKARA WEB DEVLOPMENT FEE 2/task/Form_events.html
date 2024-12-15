@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Events</title>
+</head>
+<style>
+    .fom{
+        box-shadow: 110px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        margin-top: 100px;
+    }
+</style>
+<body>
+    <div class="fom">
+    <form id="userform">
+        <label for="name">Name :</label>
+        <input type="text" id="inputName" placeholder="Enter Your Name"/><br><br>
+        <label for="number">Phone No. :</label>
+        <input type="tel" id="inputNumber" placeholder="Enter Your Phone No."/><br><br>
+        <label for="email">Email :</label>
+        <input type="email" id="inputEmail" placeholder="Enter Your Email"/><br><br>	
+        <button type="submit">Submit</button>
+        <p id="keyStatus"></p>
+    </form>
+</div>
+    <script>
+        const userform = document.getElementById('userform');
+        const usernameField = document.getElementById('inputName');
+        const userNumberField = document.getElementById('inputNumber');
+        const userEmailField = document.getElementById('inputEmail');
+        const formStatus = document.getElementById('keyStatus');
+        userform.addEventListener('submit', function(event){
+            event.preventDefault();            
+            const phoneNumber = userNumberField.value;
+            if (phoneNumber.length === 10 && !isNaN(phoneNumber)) {
+                formStatus.innerHTML = `Name: ${usernameField.value}<br>
+                Phone No.: ${userNumberField.value}<br> 
+                Email: ${userEmailField.value}`;
+                formStatus.style.color = "black"; 
+            } else {
+                formStatus.innerHTML = "Error: Phone number must be exactly 10 digits.";
+                formStatus.style.color = "red"; 
+            }
+        });
+        usernameField.addEventListener('input', function(event){
+            formStatus.innerHTML = `Name: ${usernameField.value}`;
+        });
+        userNumberField.addEventListener('input', function(event){
+            formStatus.innerHTML = `Phone No.: ${userNumberField.value}`;
+        });
+        userEmailField.addEventListener('input', function(event){
+            formStatus.innerHTML = `Email: ${userEmailField.value}`;
+        });
+    </script>
+</body>
+</html>

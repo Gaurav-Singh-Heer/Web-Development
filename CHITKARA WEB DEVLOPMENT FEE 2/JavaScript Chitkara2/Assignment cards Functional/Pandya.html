@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hardik Pandya - Card Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .details-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+        ul {
+            margin-left: 20px;
+            color: #555;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="details-container">
+        <h1 id="card-title">Hardik Pandya</h1>
+        <p id="card-description">
+            <strong>Early Life and Background:</strong><br>
+            Hardik Pandya was born on October 11, 1993, in Surat, Gujarat, India. He developed a passion for cricket at a young age and was known for his explosive batting and effective bowling. Pandya initially played for the Gujarat domestic team before making a mark in the IPL.
+            <br><br>
+            <strong>Domestic Career:</strong><br>
+            Pandya's domestic career took off with his performances for Gujarat in the Ranji Trophy. His hard-hitting batting and useful medium-pace bowling caught the eye of selectors and IPL franchises. He made a significant impact with the Mumbai Indians in the IPL.
+            <br><br>
+            <strong>International Career:</strong><br>
+            <strong>Debut and Early Years:</strong><br>
+            Hardik Pandya made his international debut for India in a T20I against Australia on January 26, 2016. Known for his all-round abilities, Pandya quickly became a key player in India's limited-overs setup.
+            <br><br>
+            <strong>Rise to Prominence:</strong><br>
+            Pandya's aggressive batting and handy bowling made him a valuable asset for the Indian team. He played a crucial role in India's 2017 ICC Champions Trophy campaign and has been an essential player in both ODIs and T20Is.
+            <br><br>
+            <strong>Achievements and Awards:</strong>
+            <ul>
+                <li>Key player in Mumbai Indians' IPL title wins</li>
+                <li>Outstanding performances in international cricket, particularly in T20Is</li>
+                <li>Named in the ICC T20I Team of the Year: 2018</li>
+            </ul>
+            <br>
+            <strong>Personal Life:</strong><br>
+            Hardik Pandya is known for his charismatic personality and has a strong presence on social media. He married Natasa Stankovic, a Bollywood actress, in May 2020, and they have a son named Agastya, born in July 2020.
+            <br><br>
+            <strong>Legacy:</strong><br>
+            Pandya is regarded as one of the most exciting all-rounders in modern cricket. His ability to change games with both bat and ball makes him a vital player in the Indian cricket team.
+            <br><br>
+            <strong>External Links:</strong>
+            <ul>
+                <li><a href="https://www.hardikpandya.com" target="_blank">Official Website</a></li>
+                <li><a href="https://twitter.com/hardikpandya7" target="_blank">Twitter</a></li>
+                <li><a href="https://www.instagram.com/hardikpandya_official/" target="_blank">Instagram</a></li>
+            </ul>
+        </p>
+        <button onclick="window.history.back()">Go Back</button>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        document.getElementById('card-title').textContent = params.get('title') || 'Hardik Pandya';
+        document.getElementById('card-description').innerHTML = document.getElementById('card-description').innerHTML.replace(/\n/g, '<br>');
+    </script>
+</body>
+</html>

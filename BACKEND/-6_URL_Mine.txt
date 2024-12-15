@@ -1,0 +1,406 @@
+https://www.npmjs.com/ 
+
+Search Package URL
+
+npm i url
+
+this is used to divide url to Protocol
+
+-------------------------------------------------------------------------------------------------
+URL-> Uniform Resource Locator
+
+Example-> https://www.piyushgarg.dev/
+
+Here, 
+    1) https:-
+      -Protocol:Hypertext Transfer Protocol Secure
+
+        Protocol means how to communicate with the server. Protocol is a set of rules that tells
+        browser how to communicate.
+        Like in https -> All request and response are encrypted. It is SSL certified 
+                http -> No SSL certificate and also less secure 
+
+    2) www.piyushgarg.dev (Domain):-
+        -Domain:User Friendly Name of IP Address of My server
+
+        there is an IP address of a server but obviously we can't learn it. So, we purchase a 
+        domain to point to that IP. This domain becomes the user Friendly Name of the site.
+
+    3) /:-
+        - Path: Homepage or Root Path
+
+        Example :- www.piyushgarg.dev/about
+|                  www.piyushgarg.dev/contact-us 
+
+        - Nested Path:
+
+        Example :- www.piyushgarg.dev/project/1
+|                  www.piyushgarg.dev/project/2
+
+    4) (userId=1&a=2) Query Parameters:
+
+        Example:- piyushgarg.dev/about?userId=1&a=2
+
+        They are basically the extra information which we pass along with our URL
+
+------------------------------------------------------------------------------------------------
+
+REAL LIFE URL:-
+
+1)
+  https://www.google.co.in/search?q=javascript+interview+questions&sca_esv=e1265ee66efd81f4&sxsrf=ADLYWIKls627Hv3Ns2d0yUgJx_MZYKqrSA%3A1733980148021&source=hp&ei=829aZ42iO4qg1e8Pw_vbwAc&iflsig=AL9hbdgAAAAAZ1p-BHkeBa7QLOaQ1_dK7_htJorWsIue&ved=0ahUKEwjN55G2u6GKAxUKUPUHHcP9FngQ4dUDCBk&uact=5&oq=javascript+interview+questions&gs_lp=Egdnd3Mtd2l6Ih5qYXZhc2NyaXB0IGludGVydmlldyBxdWVzdGlvbnMyCBAAGIAEGLEDMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAESL4CUABYAHAAeACQAQCYAZ8BoAGfAaoBAzAuMbgBA8gBAPgBAvgBAZgCAaACpAGYAwCSBwMwLjGgB74G&sclient=gws-wiz
+
+|       |                 |      |
+|       |                 |      |
+|       |                 |      |
+Protocol    Domain          Path                Query Parameters
+ 
+q=javascript+interview+questions&sca_esv=e1265ee66efd81f4&sxsrf=ADLYWIKls627Hv3Ns2d0yUgJx_MZYKqrSA%3A1733980148021&source=hp&ei=829aZ42iO4qg1e8Pw_vbwAc&iflsig=AL9hbdgAAAAAZ1p-BHkeBa7QLOaQ1_dK7_htJorWsIue&ved=0ahUKEwjN55G2u6GKAxUKUPUHHcP9FngQ4dUDCBk&uact=5&oq=javascript+interview+questions&gs_lp=Egdnd3Mtd2l6Ih5qYXZhc2NyaXB0IGludGVydmlldyBxdWVzdGlvbnMyCBAAGIAEGLEDMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAESL4CUABYAHAAeACQAQCYAZ8BoAGfAaoBAzAuMbgBA8gBAPgBAvgBAZgCAaACpAGYAwCSBwMwLjGgB74G&sclient=gws-wiz
+
+Here, q is Query Head
+      value of q, javascript+interview+questions         //As we can't add space in url so used +
+      
+2) 
+  https://www.youtube.com/results?search_query=javascript+tic+tac+toe
+
+|       |                 |      |
+|       |                 |      |
+|       |                 |      |
+Protocol    Domain          Path                Query Parameters
+-------------------------------------------------------------------------------------------------
+
+To get IP address of google we can write:
+
+ping google.com 
+
+in the terminal :
+
+As, C:\Users\GAURAV>ping google.com
+    Pinging google.com [2404:6800:4002:826::200e] with 32 bytes of data:
+    Reply from 2404:6800:4002:826::200e: time=35ms
+    Reply from 2404:6800:4002:826::200e: time=67ms
+    Reply from 2404:6800:4002:826::200e: time=42ms
+    Reply from 2404:6800:4002:826::200e: time=62ms
+
+    Ping statistics for 2404:6800:4002:826::200e:
+        Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+    Approximate round trip times in milli-seconds:
+        Minimum = 35ms, Maximum = 67ms, Average = 51ms
+
+-------------------------------------------------------------------------------------------------
+
+const http=require("http")
+const fs=require("fs")
+
+const myServer=http.createServer((req,res)=>{
+    
+    if(req.url==="/favicon.ico") return res.end(); // By this we will not log /favicon.ico in txt file
+    const log=`${Date.now()}:${req.url} New Request Received\n`;
+    fs.appendFile('6_2_log.txt',log,(err,data)=>{
+        switch(req.url){
+            case '/':
+                res.end("HomePage");
+            break
+            case '/about':
+                res.end("I am Gaurav Singh Heer");
+            break
+            default:
+                res.end("404 Not found");
+            break
+        }
+    }); // not using synchronous as if all thread in work user has to wait
+})
+
+myServer.listen(8000,()=>console.log("Server Started!"));
+
+log.txt file:-
+Output:-
+
+1733980900449:/ New Request Received
+1733980905204:/about New Request Received
+1733980940813:/about?myname=piyush New Request Received
+
+At http://localhost:8000/about?myname=piyush               (404 Not Found)
+our http module does not pass this request.module it does not know to seperate '?' then
+"/about" this is path and "myname=piyush" this is Query Parameters
+
+-------------------------------------------------------------------------------------------------
+
+At http://localhost:8000/about?myname=piyush               (404 Not Found)
+our http module does not pass this request.module it does not know to seperate '?' then
+"/about" this is path and "myname=piyush" this is Query Parameters
+
+For this we use external package
+
+https://www.npmjs.com/ at this site 
+
+npm js this is called Node Package Manager JavaScript 
+
+-------------------------------------------------------------------------------------------------
+
+const http=require("http")
+const fs=require("fs")
+const url=require("url") // It first Check at package.json if not found there then it import on it's own
+
+const myServer=http.createServer((req,res)=>{
+    
+    if(req.url==="/favicon.ico") return res.end(); // By this we will not log /favicon.ico in txt file
+    const log=`${Date.now()}:${req.url} New Request Received\n`;
+    const myUrl=url.parse(req.url);
+    console.log(myUrl);
+    fs.appendFile('6_4_log.txt',log,(err,data)=>{
+        switch(req.url){
+            case '/':
+                res.end("HomePage");
+            break
+            case '/about':
+                res.end("I am Gaurav Singh Heer");
+            break
+            default:
+                res.end("404 Not found");
+            break
+        }
+    }); // not using synchronous as if all thread in work user has to wait
+})
+
+myServer.listen(8000,()=>console.log("Server Started!"));
+
+
+BY THIS:-
+
+const myUrl=url.parse(req.url);
+console.log(myUrl);
+
+At Log.txt:
+1733986761276:/ New Request Received
+1733986771777:/about New Request Received
+1733986779889:/about?myname=piyush New Request Received
+
+
+At Console:-
+Server Started!
+Url {
+  protocol: null,
+  slashes: null,
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,
+  hash: null,
+  search: null,
+  query: null,
+  pathname: '/',
+  path: '/',
+  href: '/'
+}
+Url {
+  protocol: null,
+  slashes: null,
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,
+  hash: null,
+  search: null,
+  query: null,
+  pathname: '/about',
+  path: '/about',
+  href: '/about'
+}
+Url {
+  protocol: null,
+  slashes: null,
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,
+  hash: null,
+  search: '?myname=piyush',
+  query: 'myname=piyush',
+  pathname: '/about',
+  path: '/about?myname=piyush',
+  href: '/about?myname=piyush'
+}
+
+-------------------------------------------------------------------------------------------------
+
+Going_At_About_Even_After_Query:-
+
+const http=require("http")
+const fs=require("fs")
+const url=require("url") // It first Check at package.json if not found there then it import on it's own
+
+const myServer=http.createServer((req,res)=>{
+    
+    if(req.url==="/favicon.ico") return res.end(); // By this we will not log /favicon.ico in txt file
+    const log=`${Date.now()}:${req.url} New Request Received\n`;
+    const myUrl=url.parse(req.url);
+    console.log(myUrl.pathname);
+    fs.appendFile('6_5_log.txt',log,(err,data)=>{
+        switch(myUrl.pathname){           // Changed This switch
+            case '/':
+                res.end("HomePage");
+            break
+            case '/about':
+                res.end("I am Gaurav Singh Heer");
+            break
+            default:
+                res.end("404 Not found");
+            break
+        }
+    }); // not using synchronous as if all thread in work user has to wait
+})
+
+myServer.listen(8000,()=>console.log("Server Started!"));
+
+
+At Log.txt:-
+1733987062123:/about?myname=piyush New Request Received
+1733987068915:/ New Request Received
+1733987072842:/about New Request Received
+1733987080753:/about?myname=piyush New Request Received
+
+At Console:-
+Server Started!
+/about
+/
+/about
+/about
+-------------------------------------------------------------------------------------------------
+
+-Query_Parameters  :- object query: [Object: null prototype] {}, created using true
+
+const http=require("http")
+const fs=require("fs")
+const url=require("url") // It first Check at package.json if not found there then it import on it's own
+
+const myServer=http.createServer((req,res)=>{
+    
+    if(req.url==="/favicon.ico") return res.end(); 
+    const log=`${Date.now()}:${req.url} New Request Received\n`;
+    const myUrl=url.parse(req.url, true);       // , true For Query parameters
+    console.log(myUrl);
+    fs.appendFile('6_6_log.txt',log,(err,data)=>{
+        switch(myUrl.pathname){           
+            case '/':
+                res.end("HomePage");
+            break
+            case '/about':
+                const qp=res.end("I am Gaurav Singh Heer");   //Const qp= For Query parameters
+            break
+            default:
+                res.end("404 Not found");
+            break
+        }
+    }); // not using synchronous as if all thread in work user has to wait
+})
+
+myServer.listen(8000,()=>console.log("Server Started!"));
+
+
+At Console:-
+
+Server Started!
+Url {
+  protocol: null,
+  slashes: null,
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,
+  hash: null,
+  search: '?myname=piyush&userid=1',
+  query: [Object: null prototype] { myname: 'piyush', userid: '1' },
+  pathname: '/about',
+  path: '/about?myname=piyush&userid=1',
+  href: '/about?myname=piyush&userid=1'
+}
+Url {
+  protocol: null,
+  slashes: null,
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,
+  hash: null,
+  search: null,
+  query: [Object: null prototype] {},
+  pathname: '/about',
+  path: '/about',
+  href: '/about'
+}
+Url {
+  protocol: null,
+  slashes: null,
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,
+  hash: null,
+  search: '?myname=gaurav&userid=1&search=dog',
+  query: [Object: null prototype] {
+    myname: 'gaurav',
+    userid: '1',
+    search: 'dog'
+  },
+  pathname: '/about',
+  path: '/about?myname=gaurav&userid=1&search=dog',
+  href: '/about?myname=gaurav&userid=1&search=dog'
+}
+
+-------------------------------------------------------------------------------------------------
+
+Manipulating_Name_Acc_to_Query:-
+
+Example 1:-
+url:-
+http://localhost:8000/about?myname=gaurav&userid=1&search=dog
+
+output at site :-
+I am gaurav
+
+Example 2:-
+url:-
+http://localhost:8000/about?myname=Agam&userid=1&search=dog
+
+output at site :-
+I am Agam
+
+const http=require("http")
+const fs=require("fs")
+const url=require("url") // It first Check at package.json if not found there then it import on it's own
+
+const myServer=http.createServer((req,res)=>{
+    
+    if(req.url==="/favicon.ico") return res.end(); 
+    const log=`${Date.now()}:${req.url} New Request Received\n`;
+    const myUrl=url.parse(req.url, true);       // , true For Query parameters
+    console.log(myUrl);
+    fs.appendFile('6_6_log.txt',log,(err,data)=>{
+        switch(myUrl.pathname){           
+            case '/':
+                res.end("HomePage");
+            break
+            case '/about':
+                const username= myUrl.query.myname;
+                res.end(`I am ${username}`);   
+            break
+            default:
+                res.end("404 Not found");
+            break
+        }
+    }); // not using synchronous as if all thread in work user has to wait
+})
+
+myServer.listen(8000,()=>console.log("Server Started!"));
+
+-------------------------------------------------------------------------------------------------
+
+Basic Functionality of Server:-
+
+Take Request
+Pass URL acc to Request
+From database take that data
+pass to user
+
+-------------------------------------------------------------------------------------------------

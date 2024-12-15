@@ -1,0 +1,84 @@
+===============================================================================
+Implementing HTTP Server
+===============================================================================
+
+-'http' is the predefined module used to create http Server
+- http is the native module, so no need to delete it.
+- 'require' is used to import
+- Eg let http =require ('http')
+- 'createServer()' is predefined function in http module
+- this function is used to create the Server
+- The argument to createServer() is arrow function
+- To this arrow function there are two arguments , 'req' and 'res'
+- request and response objects provided by node engine respectively
+- req object is used to store client data
+- res object is used to send response to client
+- 'WriteHead(-,-)' is the predefined function in res object
+- This function is used to set the MIME type
+- First argument to this function is the status code (200-ok)
+- Second argument is the JSON object
+- JSON key is 'content-type' and the value is 'text/html'.
+- 'write(-) is the predefined function in res object
+- This function is used to append response to res object
+- 'end()' is the predefined function in res object
+- This function is used to lock the response
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------
+let http=require('http')
+
+let server=http.createServer((req,res)=>{
+    // set MIME type
+    res.writeHead(200,{'content-type':'text/html'})
+    res.write(`<h1>Welcome to the http server <i>This is made by GSH</i></h1>`)
+    res.end();                                       // To stop that rotation in title bar of server
+});
+
+// assign port no
+server.listen(8080)
+console.log("Server listening on port no 8080")
+
+/*
+D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\Backend Chitkara>start 1_1_Http.js
+
+D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\Backend Chitkara>
+node 1_1_Http.js
+Server listening on port no 8080
+*/
+
+--------------------------------------------------------------------------------------------------
+let http = require('http');
+
+let server = http.createServer((req, res) => {
+    // Set MIME type
+    res.writeHead(200, { 'content-type': 'text/html' });
+    res.write(`
+        <html>
+            <head>
+                <title>Gaurav ka Server</title>
+            </head>
+        <style>
+            body{
+                background-color: black;
+                // color: red;
+            }
+            h1{
+                margin:2rem 1rem;
+                text-shadow:  0px 0px 2px red;
+            }
+        </style>
+            <body>
+                <h1>Gaurav Singh Heer</h1>
+            </body>
+        </html>
+    `); 
+    res.end(); // To stop that rotation in the title bar of the server
+});
+
+// Assign port number
+server.listen(8080);
+console.log("Server listening on port no 8080");

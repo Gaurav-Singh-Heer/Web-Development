@@ -1,0 +1,122 @@
+const fs=require("fs");
+
+-------------------------------------------------------------------------------------------------
+1) Write Synchronous
+
+// Sync....
+fs.writeFileSync("./3_1_test.txt","Hey There")
+fs.writeFileSync("./3_1_test.txt","Hello world") // this will overwrite "Hey There" in file
+
+// Used to Write data in File
+
+-------------------------------------------------------------------------------------------------
+2) Write Asynchronous
+
+// Async....
+fs.writeFile("./3_2_test.txt","Hey There",(err)=>{}) 
+fs.writeFile("./3_2_test.txt","Hello world Async",(err)=>{}) // this will overwrite "Hey There" in file
+
+// (err)=>{} is to handle errors
+
+-------------------------------------------------------------------------------------------------
+3) Read Synchronous
+
+const result = fs.readFileSync("./3_3_Contact.txt","utf-8");
+// ReadFileSync-> Gives Result in store in variable
+
+// Used to Read data from File
+
+-------------------------------------------------------------------------------------------------
+4) Read Asynchronous
+
+fs.readFile("./3_3_Contact.txt","utf-8",(err,result)=>{
+    if(err){
+        console.log("Error",err);
+    }
+    else{
+        console.log(result)
+    }
+})
+
+-------------------------------------------------------------------------------------------------
+
+Summary of 1,2,3,4->
+
+Whenever we do Synchronous task it returns the result and if error is there we can use 
+try catch to handle it 
+
+Whenever we do Asynchronous task it does not returns the result rather is always expect a 
+callback (like err) 
+
+-------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+
+5) Append File Sync
+
+const fs= require("fs");
+
+let name ="Gaurav"
+
+fs.appendFileSync("./3_5_test.txt"," "+new Date().getDate().toLocaleString()+ " ");
+fs.appendFileSync("./3_5_test.txt","Hey There welcome I am Gaurav \n");
+fs.appendFileSync("./3_5_test.txt",`Hey There welcome I am ${name} \n`);
+fs.appendFileSync("./3_5_test.txt",`${Date.now()} Hey There  this is the best time \n`);
+
+// Append File Sync-> Can be used to Log data when a person used site Name,Date,Time  
+
+-------------------------------------------------------------------------------------------------
+6) Copy File Sync
+
+fs.cpSync("./3_5_test.txt","./3_6_Copy.txt")
+
+// Used to Copy One File in Another
+
+-------------------------------------------------------------------------------------------------
+7) Delete File
+
+fs.unlinkSync("./3_7_Delete_File.txt")
+
+// Used to Delete a File
+
+-------------------------------------------------------------------------------------------------
+8) Statistics of a File
+
+console.log(fs.statSync("3_5_test.txt"))
+
+// Used to check the Statistics of a file
+
+/*
+Ouput Example:-
+Stats {
+  dev: 513067387,
+  mode: 33206,
+  nlink: 1,
+  uid: 0,
+  gid: 0,
+  rdev: 0,
+  blksize: 4096,
+  ino: 562949953696651,
+  size: 158,
+  blocks: 0,
+  atimeMs: 1733889931239.0632,
+  mtimeMs: 1733889931239.0632,
+  ctimeMs: 1733889931239.0632,
+  birthtimeMs: 1733889291521.0208
+}
+*/
+
+-------------------------------------------------------------------------------------------------
+9) Make Directory
+
+fs.mkdirSync("my-docs");
+fs.mkdirSync("my-docs/a/b",{recursive:true});
+
+// Used to Create Folders or Nested Folders
+
+-------------------------------------------------------------------------------------------------
+
+Summary 1,2,3,4,5,6,7,8,9 ->
+We cannot do all these things in normal JavaScript as.It Does not have anything like fs 
+or File Handling
+
+But in Node JS we have fs module to interact with files

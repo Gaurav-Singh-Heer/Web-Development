@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KL Rahul - Card Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .details-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+        ul {
+            margin-left: 20px;
+            color: #555;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="details-container">
+        <h1 id="card-title">KL Rahul</h1>
+        <p id="card-description">
+            <strong>Early Life and Background:</strong><br>
+            Kannur Lokesh Rahul, commonly known as KL Rahul, was born on April 18, 1992, in Mangalore, India. He showed an early interest in cricket and honed his skills through various local tournaments and coaching academies.
+            <br><br>
+            <strong>Domestic Career:</strong><br>
+            KL Rahul began his domestic career with Karnataka and quickly made a mark with his consistent performances. His prolific batting in the domestic circuit, including the Indian Premier League (IPL), paved the way for his selection in the national team.
+            <br><br>
+            <strong>International Career:</strong><br>
+            <strong>Debut and Early Years:</strong><br>
+            Rahul made his international debut for India in an ODI against Australia on June 11, 2014. He showcased his talent with a notable century in his debut series, earning a spot in the Test squad soon after.
+            <br><br>
+            <strong>Rise to Prominence:</strong><br>
+            KL Rahul has established himself as a key player for India in all formats. His stylish batting and adaptability have made him a valuable asset, with notable performances in Tests, ODIs, and T20Is. He is known for his ability to play crucial innings under pressure.
+            <br><br>
+            <strong>Captaincy and Leadership:</strong><br>
+            Rahul has taken on leadership roles in the IPL, captaining the Punjab Kings. His leadership skills and ability to perform in high-pressure situations have been widely recognized.
+            <br><br>
+            <strong>Personal Life:</strong><br>
+            KL Rahul is known for his dedication to fitness and his involvement in various philanthropic activities. He maintains a low-profile personal life, focusing on his cricketing career and personal growth.
+            <br><br>
+            <strong>Achievements and Awards:</strong>
+            <ul>
+                <li>Fastest to 1,000 runs in T20Is</li>
+                <li>Outstanding performances in the IPL</li>
+                <li>Consistent performances in international cricket</li>
+            </ul>
+            <br>
+            <strong>Legacy:</strong><br>
+            KL Rahul is regarded as one of the most promising batsmen in modern cricket. His stylish play and versatility across formats have made him a significant figure in Indian cricket.
+            <br><br>
+            <strong>External Links:</strong>
+            <ul>
+                <li><a href="https://www.klrahul.com" target="_blank">Official Website</a></li>
+                <li><a href="https://twitter.com/klrahul11" target="_blank">Twitter</a></li>
+                <li><a href="https://www.instagram.com/klrahul/" target="_blank">Instagram</a></li>
+            </ul>
+        </p>
+        <button onclick="window.history.back()">Go Back</button>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        document.getElementById('card-title').textContent = params.get('title') || 'KL Rahul';
+        document.getElementById('card-description').innerHTML = document.getElementById('card-description').innerHTML.replace(/\n/g, '<br>');
+    </script>
+</body>
+</html>

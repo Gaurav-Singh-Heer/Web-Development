@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chessboard Grid</title>
+    <style>
+        .chessboard {
+            font-family: monospace;
+            white-space: pre;
+            display: inline-block;
+            border: 2px solid #000; 
+            padding: 5px;
+        }
+        
+        .chessboard-cell {
+            display: inline-block;
+            width: 30px; 
+            height: 30px; 
+            text-align: center;
+            line-height: 30px; 
+            font-size: 1.5em; 
+            margin: 0;
+            padding: 0;
+        }
+
+        .chessboard-cell.black {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .chessboard-cell.white {
+            background-color: #fff;
+            color: #000;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function print(data) {
+            const label = document.createElement('div');
+            label.className = 'chessboard';
+            label.innerHTML = data; 
+            document.body.appendChild(label);
+        }
+
+        function newLine() {
+            return '<br>'; 
+        }
+
+        const board_size = 8; 
+
+        function createChessboard(size) {
+            let grid = '';
+
+            for (let row = 0; row < size; row++) {
+                for (let col = 0; col < size; col++) {
+                    const cellClass = (row + col) % 2 === 0 ? 'white' : 'black';
+                    grid += `<div class="chessboard-cell ${cellClass}">${(row + col) % 2 === 0 ? '*' : '#'}</div>`;
+                }
+                grid += newLine(); 
+            }
+
+            print(grid);
+        }
+
+        createChessboard(board_size);
+    </script>
+    <footer>
+        Created with ❤️ by GSH
+    </footer>
+</body>
+</html>

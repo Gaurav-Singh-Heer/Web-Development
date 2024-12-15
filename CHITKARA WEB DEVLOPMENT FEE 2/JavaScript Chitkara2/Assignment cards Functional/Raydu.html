@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambati Rayudu - Card Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .details-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+        ul {
+            margin-left: 20px;
+            color: #555;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="details-container">
+        <h1 id="card-title">Ambati Rayudu</h1>
+        <p id="card-description">
+            <strong>Early Life and Background:</strong><br>
+            Ambati Rayudu was born on September 23, 1985, in Hyderabad, India. He is a right-handed batsman known for his versatility and ability to play crucial innings. Rayudu showed his talent early in his career and was considered a promising prospect.
+            <br><br>
+            <strong>Domestic Career:</strong><br>
+            Rayudu made his debut for Andhra Pradesh in the domestic circuit and quickly established himself as a reliable middle-order batsman. His performances in domestic cricket, particularly in the Indian Premier League (IPL), drew attention and earned him a spot in the national team.
+            <br><br>
+            <strong>International Career:</strong><br>
+            <strong>Debut and Early Years:</strong><br>
+            Ambati Rayudu made his international debut for India in a One Day International (ODI) against Sri Lanka on July 24, 2013. His consistent performances in the limited-overs formats earned him a reputation as a dependable middle-order batsman.
+            <br><br>
+            <strong>Rise to Prominence:</strong><br>
+            Rayudu gained recognition for his performances in the IPL, where he played for teams like the Mumbai Indians and Chennai Super Kings. His ability to play crucial innings in high-pressure situations made him a valuable asset in the T20 format.
+            <br><br>
+            <strong>Achievements and Awards:</strong>
+            <ul>
+                <li>Indian Premier League (IPL) Champion with Mumbai Indians (2013, 2015)</li>
+                <li>Consistent performer in domestic cricket and IPL</li>
+                <li>Notable contributions in ODIs and T20Is for India</li>
+            </ul>
+            <br>
+            <strong>Personal Life:</strong><br>
+            Rayudu is known for his calm demeanor and dedication to the game. He has a strong following on social media and is admired for his contributions to Indian cricket.
+            <br><br>
+            <strong>Legacy:</strong><br>
+            Ambati Rayudu is remembered for his valuable contributions in the limited-overs formats and his ability to perform under pressure. His role in the IPL and domestic cricket has cemented his place as a respected cricketer.
+            <br><br>
+            <strong>External Links:</strong>
+            <ul>
+                <li><a href="https://twitter.com/ambatirayudu" target="_blank">Twitter</a></li>
+                <li><a href="https://www.instagram.com/ambatirayudu/" target="_blank">Instagram</a></li>
+            </ul>
+        </p>
+        <button onclick="window.history.back()">Go Back</button>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        document.getElementById('card-title').textContent = params.get('title') || 'Ambati Rayudu';
+        document.getElementById('card-description').innerHTML = document.getElementById('card-description').innerHTML.replace(/\n/g, '<br>');
+    </script>
+</body>
+</html>

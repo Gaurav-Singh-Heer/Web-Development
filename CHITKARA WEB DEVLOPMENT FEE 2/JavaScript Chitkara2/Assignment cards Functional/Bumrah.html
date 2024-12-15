@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jasprit Bumrah - Card Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .details-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+        ul {
+            margin-left: 20px;
+            color: #555;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="details-container">
+        <h1 id="card-title">Jasprit Bumrah</h1>
+        <p id="card-description">
+            <strong>Early Life and Background:</strong><br>
+            Jasprit Bumrah was born on December 6, 1993, in Ahmedabad, India. He developed an interest in cricket at a young age and honed his skills through local cricket academies. Known for his unique bowling action, Bumrah quickly made a name for himself in domestic cricket.
+            <br><br>
+            <strong>Domestic Career:</strong><br>
+            Bumrah's domestic career began with Gujarat, and his performances in the Indian Premier League (IPL) with the Mumbai Indians caught the attention of national selectors. His exceptional death-overs bowling and ability to bowl yorkers consistently made him a standout player.
+            <br><br>
+            <strong>International Career:</strong><br>
+            <strong>Debut and Early Years:</strong><br>
+            Jasprit Bumrah made his international debut for India in a T20I against Australia on January 23, 2016. He quickly established himself as one of the premier fast bowlers in world cricket, known for his ability to bowl in the death overs and his exceptional variations.
+            <br><br>
+            <strong>Rise to Prominence:</strong><br>
+            Bumrah's rise to prominence came through his performances in limited-overs cricket, where he became one of the most sought-after bowlers. His impressive performances in ODIs and T20Is earned him a place in the Test team, where he continued to excel with his pace and accuracy.
+            <br><br>
+            <strong>Achievements and Awards:</strong>
+            <ul>
+                <li>Leading wicket-taker for India in ODIs and T20Is</li>
+                <li>Key player in Mumbai Indians' IPL title wins</li>
+                <li>Notable performances in international cricket</li>
+            </ul>
+            <br>
+            <strong>Personal Life:</strong><br>
+            Jasprit Bumrah is known for his focus on fitness and his commitment to the game. He maintains a relatively private personal life, focusing on his cricketing career and training.
+            <br><br>
+            <strong>Legacy:</strong><br>
+            Bumrah is regarded as one of the best fast bowlers in the world. His unique bowling action, ability to execute under pressure, and impact on the game make him a key figure in modern cricket.
+            <br><br>
+            <strong>External Links:</strong>
+            <ul>
+                <li><a href="https://www.jaspritbumrah.com" target="_blank">Official Website</a></li>
+                <li><a href="https://twitter.com/jaspritbumrah93" target="_blank">Twitter</a></li>
+                <li><a href="https://www.instagram.com/jaspritbumrah93/" target="_blank">Instagram</a></li>
+            </ul>
+        </p>
+        <button onclick="window.history.back()">Go Back</button>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        document.getElementById('card-title').textContent = params.get('title') || 'Jasprit Bumrah';
+        document.getElementById('card-description').innerHTML = document.getElementById('card-description').innerHTML.replace(/\n/g, '<br>');
+    </script>
+</body>
+</html>

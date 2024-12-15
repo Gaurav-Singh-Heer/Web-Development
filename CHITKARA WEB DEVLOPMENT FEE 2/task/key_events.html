@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyboard Events</title>
+</head>
+<body>
+    <input type="text" id="inputField" placeholder="Type Something..."/>
+    <p id="keyStatus"></p>
+    <script>
+        const inputField = document.getElementById('inputField');
+        const keyStatus = document.getElementById('keyStatus');
+        inputField.addEventListener('keydown', function(event){
+            keyStatus.innerHTML = `key pressed: ${event.key}`;
+        });
+        inputField.addEventListener('keyup', function(event){
+            keyStatus.innerHTML = `key released: ${event.key}`;
+        });
+    </script>
+</body>
+</html>

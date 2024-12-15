@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental - Checkout</title>
+    <link rel="stylesheet" href="./checkout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <header>
+        <img src="img/logo2.png" alt="Logo" class="logo fade-in">
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="navbar-toggle" aria-label="Toggle navigation">
+            <i class="fa fa-bars"></i>
+        </label>
+        <nav id="navbar">
+            <ul>
+                <li><a href="vehicles.html">Vehicles</a></li>
+                <li class="active"><a href="#">Bill</a></li>
+                <!-- <li><a href="dashboard.html">Dashboard</a></li> -->
+                <!-- <li><a href="about.html">About Us</a></li> -->
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="desc">
+            <div class="search-bar">
+                <div class="input">
+                    <div class="isuue-details">
+                        <input type="text" placeholder="Location">
+                        <div class="floater1">Location</div>
+                    </div>
+                    <div class="isuue-details">
+                        <input type="date">
+                        <div class="floater2">Checkin</div>
+                    </div>
+                    <div class="isuue-details">
+                        <input type="date">
+                        <div class="floater3">Checkout</div>
+                    </div>
+                </div>
+                <button class="update">UPDATE SEARCH</button>
+            </div>
+
+            <div class="car-details">
+                <div class="car-images">
+                    <img id="car-image" alt="Car Image">
+                </div>
+            </div>
+
+            <div class="details">
+                <div class="info">
+                    <h4><i class="fa fa-address-card"></i> &nbsp;Agam</h4>
+                    <h3 id="car-title">Car Title</h3>
+                    <h5>Automatic &bull; Petrol &bull; 5 Seats</h5>
+                    <br>
+                    <p style="font-weight: bold; font-size:xx-large; color: rgb(128, 8, 8);">₹<span id="car-price"
+                            class="car-price"> Price</span></p>
+                </div>
+
+                <div class="subsection2">
+                    <div class="nav">
+                        <a href="#">Reviews</a>
+                        <a href="#">Location</a>
+                        <a href="#">FAQs</a>
+                    </div>
+
+                    <h1>Ratings & Reviews</h1>
+                    <div class="rating-supersection">
+                        <div class="rating">
+                            <div class="rating-number">4.77</div>
+                        </div>
+                        <div class="rating-subsection">
+                            <div class="stars">★★★★☆</div>
+                            <div>Based on 14 Trips</div>
+                        </div>
+                    </div>
+
+                    <div class="reviews">
+                        <h2>REVIEWS (5)</h2>
+                        <br>
+                        <div class="reviews-subsection">
+                            <div class="review">
+                                <img src="img/About/Arshiya.jpg" alt="Arshiya Gupta" class="avatar">
+                                <div class="review-content">
+                                    <div class="reviewer-name">Arshiya Gupta</div>
+                                    <div class="review-date">on Sep 24th, 2024</div>
+                                    <div class="review-text">Car was very dirty when we picked it up, Fastag wasn’t
+                                        working, had to pay double toll in cash...</div>
+                                </div>
+                            </div>
+
+                            <div class="review">
+                                <img src="img/About/Aryan.jpg" alt="Aryan Kaushal" class="avatar">
+                                <div class="review-content">
+                                    <div class="reviewer-name">Aryan Kaushal <span class="rating-pill">+5</span></div>
+                                    <div class="review-date">on Aug 23rd, 2024</div>
+                                    <div class="review-text">Good car, host is all good.</div>
+                                </div>
+                            </div>
+
+                            <div class="review">
+                                <img src="img/About/Gaurav.jpg" alt="Gaurav" class="avatar">
+                                <div class="review-content">
+                                    <div class="reviewer-name">Gaurav</div>
+                                    <div class="review-date">on Aug 16th, 2024</div>
+                                    <div class="review-text">Nice experience, host was very responsive, car was in good
+                                        condition.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="location">
+                        <h2>Pick-up Location</h2>
+                        <p>Chandigarh-Patiala National Highway (NH-64 Village Jansla, Rajpura, Punjab 140401)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bill">
+            <div class="car-info">
+                <div class="exclusive-offers">
+                    <h3>Exclusive Offers</h3>
+                    <div class="offer-container">
+                        <div class="icon">
+                            <img src="https://img.icons8.com/ios-filled/50/000000/discount.png" alt="Discount Icon">
+                        </div>
+                        <div class="offer-details">
+                            <h4>Explore Offers</h4>
+                            <p>Check Availability Here</p>
+                        </div>
+                        <div class="spacer"></div>
+                        <div class="arrow">
+                            <span>&#x279C;</span>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="package">
+                    <p style="font-weight: bold;">GST (4.5%) :</p>
+                    <p id="GST">₹189</p>
+                </div>
+                <div class="package">
+                    <p style="font-weight: bold;">Dealer (Platform):</p>
+                    <p id="Dealer">₹10000</p>
+                </div>
+                <hr>
+            </div>
+            <div class="total-price">
+                <div class="price">
+                    <div>
+                        <h3>Total Price</h3>
+                        <p>Inclusive of all taxes</p>
+                    </div>
+                    <div>
+                        <h3 id="total">₹984</h3>
+                        <p>View Details</p>
+                    </div>
+                </div>
+                <br>
+                <button class="update">PROCEED TO DEAL</button>
+            </div>
+        </section>
+    </main>
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <h3>Payment Details</h3>
+            <div class="payment-options">
+                <button class="option active" onclick="selectOption('card')">Card<br><small>Credit/Debit</small></button>
+                <button class="option" onclick="selectOption('upi')">UPI<br><small>GPay/PhonePe</small></button>
+            </div>
+            
+            <!-- Card Payment Form -->
+            <div id="cardForm" class="payment-form">
+                <input type="text" placeholder="Card Number" required>
+                <div class="expiry-cvv">
+                    <input type="text" placeholder="MM/YY" required>
+                    <input type="text" placeholder="CVV" required>
+                </div>
+            </div>
+            
+            <!-- UPI Payment Form (Hidden initially) -->
+            <div id="upiForm" class="payment-form" style="display: none;">
+                <input type="text" placeholder="Enter UPI ID" required>
+            </div>
+            
+            <button class="pay-btn">Pay <h3 id="total">₹984</h3></button>
+        </div>
+    </div>
+
+
+    <script src="checkout.js"></script>
+</body>
+
+</html>
