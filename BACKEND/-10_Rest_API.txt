@@ -1,0 +1,78 @@
+Let's Learn what is Rest API
+
+So, There is a thing called REST full API OR REST API Both are same.
+
+This Api is different from others because,
+
+Rest Full, it is a representational state or API type which has some rules. So, these are the best practices we 
+should follow. Then only we can say that our server is made over REST Full API.
+
+Server-Client(Browser,Mobile,Alexa),
+
+Communication:-Client send request and in return server gives response. At this there are some rules given by rest API.
+
+At Many places in defination of Rest Full API it is written that it does not have any rules, But they Are some good
+practices we should follow.
+
+RULES/ Standars:-
+
+RULE 1:-It works on the basis of SERVER-CLIENT architecture, means server is different machine client is different
+        machine both should not be dependent on each other.
+        Response can be (text, image, html-doc, JSON)
+
+        For example :- we sent request to GET some blogs. And I fetched my blogs from database and made it's HTML document and sent this HTML Document as a Response.
+|                      If our client is Browser then we don't have any problem. The HTML document we have would be rendered at the screen and user will get it's data.
+|                      But what if it's a Mobile or Alexa device in that case, We can't render HTML. So, there is a problem
+|                      
+|                      2nd Problem is at HTML we are deciding how to show our data as HTML is made by our server.So, we can say that client is dependent on our server 
+|                      This thing is called SSR(Server Side Rendering). Because we generated our HTML at the server and we sent this rendered page to client
+|                      ADVANTAGES of SRS:-Fast , Secure . Even SRS is done by GOOGLE
+|
+|                      Use HTML only when u know that ur client will always be on the browser then Use HTML.
+|
+|                      Otherwise , use JSON when u have a cross platform (Mobile, ios application, smart devices). Then we have to send JSON then Front End team will handle how to display.
+|
+|                      Database-> Server->JSON->Fron-End Developer->Client
+
+So, 
+
+RULE 1:- Always follow server client Architecture.
+RULE 2:- Always respect all http methods.
+
+|       HTTP Methods:- GET, POST, PUT, PATCH, DELETE
+
+|       Get/user- user data read karo and return data.
+|       POST/user- handle new user creation.
+|       PATCH/user- update the user.
+
+|       BAD PRACTICES:-     DONE by 80%
+|       POST/update User:- user update                      // It will work but for good practice use PATCH
+|       POST/create User:- user update                      // It will work but for good practice use don't write create user as it's work is that only
+|       GET/get User:- get user data                       // It will work but for good practice use don't write get user as it's work is that only
+|       POST/delete User:- user delete                      // It will work but for good practice use PATCH
+
+||      So, we will respect each HTTP Methods by using them accordingly.
+
+------------------------------------------------------------------------------------------------------------------
+
+Summary:-
+
+1) When Client is a Browser we will send HTML Response or render HTML.         After learning MERN will send in JSON
+2) Respect HTTP Methods.
+
+If we will do these things then we can say that we had made a Rest Full API
+
+------------------------------------------------------------------------------------------------------------------
+
+To make server in JSON is very easy:-
+
+earlier syntax was:- res.send()           For JSON:- res.JSON()     // To make a JSON server
+
+
+JSON RENDER:- res.JSON()
+
+HTML RENDER:- res.send()
+|             res.render() 
+
+SSR(Server Side Rendering), HTML Rendering is Fast as in this ASAP data comes it get rendered.
+CSR(Client-Side Rendering) is slow, in This we have a JSON data and we render it on our own. Done by React. Slow, as in this data is first fetched then rendered

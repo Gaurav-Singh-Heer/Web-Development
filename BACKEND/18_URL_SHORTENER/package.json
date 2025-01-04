@@ -1,0 +1,17 @@
+{
+  "name": "18_url_shortener",
+  "version": "1.0.0",
+  "description": "Project-URL Shortener",
+  "main": "17_1_MVC_PATTERN.js",
+  "scripts": {
+    "start": "nodemon 18_3_URL_SHORTENER_Analytics_route.js"
+  },
+  "author": "Gaurav",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.9.3",
+    "nodemon": "^3.1.9",
+    "shortid": "^2.2.16"
+  }
+}

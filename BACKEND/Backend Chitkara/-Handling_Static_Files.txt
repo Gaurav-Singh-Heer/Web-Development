@@ -1,0 +1,9 @@
+Handling Static files
+ - path is the predefined module in node.js.
+ - this module is used for working with file and directory paths.
+ - this module is having predefined functions like,
+	join()
+	resolve()
+	basename()
+	are used to handle and manipulate file paths.
+ - __dirname gives current path of server.js

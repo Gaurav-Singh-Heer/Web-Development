@@ -1,0 +1,388 @@
+URL Shortener (like:-http://bit.ly/421ejLp)
+
+Design a URL shortener service that takes a valid URL and returns a shortened URL, redirecting the user to the 
+previously provided URL
+
+Also, keep track of total visits/clicks on the URL
+
+Routes
+
+POST/URL - Generates a new short URL and returns the shortened URL in the format example.com/random-id.
+GET/:id  - Redirects the user to the original URL.
+GET/ URL/analytics/:id - Returns the clicks for the provided short id.
+
+-----------------------------------------------------------------------------------------------------------
+
+https://npmjs.com/package/shortid From here we had gone to https://github.com/ai/nanoid/
+
+https://zelark.github.io/nano-id-cc/
+
+npm i nanoid
+
+D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\18_URL_SHORTENER>npm i nanoid
+
+added 1 package, and audited 120 packages in 1s
+
+20 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+{
+  "name": "18_url_shortener",
+  "version": "1.0.0",
+  "description": "Project-URL Shortener",
+  "main": "17_1_MVC_PATTERN.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gaurav",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.9.3",
+    "nanoid": "^5.0.9",
+    "nodemon": "^3.1.9"
+  }
+}
+
+-----------------------------------------------------------------------------------------------------------
+
+connectToMongoDB('mongodb://localhost:')
+
+using mongosh
+
+D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\18_URL_SHORTENER>mongosh
+Current Mongosh Log ID: 6778b5762f263431814eeb85
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.7
+Using MongoDB:          8.0.4
+Using Mongosh:          2.3.7
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2024-12-31T19:45:10.395+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> exit
+
+
+connectToMongoDB('mongodb://localhost:27017/short-url')
+|                (27017) port using mongosh| database name| 
+
+-----------------------------------------------------------------------------------------------------------
+
+PS D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\18_URL_SHORTENER> mongosh
+Current Mongosh Log ID: 6778c1a1bff4418df24eeb85
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.7
+Using MongoDB:          8.0.4
+Using Mongosh:          2.3.7
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2024-12-31T19:45:10.395+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> show dbs
+Gaurav-app-1          108.00 KiB
+GauravkaPersonalData   72.00 KiB
+Sigma                  72.00 KiB
+admin                  40.00 KiB
+config                 48.00 KiB
+local                  40.00 KiB
+short-url              12.00 KiB
+
+test> use short-url
+switched to db short-url
+short-url> show collections
+urls
+short-url> db.urls.find({})
+
+short-url>
+
+-----------------------------------------------------------------------------------------------------------
+
+AT POSTMAN:- POST http://localhost:8001/url SEND
+
+GAVE :-
+
+D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\18_URL_SHORTENER\controllers\url.js:9
+    if(!body.url) return res.status(400).json({error:'url is required'});
+             ^
+
+TypeError: Cannot read properties of undefined (reading 'url')
+    at handleGenerateNewShortURL (D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\18_URL_SHORTENER\controllers\url.js:9:14)
+    at Layer.handle [as handle_request] (D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\18_URL_SHORTENER\node_modules\express\lib\router\layer.js:95:5)
+    at next (D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\18_URL_SHORTENER\node_modules\express\lib\router\route.js:149:13)
+    at Route.dispatch (D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\18_URL_SHORTENER\node_modules\express\lib\router\route.js:119:3)   
+    at Layer.handle [as handle_request] (D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\18_URL_SHORTENER\node_modules\express\lib\router\layer.js:95:5)
+    at D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\18_URL_SHORTENER\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\18_URL_SHORTENER\node_modules\express\lib\router\index.js:346:12)
+    at next (D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\18_URL_SHORTENER\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\18_URL_SHORTENER\node_modules\express\lib\router\index.js:175:3)  
+    at router (D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\18_URL_SHORTENER\node_modules\express\lib\router\index.js:47:12)
+
+Node.js v22.9.0
+[nodemon] app crashed - waiting for file changes before starting...
+
+SO ADDED 
+
+app.use(express.json());
+
+at 18_1_URL_SHORTENER.js
+
+-----------------------------------------------------------------------------------------------------------
+
+AT POSTMAN:- POST http://localhost:8001/url SEND
+
+Go at Body-> raw -> JSON
+
+{
+
+}
+
+SEND 
+
+OUTPUT:-
+
+{
+    "error": "url is required"
+}
+
+-------------------------------------------------
+
+{
+    "url":"https://github.com/Gaurav-Singh-Heer"
+}
+
+SEND
+
+{
+    "id": 'r4czwcvWG'
+}
+
+-------------------------------------------------
+
+{
+    "url": "https://piyushgarg.dev"
+}
+
+SEND
+
+{
+    "id": 'E2IKnafn2'
+}
+
+-----------------------------------------------------------------------------------------------------------
+
+AT TERMINAL:-
+
+short-url> db.urls.find({})
+[
+  {
+    _id: ObjectId('6778c38a70ddff17bf683aad'),
+    shortId: 'r4czwcvWG',
+    redirectURL: 'https://github.com/Gaurav-Singh-Heer',
+    visitHistory: [],
+    createdAt: ISODate('2025-01-04T05:13:46.396Z'),
+    updatedAt: ISODate('2025-01-04T05:13:46.396Z'),
+    __v: 0
+  },
+  {
+    _id: ObjectId('6778c3b870ddff17bf683aaf'),
+    shortId: 'SzZoFFRUO',
+    redirectURL: 'https://github.com/Gaurav-Singh-Heer',
+    visitHistory: [],
+    createdAt: ISODate('2025-01-04T05:14:32.745Z'),
+    updatedAt: ISODate('2025-01-04T05:14:32.745Z'),
+    __v: 0
+  },
+  {
+    _id: ObjectId('6778c3cf70ddff17bf683ab1'),
+    shortId: 'E2IKnafn2',
+    redirectURL: 'https://piyushgarg.dev',
+    visitHistory: [],
+    createdAt: ISODate('2025-01-04T05:14:55.551Z'),
+    updatedAt: ISODate('2025-01-04T05:14:55.551Z'),
+    __v: 0
+  },
+  {
+    _id: ObjectId('6778c402cea8669dc07c90ad'),
+    shortId: '-y0e5ocNK',
+    redirectURL: 'https://piyushgarg.dev',
+    visitHistory: [],
+    createdAt: ISODate('2025-01-04T05:15:46.721Z'),
+    updatedAt: ISODate('2025-01-04T05:15:46.721Z'),
+    __v: 0
+  },
+  {
+    _id: ObjectId('6778c444cea8669dc07c90af'),
+    shortId: 'TviQMHiWM',
+    redirectURL: 'https://piyushgarg.dev',
+    visitHistory: [],
+    createdAt: ISODate('2025-01-04T05:16:52.264Z'),
+    updatedAt: ISODate('2025-01-04T05:16:52.264Z'),
+    __v: 0
+  },
+  {
+    _id: ObjectId('6778c45fc3b3091a7341f3be'),
+    shortId: 'hrZ3xb6Oz',
+    redirectURL: 'https://piyushgarg.dev',
+    visitHistory: [],
+    createdAt: ISODate('2025-01-04T05:17:19.033Z'),
+    updatedAt: ISODate('2025-01-04T05:17:19.033Z'),
+    __v: 0
+  }
+]
+
+-----------------------------------------------------------------------------------------------------------
+
+Complete and Corrected Code:-
+
+-->controllers/url.js
+
+const shortid = require('shortid');
+const URL = require('../models/url');
+
+async function handleGenerateNewShortURL(req, res) {
+    const body = req.body;
+
+    if (!body.url) return res.status(400).json({ error: 'URL is required' });
+
+    const shortID = shortid();
+
+    await URL.create({
+        shortId: shortID,
+        redirectURL: body.url,
+        visitHistory: [],
+    });
+
+    return res.json({ id: shortID });
+}
+
+module.exports = {
+    handleGenerateNewShortURL,
+};
+
+
+-->routes/url.js
+
+const express = require('express');
+const { handleGenerateNewShortURL } = require('../controllers/url');
+const router = express.Router();
+
+router.post('/', handleGenerateNewShortURL);
+
+module.exports = router;
+
+
+-->18_2_URL_SHORTENER_Redirect_To_URL_CREATED.js
+
+const express = require('express');
+const { connectToMongoDB } = require('./connect');
+const urlRoute = require('./routes/url');
+const URL = require('./models/url');
+const app = express();
+const PORT = 8001;
+
+connectToMongoDB('mongodb://localhost:27017/short-url').then(() =>
+    console.log('MongoDB connected')
+);
+
+app.use(express.json());
+
+app.use('/url', urlRoute);
+
+app.get('/:shortId', async (req, res) => {
+    const shortId = req.params.shortId;
+    const entry = await URL.findOneAndUpdate(
+        { shortId },
+        {
+            $push: {
+                visitHistory: {
+                    timestamp: Date.now(),
+                },
+            },
+        }
+    );
+
+    if (!entry) {
+        return res.status(404).json({ error: 'Short URL not found' });
+    }
+
+    res.redirect(entry.redirectURL);
+});
+
+app.listen(PORT, () => console.log(`Server Started at PORT:${PORT}`));
+
+-----------------------------------------------------------------------------------------------------------
+
+18_3
+
+POST:-http://localhost:8001/url
+
+{
+    "url":"https://www.google.com/"
+}
+
+OUTPUT:-
+
+{
+    "id": "sOIKuIRf6"
+}
+
+AT TERMINAL:-
+
+short-url> db.urls.find({})
+[
+  {
+    _id: ObjectId('6778cf6365394009e2da3cfa'),
+    shortId: 'sOIKuIRf6',
+    redirectURL: 'https://www.google.com/',
+    visitHistory: [
+      {
+        timestamp: 1735970665740,
+        _id: ObjectId('6778cf6965394009e2da3cfc')
+      },
+      {
+        timestamp: 1735970672867,
+        _id: ObjectId('6778cf7065394009e2da3cff')
+      },
+      {
+        timestamp: 1735970680259,
+        _id: ObjectId('6778cf7865394009e2da3d03')
+      }
+    ],
+    createdAt: ISODate('2025-01-04T06:04:19.030Z'),
+    updatedAt: ISODate('2025-01-04T06:04:40.260Z'),
+    __v: 0
+  }
+]
+
+
+AT POSTMAN:-
+
+GET:- http://localhost:8001/url/analytics/sOIKuIRf6
+
+{
+    "totalClicks": 3,
+    "analytics": [
+        {
+            "timestamp": 1735970665740,
+            "_id": "6778cf6965394009e2da3cfc"
+        },
+        {
+            "timestamp": 1735970672867,
+            "_id": "6778cf7065394009e2da3cff"
+        },
+        {
+            "timestamp": 1735970680259,
+            "_id": "6778cf7865394009e2da3d03"
+        }
+    ]
+}
+
+-----------------------------------------------------------------------------------------------------------

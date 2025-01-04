@@ -1,0 +1,5 @@
+In Mongoose we have a Schema, In which we bascally define a structure.
+
+Schema - Define the structure.
+    Using Schema we make the Model.
+    Using Model we do CRUD (Create,Read,Update,Delete) operation.

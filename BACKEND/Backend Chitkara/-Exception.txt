@@ -1,0 +1,26 @@
+handling exceptions(errors)
+ - There are various ways in node.js to handle the exceptions
+	- Synchronous errors: Use try-catch blocks to handle exceptions.
+	- Asynchronous errors: Handle errors in callbacks by checking the first argument (err).
+	- Global errors: Use process.on('uncaughtException') to handle uncaught exceptions globally.
+	- Custom errors: You can create custom error objects using Error and manipulate their properties.
+
+Creating endpoints 
+ - method is the predefined key from req object.
+ - this key gives type of method in request.
+ - url is the predefined key from req object.
+ - this key gives url of the request. 
+ - setHeader is the predefined function from res object
+ - this function is used to set headers.
+ - statusCode is the predefined key from res object.
+ - we can set status code using this key.
+ - handleError is the user defined function.
+ - we are handling exceptions(errors) from this function.
+ - possible errors are	
+	- 'Route not found'
+	- 'Invalid method'
+	- etc
+ - if any error occurred statusCode will be 4xx.
+
+
+// Html page LOGIN:-

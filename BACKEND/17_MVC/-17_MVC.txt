@@ -1,0 +1,92 @@
+MVC-> Model View Controller
+
+VIEW    <-------     MODEL     <------------    CONTROLLER
+
+Refactoring Code 16_5
+
+----------------------------------------------------------------------------------------------------------
+
+We made 4 folders:- Views, Controllers, Models, Routes
+Now we will segregate our code in these folders
+
+----------------------------------------------------------------------------------------------------------
+
+POST REQUEST:- http://localhost:8000/user/
+
+    first_name: Gaurav
+    last_name: Singh
+    email: gsh@gmail.com
+    job_title: kind
+    gender: male
+
+    AT SEND:-
+    {
+        "msg": "User created successfully",
+        "user": {
+            "first_name": "Gaurav",
+            "last_name": "Singh",
+            "email": "gsh@gmail.com",
+            "job_title": "kind",
+            "gender": "male",
+            "_id": "67767aca31ddfd03fd677815",
+            "createdAt": "2025-01-02T11:38:50.929Z",
+            "updatedAt": "2025-01-02T11:38:50.929Z",
+            "__v": 0
+        },
+        "id": "67767aca31ddfd03fd677815"
+    }
+
+----------------------------------------------------------------------------------------------------------
+
+GET REQUEST:- http://localhost:8000/user/
+
+OUTPUT:-
+
+    [
+        {
+            "_id": "67754e8f546b3ccc812e646e",
+            "first_name": "Mary",
+            "last_name": "Jane",
+            "email": "jane@gmail.com",
+            "job_title": "girlfriend",
+            "gender": "Female",
+            "__v": 0
+        },
+        {
+            "_id": "677550148b4aba15ab5724f0",
+            "first_name": "Mary",
+            "last_name": "Jane",
+            "email": "MJ@gmail.com",
+            "job_title": "girlfriend",
+            "gender": "Female",
+            "createdAt": "2025-01-01T14:24:20.386Z",
+            "updatedAt": "2025-01-01T14:24:20.386Z",
+            "__v": 0
+        },
+        {
+            "_id": "67767aca31ddfd03fd677815",
+            "first_name": "Gaurav",
+            "last_name": "Singh",
+            "email": "gsh@gmail.com",
+            "job_title": "kind",
+            "gender": "male",
+            "createdAt": "2025-01-02T11:38:50.929Z",
+            "updatedAt": "2025-01-02T11:38:50.929Z",
+            "__v": 0
+        }
+    ]
+
+----------------------------------------------------------------------------------------------------------
+
+GET REQUEST:- http://localhost:8000/user/67754e8f546b3ccc812e646e
+
+OUTPUT:-
+    {
+        "_id": "67754e8f546b3ccc812e646e",
+        "first_name": "Mary",
+        "last_name": "Jane",
+        "email": "jane@gmail.com",
+        "job_title": "girlfriend",
+        "gender": "Female",
+        "__v": 0
+    }

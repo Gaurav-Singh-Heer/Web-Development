@@ -1,0 +1,14 @@
+{
+  "name": "11_rest_api_prj",
+  "version": "1.0.0",
+  "description": "Rest Api Project",
+  "main": "11_1_Rest_API_Prj.js",
+  "scripts": {
+    "start": "node 11_3_Rest_API_Prj_List_all_users.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

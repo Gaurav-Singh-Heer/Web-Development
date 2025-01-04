@@ -1,0 +1,153 @@
+MongoDB is a DataBase. It's Code has JvaScript Like Syntax
+
+MongoDB:-
+    - No-SQL Document Based DataBase                   // No-SQL work on Document // SQL work on Table
+    - Strong Support for Aggregation Pipes
+    - Works on BSON format
+    - Best for Node Applications
+
+-----------------------------------------------------------------------------------------------------------------
+
+MongoDB Architecture:-
+    - In MongoDB we have Collections . As in SQL we have Table. Similarly in MongoDB we have Collections
+    - So, In Broader level we have collections.
+    - Let say we have Collection 'users'. And in Collection we have entry called Document-1,Document-2. We can have thousands or Lakhs of Document inside a collection
+
+-----------------------------------------------------------------------------------------------------------------
+
+To Interact In MongoDB Commands:-
+
+    1. show dbs:         Displays all databases currently available in the MongoDB server.  
+    2. use <db_name>:    Switches to the specified database or creates it implicitly.  
+    3. show collections: Lists all collections within the currently selected database.  
+    4. db.coll.find():   Retrieves and displays documents from the specified collection.  
+    5. db.coll.insert(): Adds a new document to the specified collection in MongoDB.  
+
+Example:-
+
+> use Sigma
+< switched to db Sigma
+
+> db["courses"].find()
+< {
+   _id: ObjectId('6774b821138b27c8564162ea'),
+   name: 'Java',
+   Price: '20000',
+   Instructor: 'Harry'
+  }
+ 
+> show dbs
+< Sigma   40.00 KiB
+  admin   40.00 KiB
+  config  60.00 KiB
+  local   40.00 KiB
+
+> show databases
+< Sigma   40.00 KiB
+  admin   40.00 KiB
+  config  60.00 KiB
+  local   40.00 KiB
+
+> show collections
+< courses
+-----------------------------------------------------------------------------------------------------------------
+
+InsertOne:-
+
+>   db["courses"].find()
+<   {
+    _id: ObjectId('6774b821138b27c8564162ea'),
+    name: 'Java',
+    Price: '20000',
+    Instructor: 'Harry'
+    }
+ 
+>    db.courses.insertOne({name:"JavaScript"})
+<   {
+    acknowledged: true,
+    insertedId: ObjectId('6774bb13f694bb5da2dccf0a')
+    }
+ 
+>    db["courses"].find()
+<   {
+    _id: ObjectId('6774b821138b27c8564162ea'),
+    name: 'Java',
+    Price: '20000',
+    Instructor: 'Harry'
+    }
+    {
+    _id: ObjectId('6774bb13f694bb5da2dccf0a'),
+    name: 'JavaScript'
+    }
+
+-----------------------------------------------------------------------------------------------------------------
+
+InsertMany:-
+
+>   db.courses.insertMany([
+        { name: "Python", duration: "3 months", instructor: "Alice" },
+        { name: "JavaScript", duration: "2 months", instructor: "Bob" },
+        { name: "Java", duration: "4 months", instructor: "Charlie" }
+    ]);
+    
+<   {
+        acknowledged: true,
+        insertedIds: {
+            '0': ObjectId('6774bc21f694bb5da2dccf0b'),
+            '1': ObjectId('6774bc21f694bb5da2dccf0c'),
+            '2': ObjectId('6774bc21f694bb5da2dccf0d')
+        }
+    }
+
+>   db["courses"].find()
+<   {
+        _id: ObjectId('6774b821138b27c8564162ea'),
+        name: 'Java',
+        Price: '20000',
+        Instructor: 'Harry'
+    }
+    {
+        _id: ObjectId('6774bb13f694bb5da2dccf0a'),
+        name: 'JavaScript'
+    }
+    {
+        _id: ObjectId('6774bc21f694bb5da2dccf0b'),
+        name: 'Python',
+        duration: '3 months',
+        instructor: 'Alice'
+    }
+    {
+        _id: ObjectId('6774bc21f694bb5da2dccf0c'),
+        name: 'JavaScript',
+        duration: '2 months',
+        instructor: 'Bob'
+    }
+    {
+        _id: ObjectId('6774bc21f694bb5da2dccf0d'),
+        name: 'Java',
+        duration: '4 months',
+        instructor: 'Charlie'
+    }
+
+-----------------------------------------------------------------------------------------------------------------
+
+use('GauravkaPersonalData');
+
+// Insert a few documents into the sales collection.
+db.getCollection('languages').insertMany([
+    { name: "Python", duration: "3 months", instructor: "Alice" },
+    { name: "JavaScript", duration: "2 months", instructor: "Bob" },
+    { name: "Java", duration: "4 months", instructor: "Charlie" },
+    { name: "C++", duration: "3 months", instructor: "David" },
+    { name: "HTML & CSS", duration: "1.5 months", instructor: "Eve" },
+    { name: "Data Science", duration: "6 months", instructor: "Frank" },
+    { name: "Machine Learning", duration: "5 months", instructor: "Grace" },
+    { name: "ReactJS", duration: "2.5 months", instructor: "Hannah" },
+    { name: "NodeJS", duration: "3 months", instructor: "Ian" },
+    { name: "SQL", duration: "2 months", instructor: "Jack" }
+]);
+
+// Print a message to the output window.
+console.log(`Done Inserting Data`);
+
+-----------------------------------------------------------------------------------------------------------------

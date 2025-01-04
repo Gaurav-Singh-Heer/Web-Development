@@ -1,0 +1,542 @@
+16_1
+
+Connecting MongoDB with NodeJS Applications
+
+// Connection
+mongoose.connect('mongodb://127.0.0.1:27017/Gaurav-app-1') // Gaurav-app-1  is the name of the database
+        .then(()=> console.log("MongoDB Connected"))// Promise
+        .catch((err)=>console.log("Mongo Error",err));
+// Schema
+const userSchema= new mongoose.Schema({
+    first_name:{
+        type:String,
+        required:true,
+    },
+    last_name:{
+        type:String,
+    },
+    email:{
+        type:String,
+        required:true,
+        unique:true,
+    },
+    job_title:{
+        type:String,
+    },
+    gender:{
+        type:String,
+    },
+
+});
+
+// Model
+const User=mongoose.model("user",userSchema);   // using this User class we can interact withbthe Mongo
+
+------------------------------------------------------------------------------------------------------------------
+
+16_2
+
+const User=mongoose.model("user",userSchema);   // using this User class we can interact with the Mongo
+
+Now we can use this User object to do stuff.
+
+D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\16_MongoDB>mongosh
+Current Mongosh Log ID: 677518c801152149364eeb85
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.7
+Using MongoDB:          8.0.4
+Using Mongosh:          2.3.7
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2024-12-31T19:45:10.395+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> show dbs
+Gaurav-app-1          12.00 KiB
+GauravkaPersonalData  72.00 KiB
+Sigma                 72.00 KiB
+admin                 40.00 KiB
+config                72.00 KiB
+local                 40.00 KiB
+test> use Gaurav-app-1
+switched to db Gaurav-app-1
+Gaurav-app-1> show collections
+users
+Gaurav-app-1> db.users.find({})
+
+Gaurav-app-1>
+
+app.post("/api/users", async (req, res) => {   
+    const body = req.body;
+
+    // Validate required fields
+    if (
+        !body ||
+        !body.first_name || 
+        !body.last_name || 
+        !body.email || 
+        !body.gender || 
+        !body.job_title
+    ) {
+        return res.status(400).json({ msg: "All fields are required" });
+    }
+
+    try {
+        // Create the user using correct field names
+        const result = await User.create({
+            first_name: body.first_name, // Match schema
+            last_name: body.last_name,
+            email: body.email,
+            gender: body.gender,
+            job_title: body.job_title,
+        });
+
+        console.log("result", result);
+        console.log("Body", body);
+
+        return res.status(201).json({ msg: "success", user: result });
+    } catch (err) {
+        console.error("Error creating user:", err);
+        return res.status(500).json({ msg: "Internal Server Error", error: err });
+    }
+});
+
+D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\16_MongoDB>mongosh
+Current Mongosh Log ID: 67754f2c49cbf2f5164eeb85
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.7
+Using MongoDB:          8.0.4
+Using Mongosh:          2.3.7
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2024-12-31T19:45:10.395+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> show dbs
+Gaurav-app-1           60.00 KiB
+GauravkaPersonalData   72.00 KiB
+Sigma                  72.00 KiB
+admin                  40.00 KiB
+config                108.00 KiB
+local                  40.00 KiB
+test> use Gaurav-app-1
+switched to db Gaurav-app-1
+Gaurav-app-1> show collections
+users
+Gaurav-app-1> db.users.find({})
+[
+  {
+    _id: ObjectId('67754e8f546b3ccc812e646e'),
+    first_name: 'Mary',
+    last_name: 'Jane',
+    email: 'jane@gmail.com',
+    job_title: 'girlfriend',
+    gender: 'Female',
+    __v: 0
+  }
+]
+------------------------------------------------------------------------------------------------------------------
+
+16_3:- Added Timestamp
+
+const userSchema= new mongoose.Schema({
+    first_name:{
+        type:String,
+        required:true,
+    },
+    last_name:{
+        type:String,
+    },
+    email:{
+        type:String,
+        required:true,
+        unique:true,
+    },
+    job_title:{
+        type:String,
+    },
+    gender:{
+        type:String,
+    },
+},{timestamps:true}
+);
+
+OUTPUT:-
+
+    POSTMAN:-
+    {
+        "msg": "success",
+        "user": {
+            "first_name": "Mary",
+            "last_name": "Jane",
+            "email": "MJ@gmail.com",
+            "job_title": "girlfriend",
+            "gender": "Female",
+            "_id": "677550148b4aba15ab5724f0",
+            "createdAt": "2025-01-01T14:24:20.386Z",
+            "updatedAt": "2025-01-01T14:24:20.386Z",
+            "__v": 0
+        }
+    }
+
+    CONSOLE:-
+    D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\16_MongoDB>node "d:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\16_MongoDB\16_3_Add_Timestamp.js"
+    Server Started at Port: 8000
+    MongoDB Connected
+    result {
+        first_name: 'Mary',
+        last_name: 'Jane',
+        email: 'MJ@gmail.com',
+        job_title: 'girlfriend',
+        gender: 'Female',
+        _id: new ObjectId('677550148b4aba15ab5724f0'),
+        createdAt: 2025-01-01T14:24:20.386Z,
+        updatedAt: 2025-01-01T14:24:20.386Z,
+        __v: 0
+    }
+    Body [Object: null prototype] {
+        first_name: 'Mary',
+        last_name: 'Jane',
+        email: 'MJ@gmail.com',
+        gender: 'Female',
+        job_title: 'girlfriend'
+    }
+
+    AT Command Prompt:-
+
+    C:\Users\GAURAV>mongosh
+    Current Mongosh Log ID: 677550cdd73e3632b04eeb85
+    Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.7
+    Using MongoDB:          8.0.4
+    Using Mongosh:          2.3.7
+
+    For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+    ------
+    The server generated these startup warnings when booting
+    2024-12-31T19:45:10.395+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+    ------
+
+    test> show dbs
+    Gaurav-app-1          108.00 KiB
+    GauravkaPersonalData   72.00 KiB
+    Sigma                  72.00 KiB
+    admin                  40.00 KiB
+    config                108.00 KiB
+    local                  40.00 KiB
+    test> use Gaurav-app-1
+    switched to db Gaurav-app-1
+    Gaurav-app-1> show collections
+    users
+    Gaurav-app-1> db.users.find({})
+    [
+    {
+        _id: ObjectId('67754e8f546b3ccc812e646e'),
+        first_name: 'Mary',
+        last_name: 'Jane',
+        email: 'jane@gmail.com',
+        job_title: 'girlfriend',
+        gender: 'Female',
+        __v: 0
+    },
+    {
+        _id: ObjectId('677550148b4aba15ab5724f0'),
+        first_name: 'Mary',
+        last_name: 'Jane',
+        email: 'MJ@gmail.com',
+        job_title: 'girlfriend',
+        gender: 'Female',
+        createdAt: ISODate('2025-01-01T14:24:20.386Z'),
+        updatedAt: ISODate('2025-01-01T14:24:20.386Z'),
+        __v: 0
+    }
+    ]
+------------------------------------------------------------------------------------------------------------------
+
+16_4:- Bringing Users From database
+
+app.get("/users", async (req,res)=>{                                  // http://localhost:8000/users
+    const allDbUsers=await User.find({});          // empty means all the users
+    const html=`
+    <ul>
+        ${allDbUsers.map((user)=>`<li>${user.first_name}-${user.email}</li>`).join("")}   
+    </ul>
+    `; //<!-- .join() to remove comma above at each name -->
+    res.send(html);
+})
+
+ON RUNNING
+
+AT:-http://localhost:8000/users
+Mary-jane@gmail.com
+Mary-MJ@gmail.com
+Peter-parker@gmail.com
+
+AT CMD:-
+
+Gaurav-app-1> db.users.find({})
+[
+  {
+    _id: ObjectId('67754e8f546b3ccc812e646e'),
+    first_name: 'Mary',
+    last_name: 'Jane',
+    email: 'jane@gmail.com',
+    job_title: 'girlfriend',
+    gender: 'Female',
+    __v: 0
+  },
+  {
+    _id: ObjectId('677550148b4aba15ab5724f0'),
+    first_name: 'Mary',
+    last_name: 'Jane',
+    email: 'MJ@gmail.com',
+    job_title: 'girlfriend',
+    gender: 'Female',
+    createdAt: ISODate('2025-01-01T14:24:20.386Z'),
+    updatedAt: ISODate('2025-01-01T14:24:20.386Z'),
+    __v: 0
+  },
+  {
+    _id: ObjectId('6775530dbb2b949e39c5e8c8'),
+    first_name: 'Peter',
+    last_name: 'Parker',
+    email: 'parker@gmail.com',
+    job_title: 'BoyFriend',
+    gender: 'Male',
+    createdAt: ISODate('2025-01-01T14:37:01.568Z'),
+    updatedAt: ISODate('2025-01-01T14:37:01.568Z'),
+    __v: 0
+  }
+]
+
+|               -----------------------------------------------------------------------------              |
+
+// REST API
+app.get("/api/users", async (req, res) => {
+        const allDbUsers = await User.find({}); // Fetch all users
+        res.set("X-MyName", "Piyush Garg"); 
+        return res.json(allDbUsers);
+});
+
+OUTPUT:-
+
+    AT POSTMAN:-
+
+    GO at :-http://localhost:8000/api/users                GET REQUEST
+
+    OUTPUT:-
+    [
+        {
+            "_id": "67754e8f546b3ccc812e646e",
+            "first_name": "Mary",
+            "last_name": "Jane",
+            "email": "jane@gmail.com",
+            "job_title": "girlfriend",
+            "gender": "Female",
+            "__v": 0
+        },
+        {
+            "_id": "677550148b4aba15ab5724f0",
+            "first_name": "Mary",
+            "last_name": "Jane",
+            "email": "MJ@gmail.com",
+            "job_title": "girlfriend",
+            "gender": "Female",
+            "createdAt": "2025-01-01T14:24:20.386Z",
+            "updatedAt": "2025-01-01T14:24:20.386Z",
+            "__v": 0
+        },
+        {
+            "_id": "6775530dbb2b949e39c5e8c8",
+            "first_name": "Peter",
+            "last_name": "Parker",
+            "email": "parker@gmail.com",
+            "job_title": "BoyFriend",
+            "gender": "Male",
+            "createdAt": "2025-01-01T14:37:01.568Z",
+            "updatedAt": "2025-01-01T14:37:01.568Z",
+            "__v": 0
+        }
+    ]
+
+|               -----------------------------------------------------------------------------              |
+
+app
+    .route("/api/users/:id") // Grouping
+    .get(async (req, res) => {
+        const user = await User.findById(req.params.id); // Fetch user by ID from DB
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+        return res.json(user);
+    })
+    .patch((req, res) => {
+        const id = Number(req.params.id);
+        const index = users.findIndex(user => user.id === id); // Check if user exists
+        if (index === -1) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        console.log("Request Body:", req.body); // Debugging
+        console.log("User Before Update:", users[index]); // Debugging
+
+        users[index] = { ...users[index], ...req.body }; // Merge updated fields
+
+        console.log("Updated User:", users[index]); // Debugging
+
+        fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err) => {
+            if (err) {
+                console.error("Error writing file:", err);
+                return res.status(500).json({ error: "Internal Server Error" });
+            }
+            return res.json({ status: "success", user: users[index] });
+        });
+    })
+    .delete((req, res) => {
+        const id = Number(req.params.id);
+        const index = users.findIndex(user => user.id === id); // Check if user exists
+        if (index === -1) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        users.splice(index, 1); // Remove user
+
+        fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err) => {
+            if (err) {
+                console.error("Error writing file:", err);
+                return res.status(500).json({ error: "Internal Server Error" });
+            }
+            return res.json({ status: "success", id });
+        });
+    });
+
+app.get("/api/users/:id", (req, res) => {
+    const id = Number(req.params.id);
+    if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid user ID" }); // Bad Request
+    }
+
+    const user = users.find((user) => user.id === id);
+
+    if (!user) {
+        return res.status(404).json({ error: "User not found" }); // Not Found
+    }
+
+    return res.json(user);
+});
+
+OUTPUT:-
+
+    AT POSTMAN:- http://localhost:8000/api/users/6775530dbb2b949e39c5e8c8       GET REQUEST
+
+    {
+        "_id": "6775530dbb2b949e39c5e8c8",
+        "first_name": "Peter",
+        "last_name": "Parker",
+        "email": "parker@gmail.com",
+        "job_title": "BoyFriend",
+        "gender": "Male",
+        "createdAt": "2025-01-01T14:37:01.568Z",
+        "updatedAt": "2025-01-01T14:37:01.568Z",
+        "__v": 0
+    }
+
+------------------------------------------------------------------------------------------------------------------
+
+16_5:-Update_Get_Patch_Delete
+
+app
+    .route("/api/users/:id") // Grouping
+    .get(async (req, res) => {
+        // Fetch user by ID from DB
+        const user = await User.findById(req.params.id);
+
+        // Handle case where the user is not found
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        return res.status(200).json(user); // Return user data
+    })
+
+    .patch(async (req, res) => {
+        // Update user data by ID
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params.id,
+            req.body, // Use request body for dynamic updates
+            { new: true } // Return the updated document
+        );
+
+        // Handle case where the user is not found
+        if (!updatedUser) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        return res.status(200).json({ status: "success", user: updatedUser });
+    })
+
+    .delete(async (req, res) => {
+        // Delete user by ID
+        const deletedUser = await User.findByIdAndDelete(req.params.id);
+
+        // Handle case where the user is not found
+        if (!deletedUser) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        return res.status(200).json({ status: "success", message: "User deleted successfully" });
+    });
+
+OUTPUT:-
+
+    POSTMAN:-
+
+    AT GET:-http://localhost:8000/api/users/6775530dbb2b949e39c5e8c8
+
+    {
+        "_id": "6775530dbb2b949e39c5e8c8",
+        "first_name": "Peterg",
+        "last_name": "Parker",
+        "email": "parker@gmail.com",
+        "job_title": "BoyFriend",
+        "gender": "Male",
+        "createdAt": "2025-01-01T14:37:01.568Z",
+        "updatedAt": "2025-01-01T15:03:19.233Z",
+        "__v": 0
+    }
+
+    AT PATCH:-http://localhost:8000/api/users/6775530dbb2b949e39c5e8c8
+
+    UPDATED    first_name:-Peter_Spider
+
+    {
+        "status": "success",
+        "user": {
+            "_id": "6775530dbb2b949e39c5e8c8",
+            "first_name": "Peter_Spider",
+            "last_name": "Parker",
+            "email": "parker@gmail.com",
+            "job_title": "BoyFriend",
+            "gender": "Male",
+            "createdAt": "2025-01-01T14:37:01.568Z",
+            "updatedAt": "2025-01-01T15:05:12.692Z",
+            "__v": 0
+        }
+    }
+    
+    AT DELETE:-http://localhost:8000/api/users/6775530dbb2b949e39c5e8c8
+
+    {
+        "status": "success",
+        "message": "User deleted successfully"
+    }
+
+    Again Click on SEND:-  
+    {
+        "error": "User not found"
+    }
+------------------------------------------------------------------------------------------------------------------

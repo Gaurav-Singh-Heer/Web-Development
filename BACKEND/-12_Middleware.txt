@@ -1,0 +1,296 @@
+Coding done in 11_Rest_API_PRJ
+
+Let's say we have, Client and Server
+Let's say Client sent GET Request to users 
+So, after it at Express Server we have a route where we have a function(like app.get(/users))
+
+    User ------------------------------------------------------> Server
+|                   Request    Get/users                        
+
+User send request, As request reaches the server then express will see to run which block of code then that block of code will send response. Then our request/response cycle will end.
+
+
+    User -------REQUEST--------> Server ----------RESPONSE---------> User
+
+-----------------------------------------------------------------------------------------------------------------
+
+MIDDLEWARE:-
+
+We have a Client when this Client send request  Then we have a Middleware in b/w . 
+
+    User -------REQUEST--->(Middleware)-----> Server ----------RESPONSE---------> User
+
+- When user send request, The request first goes to Middleware not to (the function app.get). 
+- This Middleware can do any type of processing on that request. We can see the person sent request is not a Hacker or Invalid Request.OR, If We have to validate somthing then we can do anything at this Middleware
+- If, 
+    - Middleware found everything OK then it will send it's request Further to the function and that function will send response back.
+    - Middleware found user is not OK or there is some threat then it will not send request further it will return it back from there only, It will send response from there only. AND will end the Request/Response Cycle.
+
+Summary:- 
+
+Middleware is a function that execute at every request and response.
+
+-----------------------------------------------------------------------------------------------------------------
+
+We can also have multiple Middleware also in a code.
+
+    User ----REQUEST--->(Middleware 1)----REQUEST--->(Middleware 2)-----REQUEST--->(Middleware 3)-----> Server
+
+|        Check if user is Hacker       |   
+
+If, 
+    At Middleware 1,
+|                if User found Hacker Return
+|                else,
+|                       Send Request Forward to Middleware 2, 3
+|
+|
+|                                   if request Reached Middleware 3 and fulfilled then it's sent to function (Server)
+
+Summary:- 
+
+Middleware is a function that has access of our request/response and act as a middle man. It's a type of Plugin
+
+-----------------------------------------------------------------------------------------------------------------
+
+-> Middleware functions can perform the following tasks:
+
+    - Execute any code.
+    - Make changes to the request and the response objects.
+    - End the request-response cycle.
+    - Call the next middleware function in the stack.
+
+More:- https://expressjs.com/en/guide/using-middleware.html
+
+-----------------------------------------------------------------------------------------------------------------
+
+Coding done in 11_Rest_API_PRJ:-
+
+11_10:-
+
+// Middleware - Plugin
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: false
+}));
+
+1. `express.json()` middleware: It parses incoming requests with JSON payloads and makes the parsed data available in `req.body`. This is commonly used when you're sending JSON data in the body of a POST request.
+
+2. `express.urlencoded({ extended: false })` middleware: It parses incoming requests with URL-encoded payloads (e.g., from forms) and makes the parsed data available in `req.body`. The `extended: false` option uses the querystring library for parsing, meaning it can only handle simple key-value pairs (without nesting objects).
+
+-----------------------------------------------------------------------------------------------------------------
+
+12_1:-
+
+Creating Middleware using app.use
+
+// Middleware - Plugin
+app.use(express.urlencoded({            //Middleware 1
+    extended: false 
+}));
+
+app.use((req,res,next)=>{              // Middleware 2, Next for Middleware 1
+    console.log("Hello from Middleware 1");
+})
+
+AT POSTMAN:-
+
+URL:- http://localhost:8000/api/users
+
+if we GET request, On Click on Send. We did n't get the output. 
+
+bcoz this Middleware (console.log("Hello from Middleware 1");) has neither ended Middleware nor called the next function.
+
+-----------------------------------------------------------------------------------------------------------------
+
+12_2:-
+
+Updated Middleware2 using res.json (return res.json({msg:"Hello from Middleware 1"}))
+
+    app.use((req,res,next)=>{              // Middleware 2, Next for Middleware 1
+        console.log("Hello from Middleware 1");
+        return res.json({msg:"Hello from Middleware 1"})
+    })
+AT POSTMAN:-
+
+URL:- http://localhost:8000/api/users
+
+OUTPUT:-
+
+{
+    "msg": "Hello from Middleware 1"
+}
+
+This output bcoz :-
+
+    - First request gone at,
+        app.use(express.urlencoded({            //Middleware 1
+            extended: false 
+        })); 
+
+        it had done all parsing and called Middleware2
+    
+    - Then at,
+        app.use((req,res,next)=>{              // Middleware 2, Next for Middleware 1
+            console.log("Hello from Middleware 1");
+            return res.json({msg:"Hello from Middleware 1"})
+        })
+
+        We did n't let it go further Rejected Here only
+
+-----------------------------------------------------------------------------------------------------------------
+
+12_3:-
+
+To Forward request further from Middleware use, next().
+
+    app.use((req,res,next)=>{              // Middleware 2, Next for Middleware 1
+        console.log("Hello from Middleware 1");
+        next();
+        // return res.json({msg:"Hello from Middleware 1"})
+    })
+
+
+AT POSTMAN:-
+
+URL:- http://localhost:8000/api/users
+
+OUTPUT:-
+
+"Whole data of 1000 Users"
+
+Because,
+    After next function request had automatically reached ROUTES
+
+-----------------------------------------------------------------------------------------------------------------
+
+12_4:-
+
+// Middleware - Plugin
+app.use(express.urlencoded({            //Middleware 1
+    extended: false 
+}));
+
+app.use((req,res,next)=>{              // Middleware 2, Next for Middleware 1
+    console.log("Hello from Middleware 1");
+    next();
+    // return res.json({msg:"Hello from Middleware 1"})
+})
+
+app.use((req,res,next)=>{              // Middleware 3, Next for Middleware 2
+    console.log("Hello from Middleware 2");
+    return res.end("Hey");
+})
+
+
+Compiling:-
+    -> Middleware 1, it will run and it's next will call Middleware 2    
+    -> Middleware 2, it will run and it's next will call Middleware 3    
+    -> Middleware 3, it will process and return "Hey" 
+    
+
+OUTPUT:-
+
+    AT POSTMAN:-
+
+        URL:- http://localhost:8000/api/users
+
+        OUTPUT:-
+
+        "Hey"
+
+    AT CONSOLE:-
+        Hello from Middleware 1
+        Hello from Middleware 2
+
+-----------------------------------------------------------------------------------------------------------------
+
+12_4_2:-
+
+IF res.end added to Middleware 2
+
+// Middleware - Plugin
+app.use(express.urlencoded({            //Middleware 1
+    extended: false 
+}));
+
+app.use((req,res,next)=>{              // Middleware 2, Next for Middleware 1
+    console.log("Hello from Middleware 1");
+    return res.end("Hey");
+    // return res.json({msg:"Hello from Middleware 1"})
+})
+
+app.use((req,res,next)=>{              // Middleware 3, Next for Middleware 2
+    console.log("Hello from Middleware 2");
+})
+
+
+OUTPUT:-
+
+    AT POSTMAN:-
+    
+        URL:- http://localhost:8000/api/users
+
+        OUTPUT:-
+
+        "Hey"
+
+    AT CONSOLE:-
+        Hello from Middleware 1
+
+Here, as res.end in Middleware 2. So, it is returning from 2nd Middleware and 3rd Middleware had not ran.
+
+-----------------------------------------------------------------------------------------------------------------
+12_5:-
+
+-> Middleware functions can perform the following tasks:
+
+    - Execute any code.
+    - Make changes to the request and the response objects.
+    - End the request-response cycle.
+    - Call the next middleware function in the stack.
+
+
+- Make changes to the request and the response objects. MEANS,
+
+// Middleware - Plugin
+app.use(express.urlencoded({            //Middleware 1
+    extended: false 
+}));
+
+app.use((req,res,next)=>{              // Middleware 2, Next for Middleware 1
+    console.log("Hello from Middleware 1");
+    req.myUserName = "Piyushgarg.dev"
+    next();
+    // return res.json({msg:"Hello from Middleware 1"})
+})
+
+app.use((req,res,next)=>{              // Middleware 3, Next for Middleware 2
+    console.log("Hello from Middleware 2", req.myUserName);
+    next();
+})
+
+NOW, if we run this we can see Middleware 3 has access to property of Middleware 2 Available.
+
+OUTPUT:-    
+    AT POSTMAN:-
+
+            URL:- http://localhost:8000/api/users
+
+            OUTPUT:-
+
+            "Whole data of 1000 Users"
+
+    AT CONSOLE:-
+        -> Hello from Middleware 1
+        -> Hello from Middleware 2 Piyushgarg.dev
+
+-----------------------------------------------------------------------------------------------------------------
+
+Converts form data to object.
+
+// Middleware - Plugin
+app.use(express.urlencoded({            //Middleware 1
+    extended: false 
+}));
+-----------------------------------------------------------------------------------------------------------------

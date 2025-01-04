@@ -1,0 +1,48 @@
+Done CODING AT -> 11_Rest_API_PRJ
+
+HTTP:       MORE AT (https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+
+- HTTP status codes are used to indicate the status of a request.
+- HTTP status codes starting with 400 indicate client errors, whiile those starting 
+  with 500 indicate server errors.
+
+- HTTP response status codes
+    HTTP response status codes indicate whether a specific HTTP request has been successfully completed.
+    Responses are grouped in five classes:
+
+    1-> Informational responses (100 – 199)  -> https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#informational_responses
+    2-> Successful responses (200 – 299)     -> https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#successful_responses   
+    3-> Redirection messages (300 – 399)     -> https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#redirection_messages
+    4-> Client error responses (400 – 499)   -> https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#client_error_responses
+    5-> Server error responses (500 – 599)   -> https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses
+
+-----------------------------------------------------------------------------------------------------------------
+
+14_1
+
+Successful responses Status Codes :-
+
+    Code 200 OK      : is Fine But for GOOD Practise 
+    Use, 201 Created : For POST and PUT request.    
+
+-----------------------------------------------------------------------------------------------------------------
+
+06:06 Understanding HTTP status codes
+
+-----------------------------------------------------------------------------------------------------------------
+
+07:58 Creating a new user requires specific fields
+
+-----------------------------------------------------------------------------------------------------------------
+
+09:47 HTTP status codes indicate different types of errors and authorization issues.
+
+-----------------------------------------------------------------------------------------------------------------
+
+11:42  HTTP status codes provide information about server and client errors.
+
+-----------------------------------------------------------------------------------------------------------------
+
+14:00  HTTP Status Codes 503 Crafted by Merlin Al.
+
+-----------------------------------------------------------------------------------------------------------------

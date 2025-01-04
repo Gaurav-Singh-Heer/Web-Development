@@ -1,0 +1,174 @@
+"Coding Done at 11_Rest_API_PRJ"
+
+Let's say,
+
+Person A sends a Mail to person B. Content of letter is inside envelope and at outside we have extra Info(From, TO, Weight).
+
+So, Similarly:-
+
+Person A   = Client
+Person B   = Server
+Mail       = Request
+Letter     = Data
+Extra info = HTTP HEADERS
+
+Headers in real world look like ,
+
+    From:- is an ip address (192.168.1.1)
+    To  :- is an ip address (10.1.1.2)
+    Content Type :- JSON
+
+-----------------------------------------------------------------------------------------------------------------
+
+In Mail we have address of From and To.
+
+Similarly,
+
+When one computer send information to another then we have IP of Boths
+
+HEADERS,
+    - HTTP Headers are an important part of the API request and response as they represent the meta-data
+    (meta-data is data about data) associated with the API request and response.
+
+    - Headers carry information for The request and Response Body. 
+ 
+Q- What are Headers in HTTP?
+A- An HTTP header is a field of an HTTP request or response that passes additional context and metadata
+   about the request or response.
+
+-----------------------------------------------------------------------------------------------------------------
+
+REAL WORLD EXAMPLE of HEADERS:-
+
+At chrome, Open Youtube, Open Inspect, Open Network - There we have Headers
+
+EXAMPLE:-
+
+    GENERAL:-
+        Request URL:https://yt3.ggpht.com/LnD0yL5NAb8yvZu2d25qLZ-oAehUISz9tfe3aN36syGqTKbs4irbPeVUJfNlmVFRzel7KHV3-uo=s68-c-k-c0x00ffffff-no-rj
+        Request Method:GET
+        Status Code:200 OK
+        Remote Address:[2404:6800:4002:813::2001]:443
+        Referrer Policy:strict-origin-when-cross-origin
+    
+    RESPONSE HEADERS:-
+        access-control-allow-origin:*
+        access-control-expose-headers:Content-Length
+        age:9404
+        alt-svc:h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+        cache-control:public, max-age=86400, no-transform
+        content-disposition:inline;filename="channels4_profile.jpg"
+        content-length:1684
+        content-type:image/jpeg
+        date:Fri, 20 Dec 2024 01:00:22 GMT
+        etag:"v1"
+        expires:Sat, 21 Dec 2024 01:00:22 GMT
+        server:fife
+        timing-allow-origin:*
+        vary:Origin
+        x-content-type-options:nosniff
+        x-xss-protection:0
+
+    REQUEST HEADERS:-
+        :authority:yt3.ggpht.com
+        :method:GET
+        :path:/LnD0yL5NAb8yvZu2d25qLZ-oAehUISz9tfe3aN36syGqTKbs4irbPeVUJfNlmVFRzel7KHV3-uo=s68-c-k-c0x00ffffff-no-rj
+        :scheme:https
+        accept:image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8
+        accept-encoding:gzip, deflate, br, zstd
+        accept-language:en-US,en;q=0.9,en-IN;q=0.8
+        priority:i
+        referer:https://www.youtube.com/
+        sec-ch-ua:"Microsoft Edge";v="131", "Chromium";v="131", "Not_A Brand";v="24"
+        sec-ch-ua-mobile:?1
+        sec-ch-ua-platform:"Android"
+        sec-fetch-dest:image
+        sec-fetch-mode:no-cors
+        sec-fetch-site:cross-site
+        user-agent:Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36 Edg/131.0.0.0
+
+-----------------------------------------------------------------------------------------------------------------
+
+Coding Done at 11_Rest_API_PRJ
+
+Checking Headers, At the server
+
+After Running, Send GET Request 
+
+
+    REQUEST HEADERS:-
+        Postman-Token   :<calculated when request is sent>
+        Host    :<calculated when request is sent>
+        User-Agent  :PostmanRuntime/7.43.0
+        Accept  :*/*
+        Accept-Encoding   :gzip, deflate, br
+        Connection  :keep-alive
+
+Value
+    RESPONSE HEADERS:-
+        
+        X-Powered-By    :Express
+        Content-Type    :application/json; charset=utf-8
+        Content-Length  :138980
+        ETag    :W/"21ee4-Mgdzn7meSsaTNJT6QjfSEiLNAtI"
+        Date    :Fri, 20 Dec 2024 04:09:32 GMT
+        Connection  :keep-alive
+        Keep-Alive  :timeout=5
+
+-----------------------------------------------------------------------------------------------------------------
+
+13_2
+
+Create Header:-
+
+// REST API
+app.get("/api/users",(req,res)=>{                                  // http://localhost:8000/api/users
+    console.log(req.headers);         // To Print Request Headers
+    res.setHeader("myName", "Piyush Garg")         // CUSTOM HEADER
+    // GOOD PRACTISE :- ALWAYS ADD X to Custom headers example:- X-myName
+    return res.json(users);
+})
+
+    RESPONSE HEADERS:-
+        
+        X-Powered-By    :Express
+        myName  :Piyush Garg
+        Content-Type    :application/json; charset=utf-8
+        Content-Length  :138980
+        ETag    :W/"21ee4-Mgdzn7meSsaTNJT6QjfSEiLNAtI"
+        Date    :Fri, 20 Dec 2024 04:09:32 GMT
+        Connection  :keep-alive
+        Keep-Alive  :timeout=5
+
+    OUTPUT:-
+
+    AT CONSOLE:-
+        Server Started at Port: 8000
+        {
+        'user-agent': 'PostmanRuntime/7.43.0',
+        accept: '*/*',
+        'postman-token': 'd5020c52-3eac-4339-a941-8a815d016bae',
+        host: 'localhost:8000',
+        'accept-encoding': 'gzip, deflate, br',
+        connection: 'keep-alive'
+        }
+        {
+            purpose: 'learning',                                // CREATED BY ME AT POSTMAN
+            'user-agent': 'PostmanRuntime/7.43.0',
+            accept: '*/*',
+            'postman-token': 'ebc4ea1b-6670-4c58-baa4-29aeb007b4e4',
+            host: 'localhost:8000',
+            'accept-encoding': 'gzip, deflate, br',
+            connection: 'keep-alive'
+        }
+
+-----------------------------------------------------------------------------------------------------------------
+
+13_3
+
+Explained:-
+    app.use(express.urlencoded({
+        extended: false
+    }));
+
+    How this change headers on Changing the type at POSTMAN POST Request

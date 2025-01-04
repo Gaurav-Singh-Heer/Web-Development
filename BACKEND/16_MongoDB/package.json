@@ -1,0 +1,16 @@
+{
+  "name": "16_mongodb",
+  "version": "1.0.0",
+  "description": "Mongo",
+  "main": "11_10_Rest_API_Patch_Delete.js",
+  "scripts": {
+    "start": "nodemon 16_1_Rest_API_Patch_Delete.js"
+  },
+  "author": "Gaurav",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.9.3",
+    "nodemon": "^3.1.9"
+  }
+}

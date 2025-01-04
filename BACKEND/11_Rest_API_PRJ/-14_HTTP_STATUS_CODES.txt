@@ -1,0 +1,132 @@
+Done CODING AT -> 11_Rest_API_PRJ
+
+HTTP:       MORE AT (https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+
+- HTTP status codes are used to indicate the status of a request.
+- HTTP status codes starting with 400 indicate client errors, whiile those starting 
+  with 500 indicate server errors.
+
+- HTTP response status codes
+    HTTP response status codes indicate whether a specific HTTP request has been successfully completed.
+    Responses are grouped in five classes:
+
+    1-> Informational responses (100 – 199)  -> https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#informational_responses
+    2-> Successful responses (200 – 299)     -> https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#successful_responses   
+    3-> Redirection messages (300 – 399)     -> https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#redirection_messages
+    4-> Client error responses (400 – 499)   -> https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#client_error_responses
+    5-> Server error responses (500 – 599)   -> https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses
+
+-----------------------------------------------------------------------------------------------------------------
+
+14_1
+
+Successful responses Status Codes :-
+
+    Code 200 OK      : is Fine But for GOOD Practise 
+    Use, 201 Created : For POST and PUT request.   
+
+	app.post("/api/users",(req,res)=>{   
+		const body = req.body;
+		users.push({...body, id: users.length+1});  // Id is made on our own by using length of whole data (= total users)
+		fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err,data)=>{
+			return res.status(201).json({status:"success", id : users.length});
+		})
+		console.log("Body", body);
+	}); 
+
+	AT POSTMAN:- 201 Created 51 ms 270 B
+
+-----------------------------------------------------------------------------------------------------------------
+
+14_2
+
+Client error responses Status Codes :-
+        
+    400 Bad Request:- 
+        When, 
+            Suppose we want user to fill the form 
+            first_name,last_name,email,gender,job_title
+        But,
+            User had n't filled email and job_title. So, it is bad request and will be denied 
+
+        app.post("/api/users",(req,res)=>{   
+            const body = req.body;
+            if(!body || !body.first_name || !body.email || !body.last_name|| !body.job_title|| !body.gender){
+                return res.status(400).json({msg:"All fields are reuired"})
+            }
+            users.push({...body, id: users.length+1});  // Id is made on our own by using length of whole data (= total users)
+            fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err,data)=>{
+                return res.status(201).json({status:"success", id : users.length});
+            })
+            console.log("Body", body);
+        });
+
+        OUTPUT:-
+
+            AT POSTMAN:--> Don't enter any key,value
+
+            URL:-http://localhost:8000/api/users
+
+            400 Bad Request 35 ms 276 B
+
+            {
+                "msg": "All fields are reuired"
+            }
+
+    404 Not Found:-
+
+        When, we are trying to find user that does n't exist
+
+        .route("/api/users/:id")             //Grouping
+        .get((req,res)=>{
+            const id=Number(req.params.id);
+            const user=users.find((user)=>user.id===id);
+            if(!user){
+                return res.status(404).json({error:"User not Found"})
+            }
+            return res.json(user);
+        })
+
+        OUTPUT:-
+
+            AT POSTMAN:-
+
+            URL:-http://localhost:8000/api/users/2000000000000000000000000
+
+            404 Not Found 14 ms 268 B
+
+            {
+                "error": "User not Found"
+            }
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+14_3
+
+Server error responses Status Codes :-
+        
+    500 Internal Server Error:- 
+
+        BY, const user=users.find((user)=>user.id[0]===id);      // Changing id -> id[0] 
+        Now, if we find user that exist(id=100) then it will show internal server error
+
+        .get((req,res)=>{
+            const id=Number(req.params.id);
+            const user=users.find((user)=>user.id[0]===id);
+            if(!user){
+                return res.status(404).json({error:"User not Found"})
+            }
+            return res.json(user);
+        })
+
+        OUTPUT:-
+
+            AT POSTMAN:-
+
+            URL:-http://localhost:8000/api/users/20
+
+            500 Internal Server Error 14 ms 268 B
+
+
+-----------------------------------------------------------------------------------------------------------------

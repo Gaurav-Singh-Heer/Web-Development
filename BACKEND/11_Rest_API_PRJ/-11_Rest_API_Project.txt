@@ -1,0 +1,412 @@
+At Terminal
+
+D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\11_Rest_API_PRJ>npm init
+D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\11_Rest_API_PRJ>npm i express
+
+At Package.json
+
+"scripts": {
+    "start": "node 11_1_Rest_API_Prj.js"
+},
+------------------------------------------------------------------------------------------------------------------
+
+Task:-
+
+We are designing a REST API. We are making a REST API in which we can support JSON data. So, It's a JSON REST API.
+
+REST API:- JSON
+
+
+ROUTES:-
+
+-> GET /users-LIST all users                        
+
+    GET /users/1:- Get the user with ID 1.
+    GET /users/2:- Get the user with ID 2.
+
+-> POST /users:- Create new user
+
+-> PATCH /users/1:- Edit the user with ID 1.
+
+-> DELETE /users/1:- Delete the user with ID 1.
+
+We are going to hardcore this data for which we are going to site:- https://mockaroo.com/
+
+------------------------------------------------------------------------------------------------------------------
+11_1
+
+We generated 1000 Rows of Fake JSON Data from https://mockaroo.com/ stored as MOCK_DATA.json
+
+-> GET /users-LIST all users    -DONE                    // Return users as JSON
+
+------------------------------------------------------------------------------------------------------------------
+11_2
+
+Our server is basically a Hybrid Server. Our server should be like which support browser and other mobile
+apps too
+
+For this we will Modify GET Route as :-
+
+-> GET /users-LIST all users      Will render HTML Document     - DONE   
+-> GET /api/users-LIST all users       JSON -DONE    
+
+    GET /api/users/1:- Get the user with ID 1.
+    GET /api/users/2:- Get the user with ID 2.
+
+-> POST /api/users:- Create new user
+
+-> PATCH /api/users/1:- Edit the user with ID 1.
+
+-> DELETE /api/users/1:- Delete the user with ID 1.   
+
+------------------------------------------------------------------------------------------------------------------
+
+11_3:-
+    
+    GET /api/users/1:- Get the user with ID 1.   -DONE
+    GET /api/users/2:- Get the user with ID 2.   -DONE
+
+As it's impossible to Allocate for URL for each user so, we will use Dynamic Path Parameters
+
+Dynamic Path Parameters
+
+GET /api/users/:id
+Here, :id-> Variable | Dynamic. :id means it can be any value
+
+
+------------------------------------------------------------------------------------------------------------------
+11_4:-
+
+-> POST /api/users:- Create new user
+
+-> PATCH /api/users/1:- Edit the user with ID 1.
+
+-> DELETE /api/users/1:- Delete the user with ID 1.   
+
+Here ,we can't use POST request because browser by Default use GET request
+
+So,     POST, PATCH, DELETE request are problematic
+
+------------------------------------------------------------------------------------------------------------------
+11_5:-
+
+-> What is a POSTMAN:-
+-> It is a utility tool used in API testing and Documentation
+
+
+-> GET
+
+-> Open POSTMAN
+-> Select GET and write this URL (http://localhost:8000/users) over there.    
+-> And Click Send.
+
+    Output will be shown (Name of all user)
+
+-> Then GET this URL (http://localhost:8000/api/users).
+-> Click Send
+
+    Output will be shown (Data of all user)
+
+
+-> Above the output bar there is,
+
+    200 OK      12 ms   135.45 KB
+| status code | time  |   Size   |
+
+We always focus that time is less as , If time is more user have to wait more.
+
+
+-> POST
+
+-> Select POST and write this URL (http://localhost:8000/api/users) over there.    
+-> And Click Send.
+
+    Output will be shown (status:-Pending)
+
+------------------------------------------------------------------------------------------------------------------
+
+11_6:- 
+
+Completing POST
+
+-> POST
+
+-> Select POST and write this URL (http://localhost:8000/api/users) over there.    
+-> And Click Send.
+-> Select Body
+-> Under Body u can Select (raw or x-www-form-urlencoded) we will mostly use raw
+-> Now Select x-www-form-urlencoded
+
+-> Copy all Field Name and Paste at KEY over there (first_name, last_name, email, gender, job_title)
+-> Write Values (Piyush, Garg, piyushgarg dev@gmail.com, Male, Software Dev)
+
+-> Click Send. Nothing will happen we want that our this data appends to JSON database for which will update the code.
+
+------------------------------------------------------------------------------------------------------------------
+
+11_7:-
+
+-> app.post("/api/users",(req,res)=>{   
+    const body = req.body;
+    console.log("Body", body);
+    return res.json({status:"pending"});
+});
+
+-> Click Send at POSTMAN.
+
+Console:- Body undefined  
+
+// Body undefined bcoz express does n't know the type of data and how to handle it.
+// For this we will use Middleware , For now let's take it as plug-in. At express there are many plug-ins
+
+------------------------------------------------------------------------------------------------------------------
+
+11_8:-
+
+Middleware (Plug-in)
+
+// Middleware - Plugin
+app.use(express.urlencoded({
+    extended: false
+}));
+
+-> It's work is ,
+    -> Whenever the x-www-form-urlencoded or form data will come, will add it to body for me
+
+-> Click Send at POSTMAN.
+
+Console:-
+Body [Object: null prototype] {
+  first_name: 'Piyush',
+  last_name: 'Garg',
+  email: 'piyushgarg dev@gmail.com',
+  gender: 'Male',
+  job_title: 'Software Dev'
+}
+
+-> Plugin picked data from POSTMAN. Made it's JS object and added it with req.body
+
+-> Now by using body we can add that data at Mockaroo data we had.
+
+------------------------------------------------------------------------------------------------------------------
+
+11_9:-
+
+-> Now by using body we can add that data at Mockaroo data we had.
+
+const fs=require('fs');
+
+app.post("/api/users",(req,res)=>{   
+    const body = req.body;
+    users.push({...body, id: users.length+1});   // Id is made on our own by using length of whole data (= total users)
+    fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err,data)=>{
+        return res.json({status:"success", id : users.length+1});
+    })
+    console.log("Body", body);
+});
+
+
+
+OUTPUT:-
+
+MOCK_DATA.json:
+
+{"first_name":"Piyush","last_name":"Garg","email":"piyushgarg dev@gmail.com","gender":"Male","job_title":"Software Dev","id":1001}
+
+POSTMAN:
+
+{
+    "status": "success",
+    "id": 1002
+}
+
+Console:
+
+Body [Object: null prototype] {
+  first_name: 'Piyush',
+  last_name: 'Garg',
+  email: 'piyushgarg dev@gmail.com',
+  gender: 'Male',
+  job_title: 'Software Dev'
+}
+
+
+-> NOW:-
+
+    -> Then GET this URL (http://localhost:8000/api/users).
+    -> Click Send
+
+    -> AT OUTPUT WE HAVE:-
+        {
+            "first_name": "Piyush",
+            "last_name": "Garg",
+            "email": "piyushgarg dev@gmail.com",
+            "gender": "Male",
+            "job_title": "Software Dev",
+            "id": 1001
+        }
+
+-> NOW:-
+
+    -> Then GET this URL (http://localhost:8000/api/users/1001).
+    -> Click Send
+
+    -> AT OUTPUT WE HAVE ONLY:-
+        {
+            "first_name": "Piyush",
+            "last_name": "Garg",
+            "email": "piyushgarg dev@gmail.com",
+            "gender": "Male",
+            "job_title": "Software Dev",
+            "id": 1001
+        }
+
+-> We also ADDED:-
+
+Body [Object: null prototype] {
+  first_name: 'JANE',
+  last_name: 'DOE',
+  email: 'Jonnydev@gmail.com',
+  gender: 'FeMale',
+  job_title: 'Software maker'
+}
+
+------------------------------------------------------------------------------------------------------------------
+
+11_10:-
+
+DELETE:-
+
+    .delete((req, res) => {
+        const id = Number(req.params.id);
+        const index = users.findIndex(user => user.id === id);
+        if (index === -1) {
+            return res.status(404).json({ error: "User not found" });
+        }
+        users.splice(index, 1);
+        fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err,data) =>{
+            return res.json({ status: "success", id })
+        });
+    }); 
+
+
+
+    OUTPUT:- 
+
+    AT POSTMAN : 
+
+    Using URL:- http://localhost:8000/api/users/1002
+
+    {
+        "status": "success",
+        "id": 1002
+    }
+
+    Using same URL Again:- http://localhost:8000/api/users/1002
+
+    {
+        "error": "User not found"
+    }
+
+PATCH:-
+
+    .patch((req, res) => {
+        const id = Number(req.params.id);
+        const index = users.findIndex(user => user.id === id);
+        if (index === -1) {
+            return res.status(404).json({ error: "User not found" });
+        }
+        console.log("Request Body:", req.body); // Debugging
+        console.log("User Before Update:", users[index]); // Debugging
+
+        users[index] = { ...users[index], ...req.body }; // Merge updated fields
+
+        console.log("Updated User:", users[index]); // Debugging
+
+        fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err,data) =>{
+            return res.json({ status: "success", user: users[index] });
+        });
+    })
+
+    OUTPUT:-
+    
+    AT CONSOLE:-
+
+    Request Body: {}                   // Empty due to Missing or Incorrect Middleware-> app.use(express.json());
+    User Before Update: {
+    first_name: 'Piyush',
+    last_name: 'Garg',
+    email: 'piyushgarg dev@gmail.com',
+    gender: 'Male',
+    job_title: 'Software Dev',
+    id: 1001
+    }
+    Updated User: {
+    first_name: 'Piyush',
+    last_name: 'Garg',
+    email: 'piyushgarg dev@gmail.com',
+    gender: 'Male',
+    job_title: 'Software Dev',
+    id: 1001
+    } 
+
+
+    -> Updated Code Error:  
+    Missing or Incorrect Middleware-> If you're not using express.json() or express.urlencoded(), or if
+|                         these middleware functions are added after your route definitions, the body of 
+|                         the request won't be parsed correctly.
+
+    // Middleware must be added BEFORE routes
+    app.use(express.json()); // Parses JSON bodies
+    app.use(express.urlencoded({ extended: true })); // Parses URL-encoded bodies
+    
+    Now,
+    
+    OUTPUT:-
+
+    AT POSTMAN : go to URL(http://localhost:8000/api/users/1001)
+
+    -> Select Patch
+    -> Go To raw:
+    |       Their Paste this :  {
+    |                             "first_name": "Gaurav",
+    |                             "last_name": "Singh"
+    |                           }
+
+
+
+
+    {
+        "status": "success",
+        "user": {
+            "first_name": "Gaurav",
+            "last_name": "Singh",
+            "email": "piyushgarg dev@gmail.com",
+            "gender": "Male",
+            "job_title": "Software Dev",
+            "id": 1001
+        }
+    }
+
+    AT CONSOLE:-
+
+    Request Body: { first_name: 'Gaurav', last_name: 'Singh' }
+    User Before Update: {
+    first_name: 'Piyush',
+    last_name: 'Garg',
+    email: 'piyushgarg dev@gmail.com',
+    gender: 'Male',
+    job_title: 'Software Dev',
+    id: 1001
+    }
+    Updated User: {
+    first_name: 'Gaurav',
+    last_name: 'Singh',
+    email: 'piyushgarg dev@gmail.com',
+    gender: 'Male',
+    job_title: 'Software Dev',
+    id: 1001
+    }
+
+
+------------------------------------------------------------------------------------------------------------------

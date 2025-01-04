@@ -1,0 +1,26 @@
+As whenever we do changes we have to stop the server and restart it
+
+But, by using nodemon it is not required.
+
+install-> npm i nodemon
+
+Package.josn:-
+
+    {
+    "name": "11_rest_api_prj",
+    "version": "1.0.0",
+    "description": "Rest Api Project",
+    "main": "11_1_Rest_API_Prj.js",
+    "scripts": {
+        "start": "nodemon 11_3_Rest_API_Prj_List_all_users.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.21.2",
+        "nodemon": "^3.1.9"
+    }
+    }
+
+- Now , If we do any changes at the code server restart's automatically . 
+- NOW NO need for stop and start again and again
