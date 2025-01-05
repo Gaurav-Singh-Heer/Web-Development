@@ -1,0 +1,18 @@
+{
+  "name": "19_server_side_rendering",
+  "version": "1.0.0",
+  "description": "Server Side Rendering",
+  "main": "18_1_URL_SHORTENER.js",
+  "scripts": {
+    "start": "nodemon 19_7_Best_Final_UI.js"
+  },
+  "author": "Gaurav",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.3",
+    "nodemon": "^3.1.9",
+    "shortid": "^2.2.16"
+  }
+}

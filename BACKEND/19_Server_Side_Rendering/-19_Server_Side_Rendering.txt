@@ -1,0 +1,119 @@
+Server Side Rendering With EJS(Embedded JavaScript)https://ejs.co/ and NODE JS
+
+We did n't had Front End of Our Short URL
+
+----------------------------------------------------------------------------------------------------------
+
+What is Server Side Rendering:-
+
+Server-Side Rendering (SSR) is a web development technique where the server generates a fully-rendered HTML 
+page for the browser, instead of relying on the browser to render content using JavaScript.  
+
+To Solve SSR we have some engines :-
+1--> EJS(Embedded JavaScript) https://ejs.co/
+2--> PUGJS                    https://pugjs.org/api/getting-started.html
+3--> HandleBarsJS             https://handlebarsjs.com/
+
+These do the SSR work for us
+
+----------------------------------------------------------------------------------------------------------
+
+SSR Using EJS:-
+
+-> npm i ejs
+
+----------------------------------------------------------------------------------------------------------
+
+19_5
+
+    app.use(express.urlencoded({extended:false}));// to parse form data we need one more middleware
+
+    extended: false:
+    When you set extended: false, the querystring library is used to parse the URL-encoded data. This means that the values in the request body can only be simple data types like strings, numbers, or arrays.
+    
+    Example:
+        name=John&age=30
+    This would be parsed as:
+        { name: "John", age: 30 }
+
+    extended: true:
+    When you set extended: true, the qs library is used to parse the URL-encoded data, allowing for more complex data types like objects and nested arrays to be encoded and decoded.
+
+    Example:
+        person[name]=John&person[age]=30
+    This would be parsed as:
+        { person: { name: "John", age: 30 } }
+
+SUMMARY:
+
+extended: false: Only simple data types like strings and arrays can be handled.
+extended: true: Supports more complex data structures like objects and nested arrays.
+
+If you don’t need to handle nested objects or arrays, it's typically fine to use extended: false. Otherwise, use extended: true.
+
+|                                -----------------------------
+
+Run this 19_5_Full_UI_Using_EJS_for_SSR
+
+write url:- https://www.piyushgarg.dev
+click Generates
+
+we got a JSON response:-
+
+{
+    "id": "gmp4FQ5xg"
+}
+
+http://localhost:8001/gmp4FQ5xg
+
+run this url it will give :- https://www.piyushgarg.dev/  as output
+
+Now, the problem is we are sending a JSON response but we want to render a UI 
+
+So, we will now do:-
+
+Change [at url.js (controllers) ]  THIS:-
+
+return res.json({ id: shortID });
+
+TO 
+
+THIS:-
+
+return res.render('home',{   // now we will send home page along with id at Generate
+    id:shortID
+})
+
+To Show this id at home page add this to home.ejs
+
+WORKFLOW:-
+
+home.ejs -> 
+(no local id) write url -> 
+form will generate post request at /url of url.js at routes-> 
+which go at handleGenerateNewShortURL at url.js at controllers handleGenerateNewShortURL this return us render home with shortId->
+now, we have id so at home page we will be shown our shortURL
+
+WORKFLOW:-
+1. home.ejs:
+   - User enters a URL into the form.
+   - Form sends a POST request to `/url`.
+
+2. /url (POST Route in url.js - Routes):
+   - Request hits `handleGenerateNewShortURL` in `url.js` (Controller).
+   - Controller generates a unique `shortId`, stores the URL in the database.
+
+3. handleGenerateNewShortURL (Controller):
+   - Generate a `shortId` for the URL.
+   - Save URL in database (`shortId` and original URL).
+   - Send response with `shortId` to render `home.ejs`.
+
+4. home.ejs:
+   - `shortId` is received and displayed to the user.
+   - Displays the short URL and its ID.
+
+-------------------------------------------------------------------------------------------------------
+
+19_6
+
+Table to show visitHistory
