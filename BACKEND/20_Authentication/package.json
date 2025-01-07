@@ -1,0 +1,20 @@
+{
+  "name": "20_authentication",
+  "version": "1.0.0",
+  "description": "Making Authentication APP",
+  "main": "20_1_Authenication.js",
+  "scripts": {
+    "start": "nodemon 20_1_Authenication.js"
+  },
+  "author": "Gaurav",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.3",
+    "nodemon": "^3.1.9",
+    "shortid": "^2.2.16",
+    "uuid": "^11.0.4"
+  }
+}
