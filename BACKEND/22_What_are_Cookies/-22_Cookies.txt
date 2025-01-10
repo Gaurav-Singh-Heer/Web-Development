@@ -1,3 +1,5 @@
+NOTE:- CODE 22_Cookies will only work on POSTMAN
+
 Flow till now:-
 
 Client send username / password to server server send it to database if found then generate JWT token
