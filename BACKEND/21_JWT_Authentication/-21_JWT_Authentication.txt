@@ -1,0 +1,181 @@
+JWT AUTHENTICATION
+
+|               Authentication Patterns
+|              /                       \
+|           Statefull               Stateless
+|       - Which maintains         - Which has no 
+|         state or data or          state.
+|         server side.
+
+On 20, we talked about Statefull Authentication in Which our server had a state and we have to maintain 
+it on our backend 
+
+There PROBLEM WAS:-
+
+1->If our server is restarted or our state is lost then all user get Log out
+2->Statefull Authentication is memory intensive means it uses our server's memory. And we had limited   
+   memory over our server
+
+
+To Solve these Problems we have Stateless Authentication
+
+------------------------------------------------------------------------------------------------------
+
+STATELESS
+
+Means we don't have any state on our backend.
+
+If we don't have state then how do we keep trak of our data OR maintain our state.
+
+So, Here 
+
+in the story:-
+
+--> Story:- Let's say a person wants to park a car at the parking at the mall
+|           So, Person takes his car to the valley(parking boy) and ask him to park his car. Valley parks the 
+|           car and gives the ticket.
+|
+|           PARKING TICKET:-  Number 24               (Valley Gave TICKET to person)
+|           Number 24: DLXXXX123                      (Valley wrote in it's Diary )
+|
+|           After, My person completed his work at the mall then person return to the parking
+|  
+|           PARKING TICKET:-  Number 24               (Person Gave TICKET to Valley to get car back)
+|           Number 24: DLXXXX123                      (Valley opened his diary to check the Number of car with TICKET No. 24)
+|
+|           Valley Gave Car Back to the Person.
+|           
+|           Number 24: DLXXXX123                      (Valley Deleted this entry from Diary)
+
+|--------: So, now the Valley's Diary where he had all entries Like,
+|
+|           Number 24: DLXXXX123                     -----------------------
+|           Number 23: DLXXXX146                                            |
+|           Number 25: DLXXXX134                                            |------------ This Data Entry By Valley Is called as STATE
+|           Number 26: DLXXXX167                                            |
+|           Number 27: DLXXXX123                     -----------------------
+|
+|         This thing is called Statefull as here a STATE is maintained
+
+For Stateless:- we keep payload / state inside this ticket(parking)
+
+-->In Statefull state was saved in the Diary, But in Stateless state is saved in ticket
+
+STATEFULL:-   PARKING TICKET:- Number 24 
+STATELESS:-   PARKING TICKET:- CarNumber 24: DLXXXX123 (With a Stamp)
+
+Here Story is:-
+
+|Person Brings the car gave keys to valley. Valley gives,
+|
+|    PARKING TICKET:- CarNumber 24: DLXXXX123 (With a Stamp) to person
+|    Car is kept by the Valley
+|
+|After Completing work, person gave ticket to valley and valley gives the keys back 
+
+----------------------------------------------------------------------------------------------------
+
+STATELESS in Node.JS 
+
+1--> Remove State, 
+2--> Make user token/id.
+3--> Data of user is kept inside token/id and will be locked.(locked so that it can be read by any but cannot be changed by any)
+
+For This we use JWT tokens or JSON WEB TOKENS (https://jwt.io/)
+
+|   +--------------------------+                  +--------------------------+
+|   |         Encoded          |                  |         Decoded          |
+|   +--------------------------+                  +--------------------------+
+|   | eyJhbGciOiJIUzI1NiIsIn...|                  | HEADER:                  |
+|   | JuYW1lIjoiR2F1cmFv...    |                  | {                        |
+|   | ...Tt1bBJrdpUzI8...      |                  |   "alg": "HS256",        |
+|   |                          |                  |   "typ": "JWT"           |
+|   |                          |                  | }                        |
+|   +--------------------------+                  +--------------------------+
+|   
+|                                                 +--------------------------+
+|                                                 | PAYLOAD: DATA            |
+|                                                 | {                        |
+|                                                 |   "name": "Gaurav Singh  |
+|                                                 |            Heer",        |
+|                                                 |   "_id": 2310991574      |
+|                                                 | }                        |
+|                                                 +--------------------------+
+|   
+|                                                 +--------------------------+
+|                                                 | VERIFY SIGNATURE:        |
+|                                                 | HMACSHA256(              |
+|                                                 |   base64UrlEncode(header)| 
+|                                                 |   + "." +                |
+|                                                 |   base64UrlEncode(payload),|
+|                                                 |   your-256-bit-secret    |
+|                                                 | )                        |
+|                                                 +--------------------------+
+
+| HERE, the payload data code in Encoded like above this Encoded is the token we will take this token
+and keep it in the cookies of the user and after it when we will refresh the user and we paste this
+token we will have the same PAYLOAD Again.
+
+Means our data is stored in this oarticular token only
+
+------------------------------------------------------------------------------------------------------
+
+install JWT by npm i jsonwebtoken
+
+we are using token as we have to store our actual data inside the token so we are using JSON WEB TOKEN
+
+--------------------------------------------------------------------------------------------------
+
+Now when i login and say my cookie i got a token when i copy and pasted that token in the Encoded
+of JWT i GOT the FOLLOWING:-
+
+|   +--------------------------+                  +--------------------------+
+|   |         Encoded          |                  |         Decoded          |
+|   +--------------------------+                  +--------------------------+
+|   | eyJhbGciOiJIUzI1NiIsIn...|                  | HEADER:                  |
+|   | JfaWQiOiI2NzdjOGI1Yz...  |                  | {                        |
+|   | ...I4041VeVb0jr14oCiP... |                  |   "alg": "HS256",        |
+|   |                          |                  |   "typ": "JWT"           |
+|   |                          |                  | }                        |
+|   +--------------------------+                  +--------------------------+
+|   
+|                                                 +--------------------------+
+|                                                 | PAYLOAD:                 |
+|                                                 | {                        |
+|                                                 |   "_id": "677c8b5c5b36e | 
+|                                                 |           d31f01b374d", |
+|                                                 |   "email": "gauravheer2 | 
+|                                                 |             005@gmail.c | 
+|                                                 |             om",         |
+|                                                 |   "iat": 1736264357      |
+|                                                 | }                        |
+|                                                 +--------------------------+
+|   
+|                                                 +--------------------------+
+|                                                 | VERIFY SIGNATURE:        |
+|                                                 | HMACSHA256(              |
+|                                                 |   base64UrlEncode(header)| 
+|                                                 |   + "." +                |
+|                                                 |   base64UrlEncode(payload),|
+|                                                 |   your-256-bit-secret    |
+|                                                 | )                        |
+|                                                 +--------------------------+
+
+// HERE we have secret key :- your-256-bit-secret
+// But our secret key is :- Piyush$123@$  // Have to use this if we have to change details illegalyy
+
+if we changed this token and paste it inplace of original our site will crash as we only have the secret key
+
+So, Token can only be changed by person having secret key
+
+To not crash the site we will make try catch
+
+function getUser(token){
+    if(!token) return null;
+    try{
+        return jwt.verify(token, secret);   // Verify with our secret key again
+    }
+    catch(error){
+        return null;
+    }
+}

@@ -1,0 +1,197 @@
+Flow till now:-
+
+Client send username / password to server server send it to database if found then generate JWT token
+in which we store (id,name,email) of user.
+Now our work is to send this to client / user in secure way 
+we have 2 ways :- 1) using cookies
+|                 2) using response 
+
+|       +-----------------+               +-------------------+               +-----------------+
+|       |     Client      |               |      Server       |               |     Database     |
+|       +-----------------+               +-------------------+               +-----------------+
+|               |                                |                                |
+|               |  1. Send Username/Password     |                                |
+|               +------------------------------->|                                |
+|               |                                |                                |
+|               |                                |  2. Validate Credentials       |
+|               |                                +------------------------------->|
+|               |                                |                                |
+|               |                                |  3. Return User Details        |
+|               |                                <--------------------------------+
+|               |                                |                                |
+|               |  4. Generate JWT Token         |                                |
+|               +<-------------------------------+                                |
+|               |                                |                                |
+|               |                                |                                |
+|       +-------------------------------------------------------------+
+|       |                     Two Possible Methods                   |
+|       |-------------------------------------------------------------|
+|       |  1. Send JWT Token via Cookies                             |
+|       |  2. Send JWT Token in Response Body                        |
+|       +-------------------------------------------------------------+
+|               |                                |
+|               +--------------------------------+
+----------------------------------------------------------------------------------------------------
+
+1) Cookies:-
+|   In cookie case we do.  res.cookie
+|
+|   We made a cookie in which we have client data (uid,token) and gave cookie to user.
+|
+|   Now in Browser we make cookie in which we have our uid. Now whenever we send any request to user.
+|   Let's say request is at "/user" we don't know whether it's get or POST. Then these cookie will also
+|   go along
+|   
+|   To Check if user is logged in or not we will check whther there is uid name in cookie. If not then 
+|   user is logged out. Else user is logged in.
+|   If There is uid name in cookie then we will take it out from cookie and Validate it to check whether
+|   it's the same token we made and when we will inspect the cookie we can see all information of the user
+|
+|                               +++++++++++++++++++++++++++++
+|
+|--> WHAT IS INSIDE COOKIES:-
+|   -Cookies are basically::1) domain specific means there is domain attached
+|
+|   1) Domain Specific/attachment means, let's say I am a client and i have a browser.
+|                                                  I logined at facebook and (fb.com) created (2)cookies for me
+|
+|                                        let's say now u requested at piyushGarg.dev and it also requested some (2)cookies
+|
+|                                        Now we have total 4 cookies :- 2 from fb and 2 from piyushGarg
+|
+|                                        Now when i search at piyushGarg.dev then only cookies of piyushGarg will be shown
+|                                        Similar at facebook.com
+|
+| This is because if all cookies are shared then owner of site will get access of your all data at other 
+| sites too which is not a good thing
+|
+| So, With cookie there is a domain (name of site) so that cookies of only particular site is shown to a
+| person. As shown Below:-
+|
+|   +------------------------+-----------------------------------------+
+|   |         Key            |               Value                     |
+|   +------------------------+-----------------------------------------+
+|   | Name                   | uid                                     |
+|   | Content                | eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVC...   |
+|   | Domain                 | localhost                               |  <--- DOMAIN
+|   | Path                   | /                                       |
+|   | Send for               | Same-site connections only              |
+|   | Created                | Thursday, January 9, 2025 at 7:17:26 AM |
+|   | Expires                | When the browsing session ends          |
+|   +------------------------+-----------------------------------------+
+|   
+|   |+------------------------+----------------------------------------+
+|   |         Key            |               Value                     |
+|   +------------------------+-----------------------------------------+
+|   | Name                   | NID                                     |
+|   | Content                | 520=jjUM73Skr5xaC_2zAt5uS1XaA6w35oby... |
+|   | Domain                 | .google.com                             |  <--- DOMAIN
+|   | Path                   | /                                       |
+|   | Send for               | Secure connections only                 |
+|   | Created                | Monday, January 6, 2025 at 9:50:47 PM   |
+|   | Expires                | Tuesday, July 8, 2025 at 9:50:47 PM     |
+|   +------------------------+-----------------------------------------+
+|   
+----------------------------------------------------------------------------------------------------
+
+Adding Domain At res.cookie at controllers/22_1_user.js
+    res.cookie("uid", token,{
+        domain: 'www.google.com'  
+    })
+
+    controllers/22_1_user.js due to this we have to change routes so added 22_1_user.js due to which added 22_1_cookies_update.js
+
+    // Due to this we will not be able to login as this cooki is now working for www.google.com
+
+    so changed it back again to:
+
+    res.cookie("uid", token);
+
+
+Can see more at :- https://expressjs.com/en/api.html#res.cookie
+
+--------------------------------------------------------------------------------------------------------
+
+Summary: - we can set domain at cookies , we can also set the expiry date 
+|       
+|   use of domain if we login google.com we automatically login at gmail,youtube,drive..etc
+
+--------------------------------------------------------------------------------------------------------
+
+Token 
+|   res.json({token})  by this token is sent to user file.
+|
+|   we can send this token using. Route
+|
+|   Route:- header:{Token:token}
+|           or we can use standard way in which we have built in header known as authorization
+|           header:{Authorization:"Bearer<token>"}
+|
+|   More at :- https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization
+|
+|   Bearer:- https://swagger.io/docs/specification/v3_0/authentication/bearer-authentication/
+|           
+|               Use:- Authorization: Bearer <token>  // will ignore bearer and use token only
+|
+|               +++++++++++++++++++++++++
+|
+|   At controllers/22_user.js  now we will not make cookies
+|
+|   We will do:- return res.json({token});
+|
+|   At middlewares_20/22_auth.js
+|   
+|   //const userUid = req.cookies?.uid;   // as using cookies so we need to install -> npm i cookie-parser
+|   // as we will not get cookies now we will get header so now we will do:-
+|
+|   const userUid = req.headers['authorization'];
+|
+|   const token = userUid.split('Bearer')[1] // token will be looking as "Bearer 23u123khdjdh" 
+|   /*
+|   By userUid.split('Bearer') "Bearer 23u123khdjdh" will change to ["","23u123khdjdh"]
+|   */
+|   async function checkAuth(req, res, next) {            // This will not do any forceful work it will only check if user is login then ok else also ok
+|        // const userUid = req.cookies?.uid;   
+|        const userUid = req.headers['authorization'];
+|
+|        const token = userUid.split('Bearer ')[1]
+|        // const user = getUser(userUid);
+|        const user = getUser(token);
+|        
+|   EXAMPLE:- --> const value="Bearer 2310991574"
+|             <-- undefined
+|             --> value.split("Bearer ")
+|             <-- (2) ['', '2310991574']
+|             --> value.split("Bearer ")[1]
+|             <-- '2310991574'
+|
+| --> Updated middlewares_20 at 22_1_Cookies_Update.js
+|    const {restrictToLoggedinUserOnly,checkAuth} = require('./middlewares_20/22_auth');
+-----------------------------------------------------------------------------------------
+|
+| NOW run:-
+|
+| At POSTMAN:-  POST http://localhost:8001/user/login
+|
+|               At Body(raw)
+|
+|               {
+|                   "email":"gauravheer2005@gmail.com",
+|                   "password":"123456"
+|               }
+|       
+|               Response:- {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzdjOGI1YzViMzZlZDMxZjAxYjM3NGQiLCJlbWFpbCI6ImdhdXJhdmhlZXIyMDA1QGdtYWlsLmNvbSIsImlhdCI6MTczNjQwNTM0OX0.bdOH5FuiWwhCR2rC1jmp4WJLvYZOqnwJot4WWM2iixk"}
+|
+| At POSTMAN:-  GET http://localhost:8001
+|
+|               At Output (Preview): Got Login PAGE
+|
+|               Now, At Authorization Go At 'Bearer Token'
+|
+|               PASTE THIS TOKEN:- {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzdjOGI1YzViMzZlZDMxZjAxYjM3NGQiLCJlbWFpbCI6ImdhdXJhdmhlZXIyMDA1QGdtYWlsLmNvbSIsImlhdCI6MTczNjQwNTM0OX0.bdOH5FuiWwhCR2rC1jmp4WJLvYZOqnwJot4WWM2iixk"}
+|
+|               PASTE THIS TOKEN:-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzdjOGI1YzViMzZlZDMxZjAxYjM3NGQiLCJlbWFpbCI6ImdhdXJhdmhlZXIyMDA1QGdtYWlsLmNvbSIsImlhdCI6MTczNjQwNTM0OX0.bdOH5FuiWwhCR2rC1jmp4WJLvYZOqnwJot4WWM2iixk
+|
+|               Response:- U will automatically Get Login
+|
+--------------------------------------------------------------------------------------------------------------
