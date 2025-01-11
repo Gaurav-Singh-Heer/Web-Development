@@ -1,0 +1,37 @@
+// const {nanoid}=require('nanoid')   giving error not working so using shortid
+const URL=require('../models/url');
+const shortid = require('shortid');
+
+async function handleGenerateNewShortURL(req, res) {
+    const body=req.body;
+
+    if(!body.url) return res.status(400).json({error:'url is required'});
+
+    const shortID = shortid();
+
+    await URL.create({
+        shortId: shortID,
+        redirectURL: body.url,
+        visitHistory: [],
+        createdBy: req.user._id,
+    });
+
+    return res.render('home',{   // now we will send home page along with id at Generate
+        id:shortID
+    })
+    //return res.json({ id: shortID });
+}
+
+async function handleGetAnalytics(req, res) {               // For 18_3
+    const shortId = req.params.shortId;
+    const result = await URL.findOne({shortId});
+    return res.json({
+        totalClicks: result.visitHistory.length,
+        analytics: result.visitHistory,
+    });
+}
+
+module.exports = {
+    handleGenerateNewShortURL,
+    handleGetAnalytics,
+}

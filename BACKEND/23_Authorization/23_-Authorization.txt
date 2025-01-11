@@ -1,0 +1,399 @@
+AUTHORIZATION
+
+Till now we saw Authentication
+
+--> Difference between Authentication and Authorisation:-
+    - Authentication means to authenticate a user or to make him login means I know this user belongs to my this particular application
+    - Authorisation means to check for particular resource that are u authorised to access  that
+
+--> Authentication
+    - Verifies the identity of a user or service. This is usually the first step in the cybersecurity process. 
+    | The user must provide physical or nonphysical evidence to confirm their identity. 
+
+--> Authorization
+    - Determines what resources a user can access. This process is usually coupled with authentication so that 
+    | the server has some concept of who the client is.
+
+--> REAL LIFE EXAMPLE
+
+    - Authentication is the process of verifying who someone is. It's like showing your ID to prove you are who 
+    | you say you are.
+    - Authorization is the process of determining what someone is allowed to do. It's like being granted 
+    | permission to enter a specific room or access certain files.
+
+    - EXAMPLE:
+    |   Imagine a company where employees use a computer system to access their work files.
+    |    * Authentication: When an employee wants to log in, they enter their username and password. This is the 
+    |      authentication step. The system verifies that the username and password match, confirming the  
+    |      employee's identity.
+    |    * Authorization: Once authenticated, the system determines what the employee is allowed to access based 
+    |      on their role. For example:
+    |      * A back-end employee might be authorized to view and edit customer data but not change pricing.
+    |      * A manager might have authorization to view all employee data, change pricing, and approve employee 
+    |      requests.
+
+    In Short:
+    * Authentication answers the question: "Are you who you say you are?"
+    * Authorization answers the question: "What are you allowed to do?"
+
+----------------------------------------------------------------------------------------------------
+
+IN Middlewares/auth.js
+
+    function checkForAuthentication(req, res, next) {
+        const authorizationHeaderValue = req.headers['authorization'];
+        req.user=null;
+        if(!authorizationHeaderValue || !authorizationHeaderValue.startswith('Bearer')){
+            return next();
+        }
+        
+        const token = authorizationHeaderValue.split('Bearer ')[1];
+        const user = getUser(token)
+
+        req.user = user;
+        return next();
+    }   
+
+    WORKING:- Here we are taking authorizationHeaderValue Checking it we put it in req.user and then 
+    |         call next function
+
+Another Function To Check Role of a person for Authorization:-
+
+function restrictTo(roles) {    // Here we will pass array of Roles // Role example:- Admin, Employee, Normal, Customer
+    return function(req,res,next){
+        if(!req.user) return res.redirect("/login");
+
+        if(!roles.includes(req.user.role)) return res.end("UnAuthorized");
+
+        return next();   // when both if Satisfied
+    }
+}
+
+At routes/23_StaticRouter.js (we created two roles path(NORMAL,ADMIN))
+
+    router.get("/admin/urls",restrictTo(["ADMIN"]), async(req,res) => {
+        const allurls = await URL.find({});
+        return res.render("home",{
+            urls: allurls,
+        });
+    });
+
+    router.get("/", restrictTo(["NORMAL"]), async(req,res)=>{           // restrictTo(["NORMAL"]) is called INLINE MIDDLEWARE          // Home Page
+        const allurls=await URL.find({createdBy: req.user._id})
+        console.log(allurls);  // Log the URLs to see if they exist
+        return res.render('home',{
+            urls: allurls
+        });
+    });   
+----------------------------------------------------------------------------------------------------
+
+As we are Now making Cookie at controllers/23_user.js ~(res.cookie("token", token);)
+
+So, IN Middlewares/auth.js
+
+    function checkForAuthentication(req, res, next) {
+        const tokenCookie = req.cookies?.token; // ?. stands for null check
+        req.user=null;
+        if(!tokenCookie){
+            return next();
+        }
+        
+        const token = tokenCookie;
+        const user = getUser(token)
+
+        req.user = user;
+        return next();
+    }   
+
+    WORKING:- The `checkForAuthentication` middleware checks for a `token` cookie, retrieves the 
+    |         associated user if the token exists, attaches the user to `req.user`, and proceeds to the 
+    |         next middleware or route.
+
+----------------------------------------------------------------------------------------------------
+
+NOW, if we LOGIN :-
+    
+    At, Email:-gauravheer2005@gmail.com   ; Password:- 123456
+    
+    then we get OUTPUT :-UnAuthorized
+
+    Because, we still had not updated our database so we now have no roles 
+
+UPDATING database (ALL COMMANDS):-
+
+    test> show dbs
+        Gaurav-app-1          108.00 KiB
+        GauravkaPersonalData   72.00 KiB
+        Sigma                  72.00 KiB
+        admin                  40.00 KiB
+        config                108.00 KiB
+        local                  40.00 KiB
+        short-url             216.00 KiB
+    test> use short-url
+        switched to db short-url
+    short-url> show collections
+        urls
+        users
+    short-url> db.urls.find({})
+        [
+            {
+                _id: ObjectId('677c9d232a2689191924d4f3'),
+                shortId: '0SzDFiPJx',
+                redirectURL: 'https://www.linkedin.com/in/gaurav-singh-heer-788804280/',
+                visitHistory: [
+                    {
+                        timestamp: 1736219952848,
+                        _id: ObjectId('677c9d302a2689191924d4f5')
+                    }
+                ],
+                createdBy: ObjectId('677c8b5c5b36ed31f01b374d'),
+                createdAt: ISODate('2025-01-07T03:18:59.884Z'),
+                updatedAt: ISODate('2025-01-07T03:19:12.849Z'),
+                __v: 0
+            },
+            {
+                _id: ObjectId('677ca0ad04e909b0906654e6'),
+                shortId: 'UWBFkL5Uo',
+                redirectURL: 'https://www.linkedin.com/in/agamx7/',
+                visitHistory: [
+                    {
+                        timestamp: 1736220853507,
+                        _id: ObjectId('677ca0b504e909b0906654e8')
+                    },
+                    {
+                        timestamp: 1736220880431,
+                        _id: ObjectId('677ca0d004e909b0906654f7')
+                    }
+                ],
+                createdBy: ObjectId('677ca06604e909b0906654dd'),
+                createdAt: ISODate('2025-01-07T03:34:05.972Z'),
+                updatedAt: ISODate('2025-01-07T03:34:40.431Z'),
+                __v: 0
+            }
+        ]
+    short-url> db.users.find({})
+        [
+            {
+                _id: ObjectId('677c8b5c5b36ed31f01b374d'),
+                name: 'Gaurav Singh Heer',
+                email: 'gauravheer2005@gmail.com',
+                password: '123456',
+                createdAt: ISODate('2025-01-07T02:03:08.538Z'),
+                updatedAt: ISODate('2025-01-07T02:13:15.322Z'),
+                __v: 0
+            },
+            {
+                _id: ObjectId('677c9ff304e909b0906654d6'),
+                name: 'Agam',
+                email: 'agamin@gmail.com',
+                password: '2004',
+                createdAt: ISODate('2025-01-07T03:30:59.323Z'),
+                updatedAt: ISODate('2025-01-07T03:30:59.323Z'),
+                __v: 0
+            }
+        ]
+    short-url> db.users.updateMany({}, { $set: { role: 'NORMAL' } });
+        {
+        acknowledged: true,
+        insertedId: null,
+        matchedCount: 2,
+        modifiedCount: 2,
+        upsertedCount: 0
+        }
+    short-url> db.users.find({})
+    [
+        {
+            _id: ObjectId('677c8b5c5b36ed31f01b374d'),
+            name: 'Gaurav Singh Heer',
+            email: 'gauravheer2005@gmail.com',
+            password: '123456',
+            createdAt: ISODate('2025-01-07T02:03:08.538Z'),
+            updatedAt: ISODate('2025-01-07T02:13:15.322Z'),
+            __v: 0,
+            role: 'NORMAL'
+        },
+        {
+            _id: ObjectId('677c9ff304e909b0906654d6'),
+            name: 'Agam',
+            email: 'agamin@gmail.com',
+            password: '2004',
+            createdAt: ISODate('2025-01-07T03:30:59.323Z'),
+            updatedAt: ISODate('2025-01-07T03:30:59.323Z'),
+            __v: 0,
+            role: 'NORMAL'
+        }
+    ]
+
+So, by db.users.updateMany({}, { $set: { role: 'NORMAL' } }); we now have role in users
+
+We also had to update setUser at 23_service/auth.js
+    
+    function setUser (user) {     // This Function will Create our Token for user
+        const payload={
+            _id: user._id,
+            email: user.email,
+            role: user.role,
+        }
+        return jwt.sign(payload, secret); // Secret is our secret key (STAMP ON TICKET) 
+    }
+
+-------------------------------------------------------------------------------------------------------------
+
+NOW, if we LOGIN :-
+    
+    At, Email:-gauravheer2005@gmail.com   ; Password:- 123456
+    
+    then we get OUTPUT :-Our Short URL site
+
+    But, if we go to :- http://localhost:8001/admin/urls
+
+    then we get OUTPUT :-UnAuthorized
+
+-------------------------------------------------------------------------------------------------------------
+
+NOW So, we Created a NEW USER (ADMIN):
+    
+    DETAILS FILLED DURING sign up:-
+        name: 'GSH_ADMIN',
+        email: 'gaurav1574.be23@chitkara.edu.in',
+        Password: 123456
+
+Changed role from NORMAL to ADMIN (ALL COMMANDS):-
+
+    short-url> db.users.find({})
+        [
+            {
+                _id: ObjectId('677c8b5c5b36ed31f01b374d'),
+                name: 'Gaurav Singh Heer',
+                email: 'gauravheer2005@gmail.com',
+                password: '123456',
+                createdAt: ISODate('2025-01-07T02:03:08.538Z'),
+                updatedAt: ISODate('2025-01-07T02:13:15.322Z'),
+                __v: 0,
+                role: 'NORMAL'
+            },
+            {
+                _id: ObjectId('677c9ff304e909b0906654d6'),
+                name: 'Agam',
+                email: 'agamin@gmail.com',
+                password: '2004',
+                createdAt: ISODate('2025-01-07T03:30:59.323Z'),
+                updatedAt: ISODate('2025-01-07T03:30:59.323Z'),
+                __v: 0,
+                role: 'NORMAL'
+            },
+            {
+                _id: ObjectId('6781c42bc15927cef70a44f5'),
+                name: 'GSH_ADMIN',
+                email: 'gaurav1574.be23@chitkara.edu.in',
+                role: 'NORMAL',
+                password: '123456',
+                createdAt: ISODate('2025-01-11T01:06:51.321Z'),
+                updatedAt: ISODate('2025-01-11T01:06:51.321Z'),
+                __v: 0
+            }
+        ]
+    short-url> db.users.updateOne({ _id: ObjectId('6781c42bc15927cef70a44f5') }, { $set: { role: 'ADMIN' } });
+        {
+        acknowledged: true,
+        insertedId: null,
+        matchedCount: 1,
+        modifiedCount: 1,
+        upsertedCount: 0
+        }
+    short-url> db.users.find({})
+        [
+            {
+                _id: ObjectId('677c8b5c5b36ed31f01b374d'),
+                name: 'Gaurav Singh Heer',
+                email: 'gauravheer2005@gmail.com',
+                password: '123456',
+                createdAt: ISODate('2025-01-07T02:03:08.538Z'),
+                updatedAt: ISODate('2025-01-07T02:13:15.322Z'),
+                __v: 0,
+                role: 'NORMAL'
+            },
+            {
+                _id: ObjectId('677c9ff304e909b0906654d6'),
+                name: 'Agam',
+                email: 'agamin@gmail.com',
+                password: '2004',
+                createdAt: ISODate('2025-01-07T03:30:59.323Z'),
+                updatedAt: ISODate('2025-01-07T03:30:59.323Z'),
+                __v: 0,
+                role: 'NORMAL'
+            },
+            {
+                _id: ObjectId('6781c42bc15927cef70a44f5'),
+                name: 'GSH_ADMIN',
+                email: 'gaurav1574.be23@chitkara.edu.in',
+                role: 'ADMIN',
+                password: '123456',
+                createdAt: ISODate('2025-01-11T01:06:51.321Z'),
+                updatedAt: ISODate('2025-01-11T01:06:51.321Z'),
+                __v: 0
+            }
+        ]
+
+NOW, if we LOGIN :-
+    
+    At, Email:-gaurav1574.be23@chitkara.edu.in   ; Password:- 123456
+    
+    then we get OUTPUT(http://localhost:8001/) :-UnAuthorized
+
+    But, if we go to :- http://localhost:8001/admin/urls
+
+    then we get OUTPUT :-All short URLS Created By ALL USERS
+
+-------------------------------------------------------------------------------------------------------------
+
+So Now, Updated routes/23_StaticRouter to Access Homepage('/') by Admin:-
+
+router.get("/", restrictTo(["NORMAL","ADMIN"]), async(req,res)=>{           
+    const allurls=await URL.find({createdBy: req.user._id})
+    console.log(allurls);  // Log the URLs to see if they exist
+    return res.render('home',{
+        urls: allurls
+    });
+});  
+
+Also, Updated 23_1_Authorization to Access Created-URL('/url') by Admin:-
+
+app.use("/url" , restrictTo(["NORMAL","ADMIN"]), urlRoute); 
+
+Now:- If (ADMIN) go to :- http://localhost:8001/
+
+    Then he/she can also create short URLS 
+
+--------------------------------------------------------------------------------------------------------------
+
+AND FINALLY AT MIDDLEWARE:-
+
+--> AUTHENTICATION IS,
+
+    function checkForAuthentication(req, res, next) {
+        const tokenCookie = req.cookies?.token; // ?. stands for null check
+        req.user=null;
+        if(!tokenCookie){
+            return next();
+        }
+        
+        const token = tokenCookie;
+        const user = getUser(token)
+
+        req.user = user;
+        return next();
+    }   
+
+--> AUTHORIZATION IS,
+
+    function restrictTo(roles) {    // Here we will pass array of Roles // Role example:- Admin, Employee, Normal, Customer
+        return function(req,res,next){
+            if(!req.user) return res.redirect("/login");
+
+            if(!roles.includes(req.user.role)) return res.end("UnAuthorized");
+
+            return next();   // when both if Satisfied
+        }
+    }
+--------------------------------------------------------------------------------------------------------------
