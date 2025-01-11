@@ -1,0 +1,95 @@
+Steps to add a BOT to Discord Server:
+    ->Create a Server.
+    ->Go to User Setting (Advanced) and Check Developer Mode
+    ->Now Go To discord developer portal (https://discord.com/developers/applications)
+    ->Create new Application
+    ->Go at Bot (Select Administrative)
+    ->Now Go at OAuth2
+    ->Then Generate URL
+    ->Select BOT then Select Administrative
+    ->Copy Generated URL 
+    ->Paste URL at NEXT tab 
+    ->Select Server where u want this bot to join 
+
+-> Now All we have to do is interact with this particular BOT: with the help of (https://discord.js.org/)
+|  using,
+|           npm install discord.js
+|
+|  Documentation:- https://discord.js.org/docs/packages/discord.js/14.17.3
+
+-> At discord BOT we can login as a bot using TOKEN (https://discord.com/developers/applications/1327588388764909660/bot)
+|
+|   My Token is :- MTMyNzU4ODM4ODc2NDkwOTY2MA.G3m_if.mvjxirEZN_MpRbbGu5FtVyz7wypB5eVsBvFzhA
+
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+
+24_1
+
+Now we will import few things(From :- https://discord.js.org/docs/packages/discord.js/14.17.3):-
+|
+|   import { Client, Events, GatewayIntentBits } from 'discord.js';
+|
+|   const client = new Client({ intents: [GatewayIntentBits.Guilds] }); // Create a Client // Virtual Client through whom we will interact with our server
+|   
+
+----------------------------------------------------------------------------------------------------------------
+
+GatewayIntentBits :- Means types of permission we are giving
+(https://discordjs.guide/popular-topics/intents.html#privileged-intents)
+
+--> `GatewayIntentBits.Guilds` allows the bot to access and respond to server-related events, such as joining 
+|    servers or managing channels.
+
+--> `GatewayIntentBits.GuildMessages` allows the bot to receive and process messages sent within guild (server)
+|    text channels, excluding direct messages.
+
+--> `GatewayIntentBits.MessageContent` to access the content of message we wrote 
+----------------------------------------------------------------------------------------------------------------
+
+AT:- https://discord.com/developers/applications/1327588388764909660/bot
+Message Content Intent (Switch ON)
+Required for your bot to receive message content in most messages.
+
+--> By This we Gave access of Content/Message To our BOT
+
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+
+24_2
+
+ADDED MORE REPLIES
+
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+
+Made commands.js By using Content From(https://discord.js.org/docs/packages/discord.js/14.17.3):
+
+|   import { REST, Routes } from 'discord.js';
+|   
+|   const commands = [
+|     {
+|       name: 'ping',
+|       description: 'Replies with Pong!',
+|     },
+|   ];
+|   
+|   const rest = new REST({ version: '10' }).setToken(TOKEN);
+|   
+|   try {
+|     console.log('Started refreshing application (/) commands.');
+|   
+|     await rest.put(Routes.applicationCommands(CLIENT_ID), { body: commands });
+|   
+|     console.log('Successfully reloaded application (/) commands.');
+|   } catch (error) {
+|     console.error(error);
+|   }    
+
+
+--> This above commands.js will create /ping command for our BOT
+
+----------------------------------------------------------------------------------------------------------------
+
+NOTE:- U have to run commands.js once seperately to set commands then u can npm start to also give reply and
+|      start interaction with those commands
