@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Uploads</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: #1B262C;
+        }
+
+        p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        input[type="file"] {
+            display: none; /* Hide the default file input */
+        }
+
+        .upload-btn {
+            padding: 12px 25px;
+            font-size: 1rem;
+            background-color: #50B498;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            background-color: #3282B8;
+        }
+
+        .file-label {
+            display: inline-block;
+            background-color: #468585;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .file-label:hover {
+            background-color: #3282B8;
+        }
+
+        .file-name {
+            margin-top: 15px;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload Your ID Card</h1>
+        <p>Choose a file from your computer to upload (e.g., ID card).</p>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <label for="profileImage" class="file-label">Choose File</label>
+            <input type="file" name="profileImage" id="profileImage" accept="image/*" onchange="updateFileName()">
+            <div id="fileName" class="file-name"></div>
+            <br>
+            <button type="submit" class="upload-btn">Upload</button>
+        </form>
+    </div>
+
+    <script>
+        function updateFileName() {
+            var fileInput = document.getElementById('profileImage');
+            var fileName = document.getElementById('fileName');
+            fileName.textContent = fileInput.files[0] ? fileInput.files[0].name : '';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+As we had seen many times while uploading some file while filling forms. How is that done
+
+--> To Upload a file we have to use a Library Known as Multer(https://www.npmjs.com/package/multer)
+|
+|   - multer is a Library which gets easily plugin with express
+|   - Multer package/Libary helps us with File Upload 
+|
+|   - At homepage.ejs we have to add 3 properties action, method, enctype
+|
+|    <form action="/upload" method="POST" enctype="multipart/form-data" >
+|        <input type="file" name="profileImage">
+|        <button>Upload</button>
+|    </form>
+|
+|   - action means, at which url we have to Upload this
+|   - enctype means, as we are sending a file in this so we have to add this encryption Type to it. Without this we 
+|                  will not be able to upload this file.
+|
+|   - now at index.js we have to make this post route of "/upload"      (app.post("/upload", (req,res) => {});)
+|   - and as we are uploading form data so we have to use (express.urlencoded) as learned earlier urlencoded helps 
+|     us to parse our form-data    (app.use(express.urlencoded({extended:false}))). Used this bcoz data coming from 
+|     frontend is not JSON it is a form data and to parse it we have to use (express.urlencoded)
+
+--------------------------------------------------------------------------------------------------------------------
+
+|   +-------------------------------------+----------------------------------------------+
+|   |           express.urlencoded()      |         Middleware for parsing data          |
+|   |-------------------------------------|----------------------------------------------|
+|   | Parses URL-encoded data in the body | Used when forms are submitted via POST       |
+|   | of incoming HTTP requests.          | or when URL-encoded data is sent in requests.|
+|   +-------------------------------------+----------------------------------------------+
+|   
+|   +-------------------------------------+-----------------------------------------------+
+|   |               extended              |          Option to determine parsing type     |
+|   |-------------------------------------|-----------------------------------------------|
+|   | If `false` (default)                | Uses the `querystring` library to parse simple|
+|   | - Parses simple key-value pairs      | key-value pairs (e.g., `key=value`).         |
+|   |   (e.g., `key=value`)               |                                               |
+|   | - Cannot handle nested objects      |                                               |
+|   +-------------------------------------+-----------------------------------------------+
+|   
+|   +-------------------------------------+------------------------------------------------+
+|   |          extended: true             |    Option to allow complex parsing             |
+|   |-------------------------------------|------------------------------------------------|
+|   | If `true`                           | Uses the `qs` library to parse data with       |
+|   | - Allows handling of nested objects | complex structures (e.g., `key[subkey]=value`).|
+|   |   (e.g., `key[subkey]=value`)       |                                                |
+|   | - Useful when dealing with deeply   |                                                |
+|   |   nested or array-like data         |                                                |
+|   +-------------------------------------+------------------------------------------------+
+|   
+|   Example with `extended: false`:
+|   Form data submitted via POST:
+|   +-----------------------+
+|   |    Key    |  Value    |
+|   |-----------|-----------|
+|   |   name    |   John    |
+|   |   age     |   30      |
+|   +-----------------------+
+|   Parsed Data (as Object):
+|   +-----------------------------------------------+
+|   |       { name: 'John', age: '30' }             |
+|   +-----------------------------------------------+
+|   
+|   Example with `extended: true`:
+|   Form data submitted via POST (with nested data):
+|   +----------------------------------+
+|   |    Key            |  Value       |
+|   |-------------------|--------------|
+|   | user[name]        | John         |
+|   | user[age]         | 30           |
+|   +----------------------------------+
+|   Parsed Data (as Object):
+|   +----------------------------------------------------+
+|   |     { user: { name: 'John', age: '30' } }          |
+|   +----------------------------------------------------+
+|   
+----------------------------------------------------------------------------------------------------------------
+
+Now at "/upload"  (app.post("/upload", (req,res) => {});)
+
+|   - we can handle our files in 2 ways :- 
+|   1) - simply import multer  (const multer = require("multer");)
+|      - then we have to create and instance of upload  (const upload = multer({dest:"uploads/"});) this means , 
+|        whatever data user will upload directly upload that in uploads Folder. Here upload is basically a 
+|        Middleware
+|      - Now, what we want is (app.post("/upload", (req,res) => {});) for this "/upload" particular route whenever 
+|        we get a request we upload a single file named profileImage(at homepage.ejs [<input type="file" name="profileImage">]) 
+|
+|        So, now  post request is updated as:-
+|
+|           app.post("/upload", upload.single("profileImage"), (req,res) => {
+|               console.log(req.body);
+|               console.log(req.file);
+|           
+|               return res.redirect("/");
+|           });
+|
+
+--> Now ran the Code and uploaded my id card at desktop, at npm start folder named uploads was created automatically
+
+and OUTPUT at console is :-
+
+D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\25_File_Upload>npm start
+
+> 25_file_upload@1.0.0 start
+> nodemon index.js
+
+[nodemon] 3.1.9
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching path(s): *.*
+[nodemon] watching extensions: js,mjs,cjs,json
+[nodemon] starting `node index.js`
+Server Started at PORT:8000
+[Object: null prototype] {}
+{
+  fieldname: 'profileImage',
+  originalname: 'School ID.jpg',
+  encoding: '7bit',
+  mimetype: 'image/jpeg',
+  destination: 'uploads/',
+  filename: '6af0589e9627f9a33cd1eebe449710ae',
+  path: 'uploads\\6af0589e9627f9a33cd1eebe449710ae',
+  size: 99538
+}
+
+and a file named 6af0589e9627f9a33cd1eebe449710ae was uploaded in uploads FOLDER 
+the file 6af0589e9627f9a33cd1eebe449710ae can't be opened
+
+DEFINED WAY:-  
+
+|           Server Output:
+|           -----------------------------------------------
+|           D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\25_File_Upload>npm start
+|           
+|           > 25_file_upload@1.0.0 start
+|           > nodemon index.js
+|           
+|           [nodemon] 3.1.9
+|           [nodemon] to restart at any time, enter `rs`
+|           [nodemon] watching path(s): *.*
+|           [nodemon] watching extensions: js,mjs,cjs,json
+|           [nodemon] starting `node index.js`
+|           Server Started at PORT:8000
+|           -----------------------------------------------
+|           
+|           [Object: null prototype]  BY~ (console.log(req.body);)         
+|
+|           File Upload Details: BY~ (console.log(req.file);)
+|           -----------------------------------------------
+|           {
+|             fieldname:         'profileImage',      // Field name for the uploaded file
+|             originalname:      'School ID.jpg',     // Original name of the file
+|             encoding:          '7bit',              // Encoding type
+|             mimetype:          'image/jpeg',        // MIME type of the file (image/jpeg)
+|             destination:       'uploads/',          // Destination folder where the file is stored
+|             filename:          '6af0589e9627f9a33cd1eebe449710ae',  // Generated filename (unique)
+|             path:              'uploads\\6af0589e9627f9a33cd1eebe449710ae',  // Path to the uploaded file
+|             size:              99538                // Size of the uploaded file (in bytes)
+|           }
+|           -----------------------------------------------
+|           
+|           File Uploaded:
+|           -----------------------------------------------
+|           - Filename: 6af0589e9627f9a33cd1eebe449710ae
+|           - Location: uploads/ folder
+|           - File Size: 99,538 bytes (approximately 99 KB)
+|           -----------------------------------------------
+
+
+------------------------------------------------------------------------------------------------------------------
+
+
+Now method to read the uploaded Files:- in the same link bottom (https://www.npmjs.com/package/multer) we have, DiskStorage which gives us full control how to save our File
+
+|           DiskStorage
+|           The disk storage engine gives you full control on storing files to disk.
+|           
+|           const storage = multer.diskStorage({
+|             destination: function (req, file, cb) {
+|               cb(null, '/tmp/my-uploads')
+|             },
+|             filename: function (req, file, cb) {
+|               const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+|               cb(null, file.fieldname + '-' + uniqueSuffix)
+|             }
+|           })
+|           
+|           const upload = multer({ storage: storage })
+
+---> NOW , in 2_index_DiskStorage.js we don't want (const upload = multer({dest:"uploads/"});) 
+
+|       Here, we have 
+|       const storage =  multer.diskStorage({             // in this we have 2 parameters
+|           destination: function (req, file, cb) {       // 1-> destination  (callback Function) // 1-> destination  (callback Function) , here we tell where or inside which folder our file is to be stored (file, is file uploaded by user; cb is the callback function ) 
+|               return cb(null, "./uploads");              // null means no error
+|             },
+|             filename: function (req, file, cb) {        // 2-> Filename , here we can take original file name but in that the problem is if another user uploaded with same name then it would be overwrite. So, here we will generate our own filename
+|               return cb(null, `${Date.now()}-${file.originalname}`); // created our own filename(date+filename(in Local system)) ${Date.now()}-${file.originalname}
+|             }
+|       });
+|       
+|       // const upload = multer({storage: storage}); // OR
+|       const upload = multer({storage});
+
+---> NOW When i Ran this code and uploaded my School id File Named (1736671742026-School ID.jpg) is created which i 
+|    can open now  
+
+|  OUTPUT AT CONSOLE:-
+|
+|       D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\25_File_Upload>npm start
+|       
+|       > 25_file_upload@1.0.0 start
+|       > nodemon 2_index_DiskStorage.js
+|       
+|       [nodemon] 3.1.9
+|       [nodemon] to restart at any time, enter `rs`
+|       [nodemon] watching path(s): *.*
+|       [nodemon] watching extensions: js,mjs,cjs,json
+|       [nodemon] starting `node 2_index_DiskStorage.js`
+|       Server Started at PORT:8000
+|       [Object: null prototype] {}
+|       {
+|         fieldname: 'profileImage',
+|         originalname: 'School ID.jpg',
+|         encoding: '7bit',
+|         mimetype: 'image/jpeg',
+|         destination: './uploads',
+|         filename: '1736671742026-School ID.jpg',
+|         path: 'uploads\\1736671742026-School ID.jpg',
+|         size: 99538
+|       }
+
+|   DEFINED WAY:-
+|
+|           Server Output:
+|           ------------------------------------------------------------
+|           D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\25_File_Upload>npm start
+|           
+|           > 25_file_upload@1.0.0 start
+|           > nodemon 2_index_DiskStorage.js
+|           
+|           [nodemon] 3.1.9
+|           [nodemon] to restart at any time, enter `rs`
+|           [nodemon] watching path(s): *.*
+|           [nodemon] watching extensions: js,mjs,cjs,json
+|           [nodemon] starting `node 2_index_DiskStorage.js`
+|           Server Started at PORT:8000
+|           ------------------------------------------------------------
+|           
+|           File Upload Details:
+|           ------------------------------------------------------------
+|           {
+|             fieldname:        'profileImage',      // Field name for the uploaded file
+|             originalname:     'School ID.jpg',     // Original name of the file
+|             encoding:         '7bit',              // Encoding type used for the file
+|             mimetype:         'image/jpeg',        // MIME type of the file (image/jpeg)
+|             destination:      './uploads',         // Folder where the file is saved (relative path)
+|             filename:         '1736671742026-School ID.jpg', // Generated filename (unique identifier)
+|             path:             'uploads\\1736671742026-School ID.jpg',  // Full path to the uploaded file
+|             size:             99538                // Size of the uploaded file (in bytes)
+|           }
+|           ------------------------------------------------------------
+|           
+|           File Uploaded:
+|           ------------------------------------------------------------
+|           - Filename: 1736671742026-School ID.jpg
+|           - Location: uploads/ folder
+|           - File Size: 99,538 bytes (approximately 99 KB)
+|           ------------------------------------------------------------
+|           
+
+--------------------------------------------------------------------------------------------------------------------
+
+EXTENSIONS:-  CAN UPLOAD MULTIPLE FILES, CAN USE THIS WHILE USER FILL FORM, CAN USE THIS TO UPDATE PROFILE DP 
+
+FOR MORE CHECKOUT:- https://www.npmjs.com/package/multer
