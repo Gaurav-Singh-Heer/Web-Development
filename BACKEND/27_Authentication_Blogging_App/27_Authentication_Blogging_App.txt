@@ -1,0 +1,960 @@
+npm i jsonwebtoken 
+
+jsonwebtoken will be installed and i can create JWT tokens
+
+----------------------------------------------------------------------------------------------------------------
+
+----> Creating 27_services/Authentication
+
+|                   const JWT = require('jsonwebtoken');
+|                   
+|                   const secret = "$uperman@123";
+|                   
+|                   function createTokenForUser(user){
+|                       const payload = {
+|                           _id: user.
+|                       }
+|                   }
+
+At, mongosh taking reference to what to keep in payload
+|            test> use blogify
+|            switched to db blogify
+|            blogify> show collections
+|            users
+|            blogify> db.users.find({})
+|            [
+|              {
+|                _id: ObjectId('6785038e6b2e6e02e5382036'),
+|                fullName: 'Gaurav Singh Heer',
+|                email: 'gauravheer2005@gmail.com',
+|                password: 'b2ae393cc437ab25c2563b415316988124774d30928f8ae29c8cab6f7bab6a0f',
+|                profileImageURL: '/images/default.jpg',
+|                role: 'USER',
+|                createdAt: ISODate('2025-01-13T12:14:06.568Z'),
+|                updatedAt: ISODate('2025-01-13T12:14:06.568Z'),
+|                salt: 'K�\x7Fr,B\x06���`\x0Bc9H�',
+|                __v: 0
+|              }
+|            ]
+
+---> Updated 27_services/Authentication 
+
+|                   const JWT = require('jsonwebtoken');
+|                   
+|                   const secret = "$uperman@123";
+|                   
+|                   function createTokenForUser(user){                    // This Function Will take user object and generate it's Token
+|                       const payload = {
+|                           _id: user._id,
+|                           email: user.email,
+|                           profileImageURL: user.profileImageURL,
+|                           role: user.role,
+|                       }
+|                   /*
+|                       const token = JWT.sign(payload, secret,{
+|                           expiresIn: '1h' // Token expiration time (1 hour)    // we can also set expiration time in tokens
+|                       })
+|                   */
+|                       const token = JWT.sign(payload, secret);
+|                       return token;
+|                   }
+|                   
+|                   function validateToken(token){                         // This function will take token and validate it
+|                       const payload = JWT.verify(token,secret);
+|                       return payload;
+|                   }
+|                   
+|                   module.exports = {
+|                       createTokenForUser,
+|                       validateToken
+|                   }
+
+----------------------------------------------------------------------------------------------------------------
+
+---> Updating models/27_user.js  (instead of returning user at matchPassword will return token 
+|                                    and changed function name to matchPasswordAndGenerateToken )
+
+|        const token = createTokenForUser(user);
+|        return token;
+
+|           Here taken function name 'createTokenForUser' from 27_services/authentication.js
+
+--> Whole Function
+
+|               userSchema.static('matchPasswordAndGenerateToken', async function(email,password) {
+|                   const user = await this.findOne({email});
+|                   // if(!user) return false;   // OR
+|                   if(!user) throw new Error('User not found!!');
+|               
+|                   // console.log(user); // To check error  
+|               
+|                   // const salt = 'someRandomSalt';   // Hard-Code   Just to check error
+|                   const salt = user.salt;
+|                   const hashedPassword = user.password;
+|                   
+|                   const userProvidedHash =  createHmac('sha256', salt)                // using sha256 algorithm
+|                       .update(password)
+|                       .digest("hex");                         // digest and give it to me in hexon
+|               
+|                       if(hashedPassword !== userProvidedHash){           // if 
+|                           throw new Error("Incorrect Password")
+|                       }
+|               
+|                   // return user; // else return
+|               
+|                   const token = createTokenForUser(user);
+|                   return token;
+|                   
+|               });
+
+---> Updated function name at routes/27_user.js 
+
+|                //const user = await User.matchPassword(email, password);  // now it will return user data
+|                // console.log("User",user);
+|                const token = await User.matchPasswordAndGenerateToken(email, password);  // now it will return user token
+|                console.log("token",token);
+
+---> Updated Route at 27_index.js (const userRoute = require('./routes/27_user');)
+
+----------------------------------------------------------------------------------------------------------------
+
+Now, npm run start
+--> sign-ing again , 
+
+|
+|      Email:gauravheer2005@gmail.com         Password:123456
+|
+|      Redirected at Homepage
+|
+|      Output At Terminal:-     Server Started at PORT: 8000
+|                               MongoDB connected
+|                               token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzg1MDM4ZTZiMmU2ZTAyZTUzODIwMzYiLCJlbWFpbCI6ImdhdXJhdmhlZXIyMDA1QGdtYWlsLmNvbSIsInByb2ZpbGVJbWFnZVVSTCI6Ii9pbWFnZXMvZGVmYXVsdC5qcGciLCJyb2xlIjoiVVNFUiIsImlhdCI6MTczNjgxODA3NH0.kloIsPfNlFwfrgCN8jPfpFn3X5POLzEOn0DmJGWwaRM
+
+----------------------------------------------------------------------------------------------------------------
+
+Now, copy the token generated at terminal and go At (jwt.io). Here At, jwt.io paste your token at ENCODED
+
+|               -OUTPUT,
+|               +-----------------------------+----------------------------------+
+|               |          ENCODED            |         DECODED                  |
+|               +-----------------------------+----------------------------------+
+|               | eyJhbGciOiJIUzI1NiIsIn...   | HEADER:                          |
+|               |                             | {                                |
+|               |                             |   "alg": "HS256",                |
+|               |                             |   "typ": "JWT"                   |
+|               |                             | }                                |
+|               |                             |                                  |
+|               |                             | PAYLOAD:                         |
+|               |                             | {                                |
+|               |                             |   "_id": "6785038...",           |
+|               |                             |   "email": "gaurav...",          |
+|               |                             |   "profileImageURL": "...",      |
+|               |                             |   "role": "USER",                |
+|               |                             |   "iat": 1736818074              |
+|               |                             | }                                |
+|               |                             |                                  |
+|               |                             | VERIFY SIGNATURE:                |
+|               |                             | HMACSHA256(                      |
+|               |                             |   base64UrlEncode(header) +      |
+|               |                             |   "." + base64UrlEncode(payload),|
+|               |                             |   your-256-bit-secret            |
+|               |                             | )                                |
+|               +-----------------------------+----------------------------------+
+|               
+|  Here, At pasting token we are getting, id, role, profileImage, email So, our token is being generated Correctly
+
+----------------------------------------------------------------------------------------------------------------
+
+Updated routes/27_user.js (at '/signin' to make user Login),
+
+|        // return res.redirect("/");
+|           return res.cookie("token",token).redirect("/");   // if user entered correct password then we made a cookie for user named token and we redirected it to home page
+|           
+
+----------------------------------------------------------------------------------------------------------------
+
+Now, npm run start
+--> sign-ing again , 
+
+|
+|      Email:gauravheer2005@gmail.com         Password:123456
+
+|      Now at our site we will see that a token is generated,
+|               +----------------------+---------------------------------------------+
+|               |       Property       |                  Value                      |
+|               +----------------------+---------------------------------------------+
+|               | Name                 | token                                       |
+|               +----------------------+---------------------------------------------+
+|               | Content              | eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ey...  |
+|               +----------------------+---------------------------------------------+
+|               | Domain               | localhost                                   |
+|               +----------------------+---------------------------------------------+
+|               | Path                 | /                                           |
+|               +----------------------+---------------------------------------------+
+|               | Send for             | Same-site connections only                  |
+|               +----------------------+---------------------------------------------+
+|               | Created              | Tuesday, January 14, 2025 at 8:27:04 AM     |
+|               +----------------------+---------------------------------------------+
+|               | Expires              | When the browsing session ends              |
+|               +----------------------+---------------------------------------------+
+|               
+
+----------------------------------------------------------------------------------------------------------------
+
+---> Updating Routes/user.js As 'matchPasswordAndGenerateToken' function throws error if we enter wrong Password
+|
+|                   /*
+|                   router.post("/signin",async (req, res) =>{
+|                       const { email,password } = req.body;
+|                       // console.log(email,password); // To Check Error
+|                       //const user = await User.matchPassword(email, password);  // now it will return user data
+|                       // console.log("User",user);
+|                       const token = await User.matchPasswordAndGenerateToken(email, password);  // now it will return user token
+|                       
+|                       // console.log("token",token);
+|                       // return res.redirect("/");
+|                       return res.cookie("token",token).redirect("/");   // if user entered correct password then we made a cookie for user named token and we redirected it to home page
+|                   });
+|                   */
+|
+|                   router.post("/signin",async (req, res) =>{
+|                       const { email,password } = req.body;
+|                       try {
+|                           const token = await User.matchPasswordAndGenerateToken(email, password);  // now it will return user token
+|                           return res.cookie("token",token).redirect("/");   // if user entered correct password then we made a cookie for user named token and we redirected it to home page
+|                           
+|                       } catch (error) {                               // If error then redirect again to signin page
+|                           return res.render("signin", {
+|                               error: "Incorrect Email or Password",
+|                           })
+|                       }
+|                   });
+
+---> Now, At views/partials/nav.ejs   (will handle this error) 
+
+|           <% if (locals.error) { %>
+|             <div>
+|               
+|             </div>
+|           <% } %>
+
+|    Now, Go at BootStrap--> Docs --> Search Alerts (https://getbootstrap.com/docs/5.3/components/alerts/#examples)
+|
+|           <div class="alert alert-danger" role="alert">
+|             A simple danger alert—check it out!
+|           </div>
+|
+
+---> Updated views/partials/nav.ejs  (error handle)
+|           
+|           <% if (locals.error) { %>
+|             <div class="alert alert-danger" role="alert">
+|               <%= locals.error %>     <!-- Here <%=  %>   this is ejs Output Tag Value -->
+|             </div>
+|           <% } %>
+|
+
+----------------------------------------------------------------------------------------------------------------
+
+Now, Delete Token Then,
+
+--> sign-ing again , 
+
+|
+|      Email:gauravheer2005@gmail.com         Password:1238219   (wrong password)
+|
+|      Output at Browser:- We remained at signin page and Got error 'Incorrect Email or Password'
+
+----------------------------------------------------------------------------------------------------------------
+
+Now, at Home Page will show User Name if User is Logged In Else will show Sign In
+
+Can be Done By:- At, routes/27_user :- Here, we will add a middleware that whether request.user exist or not 
+
+--> So, we created a Folder named 27_middleware with file authentication.js
+
+|               function checkForAuthenticationCookie(cookieName){    // Generic Middleware that will check token in every request/response
+|                   return (req, res, next){
+|                       const tokenCookieValue = req.cookie
+|                   };
+|               }
+
+---> Now At(cookie parser  https://www.npmjs.com/package/cookie-parser)  for reference 
+
+---> Updated 27_middleware/authentication.js
+
+|                   const { validateToken } = require("../27_services/authentication");
+|                   
+|                   function checkForAuthenticationCookie(cookieName){    // Generic Middleware that will check token in every request/response
+|                       return (req, res, next) => {
+|                           const tokenCookieValue = req.cookies[cookieName]
+|                           
+|                           if(!tokenCookieValue){          // If No tokenCookieValue that means that there is no user so , call next function
+|                               next();
+|                           }
+|                           /*  this must be in Try catch (because if token is not valid then it will throw error)
+|                           const userPayload = validateToken(tokenCookieValue)            // If token is present then we will validate it  // validateToken is in services/authentication
+|                           */
+|                   
+|                           /*
+|                           try {
+|                               const userPayload = validateToken(tokenCookieValue)           // If token is present then we will validate it  // validateToken is in services/authentication
+|                               req.user = userPayload;
+|                               next();
+|                           } catch (error) {}                                // if throws error then also will call next()
+|                               next(); */  // OR
+|                           
+|                           try {
+|                               const userPayload = validateToken(tokenCookieValue)            // If token is present then we will validate it  // validateToken is in services/authentication
+|                               req.user = userPayload;
+|                           } catch (error) {}                                // if throws error then also will call next()
+|                           return next();
+|                       };
+|                   }
+|                   
+|                   module.exports = {
+|                       checkForAuthenticationCookie,   
+|                   }
+
+---> npm i cookie-parser as we are using cookies  // cookie-parser is also a middleware
+
+---> import cookie-parser at 27_index.js
+
+Update 27_index.js
+
+|   const cookieParser = require("cookie-parser");
+
+|   app.use(cookieParser());
+|   app.use(checkForAuthenticationCookie("token"));// Basically we are initializing cookie parser and we are checking Token // AT routes/27_index.js //  return res.cookie("token",token).redirect("/");   // if user entered correct password then we made a cookie for user named token and we redirected it to home page
+
+|   app.get('/', (reqQ,res) =>{    // (passing user object when we render the home page)
+|       res.render("home",{
+|           user: req.user,
+|       });
+|   });
+
+---> Updated views/home.ejs
+
+|           <!DOCTYPE html>
+|           <html lang="en">
+|           <head>
+|               <%- include('./partials/head') %>
+|               <title>Homepage</title>
+|           </head>
+|           <body>
+|               <%- include('./partials/nav') %>
+|               <%= JSON.stringify(user) %>   <!-- <%= %> is EJS Output tag value -->
+|               <%- include('./partials/script') %>
+|           </body>
+|           </html>
+
+----------------------------------------------------------------------------------------------------------------
+
+Now, npm run start
+--> sign-ing again , 
+
+|
+|      Email:gauravheer2005@gmail.com         Password:123456
+
+|
+|      Output redirected at home.ejs:- {"_id":"6785038e6b2e6e02e5382036","email":"gauravheer2005@gmail.com","profileImageURL":"/images/default.jpg","role":"USER","iat":1736843270}
+
+----------------------------------------------------------------------------------------------------------------
+
+--> Updating partials/nav.ejs :- (Will Show Add Blog Only when current user exists (Using if) else will show sign-in/sign-up)
+
+|               <% if (locals.user) { %>           <!--Will show add blog and Gaurav Singh if the current user exists-->
+|                   <li class="nav-item">
+|                     <a class="nav-link" href="#">Add Blog</a>
+|                   </li>
+|                   <li class="nav-item dropdown">
+|                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+|                       Gaurav Singh <!-- Dropdown link -->
+|                     </a>
+|                     <ul class="dropdown-menu">
+|                         <li><a class="dropdown-item" href="#">Logout</a></li>
+|                       <!-- <li><a class="dropdown-item" href="#">Action</a></li>
+|                       <li><a class="dropdown-item" href="#">Another action</a></li>
+|                       <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+|                     </ul>
+|                   </li>
+|               <% } else{%>
+|                   <li class="nav-item">
+|                     <a class="nav-link" href="/user/signup">Create Account</a>
+|                   </li>
+|                   <li class="nav-item">
+|                     <a class="nav-link" href="/user/signin">SignIn</a>
+|                   </li>
+
+---------------------------------------------------------------------------------------------------------------
+
+Now, npm run start
+
+---> Will Get, Create Account ; SignIn at NAV-BAR
+
+--> sign-ing again , 
+
+|
+|      Email:gauravheer2005@gmail.com         Password:123456
+
+|
+|      Output redirected at home.ejs(At NAV-> Add Blog, Gaurav Singh (At DropDown):- {"_id":"6785038e6b2e6e02e5382036","email":"gauravheer2005@gmail.com","profileImageURL":"/images/default.jpg","role":"USER","iat":1736843270}
+|              
+
+---------------------------------------------------------------------------------------------------------------
+
+Creating Logout:
+
+---> Updating routes/27_user.js
+
+|                   router.get('/logout',(req,res) => {
+|                       res.clearCookie("token").redirect("/");   // At logout, clear cookie and redirect at Homepage
+|                   });
+
+---> Linking(/user/logout) at partials/nav.ejs
+
+|                   <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
+
+---------------------------------------------------------------------------------------------------------------
+
+Now, npm run start
+
+--> sign-ing again , 
+
+|
+|      Email:gauravheer2005@gmail.com         Password:123456
+
+|
+|      Output redirected at home.ejs(At NAV-> Add Blog, Gaurav Singh (At DropDown also have Logout):- {"_id":"6785038e6b2e6e02e5382036","email":"gauravheer2005@gmail.com","profileImageURL":"/images/default.jpg","role":"USER","iat":1736843270}
+|              
+--> Now Can Logout(By Gaurav Singh (DropDown))
+
+---------------------------------------------------------------------------------------------------------------
+
+Now, Add Blog
+
+--> To Add Blog, First we need a Schema. So, creating models/27_blogs.js
+
+|                       const {Schema, model} = require ('mongoose');
+|                       
+|                       const blogSchema = new Schema({
+|                           title: {
+|                               type: String,
+|                               required: true,
+|                           },
+|                           body: {
+|                               type:String,
+|                               required: true,
+|                           },
+|                           coverImageURL:{
+|                               type: String,
+|                               required: false,
+|                           },
+|                           createdBy:{
+|                               type: Schema.Types.ObjectId,  // Storing user's mongodb '_id' here
+|                               ref: "user", // given by models/27_user.js  (const User = model('user', userSchema);)  // Now, Created By will Automatically point Towards User
+|                           },
+|                           
+|                       },{timestamps:true}
+|                       );
+|                       
+|                       const Blog = model('blog', blogSchema);
+|                       
+|                       module.exports = Blog;
+
+--> Now, we want Frontpage of Blog and Routes of Blog
+
+--> Created views/addBlog.ejs  , Here we will add a Form from(BootStrap--> Docs--> Search Form https://getbootstrap.com/docs/5.3/forms/overview/#overview)
+
+|               <!DOCTYPE html>
+|               <html lang="en">
+|               <head>
+|                   <%- include('./partials/head') %>
+|                   <title>Add new Blog Page</title>
+|               </head>
+|               <body>
+|                   <%- include('./partials/nav') %>
+|                   <div class="container mt-3"> 
+|                       <form>
+|                           <div class="mb-3">
+|                             <label for="title" class="form-label">Title</label>
+|                             <input type="text" class="form-control" id="title" name="title" aria-describedby="title">
+|                           </div>
+|                           <button type="submit" class="btn btn-primary">Submit</button>
+|                       </form>
+|                   </div>
+|                   <%- include('./partials/script') %>
+|               </body>
+|               </html>
+
+--> To render this will create a Route,  routes/blog.js
+
+|                   const {Router} = require("express");
+|                   const router = Router();
+|                   
+|                   router.get('/add-new', (req,res) =>{
+|                       return res.render('addBlog',{
+|                           user: req.user,
+|                       })
+|                   })
+|                   
+|                   module.exports = router;
+
+--> Now register this Blog at, 27_index.js
+
+|                   const blogRoute = require('./routes/27_blog');
+|                   app.use('/blog', blogRoute);
+
+--> Navigating Blog Page partials/nav.ejs
+
+|                   <a class="nav-link" href="/blog/add-new">Add Blog</a>
+
+--> Updating addBlog.ejs  (Taking Textarea from BootStrap:- https://getbootstrap.com/docs/5.3/forms/floating-labels/#textareas)
+
+|               <!DOCTYPE html>
+|               <html lang="en">
+|               <head>
+|                   <%- include('./partials/head') %>
+|                   <title>Add new Blog Page</title>
+|               </head>
+|               <body>
+|                   <%- include('./partials/nav') %>
+|                   <div class="container mt-3"> 
+|                       <form action="/blog" method="post">
+|                           <div class="mb-3">
+|                             <label for="title" class="form-label">Title</label>
+|                             <input type="text" class="form-control" id="title" name="title" aria-describedby="title">
+|                           </div>
+|                           <div class="mb-3">
+|                               <label for="body">Body</label>
+|                               <textarea class="form-control" id="body"></textarea>
+|                           </div>
+|                           <div class="mb-3">
+|                               <button type="submit" class="btn btn-primary">Submit</button>
+|                           </div>
+|                       </form>
+|                   </div>
+|                   <%- include('./partials/script') %>
+|               </body>
+|               </html>
+
+--> Adding CoverImage div Updating addBlog.ejs
+
+|               <!DOCTYPE html>
+|               <html lang="en">
+|               <head>
+|                   <%- include('./partials/head') %>
+|                   <title>Add new Blog Page</title>
+|               </head>
+|               <body>
+|                   <%- include('./partials/nav') %>
+|                   <div class="container mt-3"> 
+|                       <form action="/blog" method="post">
+|                           <div class="mb-3">
+|                             <label for="coverImage" class="form-label">Cover Image</label>
+|                             <input type="file" class="form-control" id="coverImage" name="coverImage" aria-describedby="coverImage">
+|                           </div>
+|                           <div class="mb-3">
+|                             <label for="title" class="form-label">Title</label>
+|                             <input type="text" class="form-control" id="title" name="title" aria-describedby="title">
+|                           </div>
+|                           <div class="mb-3">
+|                               <label for="body">Body</label>
+|                               <textarea class="form-control" name="body" id="body"></textarea>
+|                           </div>
+|                           <div class="mb-3">
+|                               <button type="submit" class="btn btn-primary">Submit</button>
+|                           </div>
+|                       </form>
+|                   </div>
+|                   <%- include('./partials/script') %>
+|               </body>
+|               </html>
+
+---> Now we have to save this blog page in our js
+
+---> Adding, post route at routes/27_blog
+
+|                   const {Router} = require("express");
+|                   const router = Router();
+|                   
+|                   router.get('/add-new', (req,res) => {
+|                       return res.render('addBlog',{
+|                           user: req.user,
+|                       })
+|                   })
+|                   
+|                   router.post("/", (req,res) => {
+|                       console.log(req.body);
+|                       return res.redirect("/");
+|                   })
+|                   
+|                   module.exports = router;
+
+---------------------------------------------------------------------------------------------------------------
+
+Now, npm run start
+
+--> sign-ing again , 
+
+|
+|       Email:gauravheer2005@gmail.com         Password:123456
+
+--> Add New-Blog :  Fill Form(Add image, Add title, Add Body) THEN Submit
+|   Output at Terminal,    
+|                        MongoDB connected
+|                        MongoDB connected
+|                        [Object: null prototype] {
+|                          coverImage: 'IMG_2198.jpg',
+|                          title: 'My Kulcha',
+|                          body: 'Shimla'
+|                        }
+
+--> At Homepage:-{"_id":"6785038e6b2e6e02e5382036","email":"gauravheer2005@gmail.com","profileImageURL":"/images/default.jpg","role":"USER","iat":1736865025}
+
+---------------------------------------------------------------------------------------------------------------
+
+At, views/addBlog.ejs checking which tag is saved in dbs,
+
+|            <div class="mb-3">
+|                <label for="body1">Body</label>
+|                <textarea class="form-control" name="body2" id="body3"></textarea>
+|            </div>
+
+--> Add Blog,
+
+|
+|   [Object: null prototype] {
+|      coverImage: 'IMG_2233.jpg',
+|      title: 'Church',
+|      body2: 'Solo'
+|    }
+
+HENCE, 'name' is used to give the database entry.
+
+---------------------------------------------------------------------------------------------------------------
+
+So, now we have to save coverImage in the form of File for which we will use multer (https://www.npmjs.com/package/multer)
+
+--> npm i multer
+--> Create public/uploads
+--> in npm multer will use diskStorage (https://www.npmjs.com/package/multer#diskstorage) in updating routes/27_blog.js
+|
+|                CODE:- const storage = multer.diskStorage({
+|                         destination: function (req, file, cb) {
+|                           cb(null, '/tmp/my-uploads')
+|                         },
+|                         filename: function (req, file, cb) {
+|                           const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+|                           cb(null, file.fieldname + '-' + uniqueSuffix)
+|                         }
+|                       })
+|                       
+|                       const upload = multer({ storage: storage })
+|                        
+
+--> updating routes/27_blog.js (multer), updated post request also
+
+|                   const {Router} = require("express");
+|                   const multer = require("multer");
+|                   const path = require("path");                        // to tell where to store
+|                   
+|                   const router = Router();
+|                   
+|                   const storage = multer.diskStorage({
+|                       destination: function (req, file, cb) {
+|                         cb(null, path.resolve(`./public/uploads/${req.user._id}`))  // inside uploads will make folder of name req.user._id
+|                       },
+|                       filename: function (req, file, cb) {
+|                         const filename = `${Date.now()}-${file.originalname}`;
+|                         cb(null, filename);
+|                       },
+|                   })
+|                     
+|                   const upload = multer({ storage: storage })  // this :storage is from -->const storage = multer.diskStorage({
+|                    
+|                   router.get('/add-new', (req,res) => {
+|                       return res.render('addBlog',{
+|                           user: req.user,
+|                       })
+|                   })
+|                   
+|                   router.post("/", upload.single(''), (req,res) => {
+|                       console.log(req.body);
+|                       console.log(req.file);
+|                       return res.redirect("/");
+|                   })
+|                   
+|                   module.exports = router;
+
+---> added encryption type(enctype) at form addBlog.ejs
+|        <form action="/blog" method="post" enctype="multipart/form-data">
+
+---------------------------------------------------------------------------------------------------------------
+
+Now, npm run start
+
+--> sign-ing again , 
+
+|
+|       Email:gauravheer2005@gmail.com         Password:123456
+
+--> Add New-Blog :  Fill Form(Add image, Add title, Add Body) THEN Submit
+|   Output at Terminal,    
+|                       Error: ENOENT: no such file or directory, open 'D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\27_Authentication_Blogging_App\public\uploads\1736870955041-IMG-20240921-WA0157_1.jpg'
+
+--> updating routes/27_blog.js as got error (no such directory found)
+
+|                       //  cb(null, path.resolve(`./public/uploads/${req.user._id}`))  // inside uploads will make folder of name req.user._id
+|                         cb(null, path.resolve(`./public/uploads`))
+
+--> sign-ing again , 
+
+|
+|       Email:gauravheer2005@gmail.com         Password:123456
+
+--> Add New-Blog :  Fill Form(Add image, Add title, Add Body) THEN Submit
+|   Output at Terminal,   
+|               Server Started at PORT: 8000
+|               MongoDB connected
+|               [Object: null prototype] { title: 'Freshers', body: 'Me on Grass' }
+|               {
+|                 fieldname: 'coverImage',
+|                 originalname: 'IMG-20240921-WA0157_1.jpg',
+|                 encoding: '7bit',
+|                 mimetype: 'image/jpeg',
+|                 destination: 'D:\\GAURAV   CODING\\WEB DEVELOPMENT\\BACKEND\\27_Authentication_Blogging_App\\public\\uploads',
+|                 filename: '1736871008919-IMG-20240921-WA0157_1.jpg',
+|                 path: 'D:\\GAURAV   CODING\\WEB DEVELOPMENT\\BACKEND\\27_Authentication_Blogging_App\\public\\uploads\\1736871008919-IMG-20240921-WA0157_1.jpg',
+|                 size: 343165
+|               }
+
+---------------------------------------------------------------------------------------------------------------
+
+Now, updating routes/27_blog.js  
+
+|               const Blog = require("../models/27_blogs");
+
+|               router.post("/", upload.single('coverImage'), async (req,res) => {   // from views/addBlog.ejs  --> <input type="file" class="form-control" id="coverImage" name="coverImage" aria-describedby="coverImage">
+|                   // console.log(req.body);
+|                   // console.log(req.file);
+|                   const {title, body} = req.body;
+|                   const blog = await Blog.create({
+|                       body,
+|                       title,
+|                       createdBy: req.user._id,
+|                       coverImageURL: `/uploads/${req.file.filename}`
+|                   })
+|                   // return res.redirect("/");
+|                   return res.redirect(`/blog/${blog._id}`);
+|               })
+
+---> Now,
+
+|               OUTPUT AT CMD:-
+|                               blogify> show collections
+|                               blogs
+|                               users
+|                               blogify> db.blogs.find({})
+|                               
+|                               blogify> 
+|                                    ++++++++++++++
+--> sign-ing again , 
+
+|
+|       Email:gauravheer2005@gmail.com         Password:123456
+
+--> Add New-Blog :  Fill Form(Add image, Add title, Add Body) THEN Submit
+
+|               OUTPUT AT CMD:-
+|                           blogify> db.blogs.find({})
+|                           [
+|                             {
+|                               _id: ObjectId('67868f48ecd2288f90d715ee'),
+|                               title: 'Freshers',
+|                               body: 'Me on Grass',
+|                               coverImageURL: '/uploads/1736871752499-IMG-20240921-WA0157_1.jpg',
+|                               createdBy: ObjectId('6785038e6b2e6e02e5382036'),
+|                               createdAt: ISODate('2025-01-14T16:22:32.541Z'),
+|                               updatedAt: ISODate('2025-01-14T16:22:32.541Z'),
+|                               __v: 0
+|                             }
+|                           ]
+|                           blogify>
+
+---------------------------------------------------------------------------------------------------------------
+
+Now, we have to render these blogs at Homepage
+
+--> At 27_index.js
+
+|                       const Blog = require('./models/27_blogs');
+
+|                       /*
+|                       app.get('/', (req,res) =>{                      // (passing user object when we render the home page)
+|                           res.render("home",{
+|                               user: req.user,
+|                           });
+|                       });
+|                       */
+|                       app.get('/', async(req,res) =>{                      // (passing user object when we render the home page)
+|                           // const allBlogs = await Blog.find({}).sort('createdAt', -1);  // Sort w.r.t createdAt and -1 means in descending order
+|                           const allBlogs = await Blog.find({});  //Removed sort as it gave error
+|                           res.render("home",{
+|                               user: req.user,
+|                               blogs: allBlogs,
+|                           });
+|                       });
+
+---> At views/home.ejs,
+|                          <%= JSON.stringify(blogs) %>   
+
+FULL CODE:-
+|                   <!DOCTYPE html>
+|                   <html lang="en">
+|                   <head>
+|                       <%- include('./partials/head') %>
+|                       <title>Homepage</title>
+|                   </head>
+|                   <body>
+|                       <%- include('./partials/nav') %>
+|                       <%= JSON.stringify(blogs) %>   
+|                       <%- include('./partials/script') %>
+|                   </body>
+|                   </html>
+
+|                           +++++++++++++++++++++++++++++++++++++++++++
+
+---> npm run start
+
+--->    OUTPUT (At Homepage):- [{"_id":"67868f48ecd2288f90d715ee","title":"Freshers","body":"Me on Grass","coverImageURL":"/uploads/1736871752499-IMG-20240921-WA0157_1.jpg","createdBy":"6785038e6b2e6e02e5382036","createdAt":"2025-01-14T16:22:32.541Z","updatedAt":"2025-01-14T16:22:32.541Z","__v":0},{"_id":"678691cca4667748f17ba0d4","title":"Freshers","body":"Me on Grass","coverImageURL":"/uploads/1736872396940-IMG-20240921-WA0157_1.jpg","createdBy":"6785038e6b2e6e02e5382036","createdAt":"2025-01-14T16:33:16.957Z","updatedAt":"2025-01-14T16:33:16.957Z","__v":0}]
+
+---------------------------------------------------------------------------------------------------------------
+
+Now, At BootStrap (Search Card)
+
+|            CODE:-
+|                   <div class="card" style="width: 18rem;">
+|                     <img src="..." class="card-img-top" alt="...">
+|                     <div class="card-body">
+|                       <h5 class="card-title">Card title</h5>
+|                       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+|                       <a href="#" class="btn btn-primary">Go somewhere</a>
+|                     </div>
+|                   </div>
+
+At, views/home.ejs (Adding card)
+
+|                               <!DOCTYPE html>
+|                               <html lang="en">
+|                               <head>
+|                                   <%- include('./partials/head') %>
+|                                   <title>Homepage</title>
+|                               </head>
+|                               <body>
+|                                   <%- include('./partials/nav') %>
+|                                   
+|                                   <div class="container mt-3">
+|                               
+|                                       <% blogs.forEach(blog => { %>
+|                                           <div class="card" style="width: 18rem;">
+|                                               <!-- <img src="..." class="card-img-top" alt="..."> -->
+|                                               <img src="<%= blog.coverImageURL %>" class="card-img-top" alt="...">
+|                                               <div class="card-body">
+|                                                 <!-- <h5 class="card-title">Card title</h5> -->
+|                                                 <h5 class="card-title"><%= blog.title %></h5>
+|                                                 <a href="#" class="btn btn-primary">Go somewhere</a>
+|                                               </div>
+|                                           </div>
+|                                       <% }) %>
+|                               
+|                                   </div>
+|                               
+|                                   <%- include('./partials/script') %>
+|                               </body>
+|                               </html>
+
+---> npm run start
+
+--->    OUTPUT (At Homepage):- Card with image (but image not loading)
+
+|                               +++++++++++++++++++++++++++++++++++++++++
+
+Now, to Load Image
+
+-->At, index.js  (adding middleware)
+
+|               app.use(express.static(path.resolve("./public")));   // means to serve everything in public folder statically
+
+|                               +++++++++++++++++++++++++++++++++++++++++
+
+---> npm run start
+
+--->    OUTPUT (At Homepage):- Card with image without flex (in vertical way)
+
+----------------------------------------------------------------------------------------------------------------
+
+---> Added, BootStrap(CSS flexbox) at home.ejs
+
+|                   <!DOCTYPE html>
+|                   <html lang="en">
+|                   <head>
+|                       <%- include('./partials/head') %>
+|                       <title>Homepage</title>
+|                       
+|                   </head>
+|                   <body>
+|                       <%- include('./partials/nav') %>
+|                       
+|                       <div class="container mt-3">
+|                           <!-- <div class="d-flex flex-wrap justify-content gap-3">    BootStrap to display in flex -->
+|                           <div class="d-flex flex-wrap justify-content-around gap-3">   <!--BootStrap to display in flex-->
+|                               <% blogs.forEach(blog => { %>
+|                                   <div class="card" style="width: 18rem;">
+|                                       <!-- <img src="..." class="card-img-top" alt="..."> -->
+|                                       <img src="<%= blog.coverImageURL %>" class="card-img-top" alt="...">
+|                                       <div class="card-body">
+|                                           <!-- <h5 class="card-title">Card title</h5> -->
+|                                           <h5 class="card-title"><%= blog.title %></h5>
+|                                           <a href="#" class="btn btn-primary">Go somewhere</a>
+|                                       </div>
+|                                   </div>
+|                               <% }) %>
+|                                   
+|                           </div>
+|                       </div>
+|                   
+|                       <%- include('./partials/script') %>
+|                   </body>
+|                   </html>
+
+|                               +++++++++++++++++++++++++++++++++++++++++
+
+---> npm run start
+
+--->    OUTPUT (At Homepage):- Card with image in Flex (in Horizontal way)
+
+----------------------------------------------------------------------------------------------------------------
+
+---> Updated, card-button  at home.ejs
+
+|                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+|                        <a href="<%= /blog/blog._id %>" class="btn btn-primary">View</a>
+
+|                               +++++++++++++++++++++++++++++++++++++++++
+
+---> npm run start
+
+--->    OUTPUT (At Homepage):- Card with image , Click on View
+--->    Redirected At, http://localhost:8000/blog/67868f48ecd2288f90d715ee   (Here we can render this particular BLOG)
+
+----------------------------------------------------------------------------------------------------------------
+
+
+SUMMARY
+
+---> Here, we did Authenication (Login, Signup, Create Blog), Redirected Blog, used multer to keep image name unique
+
+|        When you include enctype="multipart/form-data":
+|                       File Uploads: This allows the form to send files to the server. Without this enctype, files selected by the user won't be included in the POST request.
+|                       Data Processing: It ensures that the server-side (e.g., Express.js) can handle the uploaded files and process them accordingly. For instance, the files will be accessible through req.files if you're using a middleware like multer.
