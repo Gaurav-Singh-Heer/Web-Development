@@ -1,0 +1,22 @@
+{
+  "name": "28_final_blogging_app",
+  "version": "1.0.0",
+  "description": "Blogging App",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon 28_index.js"
+  },
+  "author": "Gaurav",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.5",
+    "multer": "^1.4.5-lts.1"
+  }
+}
