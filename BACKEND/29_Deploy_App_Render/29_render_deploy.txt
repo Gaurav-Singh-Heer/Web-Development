@@ -1,0 +1,14 @@
+Changed App.js To index.js
+Rest All remained Same 
+
+
+FILL Form
+
+Name
+A unique name for your web service.                                    - Blogify-GSH
+Start Command 
+Render runs this command to start your app with each deploy            - node start
+
+Environment Variables                                                  - mongodb+srv://gauravheer2005:PP25HAyKjXSIsCkV@cluster0.pdzgb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+DEPLOY WEB SERVICE

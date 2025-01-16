@@ -261,3 +261,31 @@ Now, it will take some time and create resources for us, Like(it will Create a C
 Till the time it is Being Deployed we want, cloud mongodb.
 
 ---> Go to (mongodb.com)
+
+mongodb+srv://gauravheer2005:Gaurav@2005@cluster0.pdzgb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+---------------------------------------------------------------------------------------------------------------
+ERROR:-
+January 16, 2025 17:58:46 (UTC+5:30)
+ERROR
+The instance profile aws-elasticbeanstalk-ec2-role associated with the environment does not exist.
+
+Reference:- https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html
+
+Debug,
+Go at IAM -> Roles-> Create Role-> Use Case (EC2)-> Next--> At(ElasticBeanStalk-EC2-Step Guide awseb-dg.pdf) ->
+Select Point 8 At page 24
+(• AWSElasticBeanstalkWebTier
+ • AWSElasticBeanstalkWorkerTier
+ • AWSElasticBeanstalkMulticontainerDocker) --> Add these 3 at Add Permission -> Next -> give role name(r1)->
+Create role -> At Bean Stalk -> Create Application -> Fill Form -> Create New Environment 
+
+Now, At new Environment , 
+
+To Add MONGO_URL,
+
+Go to Configuration  -> Updates, monitoring, and logging -> Go at Bottom (Environment properties) THEN,
+
+Environment properties
+Name                                      Value
+MONGO_URL                                 mongodb+srv://gauravheer2005:Gaurav@2005@cluster0.pdzgb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
