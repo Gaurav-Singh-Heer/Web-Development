@@ -264,6 +264,7 @@ Till the time it is Being Deployed we want, cloud mongodb.
 
 mongodb+srv://gauravheer2005:Gaurav@2005@cluster0.pdzgb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 
+---> At Network Access Allow all (0.0.0.0/0)
 ---------------------------------------------------------------------------------------------------------------
 ERROR:-
 January 16, 2025 17:58:46 (UTC+5:30)
@@ -289,4 +290,3 @@ Go to Configuration  -> Updates, monitoring, and logging -> Go at Bottom (Enviro
 Environment properties
 Name                                      Value
 MONGO_URL                                 mongodb+srv://gauravheer2005:Gaurav@2005@cluster0.pdzgb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-|                                         mongodb+srv://gauravheer2005:PP25HAyKjXSIsCkV@cluster0.pdzgb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
