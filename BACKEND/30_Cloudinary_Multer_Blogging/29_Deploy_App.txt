@@ -1,0 +1,292 @@
+Sites To deploy:-
+https://www.heroku.com/    --> Not FREE
+https://railway.com/       --> FREE
+console.aws.amazon.com(https://ap-south-1.console.aws.amazon.com/console/home?region=ap-south-1#)    --> NOT FREE
+
+----------------------------------------------------------------------------------------------------------
+
+Things Need To Change Before Deployement:-
+
+-- As, Our Server is now running at PORT 8000. If we ran it twice in 2 different terminal we will get an error.
+|      As at cloud we cannot choose PORT according to us. As, there we already have many people running their site
+|      and this will create a Conflict.
+
+
+So, 
+---> At index.js Changing PORT = 8000,     8000 to Dynamic Variable(This variable is given to us by our cloud).
+
+---> Have to add process.env.port (For Browser)
+|                       const PORT = process.env.PORT || 8000;     // 8000 to run in Local
+
+
+---> Have to add process.env.MONGO_URL (For Browser)
+|                   mongoose
+|                       .connect(process.env.MONGO_URL)
+|                       .then((e) => console.log('MongoDB connected'))
+
+|                               +++++++++++++++++++++++++++++++++
+
+---> Now, Run this Code, It will Give Error
+|        
+|        D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\29_Deploy_App>npm start
+|        
+|        > 29_deploy_app@1.0.0 start
+|        > node app.js
+|        
+|        Server Started at PORT: 8000
+|        D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\29_Deploy_App\node_modules\mongoose\lib\drivers\node-mongodb-native\connection.js:225
+|            throw new MongooseError('The `uri` parameter to `openUri()` must be a ' +
+|                  ^
+|        
+|        MongooseError: The `uri` parameter to `openUri()` must be a string, got "undefined". Make sure the first parameter to `mongoose.connect()` or `mongoose.createConnection()` is a string.
+|            at NativeConnection.createClient (D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\29_Deploy_App\node_modules\mongoose\lib\drivers\node-mongodb-native\connection.js:225:11)
+|            at NativeConnection.openUri (D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\29_Deploy_App\node_modules\mongoose\lib\connection.js:1016:34)
+|            at Mongoose.connect (D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\29_Deploy_App\node_modules\mongoose\lib\mongoose.js:446:15)
+|            at Object.<anonymous> (D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\29_Deploy_App\app.js:16:6)
+|            at Module._compile (node:internal/modules/cjs/loader:1546:14)
+|            at Module._extensions..js (node:internal/modules/cjs/loader:1691:10)
+|            at Module.load (node:internal/modules/cjs/loader:1317:32)
+|            at Module._load (node:internal/modules/cjs/loader:1127:12)
+|            at TracingChannel.traceSync (node:diagnostics_channel:315:14)
+|            at wrapModuleLoad (node:internal/modules/cjs/loader:217:24)
+|        
+|        Node.js v22.9.0
+|        
+|        D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\29_Deploy_App>
+
+- Have to write MongoDB Server
+|           D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\29_Deploy_App>set MONGO_URL=mongodb://localhost:27017/blogify            
+
+- Run Again, No Error This time,
+|           D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\29_Deploy_App>npm start
+|           
+|           > 29_deploy_app@1.0.0 start
+|           > node app.js
+|           
+|           Server Started at PORT: 8000
+|           MongoDB connected
+
+|                               +++++++++++++++++++++++++++++++++
+
+---> Why process.env.PORT or process.env.MONGO_URL ? 
+|       Because here we have set them according to our local system but at browser, browser will allocate environment variable(PORT, MONGO_URL)
+|       
+|       Example:-  if we have,
+|       |               console.log("My name is :-", process.env.myname);
+|       |       In Code 
+|       
+|       |       then Run this code 
+|       |       
+|       |       At Terminal, we get-->   My name is :- undefined
+|       |       Set This variable -->   
+|       |                      For Linux or Mac,
+|       |                      D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\29_Deploy_App>export myname=Gaurav Singh Heer      
+|       |                      For Windows, 
+|       |                      D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\29_Deploy_App>set myname=Gaurav Singh Heer      
+|       |       Again Run, we get -->    My name is :- Gaurav Singh Heer
+
+---> Must be app.js not index.js (For aws)
+
+---> And, At package.json, start script must be their
+
+|                 "scripts": {
+|                   "start": "node app.js",
+|                 },
+
+--->Make .env file for variable defining (to run code locally)
+|   To load this .env file we use dotenv(npm) package dot env (https://www.npmjs.com/package/dotenv)
+|   npm i dotenv
+|
+|       Created .env file, with content (For Local Running),
+|                                   MONGO_URL = mongodb://localhost:27017/blogify
+|                                   PORT = 8000
+|
+|       dotenv, it is a package which helps us to load environment variables AT file (.env)
+
+|       Now Update app.js,
+|                       require('dotenv').config()
+|                       console.log(process.env) // remove this after you've confirmed it is working
+|
+|       OUTPUT At Terminal,
+|                   D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\29_Deploy_App>npm start
+|                   
+|                   > 29_deploy_app@1.0.0 start
+|                   > node app.js
+|                   
+|                   {
+|                     ALLUSERSPROFILE: 'C:\\ProgramData',
+|                     APPDATA: 'C:\\Users\\GAURAV\\AppData\\Roaming',
+|                     CHROME_CRASHPAD_PIPE_NAME: '\\\\.\\pipe\\crashpad_17016_KOSMKZGEEWSLXKIS',
+|                     COLOR: '1',
+|                     COLORTERM: 'truecolor',
+|                     CommonProgramFiles: 'C:\\Program Files\\Common Files',
+|                     'CommonProgramFiles(x86)': 'C:\\Program Files (x86)\\Common Files',
+|                     CommonProgramW6432: 'C:\\Program Files\\Common Files',
+|                     COMPUTERNAME: 'GAURAV',
+|                     ComSpec: 'C:\\WINDOWS\\system32\\cmd.exe',
+|                     DriverData: 'C:\\Windows\\System32\\Drivers\\DriverData',
+|                     EDITOR: 'C:\\WINDOWS\\notepad.exe',
+|                     EFC_3536: '1',
+|                     FPS_BROWSER_APP_PROFILE_STRING: 'Internet Explorer',
+|                     FPS_BROWSER_USER_PROFILE_STRING: 'Default',
+|                     GIT_ASKPASS: 'c:\\Users\\GAURAV\\AppData\\Local\\Programs\\Microsoft VS Code\\resources\\app\\extensions\\git\\dist\\askpass.sh',
+|                     HOME: 'C:\\Users\\GAURAV',
+|                     HOMEDRIVE: 'C:',
+|                     HOMEPATH: '\\Users\\GAURAV',
+|                     IGCCSVC_DB: 'AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAs2qxzwNgcUy3ZZkMimXHKQQAAAACAAAAAAAQZgAAAAEAACAAAACEQavTz6f+iy5GV7KMBuNl3VZ9CsrTFCRwBSB0Jnri+gAAAAAOgAAAAAIAACAAAACwVbH+RHCdYUVQYlx7s2xzSpp2fdIQsB69urdqJuHpCWAAAAARmI560U+QEu4u/dKWZW7pxfnTAkUOogeP9Uh14fxs4pmJoVWexR/G4ealhl1Ty1Y+cmE7S+sc0zgYSWyu1Z1Cxsk6pPKcnhY5vBtuaWd9Tk9JvoFfL9xNHDpOIgN1tUNAAAAAsRESpjt9y0wfaGenh/Ap7aNarV0jNdrUwxS9SUHp8/wghjdGliDH5nZvJUwdrk8CQHEk3vva6KpaqSke/uQ4qQ==',
+|                     INIT_CWD: 'D:\\GAURAV   CODING\\WEB DEVELOPMENT\\BACKEND\\29_Deploy_App',
+|                     LANG: 'en_US.UTF-8',
+|                     LOCALAPPDATA: 'C:\\Users\\GAURAV\\AppData\\Local',
+|                     LOGONSERVER: '\\\\GAURAV',
+|                     MONGO_URL: 'mongodb://localhost:27017/blogify',
+|                     myname: 'Gaurav Singh Heer',
+|                     NODE: 'C:\\Program Files\\nodejs\\node.exe',
+|                     NODE_EXE: 'C:\\Program Files\\nodejs\\\\node.exe',
+|                     NPM_CLI_JS: 'C:\\Program Files\\nodejs\\\\node_modules\\npm\\bin\\npm-cli.js',
+|                     npm_command: 'start',
+|                     npm_config_cache: 'C:\\Users\\GAURAV\\AppData\\Local\\npm-cache',
+|                     npm_config_globalconfig: 'C:\\Users\\GAURAV\\AppData\\Roaming\\npm\\etc\\npmrc',
+|                     npm_config_global_prefix: 'C:\\Users\\GAURAV\\AppData\\Roaming\\npm',
+|                     npm_config_init_module: 'C:\\Users\\GAURAV\\.npm-init.js',
+|                     npm_config_local_prefix: 'D:\\GAURAV   CODING\\WEB DEVELOPMENT\\BACKEND\\29_Deploy_App',
+|                     npm_config_node_gyp: 'C:\\Program Files\\nodejs\\node_modules\\npm\\node_modules\\node-gyp\\bin\\node-gyp.js',    
+|                     npm_config_noproxy: '',
+|                     npm_config_npm_version: '10.8.3',
+|                     npm_config_prefix: 'C:\\Users\\GAURAV\\AppData\\Roaming\\npm',
+|                     npm_config_userconfig: 'C:\\Users\\GAURAV\\.npmrc',
+|                     npm_config_user_agent: 'npm/10.8.3 node/v22.9.0 win32 x64 workspaces/false',
+|                     npm_execpath: 'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+|                     npm_lifecycle_event: 'start',
+|                     npm_lifecycle_script: 'node app.js',
+|                     npm_node_execpath: 'C:\\Program Files\\nodejs\\node.exe',
+|                     npm_package_json: 'D:\\GAURAV   CODING\\WEB DEVELOPMENT\\BACKEND\\29_Deploy_App\\package.json',
+|                     npm_package_name: '29_deploy_app',
+|                     npm_package_version: '1.0.0',
+|                     NPM_PREFIX_JS: 'C:\\Program Files\\nodejs\\\\node_modules\\npm\\bin\\npm-prefix.js',
+|                     NPM_PREFIX_NPM_CLI_JS: 'C:\\Users\\GAURAV\\AppData\\Roaming\\npm\\node_modules\\npm\\bin\\npm-cli.js',
+|                     NUMBER_OF_PROCESSORS: '8',
+|                     OneDrive: 'C:\\Users\\GAURAV\\OneDrive',
+|                     OneDriveConsumer: 'C:\\Users\\GAURAV\\OneDrive',
+|                     ORIGINAL_XDG_CURRENT_DESKTOP: 'undefined',
+|                     OS: 'Windows_NT',
+|                     Path: 'D:\\GAURAV   CODING\\WEB DEVELOPMENT\\BACKEND\\29_Deploy_App\\node_modules\\.bin;D:\\GAURAV   CODING\\WEB DEVELOPMENT\\BACKEND\\node_modules\\.bin;D:\\GAURAV   CODING\\WEB DEVELOPMENT\\node_modules\\.bin;D:\\GAURAV   CODING\\node_modules\\.bin;D:\\node_modules\\.bin;C:\\Program Files\\nodejs\\node_modules\\npm\\node_modules\\@npmcli\\run-script\\lib\\node-gyp-bin;C:\\Program Files (x86)\\VMware\\VMware Workstation\\bin\\;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;C:\\app\\GAURAV\\product\\18.0.0\\dbhomeXE\\bin;D:\\DBMS\\dbhomeXE\\bin;D:\\OracleExpress\\dbhomeXE\\bin;C:\\app\\GAURAV\\product\\21c\\dbhomeXE\\bin;C:\\Program Files\\Python311\\Scripts\\;C:\\Program Files\\Python311\\;C:\\Program Files\\Microsoft\\jdk-11.0.16.101-hotspot\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\dotnet\\;C:\\Program Files\\Microsoft SQL Server\\Client SDK\\ODBC\\170\\Tools\\Binn\\;C:\\MinGW\\bin;C:\\Program Files\\nodejs\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\MongoDB Shell\\mongosh-2.3.7-win32-x64\\bin;C:\\Program Files\\MongoDB\\Server\\8.0\\bin;C:\\Users\\GAURAV\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\GAURAV\\.dotnet\\tools;C:\\Users\\GAURAV\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\GAURAV\\AppData\\Local\\GitHubDesktop\\bin;C:\\MinGW\\bin;C:\\Users\\GAURAV\\AppData\\Roaming\\npm;C:\\Program Files\\mongosh\\',
+|                     PATHEXT: '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PY;.PYW',
+|                     PORT: '8000',
+|                     PROCESSOR_ARCHITECTURE: 'AMD64',
+|                     PROCESSOR_IDENTIFIER: 'Intel64 Family 6 Model 140 Stepping 2, GenuineIntel',
+|                     PROCESSOR_LEVEL: '6',
+|                     PROCESSOR_REVISION: '8c02',
+|                     ProgramData: 'C:\\ProgramData',
+|                     ProgramFiles: 'C:\\Program Files',
+|                     'ProgramFiles(x86)': 'C:\\Program Files (x86)',
+|                     ProgramW6432: 'C:\\Program Files',
+|                     PROMPT: '$P$G',
+|                     PSModulePath: 'C:\\Program Files\\WindowsPowerShell\\Modules;C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\Modules',
+|                     PT8HOME: 'C:\\Program Files\\Cisco Packet Tracer 8.2.2',
+|                     PUBLIC: 'C:\\Users\\Public',
+|                     SDL_AUDIODRIVER: 'directsound',
+|                     SESSIONNAME: 'Console',
+|                     SystemDrive: 'C:',
+|                     SystemRoot: 'C:\\WINDOWS',
+|                     TEMP: 'C:\\Users\\GAURAV\\AppData\\Local\\Temp',
+|                     TERM_PROGRAM: 'vscode',
+|                     TERM_PROGRAM_VERSION: '1.96.3',
+|                     TMP: 'C:\\Users\\GAURAV\\AppData\\Local\\Temp',
+|                     USERDOMAIN: 'GAURAV',
+|                     USERDOMAIN_ROAMINGPROFILE: 'GAURAV',
+|                     USERNAME: 'GAURAV',
+|                     USERPROFILE: 'C:\\Users\\GAURAV',
+|                     VSCODE_GIT_ASKPASS_EXTRA_ARGS: '',
+|                     VSCODE_GIT_ASKPASS_MAIN: 'c:\\Users\\GAURAV\\AppData\\Local\\Programs\\Microsoft VS Code\\resources\\app\\extensions\\git\\dist\\askpass-main.js',
+|                     VSCODE_GIT_ASKPASS_NODE: 'C:\\Users\\GAURAV\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe',
+|                     VSCODE_GIT_IPC_HANDLE: '\\\\.\\pipe\\vscode-git-fc77967252-sock',
+|                     windir: 'C:\\WINDOWS',
+|                     ZES_ENABLE_SYSMAN: '1'
+|                   }
+|                   Server Started at PORT: 8000
+|                   MongoDB connected
+
+NOW, FOR LOCAL IS DONE
+
+|                   ++++++++++++++++++++++++++++++++++++++++++++++
+
+NOW, DEPLOYEMENT,
+|                   At aws cloud (Search - Elastic Beanstalk(https://ap-south-1.console.aws.amazon.com/elasticbeanstalk/home?region=ap-south-1#/welcome))
+
+---> At, Elastic Beanstalk(Click at, -> Create Application)
+|                   -----------------------------------------------------
+|                                     Fill The Form
+|                   -----------------------------------------------------
+|                   Application Name           -   Blogify
+|                   -----------------------------------------------------
+|                   Platform Info
+|                   -----------------------------------------------------
+|                   Platform Type              -   
+|                   Managed Platform           -   
+|                   Platform                   -   (Choose Node.js from Dropdown)
+|                   -----------------------------------------------------
+|                   
+|                   Version Label              -   blogify-v1.0.0
+|                                                (Initial Release Suggested by AI)
+|                   -----------------------------------------------------
+|                   Application Code Info
+|                   -----------------------------------------------------
+|                   Sample Application         -   Selected
+|                   Upload Your Code           -   Selected
+|                   -----------------------------------------------------
+|                   
+|                   Upload Steps:
+|                   1. Delete node_modules from the folder.
+|                   2. Select all files, then Right Click -> Compress to (blogify-code.zip).
+|                   3. Upload this ZIP file.
+|                   
+|                   File Name:
+|                   blogify-code.zip (Uploaded Successfully)
+|                   -----------------------------------------------------
+|                   
+|                   Then:
+|                   - Click Next.
+|                   - Skip to Review.
+|                   - Submit.
+|                   -----------------------------------------------------
+
+Now, it will take some time and create resources for us, Like(it will Create a CPU then bring our code to it then will install npm, then add load-balancers to it , then add cloud-watch.......and many more).
+|                                   Load-balancer is,used to handle multiple requests
+|                                   Cloud-watch is, where we can see logs
+| 
+|       There are many things and all this is done by Beanstalk  
+
+---------------------------------------------------------------------------------------------------------------
+
+Till the time it is Being Deployed we want, cloud mongodb.
+
+---> Go to (mongodb.com)
+
+mongodb+srv://gauravheer2005:Gaurav@2005@cluster0.pdzgb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+---> At Network Access Allow all (0.0.0.0/0)
+---------------------------------------------------------------------------------------------------------------
+ERROR:-
+January 16, 2025 17:58:46 (UTC+5:30)
+ERROR
+The instance profile aws-elasticbeanstalk-ec2-role associated with the environment does not exist.
+
+Reference:- https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html
+
+Debug,
+Go at IAM -> Roles-> Create Role-> Use Case (EC2)-> Next--> At(ElasticBeanStalk-EC2-Step Guide awseb-dg.pdf) ->
+Select Point 8 At page 24
+(• AWSElasticBeanstalkWebTier
+ • AWSElasticBeanstalkWorkerTier
+ • AWSElasticBeanstalkMulticontainerDocker) --> Add these 3 at Add Permission -> Next -> give role name(r1)->
+Create role -> At Bean Stalk -> Create Application -> Fill Form -> Create New Environment 
+
+Now, At new Environment , 
+
+To Add MONGO_URL,
+
+Go to Configuration  -> Updates, monitoring, and logging -> Go at Bottom (Environment properties) THEN,
+
+Environment properties
+Name                                      Value
+MONGO_URL                                 mongodb+srv://gauravheer2005:Gaurav@2005@cluster0.pdzgb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0

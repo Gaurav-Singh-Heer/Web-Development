@@ -1,0 +1,182 @@
+https://www.npmjs.com/package/multer-storage-cloudinary   (npm install multer-storage-cloudinary)
+
+---> Create a new file config/cloudinary.js
+
+|                               const cloudinary = require('cloudinary').v2;
+|                               
+|                               cloudinary.config({
+|                                   cloud_name: process.env.CLOUD_NAME, // Add these keys in your .env file
+|                                   api_key: process.env.CLOUD_API_KEY,
+|                                   api_secret: process.env.CLOUD_API_SECRET,
+|                               });
+|                               
+|                               module.exports = cloudinary;
+
+---> routes/28_blog.js, modify the upload configuration to use multer-storage-cloudinary. so made routes/30_blog.js
+
+|                           const { Router } = require("express");
+|                           const multer = require("multer");
+|                           const { CloudinaryStorage } = require("multer-storage-cloudinary");
+|                           const cloudinary = require("../config/cloudinary"); // Import cloudinary config
+|                           
+|                           const Blog = require("../models/27_blogs");
+|                           const Comment = require("../models/28_comment");
+|                           
+|                           const router = Router();
+|                           
+|                           // Configure Cloudinary Storage
+|                           
+|                           const storage = new CloudinaryStorage({
+|                               cloudinary: cloudinary,
+|                               params: {
+|                                   folder: "blog_images", // Folder in Cloudinary
+|                                   format: async (req, file) => "jpg", // Force file format to jpg
+|                                   public_id: (req, file) => `${Date.now()}-${file.originalname.split(".")[0]}`, // Generate public ID
+|                               },
+|                           });
+|                           
+|                           const upload = multer({ storage });
+|                           
+|                           router.post("/", upload.single("coverImage"), async (req, res) => {
+|                               try {
+|                                   const { title, body } = req.body;
+|                                   const blog = await Blog.create({
+|                                       title,
+|                                       body,
+|                                       createdBy: req.user._id,
+|                                       coverImageURL: req.file.path, // URL from Cloudinary
+|                                       coverImagePublicId: req.file.filename, // Cloudinary public ID
+|                                   });
+|                                   return res.redirect(`/blog/${blog._id}`);
+|                               } catch (error) {
+|                                   console.error(error);
+|                                   return res.status(500).send("Error uploading blog");
+|                               }
+|                           });
+|                           
+|                           module.exports = router;
+
+--> models/27_blog.js so made models/30_blog.js
+
+|                   const { Schema, model } = require("mongoose");
+|                   
+|                   const blogSchema = new Schema(
+|                       {
+|                           title: {
+|                               type: String,
+|                               required: true,
+|                           },
+|                           body: {
+|                               type: String,
+|                               required: true,
+|                           },
+|                           coverImageURL: {
+|                               type: String,
+|                               required: false,
+|                           },
+|                           coverImagePublicId: {
+|                               type: String, // Store public ID for Cloudinary operations
+|                               required: false,
+|                           },
+|                           createdBy: {
+|                               type: Schema.Types.ObjectId,
+|                               ref: "user",
+|                           },
+|                       },
+|                       { timestamps: true }
+|                   );
+|                   
+|                   const Blog = model("blog", blogSchema);
+|                   
+|                   module.exports = Blog;
+
+--> Add your Cloudinary credentials in the .env file:
+
+|                       CLOUD_NAME=your_cloud_name
+|                       CLOUD_API_KEY=your_api_key
+|                       CLOUD_API_SECRET=your_api_secret
+
+--> /views/blog.ejs
+
+|               <img src="<%= blog.coverImageURL %>" class="card-img-top" alt="Blog Cover" style="width: 80%; margin: 0 auto; display: block;">
+
+---> Now, At .env to fill these
+
+|           CLOUD_NAME=your_cloud_name
+|           CLOUD_API_KEY=your_api_key
+|           CLOUD_API_SECRET=your_api_secret   
+
+| Go At (https://cloudinary.com/  --> Login VIA (Google))
+| Then Go At (https://console.cloudinary.com/pm/c-9169782d1362ac12d2f0021149ea72/getting-started)
+| Then Go At (Dashboard -->https://console.cloudinary.com/pm/c-9169782d1362ac12d2f0021149ea72/developer-dashboard)
+
+|           CLOUD_NAME=your_cloud_name         (dvnn29iku)
+|           CLOUD_API_KEY=your_api_key         (671668652512433)
+|           CLOUD_API_SECRET=your_api_secret   (xrFsLbcki4UBgK70Wu4fvASkYn0)
+
+-------------------------------------------------------------------------------------------------------------
+
+Deploying at Versel:
+
+--> GOT ERROR
+
+|               npm error code ERESOLVE
+|               npm error ERESOLVE could not resolve
+|               npm error
+|               npm error While resolving: multer-storage-cloudinary@4.0.0
+|               npm error Found: cloudinary@2.5.1
+|               npm error node_modules/cloudinary
+|               npm error   cloudinary@"^2.5.1" from the root project
+|               npm error
+|               npm error Could not resolve dependency:
+|               npm error peer cloudinary@"^1.21.0" from multer-storage-cloudinary@4.0.0
+|               npm error node_modules/multer-storage-cloudinary
+|               npm error   multer-storage-cloudinary@"^4.0.0" from the root project
+
+
+---> Cause of Error: the version of multer-storage-cloudinary requires an older version of cloudinary (specifically ^1.21.0), while you have cloudinary@2.5.1 installed. These versions are incompatible.
+
+|Solution 1: Install Compatible Versions
+|       Downgrade the cloudinary package to a version compatible with multer-storage-cloudinary@4.0.0.
+|
+|               npm uninstall cloudinary
+|               npm install cloudinary@^1.21.0
+|               
+
+|   Solution 2: Use a Compatible Storage Library
+|               
+|               Alternatively, if you need to use cloudinary@2.x, use an updated or different library to handle Cloudinary uploads directly with multer, such as multer-cloudinary-storage.
+|               
+
+|               npm uninstall multer-storage-cloudinary
+|               npm install multer-cloudinary-storage
+
+|  --> Update the storage configuration in your code as follows:
+
+|               const multer = require("multer");
+|               const cloudinary = require("cloudinary").v2;
+|               const { CloudinaryStorage } = require("multer-cloudinary-storage");
+|               
+|               cloudinary.config({
+|                   cloud_name: process.env.CLOUD_NAME,
+|                   api_key: process.env.CLOUD_API_KEY,
+|                   api_secret: process.env.CLOUD_API_SECRET,
+|               });
+|               
+|               const storage = new CloudinaryStorage({
+|                   cloudinary: cloudinary,
+|                   params: {
+|                       folder: "blog_images",
+|                       format: async (req, file) => "jpg", // Force format
+|                       public_id: (req, file) => `${Date.now()}-${file.originalname.split(".")[0]}`, // Generate ID
+|                   },
+|               });
+|               
+|               const upload = multer({ storage });
+|               
+
+---> Done :)
+
+------------------------------------------------------------------------------------------------------------------
+
+SUMMARY:- Done Deployement Using , Cloudinary, Learned About MongoDB Server ~ON VERCEL
