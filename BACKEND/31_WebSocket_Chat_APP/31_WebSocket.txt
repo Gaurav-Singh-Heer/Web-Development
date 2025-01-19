@@ -785,5 +785,164 @@ Now to Check,
 
 FOR MORE CHECKOUT--> (https://socket.io/get-started/chat)
 
-IMP_NOTE:-  public/4_index_Full_UI.html is ONLY CSS and index4.js is just to navigate to it
-|           ONLY ADDED CSS AND MADE DIV FOR SENT MESSAGE AND RECIEVED MESSAGE IN BODY 
+IMP_NOTE:-  public/4_index_Full_UI.html is Full Chat App With UI with reference of (https://socket.io/get-started/chat)
+|
+|  FULL CODE (WORKING without any UI):-
+|
+|       ---> 4_index_Full_UI.html
+|                                <!DOCTYPE html>
+|                                <html lang="en">
+|                                <head>
+|                                    <meta charset="UTF-8">
+|                                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+|                                    <title>Chat APP</title>
+|                                    <style>
+|                                        body {
+|                                            margin: 0;
+|                                            padding-bottom: 3rem;
+|                                            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+|                                        }
+|                                
+|                                        #form {
+|                                            background: rgba(0, 0, 0, 0.15); 
+|                                            padding: 0.25rem; 
+|                                            position: fixed; 
+|                                            bottom: 0; 
+|                                            left: 0; 
+|                                            right: 0; 
+|                                            display: flex; 
+|                                            height: 3rem; 
+|                                            box-sizing: border-box; 
+|                                            backdrop-filter: blur(10px); 
+|                                        }
+|                                        #input { 
+|                                            border: none; 
+|                                            padding: 0 1rem; 
+|                                            flex-grow: 1; 
+|                                            border-radius: 2rem; 
+|                                            margin: 0.25rem;
+|                                        }
+|                                        #input:focus {
+|                                            outline: none;
+|                                        }
+|                                        #form > button { 
+|                                            background: #333; 
+|                                            border: none; 
+|                                            padding: 0 1rem; 
+|                                            margin: 0.25rem; 
+|                                            border-radius: 3px; 
+|                                            outline: none; 
+|                                            color: #fff; 
+|                                        }
+|                                
+|                                        #messages { 
+|                                            list-style-type: none; 
+|                                            margin: 0; 
+|                                            padding: 0; 
+|                                        }
+|                                        #messages > li { 
+|                                            padding: 0.5rem 1rem;
+|                                        }
+|                                        #messages > li:nth-child(odd) { 
+|                                            background: #efefef; 
+|                                        }
+|                                    </style>
+|                                </head>
+|                                <body>
+|                                    <h1> Chatting </h1>
+|                                
+|                                    <ul id="messages"></ul>
+|                                    <form id="form" action="">
+|                                      <input id="input" autocomplete="off" />
+|                                      <button>Send</button>
+|                                      <!-- <input type="text" id="message" placeholder="Enter Message"> -->
+|                                      <!-- <button id="sendBtn">Send</button> -->
+|                                    </form>
+|                                
+|                                    <!-- <div id="messagesDisplay"></div> -->
+|                                
+|                                    <script src="/socket.io/socket.io.js"></script>
+|                                    <script>
+|                                        var socket = io();
+|                                
+|                                        var messages = document.getElementById('messages');
+|                                        var form = document.getElementById('form');
+|                                        var input = document.getElementById('input');
+|                                
+|                                        form.addEventListener('submit', function(e) {
+|                                            e.preventDefault();
+|                                            if (input.value) {
+|                                                socket.emit('chat message', input.value);
+|                                                input.value = '';
+|                                            }
+|                                        });
+|                                
+|                                        socket.on('chat message', function(msg) {
+|                                            var item = document.createElement('li');
+|                                            item.textContent = msg;
+|                                            messages.appendChild(item);
+|                                            window.scrollTo(0, document.body.scrollHeight);
+|                                        });
+|                                    </script>
+|                                    <!--
+|                                    <script src="/socket.io/socket.io.js"></script>
+|                                    <script>
+|                                        const socket = io();          // Basically  this line made socket connection for me 
+|                                        const sendBtn = document.getElementById('sendBtn');
+|                                        const messageInput= document.getElementById('message');
+|                                        const allMessages = document.getElementById('messagesDisplay')
+|                                
+|                                        // socket.on('message-toAll', message => console.log(message))           // io.emit("message-toAll", message); index2.js
+|                                        socket.on('message-toAll', message =>{              // io.emit("message-toAll", message); index2.js
+|                                            const p = document.createElement('p');
+|                                            p.innerText = message;
+|                                            allMessages.appendChild(p);
+|                                
+|                                        })           
+|                                
+|                                        sendBtn.addEventListener('click', e=>{
+|                                            const message = messageInput.value;
+|                                            console.log(message)
+|                                            socket.emit('user-message', message);
+|                                        })
+|                                    </script>
+|                                    -->
+|                                </body>
+|                                </html>
+|                                          
+|       ---> index4.js
+|                   const http = require("http")
+|                   const express = require("express");
+|                   const path = require('path');
+|                   const { Server } = require("socket.io");
+|                   
+|                   const app = express();
+|                   const server = http.createServer(app);
+|                   const io = new Server(server);
+|                   
+|                   const PORT = 9000;
+|                   
+|                   // Socket.io 
+|                   
+|                   io.on('connection', (socket) => {                                              // means whenever there will a connection from front-end we will get a socket(client) called as socket in socket.io world
+|                       // console.log('A new user has connected', socket.id);                        // each socket has an id
+|                       //socket.on('user-message', message =>{      // from user-message message will come            // user-message From front-end 2_index.html socket.emit('user-message', message);
+|                       socket.on('chat message', message =>{      // from chat message message will come            // chat message From front-end 4_index_Full_UI.html socket.emit('chat message', input.value);
+|                           console.log("A new User message", message)
+|                           // io.emit("message-toAll", message);
+|                           io.emit("chat message", message);
+|                       })                   
+|                   });
+|                   
+|                   // HTTP Handle
+|                   app.use(express.static(path.resolve('./public')));
+|                   
+|                   // app.get('/', (req,res)=>{
+|                   //     res.sendFile('./public/2_index.html')
+|                   // })
+|                   
+|                   app.get("/", (req, res) => {
+|                       res.sendFile(path.resolve(__dirname, "public", "4_index_Full_UI.html")); // Provide an absolute path
+|                   });
+|                   
+|                   server.listen(PORT, ()=>console.log(`Server has started at ${PORT}`))

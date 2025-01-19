@@ -13,9 +13,11 @@ const PORT = 9000;
 
 io.on('connection', (socket) => {                                              // means whenever there will a connection from front-end we will get a socket(client) called as socket in socket.io world
     // console.log('A new user has connected', socket.id);                        // each socket has an id
-    socket.on('user-message', message =>{      // from user-message message will come            // user-message From front-end 2_index.html socket.emit('user-message', message);
+    //socket.on('user-message', message =>{      // from user-message message will come            // user-message From front-end 2_index.html socket.emit('user-message', message);
+    socket.on('chat message', message =>{      // from chat message message will come            // chat message From front-end 4_index_Full_UI.html socket.emit('chat message', input.value);
         console.log("A new User message", message)
-        io.emit("message-toAll", message);
+        // io.emit("message-toAll", message);
+        io.emit("chat message", message);
     })                   
 });
 
