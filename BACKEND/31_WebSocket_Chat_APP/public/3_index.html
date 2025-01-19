@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat APP</title>
+</head>
+<body>
+    <h1> Chatting </h1>
+
+    <input type="text" id="message" placeholder="Enter Message">
+    <button id="sendBtn">Send</button>
+
+    <div id="messagesDisplay"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();          // Basically  this line made socket connection for me 
+        const sendBtn = document.getElementById('sendBtn');
+        const messageInput= document.getElementById('message');
+        const allMessages = document.getElementById('messagesDisplay')
+
+        // socket.on('message-toAll', message => console.log(message))           // io.emit("message-toAll", message); index2.js
+        socket.on('message-toAll', message =>{              // io.emit("message-toAll", message); index2.js
+            const p = document.createElement('p');
+            p.innerText = message;
+            allMessages.appendChild(p);
+
+        })           
+
+        sendBtn.addEventListener('click', e=>{
+            const message = messageInput.value;
+            console.log(message)
+            socket.emit('user-message', message);
+        })
+    </script>
+</body>
+</html>
