@@ -1,0 +1,150 @@
+Streams:
+
+---> Let's say we have a txt file with some text content And size of this file is 50 MB
+|
+|   TASK: Whenever user will route at '/' we have to display the content of this txt file
+|
+|---> So we have to read the content of file ~ which is done using fs module
+|
+|   CODE at index_1.js:
+|                       const express = require("express");
+|                       const fs = require("fs");
+|                       
+|                       const app = express();
+|                       const PORT = 8000;
+|                       
+|                       app.get("/", (req,res) =>{
+|                           fs.readFile("./test_content.txt",(err, data) => {
+|                               res.end(data);
+|                           })
+|                       })
+|                       
+|                       app.listen(PORT, () => {
+|                           console.log(`Serve Started at PORT ${PORT}`);
+|                       })
+
+-------------------------------------------------------------------------------------------------------------
+
+To check CPU status while reading txt File.
+
+---> There is a package which tells how much is CPU Utilisation ( Express-status-monitor) [https://www.npmjs.com/package/express-status-monitor]
+
+|       1) npm i express-status-monitor
+|       2) Will add this to code and now 
+|       3) Will go at 
+|       4) /Status 
+|       5) It will show how much memory is being used by our express application 
+
+| Now, Create index_2.js (add code of index.js)
+|   Update CODE :-
+|           const status = require("express-status-monitor");
+|           app.use(status());
+
+|           OUTPUT:-
+|           
+|           Will observe the sudden increase in graph memory at /status (http://localhost:8000/status)
+|           Whenever we refresh the '/' page                            (http://localhost:8000/)
+|           NOTE:- OPEN BOTH PAGE In different Browser
+
+-------------------------------------------------------------------------------------------------------------
+
+---> Suppose we have a file of 400MB. And we did fs.readFile 
+|    means, we read the content of the file and we made a local variable 'data'
+|
+|    Now, First content of file will go inside the 'data' variable and then we sent this data in response(res.send)
+|
+|      So, We picked 400MB data --> Loaded it in Memory (data variable) --> Sent in Response
+
+PROBLEM:-
+|      So, For sometime till data was being read we have to store 400MB in (Memory) RAM which is not a good 
+|      thing as if there would be 100 users then will have to real this file 100 times which will lead to alot 
+|      of memory consumption. So, This particular way is not memory efficient
+
+--------------------------------------------------------------------------------------------------------------
+
+To Solve this problem we have concept of Streams.
+---> Stream means as data is coming it is becoming available. 
+|    Example:- Youtube is not waiting for u to load whole video in buffer then only will play. As soon as data is coming it is being played
+|
+|   - This Thing can be done here also by using Streams.
+|
+|   So, we will say to fs module that not to read-file just stream it. Stream it means (read chunk by chunk 
+|   means small-small parts) and as we will get these chunks will send these small small chunks to browser .
+|
+|   Basically,  File -----DATA-----> fs(Node.js) -----(Chunk)DATA-----> Browser. Means it hasn't kept anything in memory . It's just like pipeline. 
+|   We made Pipeline ------> Picked up File -----> As data comes ----> Data Sent to Front-end. By this our 
+|   server memory will not spike up suddenly because we are reading file just chunk by chunk and sending this chunk side by side to Front-End
+
+Create index_3.js and( Copy the index_2 Code):
+---> Update index_3.js 
+
+|   Updated Part Code:-
+|   
+|               app.get("/", (req,res) =>{
+|                   const stream = fs.createReadStream("./test_content.txt", "utf-8");                               // To read File Stream by Stream
+|                   stream.on('data', (chunk) => res.write(chunk))    // as chunk come will send chunk in response
+|                   stream.on('end', (chunk) => res.end());       // When stream will end work is done
+|                   /*fs.readFile("./test_content.txt",(err, data) => {
+|                       res.end(data);
+|                   })*/
+|               })
+
+---> By This Part 
+|
+|   Now, npm start
+|           Will observe the sudden increase in graph memory at /status (http://localhost:8000/status)
+|           Whenever we refresh the '/' page                            (http://localhost:8000/)
+|           NOTE:- OPEN BOTH PAGE In different Browser
+|   
+|    NOTE::-   This time comparatively our memory consumption will be less
+|
+|   Now, Inspect ---> Network ---> Header (At, Response Header --> transfer-encoding:chunked)
+|   Basically, Whenever we do this express sets a header 'transfer-encoding:chunked' to tell browser that data 
+|              will come in chunks not to stop till res.end will come
+|
+|   For More about 'Transfer-Encoding' Checkout-> https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Transfer-Encoding
+|
+|
+
+-------------------------------------------------------------------------------------------------------------
+
+Interesting thing with Streams,
+
+Take test_content.txt and zip it: 
+|                               Way 1 - Take this file in Node.JS read it then will do fs.writefile ZIP it.
+|                                       Here Problem is if file is 400MB , Then we have to read 400MB --THEN--> 400MB (ZIP) Means Till now Memory Consumption is 800MB. Then we Write this 400MB
+|                                       // 400MB File -> 400MB (ZIP) --> 400MB write
+|                                           400MB File -> 400MB (ZIP) This part takes 800MB which is not the good thing.
+|                               Way 2
+|                                  OPTIMIZED WAY- 400MB File will Stream this  
+|                                       // Stream -> 400MB (ZIP) --> 400MB write
+|                                       // Stream Read -> zlib -> 400MB Write
+|                                       Here Still we are using 400MB
+|
+|                                       Now to ZIP file will use zlib
+|
+|                                  OPTIMIZED WAY- 400MB File will Stream this  
+|                                       // Stream -> zlib --> 400MB write 
+|                                       // Stream Read (Sample.txt) -> Zipper (zlib) -> fs Write Stream
+|                                       Here Now we are using 0MB
+|
+|                   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+|
+---> Create index_4.js (Copy Whole index_3.js)
+---> Update index_4.js 
+|       
+|       Updated CODE:-
+|                       const zlib = require("zlib")
+|                       
+|                       // Stream Read -> Zipperlib -> 400MB Write
+|                       // Stream Read (test_content.txt) -> Zipper (Zlib) -> fs Write Stream
+|                       
+|                       fs.createReadStream('./test_content.txt').pipe(
+|                           zlib.createGzip().pipe(fs.createWriteStream("./test_content.zip")
+|                       ));
+
+Now, npm start ,
+|               test_content.zip, is created
+
+
+| FOR MORE About Streams Checkout --> https://nodejs.org/api/stream.html 
