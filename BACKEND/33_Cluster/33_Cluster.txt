@@ -1,0 +1,153 @@
+Let's say, At first 2 person are using a single server 
+
+|            User 1        User 2        User 3        User 4
+|              |              |              |              |
+|              ----------------------------------------------
+|                                   Server
+|              ----------------------------------------------
+|              |              |              |              |
+|            User 5        User 6        User 7        User 8
+|     
+
+
+PROBLEM :- But with time no. of user can increase if our application became successful And at that time as no. of 
+|          user will increase. Load or memory usage would also increase so it can happen that our server can crash
+
+Code at index_1.js:-
+|                   const express = require("express");
+|                   
+|                   const app = express();
+|                   const PORT = 8000;
+|                   
+|                   app.get("/", (req,res) =>{
+|                       return res.json({message: "Hello from Express Server"});
+|                   });
+|                   
+|                   app.listen(PORT, () => {
+|                       console.log(`Server Started at PORT: ${PORT}`)
+|                   })
+
+---------------------------------------------------------------------------------------------------------------
+
+SOLUTION :- If our no. of user increase in nodejs then we will use Cluster in nodejs (https://nodejs.org/api/cluster.html)
+
+- Clusters of Node.js processes can be used to run multiple instances of Node.js that can distribute workloads among their application threads
+
+Means
+
+|            User 1     User 2     User 3     User 4     User 5     User 6     User 7     User 8
+|               |          |          |          |          |          |          |          |
+|          --------------------------------------------------------------------------------------
+|                                      Central Node
+|          --------------------------------------------------------------------------------------
+|                                |             |             |             |
+|                            Workload 1    Workload 2    Workload 3    Workload 4
+
+
+--> Create index_2.js
+--> Update index_2.js (Added process.pid in message response of get request at '/')
+|                       OUTPUT:- {"message":"Hello from Express Server 27900"}
+
+--> Create index_3.js (And Write code from the reference of [https://nodejs.org/api/cluster.html])
+--> Update index_3.js
+
+|     CODE:-
+|                   const cluster = require('cluster');
+|                   const os = require("os")                                  // Used to get count of no of CPU's
+|                   const express = require("express")
+|                   
+|                   const totalCPUs = os.cpus().length          // OUTPUT: 8               // OR
+|                   // const totalCPUs = os.availableParallelism()          // OUTPUT: 8               
+|                   console.log(totalCPUs)
+|                   // Making worker threads as the number of CPU(core) present in my system
+|                   
+|                   if (cluster.isPrimary) {                                              // This particular cluster will do work of load Balancing
+|                       console.log(`Primary ${process.pid} is running`);
+|                   
+|                       // Fork Workers 
+|                       for (let i = 0; i < totalCPUs; i++) {                               // No. of workers = No.of CPUs
+|                           cluster.fork();
+|                       }
+|                   }
+|                   else{                                                                   // If Not Primary run express Server
+|                       const app = express();
+|                       const PORT = 8000;
+|                   
+|                       app.get("/", (req,res) =>{
+|                           return res.json({message: `Hello from Express Server ${process.pid}`});
+|                       });
+|                       
+|                       app.listen(PORT, () => {
+|                           console.log(`Server Started at PORT: ${PORT}`)
+|                       })
+|                   }
+
+|           OUTPUT, At Terminal:- 8
+|                                 Primary 17380 is running
+|                                 8
+|                                 8
+|                                 8
+|                                 8
+|                                 8
+|                                 8
+|                                 8
+|                                 Server Started at PORT: 8000
+|                                 Server Started at PORT: 8000
+|                                 Server Started at PORT: 8000
+|                                 Server Started at PORT: 8000
+|                                 Server Started at PORT: 8000
+|                                 Server Started at PORT: 8000
+|                                 Server Started at PORT: 8000
+|                                 8
+|                                 Server Started at PORT: 8000
+|
+|        --->   We got 'Server Started at PORT: 8000' 8 Times
+|
+|           OUTPUT, Two Different Browsers:- {"message":"Hello from Express Server 15276"}
+|                                            {"message":"Hello from Express Server 27900"}
+
+| Algorithm To distribute Workload:- 
+|
+|               The cluster module supports two methods of distributing incoming connections.
+|               
+|               The first one (and the default one on all platforms except Windows) is the round-robin approach, 
+|               where the primary process listens on a port, accepts new connections and distributes them across 
+|               the workers in a round-robin fashion, with some built-in smarts to avoid overloading a worker process.
+|               
+|               The second approach is where the primary process creates the listen socket and sends it to 
+|               interested workers. The workers then accept incoming connections directly.
+|               
+|               The second approach should, in theory, give the best performance. In practice however, 
+|               distribution tends to be very unbalanced due to operating system scheduler vagaries. Loads have 
+|               been observed where over 70% of all connections ended up in just two processes, out of a total of eight.
+
+|   On System other than Windows Using (round-robin) to handle moe traffic
+|   MEANS, Let's say we got 12 users and as we have 8 Core Then each core will have 1 user but 4 core will have 1 more user (By ~round robin)  
+
+|                   Each core in an 8-core system will manage at least one user. Since there are 12 users in total, the distribution will work as follows:
+|                   
+|                   1. Each of the 8 cores will be assigned 1 user, covering 8 users.
+|                   2. The remaining 4 users will be distributed to 4 of the cores, resulting in 4 cores having 2 users each.
+|                   
+|                   The distribution can be represented as:
+|                   
+|                   Core 1: User 1, User 9
+|                   Core 2: User 2, User 10
+|                   Core 3: User 3, User 11
+|                   Core 4: User 4, User 12
+|                   Core 5: User 5
+|                   Core 6: User 6
+|                   Core 7: User 7
+|                   Core 8: User 8
+|                   
+|                   Diagram:
+|                   
+|                   Cores:
+|                   [Core 1] -> User 1, User 9
+|                   [Core 2] -> User 2, User 10
+|                   [Core 3] -> User 3, User 11
+|                   [Core 4] -> User 4, User 12
+|                   [Core 5] -> User 5
+|                   [Core 6] -> User 6
+|                   [Core 7] -> User 7
+|                   [Core 8] -> User 8
