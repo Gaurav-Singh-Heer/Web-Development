@@ -1,0 +1,23 @@
+=================================================
+Middleware
+=================================================
+
+What is Middleware in Express?
+Middleware in Express is a function that processes a request before it reaches the route handler, or processes the 
+response before it is sent back to the client. 
+
+|   These functions have access to three core objects:
+|
+|       req (Request Object) : Contains data about the incoming request (e.g., URL, query parameters, headers, 
+|                              body).
+|
+|       res (Response Object): Allows the middleware to modify the outgoing response (e.g., setting status codes, 
+|                              sending a response body).
+|
+|       next (Function)      : A callback that passes control to the next middleware function in the stack. If you 
+|                              don’t call next(), the request-response cycle will be halted.
+|   
+
+=================================================
+Middleware lifecycle
+=================================================
