@@ -1,0 +1,122 @@
+Nginx (Engine-X)
+
+---> Nginx is a powerful web server and uses a non-threaded, event-driven architecture
+
+---> It can also do other important things, such as load balancing and HTTP caching, or be used as a reverse proxy.
+|    Load balancing, HTTP caching and reverse proxy are 3 main benefits why we use Nginx
+
+-----------------------------------------------------------------------------------------------------------------
+
+|           User <----------- Normal HTTP Connection <-------------------> Server (NodeJS)
+
+--->VPN: VPN is a proxy server. In case of VPN when we have to access this site. Then we don't make direct Connection 
+|    with the server. We send our request to VPN and on our behalf VPN forward our request to that particular server
+|   
+|               User <----------------> VPN <----------------------> NodeJS
+
+-----------------------------------------------------------------------------------------------------------------
+
+---> What is Reverse Proxy
+
+|   When we connect multiple User with VPN then with Server (NodeJS) this particular thing is called FORWARD PROXY.
+|
+|           
+|           User <---------------> +--------------+
+|           User <---------------> |  VPN (Proxy) |  <---------------> Server
+|           User <---------------> +--------------+
+
+|   When we connect Single User with VPN then with Multiple Server (NodeJS) this particular thing is called REVERSE PROXY.
+|
+|           
+|                                  +-------------+  <---------------> Server
+|           User <---------------> |  VPN (Prox) |  <---------------> Server
+|                                  +-------------+  <---------------> Server
+
+---> The Most Popular Reverse Proxy Server is NGINX
+|
+|                                  +---------------+  <---------------> Server
+|           User <---------------> |  NGINX (Prox) |  <---------------> Server
+|                                  +---------------+  <---------------> Server
+
+-----------------------------------------------------------------------------------------------------------------
+
+NGINX
+
+---> Whenever u open any website then there is 90% chance that it is working over NGINX. Because most of the website
+|    uses NGINX. We never communicate with the main Server. We Send our Request to Middle server in Between (Let it 
+|    be NGINX).
+|    To decide which type of request has to be sent to which server that coding is done by us. There are many 
+|    parameters (Round Robin, Path parameters). So, Basically we have many options that on which basis we have to 
+|    resolve the request.
+|
+|                                                                                   -----+
+|                                  +---------------+  <---------------> Server           |
+|           User <---------------> |  NGINX (Prox) |  <---------------> Server           |      REVERSE PROXY
+|                                  +---------------+  <---------------> Server           |
+|                                                                                   -----+
+|
+|   But in OVERVIEW, Whenever client request to this NGINX server. Then this NGINX server forward request on the 
+|                    basis of our code in it.
+|   
+|   So, NGINX is doing Reverse Proxy here as we haven't given direct access of server to our user. User is 
+|       communicating with our NGINX Server or our Reverse Proxy. Our Reverse Proxy decide over the code in it that, 
+|       particular request should go in which server then we resolve it's request.
+|       
+|       Here it can also do Load Balancing, Load Balancing means as we have 3 Server over here so by round robin 
+|                                           algorithm will send request one by one to each server so that all Load 
+|                                           is not over one server.
+|
+|       Here it can also do HTTP Caching, Example user requested an image NGINX sent th request to 3rd_Server and 
+|                                         it responded the image. Next time when another user want to access that 
+|                                         image then NGINX will pick that image from it's cache only. 
+|                                         So, By HTTP Caching Request-Response cycle becomes more faster.
+
+-----------------------------------------------------------------------------------------------------------------
+
+Overview of Real Architecture of NGINX
+
+|           User <---------------> +---------------+  <---------------> Server
+|           User <---------------> |  NGINX (Prox) |  <---------------> Server
+|           User <---------------> |               |  <---------------> Server
+|           User <---------------> +---------------+
+|
+|   Here, we have many users and they don't communicate directly with the server. Users communicate with NGINX_Server
+|        and this NGINX_Server will decide at the runtime that at which server request must be forwarded and Our 
+|        Server (NodeJS) resolve whichever request it will send response to NGINX_Server and then NGINX_Server will 
+|        deal with the clients.
+|
+|        So, this is the basic architecture of the NGINX_Server
+
+|       Example of Configuration in NGINX:- 
+|
+|                   {
+|                       /admin: use server 1
+|                       /settings: use server 2
+|                       /home : use server 3
+|                   }
+|           User <---------------> +----------------------------+  <------ /admin    ---------> Server
+|           User <---------------> |  NGINX (Prox)              |  <------ /settings ---------> Server
+|           User <---------------> | {                          |  <------ /home     --------> Server
+|           User <---------------> |    /admin: use server 1    |
+|                                  |    /settings: use server 2 |
+|                                  |    /home : use server 3    |
+|                                  |  }                         |
+|                                  +----------------------------+  
+|
+|           So, Basically like this we can give Configurations to our NGINX_Server and it will respond accordingly
+
+Real Life Example of Reverse Proxy:-
+|                                      When we go to; https://www.google.com/ we are directed at different server
+|                                      And, When we go to; https://www.google.co.in/maps we are directed at different server
+|
+-----------------------------------------------------------------------------------------------------------------
+
+Advantages of NGINX:-
+
+---> Can Handle 10,000 Concurrent Requests.
+---> Cache HTTP Requests.
+---> Act as Reverse Proxy.
+---> Act as Load Balancer.
+---> Act as an API Gateway.
+---> Serve and Cache Static files like images, videos, etc.
+---> Handle SSL Certificates.
