@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./src/output.css" rel="stylesheet">
+</head>
+<body>
+    <!--CAN MAKE RESPONSIVE USING BREAKPOINTS (https://tailwindcss.com/docs/responsive-design#using-custom-breakpoints)-->
+    <!--
+
+            +----------------+--------------------+-----------------------------------------------+
+            | Breakpoint     | Minimum Width      | CSS                                           |
+            +----------------+--------------------+-----------------------------------------------+
+            | sm             | 40rem (640px)      | @media (width >= 40rem) { ... }              |
+            | md             | 48rem (768px)      | @media (width >= 48rem) { ... }              |
+            | lg             | 64rem (1024px)     | @media (width >= 64rem) { ... }              |
+            | xl             | 80rem (1280px)     | @media (width >= 80rem) { ... }              |
+            | 2xl            | 96rem (1536px)     | @media (width >= 96rem) { ... }              |
+            +----------------+--------------------+-----------------------------------------------+    
+    -->
+
+    <!-- Navigation Bar -->
+    <nav class="bg-purple-700 text-white flex justify-between items-center p-4">     
+        <div class="logo text-xl mx-auto md:mx-0">
+            Gaurav
+        </div>
+        
+        <ul class="flex space-x-6 hidden md:flex">
+            <!-- Flex for larger screens, hidden for mobile -->
+            <li>Home</li>
+            <li>About</li>
+            <li>Contact US</li>
+        </ul>
+        
+        <!-- Mobile Hamburger Icon -->
+        <div class="md:hidden flex items-center">
+            <button class="text-white" id="menu-toggle">
+                &#9776;  <!-- Hamburger menu icon -->
+            </button>
+        </div>
+    </nav>
+    </nav>
+
+    <!-- 
+    On small screens (below 640px), the background will be red (bg-red-600).
+    On medium screens (640px to 768px), the background will be purple (sm:bg-purple-700).
+    On large screens (768px and above), the background will be slate (md:bg-slate-600). 
+    -->
+    <section class=" container bg-red-600 sm: bg-purple-700 md:bg-slate-600"> <!-- TO EXPLAIN BREAKPOINTS-->
+        HEY THIS IS TESTING
+    </section>
+
+    <!-- Main Content Section -->
+    <main class="p-8">
+        <section>
+            <h1 class="text-4xl font-semibold text-center">Welcome to Gaurav's Website</h1>
+            <p class="mt-4 text-lg text-center">This is the main content area. Add your information here.</p>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-purple-700 text-white text-center p-4 mt-8">
+        <p>&copy; 2025 Gaurav Singh Heer. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

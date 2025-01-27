@@ -1,0 +1,137 @@
+Tailwind CSS is used to make websites quickly
+
+BEFORE:-                                                                    
+|                           <!DOCTYPE html>
+|                           <html lang="en">
+|                           <head>
+|                                 <meta charset="UTF-8">
+|                                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+|                                 <title>Document</title>
+|                                 <style>
+|                                     .container{
+|                                         background-color: black;
+|                                         color: white;
+|                                     }
+|                                 </style>
+|                             </head>
+|                             <body>
+|                                 <div class="container">
+|                                     Hey Gaurav
+|                                 </div>
+|                             </body>
+|                             </html>
+
+USING TAILWIND (By CDN):-
+|                               
+|                               <!DOCTYPE html>
+|                               <html lang="en">
+|                               <head>
+|                                   <meta charset="UTF-8">
+|                                   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+|                                   <title>Document</title>
+|                                   <script src="https://cdn.tailwindcss.com"></script>
+|                               </head>
+|                               <body>
+|                                   <div class="bg-black text-white">
+|                                       Hey Gaurav
+|                                   </div>
+|                               </body>
+|                               </html>
+|                               
+
+|                   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+|  Aspect            | Before (Using Custom CSS)                       | After (Using Tailwind CSS)
+|  ------------------|-------------------------------------------------|-------------------------------------------------------
+|  HTML Structure    | <div class="container">                         | <div class="bg-black text-white">
+|  CSS Styling       | Written in a <style> tag inside the <head>.     | Inline utility classes provided by Tailwind (e.g., bg-black, text-white).
+|  Code Reusability  | Requires defining a CSS class (.container)      | Directly uses Tailwind's utility classes for faster and reusable styling.
+|  CSS Load Time     | Custom styles written manually, increasing the  | Optimized, pre-built CSS classes from Tailwind, reducing CSS bloat.
+|                    | need for additional CSS definitions.            | 
+|  Ease of Use       | Developers need to write and manage custom      | Utility-first framework simplifies the process with pre-designed classes.
+|                    | classes manually.                               | 
+|  Responsive Design | Requires writing additional CSS media queries   | Tailwind provides built-in responsive classes (e.g., md:bg-red-500, lg:text-xl) for responsiveness.
+|                    | manually.                                       | 
+|  Output Code       | <div class="container">Hey Gaurav</div>         | <div class="bg-black text-white">Hey Gaurav</div>
+|  
+
+-----------------------------------------------------------------------------------------------------------------------
+ChatGPT is made using TAILWIND
+
+---> Come at Tailwind CSS site:- https://tailwindcss.com/
+
+---> TAILWIND CSS Playground:- https://play.tailwindcss.com/
+
+| ON Playground write text-pur in class then do (CTRL + SPACE [For Suggestion])\
+|
+|                       <div class="container mx-auto w-10">
+|                         <h1 class="text-pur">HELLO WORLD</h1>
+|                       </div>
+
+--->You can do any experiment with TAILWIND CSS on Playground:- https://play.tailwindcss.com/
+
+---> Site to Get Already Made components of Tailwind -> https://tailblocks.cc/
+
+|       -EXAMPLE:-
+|                                   <section class="text-gray-600 body-font relative">
+|                                     <div class="absolute inset-0 bg-gray-300">
+|                                       <iframe width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0" title="map" scrolling="no" src="https://maps.google.com/maps?width=100%&height=600&hl=en&q=%C4%B0zmir+(My%20Business%20Name)&ie=UTF8&t=&z=14&iwloc=B&output=embed" style="filter: grayscale(1) contrast(1.2) opacity(0.4);"></iframe>
+|                                     </div>
+|                                     <div class="container px-5 py-24 mx-auto flex">
+|                                       <div class="lg:w-1/3 md:w-1/2 bg-white rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 relative z-10 shadow-md">
+|                                         <h2 class="text-gray-900 text-lg mb-1 font-medium title-font">Feedback</h2>
+|                                         <p class="leading-relaxed mb-5 text-gray-600">Post-ironic portland shabby chic echo park, banjo fashion axe</p>
+|                                         <div class="relative mb-4">
+|                                           <label for="email" class="leading-7 text-sm text-gray-600">Email</label>
+|                                           <input type="email" id="email" name="email" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+|                                         </div>
+|                                         <div class="relative mb-4">
+|                                           <label for="message" class="leading-7 text-sm text-gray-600">Message</label>
+|                                           <textarea id="message" name="message" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+|                                         </div>
+|                                         <button class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Button</button>
+|                                         <p class="text-xs text-gray-500 mt-3">Chicharrones blog helvetica normcore iceland tousled brook viral artisan.</p>
+|                                       </div>
+|                                     </div>
+|                                   </section>
+
+---------------------------------------------------------------------------------------------------------------
+
+Create Folder Testing
+then 
+
+TAILWIND CSS Using CLI:- (https://tailwindcss.com/docs/installation/tailwind-cli)
+
+|           Step 1: - npm init -y
+|           Step 2: - npm i -D tailwindcss
+|           Step 3: - npm install tailwindcss @tailwindcss/cli
+|           Step 4: - npx tailwindcss init
+|           Step 5: - mkdir src
+|           Step 6: - At src make input.css
+|                                           @import "tailwindcss";
+|           Step 7: - npx tailwindcss -i ./src/input.css -o ./src/output.css --watch
+|                   This command scans your input.css file for Tailwind directives and generates the output CSS file (output.css).
+|                   The --watch flag ensures that the build process automatically rebuilds whenever you save changes to your files.
+
+| As, npx tailwindcss -i ./src/input.css -o ./src/output.css --watch command is very long so write it in scripts of 
+| package.json
+|                           "scripts": {
+|                              "test": "echo \"Error: no test specified\" && exit 1",
+|                              "build": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch"
+|                            },
+|
+| Now just do  :- npm run build                                   , On Terminal
+
+-------------------------------------------------------------------------------------------------------------------
+
+CAN MAKE RESPONSIVE USING BREAKPOINTS (https://tailwindcss.com/docs/responsive-design#using-custom-breakpoints)
+
+    +----------------+--------------------+-----------------------------------------------+
+    | Breakpoint     | Minimum Width      | CSS                                           |
+    +----------------+--------------------+-----------------------------------------------+
+    | sm             | 40rem (640px)      | @media (width >= 40rem) { ... }               |
+    | md             | 48rem (768px)      | @media (width >= 48rem) { ... }               |
+    | lg             | 64rem (1024px)     | @media (width >= 64rem) { ... }               |
+    | xl             | 80rem (1280px)     | @media (width >= 80rem) { ... }               |
+    | 2xl            | 96rem (1536px)     | @media (width >= 96rem) { ... }               |
+    +----------------+--------------------+-----------------------------------------------+    
