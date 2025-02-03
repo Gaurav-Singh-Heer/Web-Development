@@ -1,0 +1,21 @@
+Made 2.0 to-> On login Successfull open home.ejs with content You login succefull to Gaurav Ka OTP
+
+So, 
+1. Create home.ejs file
+2. Update authController.js to render home.ejs upon successful OTP verification
+|           if (otp == currentOTP) {
+|               res.render('auth/home'); // Render the home.ejs page on successful OTP verification
+|           } 
+
+---------------------------------------------------------------------------------------------------------
+Now link Mongosh Server with this to store credentials During SignUP
+
+1. Set Up MongoDB Connection
+|       Updated app.js So, created app_2.js
+
+2. Define User Model
+|       Create a models/User.js file to store user credentials:
+
+3. Modify authController.js to Store Credentials
+|       Update authController.js to save users during signup:
+|       So created authController_2.js
