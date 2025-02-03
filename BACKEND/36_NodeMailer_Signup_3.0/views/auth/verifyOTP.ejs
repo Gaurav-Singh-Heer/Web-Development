@@ -1,0 +1,29 @@
+<!-- views/auth/verifyOTP.ejs -->
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <%- include('./partials/head') %>
+  <title>Verify OTP</title>
+</head>
+<body>
+  <%- include('./partials/nav') %>
+  <!-- <h1>Enter OTP</h1>
+  <form action="/verify-otp" method="POST">
+    <label for="otp">OTP:</label>
+    <input type="text" name="otp" id="otp" required><br><br>
+    <button type="submit">Verify OTP</button>
+  </form> -->
+  <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow-lg" style="width: 350px;">
+      <h2 class="text-center mb-4">Enter OTP</h2>
+      <form action="/verify-otp" method="POST">
+        <div class="mb-3">
+          <label for="otp" class="form-label">OTP:</label>
+          <input type="text" class="form-control" name="otp" id="otp" required>
+        </div>
+        <button type="submit" class="btn btn-success w-100">Verify OTP</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
