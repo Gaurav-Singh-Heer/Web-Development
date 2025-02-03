@@ -1,0 +1,17 @@
+{
+  "name": "36_nodemailer_signup",
+  "version": "1.0.0",
+  "description": "SignUp using OTP",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "Gaurav",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "nodemailer": "^6.10.0",
+    "nodemon": "^3.1.9"
+  }
+}
