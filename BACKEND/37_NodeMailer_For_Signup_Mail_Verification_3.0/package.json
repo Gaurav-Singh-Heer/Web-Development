@@ -1,0 +1,19 @@
+{
+  "name": "37_nodemailer_for_signup_mail_verification_3.0",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app2.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.6",
+    "nodemailer": "^6.10.0",
+    "nodemon": "^3.1.9"
+  }
+}
