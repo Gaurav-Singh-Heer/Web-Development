@@ -62,3 +62,17 @@ app.use(router) // Apply the router
     Open Postman and send multiple GET requests to `http://localhost:8080/api/`.
     After reaching the rate limit (5 requests), you will receive a `429 Too many requests` response.
 */
+
+
+/*
+You need to send more than 5 requests (since RATE_LIMIT = 5) to http://localhost:8080/api/.
+
+Using Postman:
+Open Postman.
+Select GET request.
+Enter the URL:
+http://localhost:8080/api/
+Click Send 5 times → You will get "Data accessed" as a response.
+On the 6th request, you should receive:
+429 Too Many Requests
+*/
