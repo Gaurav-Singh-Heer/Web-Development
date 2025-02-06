@@ -1,0 +1,489 @@
+Ejs because here we are using server side rendering 
+
+In real world we don't use port because in real world when we deploy the project in other's cloud computer then it can happen that (PORT= 8000) is not available on that system 
+
+So, we cannot choose to run on which port
+So this thing is handled using env variables .
+
+
+Now we will add some configuration/ middleware 
+
+app.set("view engine","ejs")
+
+-----------------------------------------------------------------------------------------------------------------
+
+Then we will make home.ejs (homepage):-
+|   Here We will Use BootStrap    
+|       - (https://getbootstrap.com/) From Here we will copy (CDN:-
+|                                                                 - CSS:-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">) 
+|                                                                 - JS :-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+|       
+|      - Now, The Problem is we will make many pages and in each page linking this thing is not good
+|        So, Now
+|               We will make a folder partials where we will keep common part of all files/pages
+|    
+|               Then, will link this prtials with the pages(<%- include('./partials/head') %> ; <%- include('./partials/script') %>)
+
+------------------------------------------------------------------------------------------------------------------------
+
+---> npm i nodemon -D 
+
+|       D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\26_Blogging_App>npm i nodemon -D
+|       npm warn idealTree Removing dependencies.nodemon in favor of devDependencies.nodemon
+|       
+|       up to date, audited 111 packages in 3s
+|       
+|       20 packages are looking for funding
+|         run `npm fund` for details
+|       
+|       found 0 vulnerabilities
+|       
+|       It Creates (in package.json):-
+|        "devDependencies": { // These are the dependencies we want during development only
+|           "nodemon": "^3.1.9"
+|         }
+|       
+|       What Happens?
+|       
+|       1. -D Flag:
+|          - The -D flag indicates that the package is installed as a development dependency, meaning it is required only during the development phase, not in production.
+|       
+|       2. devDependencies Section:
+|          - After running the command, nodemon gets added to the devDependencies section in your package.json.
+|       
+|       3. Why Use devDependencies?
+|          - Packages like nodemon are tools used during development to enhance workflow (e.g., auto-restart during file changes). These are not needed when the app is running in production.
+|   
+|        AND, For :-   
+|                   "scripts": {
+|                       "start": "nodemon index.js"
+|                    },
+|        In Terminal we Write:- npm run start
+
+-------------------------------------------------------------------------------------------------------------------
+
+--> Made NavBar Using BootStrap, 
+
+|   At, (https://getbootstrap.com/docs/5.3/components/navbar/)
+|
+|   You can also use dropdowns in your navbar. Dropdown menus require a wrapping element for positioning, so be 
+|   sure to use separate and nested elements for .nav-item and .nav-link as shown below.
+|   
+|   Code was below this para
+|                                       +++++++++++
+|   To make navbar dark,
+| 
+|   Navbar themes are easier than ever thanks to Bootstrap’s combination of Sass and CSS variables. The default is 
+|   our “light navbar” for use with light background colors, but you can also apply data-bs-theme="dark" to the .
+|   navbar parent for dark background colors. Then, customize with .bg-* and additional utilities.
+|
+|   Code was below this above para, 
+|
+|   <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+|     <!-- Navbar content -->
+|   </nav>
+|
+|   Took Part--> class="bg-dark" data-bs-theme="dark"
+|   Added to nav.ejs as,--> <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark" data-bs-theme="dark">
+
+-------------------------------------------------------------------------------------------------------------------
+
+--> In models we made user.js where we have salt, password.
+|
+|   - In mongoose we can do something that what to do before saveing this(password) .
+|   - By Searching (mongoose pre save example -->  At,https://mongoosejs.com/docs/middleware.html 
+|                                                     (bottom [https://mongoosejs.com/docs/middleware.html#pre]));
+|                                   
+|                                               CODE:-  const schema = new Schema({ /* ... */ });
+|                                                       schema.pre('save', function(next) {
+|                                                         // do stuff
+|                                                         next();
+|                                                       });
+|
+|   - Applying this at models/user.js,
+|                   
+|                   
+|                   userSchema.pre('save', function(next){
+|                       const user = this;   // Here, this is pointing at the user
+|                   
+|                       if(!user.isModified('password')) return;   // If Password not modified in user RETURN
+|                   });
+|                   
+|                   /*
+|                   Why is an arrow function not used?
+|                   
+|                   userSchema.pre('save', function(next) {
+|                       console.log(this); // `this` refers to the current document being saved
+|                       next();
+|                   });
+|                   
+|                   userSchema.pre('save', (next) => {
+|                       console.log(this); // `this` refers to the outer scope, not the document
+|                       next();
+|                   });
+|                   
+|                   */
+|
+|   - Now, we will use built in Package(crypto hash nodejs) https://nodejs.org/api/crypto.html,
+|          Here go down at createhmac (https://nodejs.org/api/crypto.html#cryptocreatehmacalgorithm-key-options)
+|          Here we have an example how to hash a password
+|
+|           -> Crypto
+|               Stability: 2 - Stable                
+|
+|               CODE:-
+|               const { createHmac } = require('node:crypto');
+|               
+|               const secret = 'abcdefg';
+|               const hash = createHmac('sha256', secret)
+|                              .update('I love cupcakes')
+|                              .digest('hex');
+|               console.log(hash);
+|               // Prints:
+|               //   c0fa1bc00531bd78ef38c628449c5102aeabd49b5dc3a2a516ea6ea959d6658e
+|
+|
+|       Added to our models/user.js
+|
+|       // const { createHmac } = require('node:crypto');  // OR  // crypto is a built in package
+|       const { createHmac, randomBytes } = require('crypto');  
+|
+|       userSchema.pre('save', function(next){                                // When we will try to save user this function will run and hash the user's password
+|           const user = this;   // Here, this is pointing at the user
+|       
+|           if(!user.isModified('password')) return;   // If Password not modified in user RETURN
+|       
+|           const salt = randomBytes(16).toString();   // Will Work As our Secret Key
+|           const hashedPassword = createHmac('sha256', salt)                // using sha256 algorithm
+|               .update(user.password)
+|               .digest("hex");                         // digest and give it to me in hexon
+|           
+|           this.salt = salt;
+|           this.password = hashedPassword;
+|       
+|           next();
+|       });
+
+-----------------------------------------------------------------------------------------------------------------
+
+--> Now, making routes/user.js
+|           const {Router} = require("express");
+|           const User = require('../models/user')
+|           const router = Router();
+|           
+|           router.get("/signin", (req,res) =>{
+|               return res.render("signin");
+|           })
+|           
+|           router.get("/signup", (req,res) =>{
+|               return res.render("signup");
+|           })
+|           
+|           router.post("/signup", async (req, res) =>{
+|               const { fullname,email,password } = req.body;
+|               await User.create({
+|                   fullName,
+|                   email,
+|                   password,
+|               });
+|               return res.redirect("/");     // Once The user is created redirect him to Homepage
+|           });
+|           
+|           module.exports = router;
+
+-----------------------------------------------------------------------------------------------------------------
+
+--> Now Making, views/signup.ejs
+|
+|       Creating form in this using bootstrap (in BootStrap Search Form:-https://getbootstrap.com/docs/5.3/forms/overview/#overview)
+|
+|       Picked the code below Overview paragraph as it was relevant
+|
+|       Note:- <!-- mt margin top, ms margin start, me margin end, mb margin bottom-->
+
+|           <!DOCTYPE html>
+|           <html lang="en">
+|           <head>
+|               <%- include('./partials/head') %>
+|               <title>SignUp</title>
+|           </head>
+|           <body>
+|               <%- include('./partials/nav') %>
+|               <div class="conatiner mt-4 ms-5 me-5">   
+|                   <form>
+|                       <div class="mb-3">
+|                         <label for="exampleInputEmail1" class="form-label">Full Name </label>
+|                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+|                       </div>
+|                       <div class="mb-3">
+|                         <label for="exampleInputEmail1" class="form-label">Email address</label>
+|                         <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+|                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+|                       </div>
+|                       <div class="mb-3">
+|                         <label for="exampleInputPassword1" class="form-label">Password</label>
+|                         <input type="password" class="form-control" id="exampleInputPassword1">
+|                       </div>
+|                       <button type="submit" class="btn btn-primary">Submit</button>
+|                   </form>
+|               </div>
+|               <%- include('./partials/script') %>
+|           </body>
+|           </html>
+
+-----------------------------------------------------------------------------------------------------------------
+
+--> Now Making, index.js   (adding routes here)
+|
+|           const userRoute = require('./routes/user');
+|            app.use('/user', userRoute);
+|
+
+--> Now  npm run start and go at :-http://localhost:8000/user/signup   [U will reach at Signup Page]
+
+-----------------------------------------------------------------------------------------------------------------
+
+--> At Signup.ejs added name(to FullName,Email,Password),action and method to form,
+|                                                            (<form action="/user/signup" method="post">)
+
+--> now at index.js we will connect mongodb,
+|                                           const mongoose = require("mongoose");
+|                                           mongoose.connect('mongodb://localhost:27017/blogify').then(e => console.log('MongoDB connected'))  // 27017 is generated by writing command mongosh in terminal and blogify is the name of the database 
+
+--> now added middleware of form data at index.js
+|                                                app.use(express.urlencoded({extended: false}));
+
+--> blogify database Created:-
+
+|           test> show dbs
+|           Gaurav-app-1          108.00 KiB
+|           GauravkaPersonalData   72.00 KiB
+|           Sigma                  72.00 KiB
+|           admin                  40.00 KiB
+|           config                 48.00 KiB
+|           discordbot            108.00 KiB
+|           local                  40.00 KiB
+|           short-url             216.00 KiB
+|           test> show dbs
+|           Gaurav-app-1          108.00 KiB
+|           GauravkaPersonalData   72.00 KiB
+|           Sigma                  72.00 KiB
+|           admin                  40.00 KiB
+|           blogify                12.00 KiB
+|           config                 72.00 KiB
+|           discordbot            108.00 KiB
+|           local                  40.00 KiB
+|           short-url             216.00 KiB
+|           test> use blogify
+|           switched to db blogify
+|           blogify> show collections
+|           users
+|           blogify> db.users.find({})
+|           
+|           blogify> 
+-----------------------------------------------------------------------------------------------------------------
+
+--> Now, npm run start,
+|                       Enter Data At SignUp:- Name: Gaurav Singh Heer
+|                                              Email: gauravheer2005@gmail.com
+|                                              password: 123456
+|
+|   Data, Created:-
+|           
+|           blogify> db.users.find({})
+|           [
+|             {
+|               _id: ObjectId('6785038e6b2e6e02e5382036'),
+|               fullName: 'Gaurav Singh Heer',
+|               email: 'gauravheer2005@gmail.com',
+|               password: 'b2ae393cc437ab25c2563b415316988124774d30928f8ae29c8cab6f7bab6a0f',
+|               profileImageURL: '/images/default.jpg',
+|               role: 'USER',
+|               createdAt: ISODate('2025-01-13T12:14:06.568Z'),
+|               updatedAt: ISODate('2025-01-13T12:14:06.568Z'),
+|               salt: 'K�\x7Fr,B\x06���`\x0Bc9H�',
+|               __v: 0
+|             }
+|           ]
+
+-----------------------------------------------------------------------------------------------------------------
+
+--> Now, Creating SignIn.ejs
+
+--> First, models/user.js(For This, we have to use(for reference to how to create functionw):- mongoose virtual(https://mongoosejs.com/docs/tutorials/virtuals.html))
+|       Here, we create function name (matchPassword) with Logic( Find email, Then hash the password entered with salt if both hash password matches then login)
+
+|       userSchema.static('matchPassword', function(email,password) {
+|           const user = this.findOne({email});
+|           if(!user) return false;
+|       
+|           const salt = user.salt;
+|           const hashedPassword = user.password;
+|           
+|           const userProvidedHash =  createHmac('sha256', salt)                // using sha256 algorithm
+|               .update(password)
+|               .digest("hex");                         // digest and give it to me in hexon
+|       
+|           return hashedPassword === userProvidedHash;
+|       });
+
+--> Then, update routes.js  For This, we have to use(for reference to how to create functionw):- mongoose virtual(https://mongoosejs.com/docs/tutorials/virtuals.html)
+|
+|                   router.post("/signin",async (req, res) =>{
+|                       const { email,password } = req.body;
+|                       const isMatched = User.matchPassword(email, password);  // User.matchPassword(email, password) will give a boolean value
+|                       
+|                   });
+|
+--> Updated models/user.js,
+|                   userSchema.static('matchPassword', function(email,password) {
+|                       const user = this.findOne({email});
+|                       // if(!user) return false;   // OR
+|                       if(!user) throw new Error('User not found!!');
+|                   
+|                   
+|                       const salt = user.salt;
+|                       const hashedPassword = user.password;
+|                       
+|                       const userProvidedHash =  createHmac('sha256', salt)                // using sha256 algorithm
+|                           .update(password)
+|                           .digest("hex");                         // digest and give it to me in hexon
+|                   
+|                           if(hashedPassword !== userProvidedHash){           // if 
+|                               throw new Error("Incorrect Password")
+|                           }
+|                   
+|                       // return hashedPassword === userProvidedHash;
+|                       // return user;
+|                       return {...user, password: undefined, salt: undefined};  // else return
+|                   
+|                   });
+
+-->Updated routes/user.js,
+
+|           router.post("/signin",async (req, res) =>{
+|               const { email,password } = req.body;
+|               const user = User.matchPassword(email, password);  // now it will return user data
+|               console.log(user)
+|               return res.redirect("/");
+|           });
+        
+--> Now, Created singin.ejs  ( same as signup just removed Full Name)  and (<form action="/user/signin" method="post">)
+
+--> Note:- To Delete all users from mongo dbs use :- db.users.deleteMany({});
+
+--> Got Error during signin:-
+-->Updated models/user.js,  (added async,await),
+|
+|                   userSchema.static('matchPassword', async function(email,password) {
+|                       const user = await this.findOne({email});
+|                       // if(!user) return false;   // OR
+|                       if(!user) throw new Error('User not found!!');
+|                       console.log(user);   // just to check error
+|                       // const salt = 'someRandomSalt';   // Hard-Code   Just to check error
+|                       const salt = user.salt;
+|                       const hashedPassword = user.password;
+|                       
+|                       const userProvidedHash =  createHmac('sha256', salt)                // using sha256 algorithm
+|                           .update(password)
+|                           .digest("hex");                         // digest and give it to me in hexon
+|                   
+|                           if(hashedPassword !== userProvidedHash){           // if 
+|                               throw new Error("Incorrect Password")
+|                           }
+|                   
+|                       // return hashedPassword === userProvidedHash;
+|                       // return user;
+|                       return {...user, password: undefined, salt: undefined};  // else return
+|                   
+|                   });
+
+--> sign-ing again , 
+|
+|    Email:gauravheer2005@gmail.com         Password:123456
+|
+|    Output at terminal:- Server Started at PORT: 8000
+|                         MongoDB connected
+|                         Promise { <pending> }
+|                        
+
+--> Updated routes/user.js  (added await),
+
+|               router.post("/signin",async (req, res) =>{
+|                   const { email,password } = req.body;
+|                   // console.log(email,password); // To Check Error
+|                   const user = await User.matchPassword(email, password);  // now it will return user data
+|                   console.log(user)
+|                   return res.redirect("/");
+|               });
+
+|                         MongoDB connected
+|                         {
+|                           '$__': InternalCache {
+|                             activePaths: ctor { paths: [Object], states: [Object] },
+|                             skipId: true
+|                           },
+|                           '$isNew': false,
+|                           _doc: {
+|                             _id: new ObjectId('6785038e6b2e6e02e5382036'),
+|                             fullName: 'Gaurav Singh Heer',
+|                             email: 'gauravheer2005@gmail.com',
+|                             password: 'b2ae393cc437ab25c2563b415316988124774d30928f8ae29c8cab6f7bab6a0f',
+|                             profileImageURL: '/images/default.jpg',
+|                             role: 'USER',
+|                             createdAt: 2025-01-13T12:14:06.568Z,
+|                             updatedAt: 2025-01-13T12:14:06.568Z,
+|                             salt: 'K�\x7Fr,B\x06���`\x0Bc9H�',
+|                             __v: 0
+|                           },
+|                           password: undefined,
+|                           salt: undefined
+|                         }
+    
+--> Updated models/user.js  :- return {...user._doc, password: undefined, salt: undefined};  // else return
+
+--> sign-ing again , 
+
+|
+|    Email:gauravheer2005@gmail.com         Password:123456
+|
+|    Output at terminal:- Server Started at PORT: 8000
+|                         MongoDB connected
+|                         {
+|                           _id: new ObjectId('6785038e6b2e6e02e5382036'),
+|                           fullName: 'Gaurav Singh Heer',
+|                           email: 'gauravheer2005@gmail.com',
+|                           password: undefined,
+|                           profileImageURL: '/images/default.jpg',
+|                           role: 'USER',
+|                           createdAt: 2025-01-13T12:14:06.568Z,
+|                           updatedAt: 2025-01-13T12:14:06.568Z,
+|                           salt: undefined,
+|                           __v: 0
+|                         }
+
+--> Updated models/user.js  :- return user;  // else return
+
+--> sign-ing again , 
+
+|
+|      Email:gauravheer2005@gmail.com         Password:123456
+|
+|      Output at terminal:- Server Started at PORT: 8000
+|                           MongoDB connected
+|                           {
+|                             _id: new ObjectId('6785038e6b2e6e02e5382036'),
+|                             fullName: 'Gaurav Singh Heer',
+|                             email: 'gauravheer2005@gmail.com',
+|                             password: 'b2ae393cc437ab25c2563b415316988124774d30928f8ae29c8cab6f7bab6a0f',
+|                             profileImageURL: '/images/default.jpg',
+|                             role: 'USER',
+|                             createdAt: 2025-01-13T12:14:06.568Z,
+|                             updatedAt: 2025-01-13T12:14:06.568Z,
+|                             salt: 'K�\x7Fr,B\x06���`\x0Bc9H�',
+|                             __v: 0
+|                           }
+
+-----------------------------------------------------------------------------------------------------------------
+
+Summary:-  We learned--> How to hash/salt a password

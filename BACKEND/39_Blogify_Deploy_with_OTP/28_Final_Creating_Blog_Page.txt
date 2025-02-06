@@ -1,0 +1,581 @@
+--> Adding route blog.js for view Blog. Then creating that blog page 
+|
+|   So, Created routes/28_blog.js , So, Created 28_index.js
+|   
+
+--> Updated routes/28_blog.js 
+|                       router.get("/:id", async (req,res) => {
+|                           const blog = await Blog.findById(req.params.id);
+|                       })
+
+--> Created views/blog.ejs
+
+--> Update routes/28_blog.js
+|                    router.get('/:id', async (req, res) => {
+|                        const blog = await Blog.findById(req.params.id);
+|                        return res.render('blog',{
+|                            user: req.user,
+|                            blog: blog,
+|                        })
+|                    })
+
+--> Updating views/blog.ejs
+
+|                           <!DOCTYPE html>
+|                           <html lang="en">
+|                           <head>
+|                               <%- include('./partials/head') %>
+|                               <title>Blog</title>
+|                               
+|                           </head>
+|                           <body>
+|                               <%- include('./partials/nav') %>
+|                           
+|                               <div class="container">
+|                                   <h1><%= blog.title %></h1>
+|                                   <img src="<%= blog.coverImageURL %>" width="150px" hieght="100px">
+|                                   <p><%= blog.body %></p>
+|                               </div>
+|                           
+|                               <%- include('./partials/script') %>
+|                           </body>
+|                           </html>
+
+|                                   ++++++++++++++++++++++++++++
+
+Now, At, Home Page --> Click on View at Blog 
+|                       U will see Blog Page with, Title , image , Body 
+
+----------------------------------------------------------------------------------------------------------
+
+--> Updating views/home.ejs (To Show Blog Only if User is Logged IN)
+
+|           OLD CODE:-
+|                           <!DOCTYPE html>
+|                           <html lang="en">
+|                           <head>
+|                               <%- include('./partials/head') %>
+|                               <title>Homepage</title>
+|                               
+|                           </head>
+|                           <body>
+|                               <%- include('./partials/nav') %>
+|                               
+|                               <div class="container mt-3">
+|                                   <!-- <div class="d-flex flex-wrap justify-content gap-3">    BootStrap to display in flex -->
+|                                   <div class="d-flex flex-wrap justify-content-around gap-3">   <!--BootStrap to display in flex-->
+|                                       <% blogs.forEach(blog => { %>
+|                                           <div class="card" style="width: 18rem;">
+|                                               <!-- <img src="..." class="card-img-top" alt="..."> -->
+|                                               <img src="<%= blog.coverImageURL %>" class="card-img-top" alt="...">
+|                                               <div class="card-body">
+|                                                   <!-- <h5 class="card-title">Card title</h5> -->
+|                                                   <h5 class="card-title"><%= blog.title %></h5>
+|                                                   <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+|                                                   <a href="/blog/<%= blog._id %>" class="btn btn-primary">View</a>
+|                                               </div>
+|                                           </div>
+|                                       <% }) %>
+|                                   </div>
+|                               </div>
+|                           
+|                               <%- include('./partials/script') %>
+|                           </body>
+|                           </html>
+
+|           NEW CODE:-
+|                           <!DOCTYPE html>
+|                           <html lang="en">
+|                           <head>
+|                               <%- include('./partials/head') %>
+|                               <title>Homepage</title>
+|                               
+|                           </head>
+|                           <body>
+|                               <%- include('./partials/nav') %>
+|                               <div class="container mt-3">
+|                                   <% if (locals.user) { %>
+|                                       <!-- Content for logged-in users -->
+|                                       <!-- <div class="d-flex flex-wrap justify-content gap-3">    BootStrap to display in flex -->
+|                                       <div class="d-flex flex-wrap justify-content-around gap-3">
+|                                           <% blogs.forEach(blog => { %>
+|                                               <div class="card" style="width: 18rem;">
+|                                                   <!-- <img src="..." class="card-img-top" alt="..."> -->
+|                                                   <img src="<%= blog.coverImageURL %>" class="card-img-top" alt="...">
+|                                                   <div class="card-body">
+|                                                       <!-- <h5 class="card-title">Card title</h5> -->
+|                                                       <h5 class="card-title"><%= blog.title %></h5>
+|                                                      <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+|                                                       <a href="/blog/<%= blog._id %>" class="btn btn-primary">View</a>
+|                                                   </div>
+|                                               </div>
+|                                           <% }) %>
+|                                       </div>
+|                                   <% } else { %>
+|                                       <!-- Content for guests -->
+|                                       <div class="text-center">
+|                                           <h3>Please log in to view blogs</h3>
+|                                           <a href="/user/signin" class="btn btn-primary mt-3">Log In</a>
+|                                       </div>
+|                                   <% } %>
+|                               </div>
+|                               
+|                               <%- include('./partials/script') %>
+|                           </body>
+|                           </html>
+
+-----------------------------------------------------------------------------------------------------------------
+
+Now, npm run start
+
+--> sign-ing again , 
+
+|
+|       Email:gauravheer2005@gmail.com         Password:123456
+
+--> Add New-Blog :  Fill Form(Add image, Add title, Add Body) THEN Submit  
+
+--> Can see New Blog Now at blog page 
+
+** Added 3 Blogs CP67, Me at CP 67, Me at Chandigarh
+-----------------------------------------------------------------------------------------------------------------
+
+Upadeted, views/partials/nav.ejs (Updated home href="#" to href="/") (For better UI and my Satisfaction)
+
+-->            <a class="nav-link active" aria-current="page" href="/">Home</a>
+
+Updated, views/blog.ejs (For better view/UI)
+
+-->        <p><%= blog.body %></p>   <!-- Chnaged p to pre tag as it maintain spacing-->
+
+--> Updated, views/home.ejs (For better view/UI)
+
+|                        <!-- <img src="..." class="card-img-top" alt="..."> -->
+|                        <!-- <img src="..." class="card-img-top" alt="..."> -->
+|                        <img src="<%= blog.coverImageURL %>" class="card-img-top" alt="..." style="width: 80%; margin: 0 auto; display: block;">
+|                        <!-- <img src="..." class="card-img-top" alt="..." style="width: 400px; margin: 0 auto; display: block;"> -->
+
+-----------------------------------------------------------------------------------------------------------------
+
+--> Updated, views/home.ejs (For better view/UI)   [ USING Grid instead of Flex-Box  : Bootstrap Search grid]
+
+--> USING FLEXBOX;
+
+|                           <div class="d-flex flex-wrap justify-content-around gap-3">
+|                               <% blogs.forEach(blog => { %>
+|                                   <div class="card" style="width: 18rem;">
+|                                       <!-- <img src="..." class="card-img-top" alt="..."> -->
+|                                       <!-- <img src="..." class="card-img-top" alt="..."> -->
+|                                       <img src="<%= blog.coverImageURL %>" class="card-img-top" alt="..." style="width: 80%; margin: 0 auto; display: block;">
+|                                       <!-- <img src="..." class="card-img-top" alt="..." style="width: 400px; margin: 0 auto; display: block;"> -->
+|                                       <div class="card-body">
+|                                           <!-- <h5 class="card-title">Card title</h5> -->
+|                                           <h5 class="card-title"><%= blog.title %></h5>
+|                                          <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+|                                           <a href="/blog/<%= blog._id %>" class="btn btn-primary">View</a>
+|                                       </div>
+|                                   </div>
+|                               <% }) %>
+|                           </div>
+
+--> USING GRID;
+
+|               <div class="row row-cols-4">
+|                   <% blogs.forEach(blog => { %>
+|                       <div class="col">
+|                           <div class="card" style="width: 18rem;">
+|                               <!-- <img src="..." class="card-img-top" alt="..."> -->
+|                               <!-- <img src="..." class="card-img-top" alt="..."> -->
+|                               <img src="<%= blog.coverImageURL %>" class="card-img-top" alt="..." style="width: 80%; margin: 0 auto; display: block;">
+|                               <!-- <img src="..." class="card-img-top" alt="..." style="width: 400px; margin: 0 auto; display: block;"> -->
+|                               <div class="card-body">
+|                                   <!-- <h5 class="card-title">Card title</h5> -->
+|                                   <h5 class="card-title"><%= blog.title %></h5>
+|                                  <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+|                                   <a href="/blog/<%= blog._id %>" class="btn btn-primary">View</a>
+|                               </div>
+|                           </div>
+|                       </div>
+|                   <% }) %>
+|               </div>
+
+-----------------------------------------------------------------------------------------------------------------
+
+At, models/27_blog.js :- We have createdBy By this we can see this blog is created-By which user. With the help of ['.populate("createdBy")']
+
+--> Updating routes/blog.js,
+|                   
+|                   router.get('/:id', async (req, res) => {
+|                       const blog = await Blog.findById(req.params.id).populate("createdBy");
+|                       console.log("blog",blog)
+|                       return res.render('blog',{
+|                           user: req.user,
+|                           blog: blog,
+|                       })
+|                   })
+
+
+Now, npm run start
+
+--> sign-ing again , 
+
+|
+|       Email:gauravheer2005@gmail.com         Password:123456
+|
+|       At Home, Click on View at Any Blog:-
+
+|                   OUTPUT AT TERMINAL:-
+|                                       Server Started at PORT: 8000
+|                                       MongoDB connected
+|                                       blog {
+|                                         _id: new ObjectId('678767eb7ecc2c4a97943833'),
+|                                         title: 'Me at CP 67',
+|                                         body: 'This time, I visited CP67 Mall with my cousin Sunny Bhaiya and Saurav for a memorable night out. Sunny Bhaiya had come back after a long time from Australia, which made the evening even more special. We spent the night driving around in his car, creating moments that felt both nostalgic and refreshing.\r\n' +
+|                                           '\r\n' +
+|                                           'For dinner, we stopped at Highway Green, where the food was absolutely delightful. Later, we treated ourselves to dessert at Gopal’s, which, as always, lived up to its reputation for heavenly sweets.\r\n' +
+|                                           '\r\n' +
+|                                           'That evening also marked a personal milestone for me — my first-ever visit to Tim Hortins. It was a fantastic experience! I tried their hot chocolate, and I must say, it was absolutely incredible. The rich, velvety texture and the perfect balance of sweetness made it a drink to remember.\r\n' +
+|                                           '\r\n' +
+|                                           'Overall, it was a night filled with great company, delicious food, and cherished moments that I’ll hold close for a long time. Truly, a night to remember and savor.',
+|                                         coverImageURL: '/uploads/1736927211655-IMG_20241101_215432_797.jpg',
+|                                         createdBy: {
+|                                           _id: new ObjectId('6785038e6b2e6e02e5382036'),
+|                                           fullName: 'Gaurav Singh Heer',
+|                                           email: 'gauravheer2005@gmail.com',
+|                                           password: 'b2ae393cc437ab25c2563b415316988124774d30928f8ae29c8cab6f7bab6a0f',
+|                                           profileImageURL: '/images/default.jpg',
+|                                           role: 'USER',
+|                                           createdAt: 2025-01-13T12:14:06.568Z,
+|                                           updatedAt: 2025-01-13T12:14:06.568Z,
+|                                           salt: 'K�\x7Fr,B\x06���`\x0Bc9H�',
+|                                           __v: 0
+|                                         },
+|                                         createdAt: 2025-01-15T07:46:51.663Z,
+|                                         updatedAt: 2025-01-15T07:46:51.663Z,
+|                                         __v: 0
+|                                       }
+
+Here, we have 'createdBy'
+
+|                                    +++++++++++++++++++++++++++++++++++++++++++++++
+
+--> Now, by using this we can show who created this Blog,
+
+At, blog.ejs
+ 
+|                       <div class="container mt-4">
+|                           <img src="<%= blog.createdBy.profileImageURL %>" width="150px">
+|                           <h2>~By:-</h2><h3><%= blog.createdBy.fullName %></h3>
+|                       </div>
+
+|     To Show in One Line  (~By:- Name): 
+|                                       1) -->    <h2 style="display: inline;">~By:-</h2><h3 style="display: inline; margin-left: 5px;"><%= blog.createdBy.fullName %></h3>
+|                                       2) -->    <span style="display: inline;">~~BY:-</span><span style="display: inline; margin-left: 5px;"><%= blog.createdBy.fullName %></span>
+
+|       EXPLAINATION:-
+|                   Both <h2> and <h3> will be displayed on the same line because of the display: inline; style applied to them. Here's why:
+|                   
+|                   Block-level elements (such as <h2>, <h3>, <p>, etc.) by default take up the entire width of their parent container and force the next element to start on a new line.
+|                   Inline elements (such as <span>, <a>, etc.) only take up as much width as necessary and allow other elements to appear beside them on the same line.
+|                   By using display: inline; on both <h2> and <h3>, you're telling the browser to treat these heading tags as inline elements, which don't force line breaks and instead stay on the same line, if there's enough space.
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+Comments, Any Logged In User can Comment on post at (blog.ejs)
+
+--> Creating models/28_comment.js
+
+|                         const {Schema, model} = require ('mongoose');
+|                          
+|                         const commentSchema = new Schema({
+|                             content: {
+|                                 type: String,
+|                                 required: true,
+|                             },
+|                             blogId: {
+|                                 type: Schema.Types.ObjectId,
+|                                 ref: "blog",                      // reference, blog database
+|                             },
+|                             createdBy: {                             // same as in models/27_blog.js
+|                                 type: Schema.Types.ObjectId,
+|                                 ref: "user",                         // reference
+|                             },
+|                         },{timestamps: true}
+|                         );
+|                         
+|                         const Comment = model('comment', commentSchema);
+|                         
+|                         module.exports = Comment;
+
+
+--> Now will add route of comment in routes/28_blog.js,
+
+|                           const Comment = require("../models/28_comment");
+
+|                           router.post('/comment/:blogId', async (req, res) => {
+|                               // const comment = await Comment.create({    // No need of This Const
+|                               await Comment.create({    
+|                                   content: req.body.content,
+|                                   blogId: req.params.blogId,
+|                                   createdBy: req.user._id,
+|                               });
+|                               return res.redirect(`/blog/${req.params.blogId}`);
+|                           });
+
+---> Now Creating Comment Form At views/blog.ejs
+
+|                       <div class="container mt-3">
+|                           <h1>Comments</h1>
+|                           <form action="">   <!-- Copy Form From Signin.ejs-->
+|                               <div class="mb-3">
+|                                   <input type="text" class="form-control" name="content" placeholder="Enter your comment">
+|                               </div>
+|                               <button type="submit" class="btn btn-sm btn-primary">Add</button>
+|                           </form>
+|                       </div>
+
+---> Now Show this Comment Form if User is Logged In,
+
+|                           <% if (locals.user) { %>
+|                               <div class="container mt-3">
+|                                   <h1>Comments</h1>
+|                                   <form action="">   <!-- Copy Form From Signin.ejs-->
+|                                       <div class="mb-3">
+|                                           <input type="text" class="form-control" name="content" placeholder="Enter your comment">
+|                                       </div>
+|                                       <button type="submit" class="btn btn-sm btn-primary">Add</button>
+|                                   </form>
+|                               </div>
+|                           <% } %>
+
+---> To add comments we created a route at routes/28_blogs.js  [router.post('/comment/:blogId', async (req, res) => {]
+
+---> So, adding this at views/blog.ejs
+|            <!-- <form action="/comment/:blogId" method="post"> --> <!-- Copy Form From Signin.ejs-->
+|            <form action="/blog/comment/<%= blog._id%>" method="post">   <!-- Copy Form From Signin.ejs-->
+
+|                           ++++++++++++++++++++++++++++++++++++++++
+
+|       AT mongosh TERMINAL,
+|                       test> use blogify
+|                       switched to db blogify
+|                       blogify> show collections
+|                       blogs
+|                       comments
+|                       users
+|                       blogify> db.comments.find({})
+|                       
+|                       blogify>
+
+Now, npm run start
+
+--> sign-ing again , 
+
+|
+|       Email:gauravheer2005@gmail.com         Password:123456
+|
+|       At Home, Click on View at Any Blog:-
+|       At Blog page, Add any Comment:- 'Hello Author this Side well Done!!!'
+
+|       AT mongosh TERMINAL,
+|                       blogify> db.comments.find({})
+|                       [
+|                         {
+|                           _id: ObjectId('6787bbfdea999d14fb758cbe'),
+|                           content: 'Hello Author this Side well Done!!!',
+|                           blogId: ObjectId('678767eb7ecc2c4a97943833'),
+|                           createdBy: ObjectId('6785038e6b2e6e02e5382036'),
+|                           createdAt: ISODate('2025-01-15T13:45:33.135Z'),
+|                           updatedAt: ISODate('2025-01-15T13:45:33.135Z'),
+|                           __v: 0
+|                         }
+|                       ]
+|                       blogify>
+
+-----------------------------------------------------------------------------------------------------------------
+
+Now, when we will Fetch the blog will fetch it's comments also
+
+---> Updating routes/28_blog.js
+
+|               router.get('/:id', async (req, res) => {
+|                   const blog = await Blog.findById(req.params.id).populate("createdBy");
+|                   // console.log("blog",blog)
+|                   const comments = await Comment.find({blogId: req.params.id }).populate("createdBy")
+|                   console.log("comments",comments)
+|                   return res.render('blog',{
+|                       user: req.user,
+|                       blog: blog,
+|                       comments: comments,
+|                   })
+|               })
+
+---->  NOW, REFRESH THE SITE,
+
+|   OUTPUT AT TERMINAL,
+|                   Server Started at PORT: 8000
+|                   MongoDB connected
+|                   comments [
+|                     {
+|                       _id: new ObjectId('6787bbfdea999d14fb758cbe'),
+|                       content: 'Hello Author this Side well Done!!!',
+|                       blogId: new ObjectId('678767eb7ecc2c4a97943833'),
+|                       createdBy: {
+|                         _id: new ObjectId('6785038e6b2e6e02e5382036'),
+|                         fullName: 'Gaurav Singh Heer',
+|                         email: 'gauravheer2005@gmail.com',
+|                         password: 'b2ae393cc437ab25c2563b415316988124774d30928f8ae29c8cab6f7bab6a0f',
+|                         profileImageURL: '/images/default.jpg',
+|                         role: 'USER',
+|                         createdAt: 2025-01-13T12:14:06.568Z,
+|                         updatedAt: 2025-01-13T12:14:06.568Z,
+|                         salt: 'K�\x7Fr,B\x06���`\x0Bc9H�',
+|                         __v: 0
+|                       },
+|                       createdAt: 2025-01-15T13:45:33.135Z,
+|                       updatedAt: 2025-01-15T13:45:33.135Z,
+|                       __v: 0
+|                     }
+|                   ]
+
+---> Updating views/blog.ejs
+
+|               <div class="container mt-3">
+|                   <% comments.forEach(comment => { %>
+|                       <div>
+|                           <img src="<%=comment.createdBy.profileImageURL%>" width="50px" alt="">
+|                           <h3 style="display: inline; margin-left: 5px;"><%= comment.createdBy.fullName %></h3>
+|                           <pre><%= comment.content %></pre>
+|                       </div>
+|                   <% }); %>
+|               </div>
+
+---> NOW, REFRESH THE SITE, 
+|                           Able to See Comments at view of a Blog 
+
+-----------------------------------------------------------------------------------------------------------------
+
+Now, To Show Number of Comments a a Blog,
+
+---> Updating views/blog.ejs,
+|                           <h1>Comments (<%= comments.length %>)</h1>
+
+---> NOW, REFRESH THE SITE, 
+|                           Able to See Comments Count at view of a Blog 
+
+-----------------------------------------------------------------------------------------------------------------
+----> Complete Code views/blog.ejs,
+
+|                           <!DOCTYPE html>
+|                           <html lang="en">
+|                           <head>
+|                               <%- include('./partials/head') %>
+|                               <title>Blog</title>
+|                               
+|                           </head>
+|                           <body>
+|                               <%- include('./partials/nav') %>
+|                           
+|                               <div class="container">
+|                                   <h1><%= blog.title %></h1>
+|                                   <img src="<%= blog.coverImageURL %>" width="150px" hieght="100px">
+|                                   <p><%= blog.body %></p>   <!-- Chnaged p to pre tag as it maintain spacing-->
+|                               </div>
+|                           
+|                               <div class="container mt-4">
+|                                   <img src="<%= blog.createdBy.profileImageURL %>" width="50px">
+|                                   <h2 style="display: inline;">~By:-</h2><h3 style="display: inline; margin-left: 5px;"><%= blog.createdBy.fullName %></h3>
+|                               </div>
+|                           
+|                               <% if (locals.user) { %>
+|                                   <div class="container mt-3">
+|                                       <h1>Comments (<%= comments.length %>)</h1>
+|                                       <!-- <form action="/comment/:blogId" method="post"> --> <!-- Copy Form From Signin.ejs-->
+|                                       <form action="/blog/comment/<%= blog._id%>" method="post">   <!-- Copy Form From Signin.ejs-->
+|                                           <div class="mb-3">
+|                                               <input type="text" class="form-control" name="content" placeholder="Enter your comment">
+|                                           </div>
+|                                           <button type="submit" class="btn btn-sm btn-primary">Add</button>
+|                                       </form>
+|                                   </div>
+|                               <% } %>
+|                               <div class="container mt-3">  <!--Comments must be visible to user without Login-->
+|                                   <% comments.forEach(comment => { %>
+|                                       <div>
+|                                           <img src="<%=comment.createdBy.profileImageURL%>" width="50px" alt="">
+|                                           <h3 style="display: inline; margin-left: 5px;"><%= comment.createdBy.fullName %></h3>
+|                                           <pre><%= comment.content %></pre>
+|                                       </div>
+|                                   <% }); %>
+|                               </div>
+|                                   
+|                               <%- include('./partials/script') %>
+|                           </body>
+|                           </html>
+
+-----------------------------------------------------------------------------------------------------------------
+
+<% if (locals.user) { %> <% } %>
+
+Here, Locals means... locals is an object if we write <%= JSON.stringify(locals)%> it will print object
+
+---> <% if (age) { %>........ <% } %>, if we write age then there would be error as we haven't passed any age variable
+
+---> But if, <% if (locals.age) { %> <% } %>, then there would be no error as system will find in it's local whether age is present or not.
+
+|                       Case 1: <% if (age) { %> ... <% } %>
+|                       -------------------------------------------------
+|                       - Assumes `age` is a defined variable in the current context.
+|                       - If `age` is NOT passed or defined, it will throw a `ReferenceError`.
+|                       - Example of error:
+|                         "ReferenceError: age is not defined"
+|                       
+|                       Case 2: <% if (locals.age) { %> ... <% } %>
+|                       -------------------------------------------------
+|                       - Safely checks the `locals` object for the `age` property.
+|                       - If `age` is NOT defined, `locals.age` will be `undefined` or `false`.
+|                       - No error will be thrown, and it handles missing variables gracefully.
+|                       
+|                       Why use `locals`?
+|                       -------------------------------------------------
+|                       - `locals` is an object that contains all local variables available in the EJS template during rendering.
+|                       - It avoids runtime errors caused by missing variables.
+|                       - Ensures templates handle undefined variables gracefully.
+|                       
+|                       Example using `locals`:
+|                       -------------------------------------------------
+|                       <% if (locals.user) { %>
+|                         <p>Welcome, <%= locals.user.name %>!</p>
+|                       <% } else { %>
+|                         <p>Welcome, Guest!</p>
+|                       <% } %>
+|                       
+|                       Behavior:
+|                       - If `user` is passed as a variable, it will render:
+|                         "Welcome, [User's Name]!"
+|                       - If `user` is NOT passed, it will render:
+|                         "Welcome, Guest!"
+|                       
+
+-----------------------------------------------------------------------------------------------------------------
+
+NOTE:- Here, we added 'if(locals.user)' condition in blog.ejs but it's of no use as we already applied condition  
+|            in home.ejs that if user is logged in then show the blogs else not.
+
+|            But, in blogging app blogs is shown to all but comments is added by only logged in User.
+
+NOTE:- rs means restart server
+-----------------------------------------------------------------------------------------------------------------
+
+SUMMARY:-
+
+--> Adding route blog.js for view Blog. Then creating that blog page 
+
+--> Then creating Comment model
+
+--> Then comment route inside blog.js only. Then updating blog.ejs Adding form there to add comments 
+
+--> Then doing small small changes only
+
+--> How To Model our data

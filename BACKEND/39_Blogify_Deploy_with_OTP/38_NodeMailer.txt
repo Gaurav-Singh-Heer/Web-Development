@@ -1,0 +1,364 @@
+TASK:- 1) DO EMAIL VERIFICATION          AT SignUp 
+|      2) ADD 2 FACTOR AUTHENTICATION    AT SignIn
+
+1. Install NodeMailer
+|               
+|               npm install nodemailer
+|               
+
+2. Create 38_user.js to update it on index.js Created 38_index.js
+|
+|               const express = require("express");
+|               const User = require("../models/27_user");
+|               const nodemailer = require("nodemailer");
+|               
+|               const router = express.Router();
+|               const otpStorage = {}; // Temporary OTP storage (Use Redis in production)
+|               
+|               // Nodemailer Configuration
+|               const transporter = nodemailer.createTransport({
+|                   service: 'gmail',
+|                   port: 587,
+|                   secure: false,
+|                   auth: {
+|                       user: 'gauravheer2005@gmail.com', // your email
+|                       pass: 'txnfawwamiyjcvyo'  // your app-specific password
+|                   }
+|               });
+|               
+|               // Function to send OTP
+|               const sendOTP = async (email) => {
+|                   const otp = Math.floor(100000 + Math.random() * 900000); // 6-digit OTP
+|                   const mailOptions = {
+|                       from: "gauravheer2005@gmail.com",
+|                       to: email,
+|                       subject: "Your Login OTP",
+|                       text: `Your OTP for login is: ${otp}`,
+|                   };
+|               
+|                   try {
+|                       await transporter.sendMail(mailOptions);
+|                       return otp;
+|                   } catch (error) {
+|                       console.error("Error sending OTP:", error);
+|                       return null;
+|                   }
+|               };
+|               
+|               // Signup Page Route
+|               router.get("/signup", (req, res) => res.render("signup"));
+|               
+|               // Signup Route with OTP Verification
+|               router.post("/signup", async (req, res) => {
+|                   const { fullName, email, password } = req.body;
+|               
+|                   const existingUser = await User.findOne({ email });
+|                   if (existingUser) {
+|                       return res.status(400).send("Email already registered.");
+|                   }
+|               
+|                   const otp = await sendOTP(email);
+|                   if (!otp) {
+|                       return res.status(500).send("Failed to send OTP. Try again.");
+|                   }
+|               
+|                   otpStorage[email] = { otp, fullName, password };
+|                   res.render("verify_otp", { email });
+|               });
+|               
+|               // OTP Verification Route for Signup
+|               router.post("/verify-otp", async (req, res) => {
+|                   const { email, otp } = req.body;
+|               
+|                   if (otpStorage[email] && otpStorage[email].otp == otp) {
+|                       const { fullName, password } = otpStorage[email];
+|                       delete otpStorage[email];
+|               
+|                       const newUser = new User({ fullName, email, password });
+|                       await newUser.save();
+|               
+|                       // return res.send("Signup successful!");
+|                       return res.render("signin");
+|                   }
+|               
+|                   return res.status(400).send("Invalid OTP. Try again.");
+|               });
+|               
+|               // Signin Page Route
+|               router.get("/signin", (req, res) => res.render("signin"));
+|               
+|               // Signin Route (Send OTP after correct credentials)
+|               router.post("/signin", async (req, res) => {
+|                   const { email, password } = req.body;
+|               
+|                   try {
+|                       // Match email and password, and generate a token
+|                       const user = await User.matchPasswordAndGenerateToken(email, password);
+|               
+|                       if (!user) {
+|                           return res.render("signin", { error: "Incorrect Email or Password" });
+|                       }
+|               
+|                       // Send OTP for verification
+|                       const otp = await sendOTP(email);
+|                       if (!otp) {
+|                           return res.status(500).send("Failed to send OTP. Try again.");
+|                       }
+|               
+|                       otpStorage[email] = { otp }; // Store OTP temporarily
+|                       return res.render("verify_login_otp", { email });
+|                   } catch (error) {
+|                       return res.render("signin", { error: "Incorrect Email or Password" });
+|                   }
+|               });
+|               
+|               // OTP Verification for Login
+|               router.post('/verify-login-otp', async (req, res) => {
+|                   const { email, otp } = req.body;
+|               
+|                   if (otpStorage[email] && otpStorage[email].otp == otp) {
+|                       const user = await User.findOne({ email });
+|               
+|                       if (!user) {
+|                           return res.status(400).send('User not found');
+|                       }
+|               
+|                       // Generate auth token after OTP validation
+|                       const token = await User.matchPasswordAndGenerateToken(email, user.password);
+|                       if (!token) {
+|                           return res.status(400).send('Token generation failed');
+|                       }
+|               
+|                       // Set the token as a cookie and redirect to homepage
+|                       return res.cookie("token", token).redirect("/");
+|                   }
+|               
+|                   return res.status(400).send('Invalid OTP');
+|               });
+|               
+|               // Logout Route
+|               router.get("/logout", (req, res) => res.clearCookie("token").redirect("/"));
+|               
+|               module.exports = router;
+|               
+
+--> Here created pass from App Password in gmail
+
+Error came as had given wrong action at form of verify_login_otp.ejs and verify_otp.ejs
+|      Wrong   :-  /verify-login-otp      and     /verify-otp
+|      Correct :-  /user/verify-login-otp      and     /user/verify-otp
+
+3. Modify models/27_user.js Removed Hashing as unable to do work with it as were diving wrong 
+|  password during signin DUE TO SALTING
+|
+|           
+|           const { Schema, model } = require('mongoose');
+|           const { createTokenForUser } = require('../27_services/authentication');
+|           
+|           const userSchema = new Schema({
+|               fullName: {
+|                   type: String,
+|                   required: true,
+|               },
+|               email: {
+|                   type: String,
+|                   required: true,
+|                   unique: true,
+|               },
+|               password: {
+|                   type: String,
+|                   required: true,
+|               },
+|               profileImageURL: {
+|                   type: String,
+|                   default: '/images/default.jpg',
+|               },
+|               role: {
+|                   type: String,
+|                   enum: ["USER", "ADMIN"],  // enum means not to assign value other than these two
+|                   default: "USER",
+|               }
+|           }, { timestamps: true });
+|           
+|           // Remove password hashing (no need for salt or hashing)
+|           userSchema.pre('save', function(next) { 
+|               const user = this;   
+|               if (!user.isModified('password')) return;   // Only modify if password is new
+|           
+|               // No hashing or salting, store the password as it is
+|               console.log("Password during save:", user.password); // Debugging line
+|               
+|               next();
+|           });
+|           
+|           // Compare password normally (without hash or salt)
+|           userSchema.static('matchPasswordAndGenerateToken', async function(email, password) {
+|               const user = await this.findOne({ email });
+|               if (!user) throw new Error('User not found!!');
+|               
+|               // Check if provided password matches the stored password
+|               console.log("Stored password:", user.password); // Debugging line
+|               console.log("User provided password:", password); // Debugging line
+|           
+|               // Compare passwords directly (no hash comparison)
+|               if (user.password !== password) { 
+|                   throw new Error("Incorrect Password");
+|               }
+|           
+|               const token = createTokenForUser(user);
+|               return token;
+|           });
+|           
+|           const User = model('user', userSchema);
+|           
+|           module.exports = User;
+|           
+|           
+|           /*
+|           // const { createHmac } = require('node:crypto');  // OR  // crypto is a built in package
+|           const { createHmac, randomBytes } = require('crypto');  
+|           const {Schema, model} = require ('mongoose');
+|           const { createTokenForUser } = require('../27_services/authentication');
+|           
+|           const userSchema = new Schema({
+|               fullName: {
+|                   type: String,
+|                   required : true,
+|               },
+|               email: {
+|                   type: String,
+|                   required: true,
+|                   unique: true,
+|               },
+|               salt: {
+|                   type: String,
+|               },
+|               password: {
+|                   type: String,
+|                   required: true,
+|               },
+|               profileImageURL: {
+|                   type: String,
+|                   default: '/images/default.jpg',
+|               },
+|               role: {
+|                   type: String,
+|                   enum: ["USER", "ADMIN"],          // enum means not to assign value other than these two // mongoose will throw error if value other than these is assigned 
+|                   default: "USER",
+|               }
+|           },{timestamps: true});
+|           
+|           /*
+|           userSchema.pre('save', function(next){                                // When we will try to save user this function will run and hash the user's password
+|               const user = this;   // Here, this is pointing at the user
+|           
+|               if(!user.isModified('password')) return;   // If Password not modified in user RETURN
+|           
+|               const salt = randomBytes(16).toString();   // Will Work As our Secret Key
+|               const hashedPassword = createHmac('sha256', salt)                // using sha256 algorithm
+|                   .update(user.password)
+|                   .digest("hex");                         // digest and give it to me in hexon
+|               
+|               this.salt = salt;
+|               this.password = hashedPassword;
+|           
+|               next();
+|           });
+|           */
+|           
+|           /* EXTRA (/*)
+|           userSchema.pre('save', function(next) { 
+|               const user = this;   
+|               if (!user.isModified('password')) return;   
+|           
+|               // Generate a salt using the email (or any other unique value for consistency)
+|               const salt = createHmac('sha256', user.email).update(user.email).digest('hex'); 
+|           
+|               const hashedPassword = createHmac('sha256', salt) 
+|                   .update(user.password)
+|                   .digest('hex');                        
+|           
+|               this.salt = salt;
+|               this.password = hashedPassword;
+|           
+|               console.log("Salt during save:", salt);  // Debugging line
+|               console.log("Hashed password during save:", hashedPassword); // Debugging line
+|           
+|               next();
+|           });
+|           
+|           
+|           /*
+|           Why is an arrow function not used?
+|           
+|           userSchema.pre('save', function(next) {
+|               console.log(this); // `this` refers to the current document being saved
+|               next();
+|           });
+|           
+|           userSchema.pre('save', (next) => {
+|               console.log(this); // `this` refers to the outer scope, not the document
+|               next();
+|           });
+|           
+|           */
+|           /*
+|           userSchema.static('matchPasswordAndGenerateToken', async function(email,password) {
+|               const user = await this.findOne({email});
+|               // if(!user) return false;   // OR
+|               if(!user) throw new Error('User not found!!');
+|           
+|               // console.log(user); // To check error  
+|           
+|               // const salt = 'someRandomSalt';   // Hard-Code   Just to check error
+|               const salt = user.salt;
+|               const hashedPassword = user.password;
+|               
+|               const userProvidedHash =  createHmac('sha256', salt)                // using sha256 algorithm
+|                   .update(password)
+|                   .digest("hex");                         // digest and give it to me in hexon
+|           
+|                   if(hashedPassword !== userProvidedHash){           // if 
+|                       console.log(hashedPassword);
+|                       console.log(userProvidedHash);
+|                       throw new Error("Incorrect Password")
+|                   }
+|           
+|               // return user; // else return
+|           
+|               const token = createTokenForUser(user);
+|               return token;
+|               
+|           });
+|           */
+|           
+|           /* EXTRA (/*)
+|           userSchema.static('matchPasswordAndGenerateToken', async function(email, password) {
+|               const user = await this.findOne({ email });
+|               if (!user) throw new Error('User not found!!');
+|           
+|               const salt = user.salt;
+|               const hashedPassword = user.password;
+|               
+|               const userProvidedHash = createHmac('sha256', salt) 
+|               .update(password)
+|               .digest("hex");
+|               
+|               console.log("Salt during comparison:", salt); // Debugging line
+|               console.log("Hashed password from DB:", hashedPassword); // Debugging line
+|               console.log("User provided hash:", userProvidedHash); // Debugging line
+|               
+|               console.log('Stored hash:', storedHash);
+|           
+|               if (hashedPassword !== userProvidedHash) { 
+|                   throw new Error("Incorrect Password");
+|               }
+|           
+|               const token = createTokenForUser(user);
+|               return token;
+|           });
+|           
+|           const User = model('user', userSchema);
+|           
+|           module.exports = User;
+|           */

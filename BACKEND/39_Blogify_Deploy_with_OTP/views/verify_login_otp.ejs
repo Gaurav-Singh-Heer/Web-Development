@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <title>Verify OTP</title>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    
+    
+    <div class="container mt-4">
+        
+        <form action="/user/verify-login-otp" method="POST">
+            <input type="hidden" name="email" value="<%= email %>">
+            <input type="text" name="otp" placeholder="Enter OTP" required>
+            <button type="submit">Verify</button>
+        </form>
+
+    </div>
+    <%- include('./partials/script') %>
+</body>
+</html>

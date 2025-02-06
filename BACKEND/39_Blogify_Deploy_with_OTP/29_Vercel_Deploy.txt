@@ -1,0 +1,6 @@
+---> npm install @vercel/node
+
+Versel-> Changed MongoDB Server To access All 
+---> At Network Access Allow all (0.0.0.0/0)
+
+Then deployed By Changing Things 
