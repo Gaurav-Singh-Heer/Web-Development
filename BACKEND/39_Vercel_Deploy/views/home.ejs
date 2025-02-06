@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <%- include('./partials/head') %>
+    <title>Homepage</title>
+    
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    <div class="container mt-3">
+        <% if (locals.user) { %>
+            <!-- Content for logged-in users -->
+            <!-- <div class="d-flex flex-wrap justify-content gap-3">    BootStrap to display in flex -->
+            <!-- <div class="d-flex flex-wrap justify-content-around gap-3"> -->
+            <div class="row row-cols-4">
+                <% blogs.forEach(blog => { %>
+                    <div class="col">
+                        <div class="card" style="width: 18rem;">
+                            <!-- <img src="..." class="card-img-top" alt="..."> -->
+                            <!-- <img src="..." class="card-img-top" alt="..."> -->
+                            <img src="<%= blog.coverImageURL %>" class="card-img-top" alt="..." style="width: 80%; margin: 0 auto; display: block;">
+                            <!-- <img src="..." class="card-img-top" alt="..." style="width: 400px; margin: 0 auto; display: block;"> -->
+                            <div class="card-body">
+                                <!-- <h5 class="card-title">Card title</h5> -->
+                                <h5 class="card-title"><%= blog.title %></h5>
+                               <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                                <a href="/blog/<%= blog._id %>" class="btn btn-primary">View</a>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <!-- Content for guests -->
+            <div class="text-center">
+                <h3>Please log in to view blogs</h3>
+                <a href="/user/signin" class="btn btn-primary mt-3">Log In</a>
+            </div>
+        <% } %>
+    </div>
+    
+    <%- include('./partials/script') %>
+</body>
+</html>

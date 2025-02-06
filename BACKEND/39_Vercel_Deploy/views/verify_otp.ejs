@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <%- include('./partials/head') %>
+    <title>Verify OTP</title>
+</head>
+
+<body>
+    <%- include('./partials/nav') %>
+
+    <!-- Centered OTP Form -->
+    <div class="container mt-1 d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="col-md-6 col-lg-4 border border-light rounded shadow-sm">
+            <form action="/user/verify-otp" method="POST" class="bg-dark p-4 rounded">
+                <h3 class="text-center text-white mb-4">Verify OTP</h3>
+                
+                <input type="hidden" name="email" value="<%= email %>">
+
+                <div class="mb-3">
+                    <label for="otp" class="form-label text-white">Enter OTP</label>
+                    <input type="text" name="otp" id="otp" placeholder="Enter OTP" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Verify</button>
+            </form>
+        </div>
+    </div>
+
+    <%- include('./partials/script') %>
+</body>
+
+</html>

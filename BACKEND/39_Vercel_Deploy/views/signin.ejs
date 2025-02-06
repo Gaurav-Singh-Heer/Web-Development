@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <%- include('./partials/head') %>
+    <title>SignIn</title>
+</head>
+
+<body>
+    <%- include('./partials/nav') %>
+
+    <!-- Centered Sign-In Form -->
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="col-md-6 col-lg-4 p-4 bg-dark rounded shadow-lg">
+            <form action="/user/signin" method="post">
+                <h3 class="text-center text-white mb-4">Sign In</h3>
+                
+                <!-- Email Input -->
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label text-white">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" required>
+                    <div id="emailHelp" class="form-text text-white">We'll never share your email with anyone else.</div>
+                </div>
+
+                <!-- Password Input -->
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label text-white">Password</label>
+                    <input name="password" type="password" class="form-control" id="exampleInputPassword1" required>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary w-100">Sign In</button>
+
+                <!-- Forgot Password Link -->
+                <div class="text-center mt-3">
+                    <a href="/user/forgot-password" class="text-white">Forgot password?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <%- include('./partials/script') %>
+</body>
+
+</html>
