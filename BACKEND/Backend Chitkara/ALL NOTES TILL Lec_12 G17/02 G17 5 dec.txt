@@ -1,0 +1,27 @@
+
+1534
+1559
+
+
+-	Create a folder rename it as 'NodeJS'
+-	in that folder create one more folder 'modules eg'
+-	open 'modules eg' folder in VSCode
+-	create server.js file there
+
+***************************************************
+Download following modules using yarn tool
+***************************************************
+1. express			
+2. mysql			
+3. mongodb@2.2.32	
+4. multer			
+5. jwt-simple 		
+
+>npm init -y
+
+1. express			>yarn add express --save
+2. mysql			>yarn add mysql --save
+3. mongodb@2.2.32	>yarn add mongodb@2.2.32 --save
+4. multer			
+5. jwt-simple 			
+	>yarn add multer jwt-simple --save 

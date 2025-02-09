@@ -1,0 +1,27 @@
+=======================================================
+Node.js
+=======================================================
+Introduction:-
+-	Node.JS is open source, cross platform, Javascript runtime environemnt.
+-	Node applications can be developed using either Javascript or Typescript.
+-	Node.JS was released by Ryan Dahl on 27th May 2009, at netscape.
+-	Latest version of Node.JS is	23.3.0	20-11-2024
+-	Current stable version is 		22.11.0	29-10-2024
+-	The applications (servers) developed by Node.JS are called 'Single Threaded Event Loop' applications. 
+
+Fig
+
+ - Node.JS contain infinite event loop.
+ - This loop can handle Two types of requests
+	- Non - Blocking i/o requests
+	- Blocking  i/o requests
+ - Multiple clients requesting to server.
+ - These requests kept in Event queue.
+ - These requests sent to event loop.
+ - if the requests are non - blocking i/o requests,
+	response will be sent immediately to clients.
+ - if the the requests are blocking i/o requests, those are sent to thread pool.
+ - thread pool will pass requests to Databases or Files Systems(Third Parties)
+ - the response given by third parties will be in thread pool.
+ - the response from thread pool will be in event loop.
+ - event loop will give this response back to clients.
