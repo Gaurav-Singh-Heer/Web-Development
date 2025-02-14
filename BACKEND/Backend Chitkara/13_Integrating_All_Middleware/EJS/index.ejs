@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive API</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Interactive API</h1>
+        <div id="response"></div>
+
+        <section>
+            <h2>Greet User</h2>
+            <input type="text" id="nameInput" placeholder="Enter your name">
+            <button onclick="greetUser()">Greet</button>
+        </section>
+
+        <section>
+            <h2>Get Random Number</h2>
+            <button onclick="getRandomNumber()">Get Random Number</button>
+        </section>
+
+        <section>
+            <h2>Echo Your Message</h2>
+            <textarea id="echoInput" placeholder="Write something to echo"></textarea>
+            <button onclick="echoMessage()">Echo</button>
+        </section>
+
+        <div id="output"></div>
+    </div>
+
+    <script src="/script.js"></script>
+</body>
+</html>
