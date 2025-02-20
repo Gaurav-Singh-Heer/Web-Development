@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GraphQL Client</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Arial", sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        #result {
+            text-align: left;
+            margin-top: 10px;
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 8px;
+            height: 200px;
+            overflow-y: auto;
+            font-size: 14px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>GraphQL Client</h2>
+
+        <div class="button-group">
+            <button onclick="fetchTodos()">Fetch Todos</button>
+            <button onclick="fetchUsers()">Fetch Users</button>
+        </div>
+
+        <div class="input-group">
+            <input type="text" id="userId" placeholder="Enter User ID">
+            <button onclick="fetchUserById()">Get User</button>
+        </div>
+
+        <div id="result">Results will be displayed here...</div>
+    </div>
+
+    <script>
+        const API_URL = "http://localhost:8000/graphql";
+
+        async function fetchTodos() {
+            const query = `{
+                getTodos {
+                    id
+                    title
+                    completed
+                }
+            }`;
+            fetchGraphQL(query);
+        }
+
+        async function fetchUsers() {
+            const query = `{
+                getAllUsers {
+                    id
+                    name
+                    email
+                }
+            }`;
+            fetchGraphQL(query);
+        }
+
+        async function fetchUserById() {
+            const userId = document.getElementById("userId").value;
+            if (!userId) {
+                alert("Please enter a User ID");
+                return;
+            }
+            const query = `{
+                getUser(id: "${userId}") {
+                    id
+                    name
+                    email
+                    phone
+                }
+            }`;
+            fetchGraphQL(query);
+        }
+
+        async function fetchGraphQL(query) {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ query })
+            });
+
+            const result = await response.json();
+            document.getElementById("result").innerText = JSON.stringify(result, null, 2);
+        }
+    </script>
+
+</body>
+</html>

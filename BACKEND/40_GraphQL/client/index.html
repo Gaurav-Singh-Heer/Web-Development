@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GraphQL Client</title>
+    <style>
+        body {
+            font-family: Roboto, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            color: #333;
+        }
+        button {
+            margin: 10px 5px;
+            padding: 10px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        input {
+            padding: 8px;
+            margin-right: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <h2>GraphQL Client</h2>
+
+    <button onclick="fetchTodos()">Fetch Todos</button>
+    <button onclick="fetchUsers()">Fetch Users</button>
+    
+    <div>
+        <input type="text" id="userId" placeholder="Enter User ID">
+        <button onclick="fetchUserById()">Get User</button>
+    </div>
+
+    <div id="result">Results will be displayed here...</div>
+
+    <script>
+        const API_URL = "http://localhost:8000/graphql";
+
+        async function fetchTodos() {
+            const query = `{
+                getTodos {
+                    id
+                    title
+                    completed
+                }
+            }`;
+            fetchGraphQL(query);
+        }
+
+        async function fetchUsers() {
+            const query = `{
+                getAllUsers {
+                    id
+                    name
+                    email
+                }
+            }`;
+            fetchGraphQL(query);
+        }
+
+        async function fetchUserById() {
+            const userId = document.getElementById("userId").value;
+            if (!userId) {
+                alert("Please enter a User ID");
+                return;
+            }
+            const query = `{
+                getUser(id: "${userId}") {
+                    id
+                    name
+                    email
+                    phone
+                }
+            }`;
+            fetchGraphQL(query);
+        }
+
+        async function fetchGraphQL(query) {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ query })
+            });
+
+            const result = await response.json();
+            document.getElementById("result").innerText = JSON.stringify(result, null, 2);
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,1040 @@
+GraphQL :- https://graphql.org/
+
+Now, REST APIs
+
+|   Let's Say user made a Get Request on /To-dos and our server returned all to-dos to it.
+|     
+|           Client -------------------------Get /To-dos -----------------------------------> SERVER
+|           Client <--------------------------- To-dos ------------------------------------- SERVER
+|
+|   Now, here we got all to-dos
+|                     To-dos might look like , Open JsonPlaceholder (https://jsonplaceholder.typicode.com/) 
+|                                              From here Open https://jsonplaceholder.typicode.com/todos 
+|                                              given in fetch
+|
+|                     So, Todos Look as, 
+|                                         {
+|                                           "userId": 1,
+|                                           "id": 1,
+|                                           "title": "delectus aut autem",
+|                                           "completed": false
+|                                         },
+|                                         {
+|                                           "userId": 1,
+|                                           "id": 2,
+|                                           "title": "quis ut nam facilis et officia qui",
+|                                           "completed": false
+|                                         },
+|
+|                   So, in To-dos we have 4 keys:- - user_id
+|                                                  - id
+|                                                  - title
+|                                                  - completed
+|
+|       Now, let's say we only want "title" of these todos.
+|               So, in Front-End we will ignore ❌user_id, ❌id, ❌completed and will pick ✅title so we are travelling 
+|                   very unnecessary data which is not required to client.
+|
+|       Now if we have multiple clients with different demands:-
+|
+|                               Client 1 :- Wants Todos ID
+|                               Client 2 :- Wants Todos Title and user_id
+|                               Client 3 :- Wants Todos which are completed
+|
+|       Now as these 3 clients have different-different requirements but we are giving them same WHOLE Todos data.
+|       Due to which alot of Band-Width is wasted.
+|
+|       So, 
+|       Problem 1:- Our data is wasted
+|
+|       Problem 2:- Now, Let's say i want to show after each todos that which user made it.
+|                   we can see that each Todos have a user ID. So, if we go at https://jsonplaceholder.typicode.com/users  
+|                   
+|               User looks as, {
+|                               "id": 1,
+|                               "name": "Leanne Graham",
+|                               "username": "Bret",
+|                               "email": "Sincere@april.biz",
+|                               "address": {
+|                                 "street": "Kulas Light",
+|                                 "suite": "Apt. 556",
+|                                 "city": "Gwenborough",
+|                                 "zipcode": "92998-3874",
+|                                 "geo": {
+|                                   "lat": "-37.3159",
+|                                   "lng": "81.1496"
+|                                 }
+|                               },
+|                               "phone": "1-770-736-8031 x56442",
+|                               "website": "hildegard.org",
+|                               "company": {
+|                                 "name": "Romaguera-Crona",
+|                                 "catchPhrase": "Multi-layered client-server neural-net",
+|                                 "bs": "harness real-time e-markets"
+|                               }
+|                             },
+|                    
+|       So, Let's Say user made a Get Request on /To-dos (To get Title) and our server returned all to-dos to it. 
+|       Then user again made a request of /user/:id (To get Name) then in return we will get whole user from the server.  
+|     
+|           Client -------------------------Get /To-dos -----------------------------------> SERVER
+|           Client <--------------------------- To-dos ------------------------------------- SERVER
+|           Client -------------------------Get /user/1 -----------------------------------> SERVER
+|           Client <--------------------------- user --------------------------------------- SERVER
+|
+|               So, we saw that to display [Todos_Title, User_Name] we fetched alot of unnecessary data to show 
+|                   these two things for which we had called two different APIs and it took alot of time and we got 
+|                   many unnecessary things so we saw that for large application our application is not optimized. 
+|                   We are fetching alot of unnecessary data, using memory of user, and to do a simple thing we are 
+|                   calling two different-different APIs
+
+---> So, These were the Problems in REST API.
+
+-----------------------------------------------------------------------------------------------------------------
+
+GraphQL (https://graphql.org/)
+
+|    So, to solve the REST_API's Problem GraphQL is used.
+
+Why we use GraphQL?
+GraphQL addresses a common problem with REST APIs: over-fetching data. When retrieving information from a 
+REST API, you often receive more data than needed.
+
+GraphQL Advantages: 
+|          - Data Efficiency:  GraphQL allows clients to request specific data, preventing the server from sending
+|                              unnecessary information. This leads to faster loading times, especially crucial when 
+|                              dealing with large datasets.
+|          - Prevents Over-fetching: Clients receive only the requested data, leading to faster load times.
+|          - Optimized Performance: Eliminates multiple API calls by allowing clients to fetch related data in a single query.
+
+---> GraphQL says, whenever someone request a GraphQL to you or whenever to request data through GraphQL client 
+|    have to specigy what data he wants and that would be shown to him directly accordingly without fetching any 
+|    unnecessary data 
+|
+|       Syntax To get todos "title" is,
+|                   todos{
+|                       title
+|                   }
+|
+|       Syntax To get todos "title" and "id" is,
+|                   todos{
+|                       title
+|                       id
+|                   }
+|
+|       So, This was the solution to Problem 1 of REST_API                       (Unnecessary data fetched)
+|
+|       Now, Solution for Problem 2 of REST_API is,                              (Calling 2 APIs Seperately)
+|
+|           By Creating Nested Query,
+|                 So, Syntax To get todos "title" and user "name" is,
+|                                       todos{
+|                                           title
+|                                           user{
+|                                               name
+|                                           }
+|                                       }       
+|
+|           So, instead of Fetching 2 APIs Seperately we Created a Single Query in GraphQL
+                                          
+-----------------------------------------------------------------------------------------------------------------
+
+Coding GraphQL
+
+--> Make 2 folder client and server. Here, inside client will send ReactJS code and in server will give backend code
+
+|               D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\40_GraphQL>cd server
+|               D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\40_GraphQL\server>yarn init
+|               D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\40_GraphQL\server>npm i express
+|
+|               Then go at --> https://www.apollographql.com/ from here go at Developers Tab Docs https://www.apollographql.com/docs
+|                              Then go at Get Started the select 
+|                              GraphQL apollo https://www.apollographql.com/docs/graphos/get-started/guides/graphql
+|              
+|                --> For, Setting up apollo server for GraphQL 
+|                          yarn add @appolo/server graphql
+|
+|               D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\40_GraphQL\server>yarn add @apollo/server graphql
+|
+|               D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\40_GraphQL\server>yarn add body-parser
+|               D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\40_GraphQL\server>yarn add cors
+
+Now, at Server Create index_1.js and edit it 
+
+|           CODE:-
+|                   const express = require("express");
+|                   const { ApolloServer } = require("@apollo/server");
+|                   const { expressMiddleware } = require("@apollo/server/express4");
+|                   const bodyParser = require("body-parser");
+|                   const cors = require("cors");
+|
+|           Explaination:- 
+|                   1. const express = require("express"); 
+|                      - This imports the Express framework, which is used to create a web server and handle HTTP requests.
+|                   
+|                   2. const { ApolloServer } = require("@apollo/server");    
+|                      - This imports the `ApolloServer` class from the Apollo GraphQL package.  
+|                      - Apollo Server is used to create a GraphQL API server.
+|                   
+|                   3. const { expressMiddleware } = require("@apollo/server/express4");    
+|                      - This imports `expressMiddleware` from Apollo Server’s Express integration.  
+|                      - It helps integrate Apollo Server with Express, allowing GraphQL queries to be processed through an Express server.
+|                   
+|                   4. const bodyParser = require("body-parser");    
+|                      - This middleware is used to parse incoming request bodies (e.g., JSON data) before handling them in the API.  
+|                      - It helps Express handle request data properly.
+|                   
+|                   5. const cors = require("cors");    
+|                      - This imports the `cors` middleware, which is used to enable Cross-Origin Resource Sharing (CORS).  
+|                      - It allows the server to handle requests from different origins (useful for front-end apps running on a different domain).
+
+|               CODE:-
+|                   const express = require("express");
+|                   const { ApolloServer } = require("@apollo/server");
+|                   const { expressMiddleware } = require("@apollo/server/express4");
+|                   const bodyParser = require("body-parser");
+|                   const cors = require("cors");
+|                   
+|                   async function startServer() {
+|                       const app = express();
+|                       const server = new ApolloServer({});                  // Will Configure the server here
+|                   
+|                       app.use(bodyParser.json());
+|                       app.use(cors());
+|                   
+|                       await server.start()
+|                   
+|                       app.use('/graphql', expressMiddleware(server))
+|                   
+|                       app.listen(8000, () => console.log("Server Started at PORT 8000"))
+|                   
+|                   }
+|                   
+|                   startServer()
+
+|               Means, we made express then we made server then middlewares came then stated graphql server then we 
+|                      said that if any request comes at /graphql then that wiill be handled by graphql server then 
+|                      we finally added app.listen and then we called this function outside 
+|
+|      On Run it gave Error, as we are directly starting the server at const server = new ApolloServer ({}); 
+|                            So, at {} we have to give Typedefinations, Queries/resolvers. 
+|                            This is Because, we are using GraphQL and to use it Server must know what all 
+|                                             operations we are going to perform on it. As we make Routes in 
+|                                             Express we make Schema here
+|
+|           const server = new ApolloServer ({});        Here, inside {} we must have typeDefs and resolvers.
+|                           const server = new ApolloServer({
+|                               typeDefs: "",   // typedef is a string
+|                               resolvers: {},
+|                           }); 
+
+|       Making this server's typedef from taking reference of keys from (https://jsonplaceholder.typicode.com/todos)
+|
+|                           const server = new ApolloServer({
+|                                   typeDefs: `
+|                                       type Todo{
+|                                           id:ID!                                  
+|                                           title: String! 
+|                                           completed: Boolean
+|                                       }
+|                                   `,   // typedef is a string and ! means field is required
+|                                   resolvers: {},
+|                               });
+|
+--> Now, will make a type Query
+|           Query, if u want to fetch a Query, if u want to fetch anything from GraphQL server then do Query 
+|           If u want to give to GraphQL server then we do mutation 
+|   
+|               const server = new ApolloServer({                         // typedef is a string and ! means field is required
+|                       typeDefs: `                    
+|                           type Todo{
+|                               id:ID!                                  
+|                               title: String! 
+|                               completed: Boolean
+|                           }
+|                           type Query {
+|                               getTodos: [Todo]
+|                           }
+|                       `, 
+|                       resolvers: {},
+|                   });        
+|
+|   We, Haven't wrote any resolver/logic so, we will now 
+|   Run and open localhost 8000/graphql and u can see that we are having a full UI which is coming by appolo 
+|
+|   Then in UI at operation we can add to-dos query 
+|               INSIDE UI:- 
+|                           WRITE OPERATION:-
+|                                       query GetAllTodos{
+|                                         getTodos {
+|                                           title
+|                                         }
+|                                       }
+|
+|                           Then Run this and output is,
+|                                       
+|                                       RESPONSE:-
+|                                       
+|                                       {
+|                                         "data": {
+|                                           "getTodos": null
+|                                         }
+|                                       }
+|   
+|   ----> Got NULL as we haven't wrote any logic at resolvers
+|   
+
+--->Now, Updating resolvers in index_1.js By Hardcode
+|               resolvers: {
+|                   Query:{
+|                       getTodos: () => [{id: 1, title: 'Something Random', completed: false}]
+|                   }
+|               },
+|   
+|   Now at localhost 8000/graphql whatever we ask at operation we will get it.
+|  
+|   Then in UI at operation we can add to-dos query 
+|               INSIDE UI:- 
+|                           WRITE OPERATION:-
+|                                       query GetAllTodos{
+|                                         getTodos {
+|                                           id
+|                                           title
+|                                         }
+|                                       }
+|
+|                           Then Run this and output is,
+|                                       
+|                                       RESPONSE:-
+|                                       
+|                                       {
+|                                         "data": {
+|                                           "getTodos": [
+|                                             {
+|                                               "id": "1",
+|                                               "title": "Something Random"
+|                                             }
+|                                           ]
+|                                         }
+|                                       }
+|   
+|   ----> Got values of what we asked at operation as we had wrote hardcode logic at resolvers
+
+----------------------------------------------------------------------------------------------------------------
+
+Now doing without Hardcode 
+---> Using API call 
+   
+---> Making new resolvers 
+|           So, Create index_2.js and copy paste index_1.js in it
+|
+|   Now do yarn add axios (to make API calls)
+|                      D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\40_GraphQL\server>yarn add axios 
+|
+|   As, we were not having type defination of axios so,
+|   Now add yarn add @types/axios 
+|                         D:\GAURAV   CODING\WEB DEVELOPMENT\BACKEND\40_GraphQL\server> yarn add @types/axios
+|   Then do axios.get("API_LINK")
+|
+---> Changes in index_2.js
+|      // const { default: axios } = require("axios"); // Came Automatically as we wrote axios in resolvers -> Query
+|      // OR
+|      const axios = require("axios");
+|
+|           resolvers: {
+|               Query:{
+|                   getTodos: async () =>
+|                       (await axios.get("https://jsonplaceholder.typicode.com/todos")).data, // Calling API and Returning DATA
+|               }
+|           },
+|   
+|   Now at localhost 8000/graphql whatever we ask at operation we will get it.
+|  
+|   Then in UI at operation we can add to-dos query 
+|               INSIDE UI:- 
+|                           WRITE OPERATION:-
+|                                       query GetAllTodos{
+|                                         getTodos {
+|                                           id
+|                                           title
+|                                         }
+|                                       }
+|
+|                           Then Run this and output is,
+|                                       
+|                                       RESPONSE:-
+|                                       
+|                                       {
+|                                         "data": {
+|                                           "getTodos": [
+|                                             {
+|                                               "id": "1",
+|                                               "title": "delectus aut autem"
+|                                             },
+|                                             {
+|                                               "id": "2",
+|                                               "title": "quis ut nam facilis et officia qui"
+|                                             },
+|                                             {
+|                                               "id": "3",
+|                                               "title": "fugiat veniam minus"
+|                                             },
+|                                             {
+|                                               "id": "4",
+|                                               "title": "et porro tempora"
+|                                             },
+|                                             {
+|                                               "id": "5",
+|                                               "title": "laboriosam mollitia et enim quasi adipisci quia provident illum"
+|                                             },
+|                                             {
+|                                               "id": "6",
+|                                               "title": "qui ullam ratione quibusdam voluptatem quia omnis"
+|                                             },
+|                                             {
+|                                               "id": "7",
+|                                               "title": "illo expedita consequatur quia in"
+|                                             },
+|                                             {
+|                                               "id": "8",
+|                                               "title": "quo adipisci enim quam ut ab"
+|                                             },
+|                                             .
+|                                             .
+|                                             . etc
+|                                           ]
+|                                         }
+|                                       }
+|   
+|   ----> Got values of what we asked at operation as we had fetched API at resolvers
+|
+Till Now, we had called axios on some other external server but u can also call this on your server
+
+-------------------------------------------------------------------------------------------------------------------
+
+TASK:- READ Data of your own Server
+Now, reading My Blogify Data
+
+--> Created index_3_Blog_data.js To fetch my blogify data
+|
+|         CODE:-
+|               const express = require("express");
+|               const { ApolloServer } = require("@apollo/server");
+|               const { expressMiddleware } = require("@apollo/server/express4");
+|               const bodyParser = require("body-parser");
+|               const cors = require("cors");
+|               const { MongoClient, ObjectId } = require("mongodb");
+|               
+|               const uri = "mongodb+srv://gauravheer2005:Gaurav1234@cluster0.44sge.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+|               
+|               async function startServer() {
+|                   const app = express();
+|               
+|                   // Connect to MongoDB
+|                   const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+|                   await client.connect();
+|                   const database = client.db("test");  // Database name
+|                   const collection = database.collection("blogs"); // Collection name
+|               
+|                   // Define GraphQL schema
+|                   const typeDefs = `                    
+|                       type Blog {
+|                           id: ID!                                  
+|                           title: String! 
+|                           body: String!
+|                           coverImageURL: String
+|                           createdBy: ID
+|                           createdAt: String
+|                           updatedAt: String
+|                       }
+|               
+|                       type Query {
+|                           getBlogs: [Blog]
+|                       }
+|                   `;
+|               
+|                   // Define resolvers
+|                   const resolvers = {
+|                       Query: {
+|                           getBlogs: async () => {
+|                               try {
+|                                   const blogs = await collection.find().toArray();
+|                                   return blogs.map(blog => ({
+|                                       id: blog._id.toString(),
+|                                       title: blog.title,
+|                                       body: blog.body,
+|                                       coverImageURL: blog.coverImageURL,
+|                                       createdBy: blog.createdBy?.toString(),
+|                                       createdAt: blog.createdAt.toISOString(),
+|                                       updatedAt: blog.updatedAt.toISOString()
+|                                   }));
+|                               } catch (error) {
+|                                   console.error("Error fetching blogs:", error);
+|                                   throw new Error("Failed to fetch blogs");
+|                               }
+|                           }
+|                       }
+|                   };
+|               
+|                   const server = new ApolloServer({ typeDefs, resolvers });
+|               
+|                   await server.start();
+|               
+|                   app.use(bodyParser.json());
+|                   app.use(cors());
+|                   app.use('/graphql', expressMiddleware(server));
+|               
+|                   app.listen(8000, () => console.log("🚀 Server Started at PORT 8000"));
+|               }
+|               
+|               startServer().catch(err => console.error("Server startup error:", err));
+
+|   Now at localhost 8000/graphql whatever we ask at operation we will get it.
+
+|  
+|   Then in UI at operation we can add to-dos query 
+|               INSIDE UI:- 
+|                           WRITE OPERATION:-
+|                                       query GetBlogs {
+|                                         getBlogs {
+|                                           id
+|                                           title
+|                                           body
+|                                           coverImageURL
+|                                           createdBy
+|                                           createdAt
+|                                           updatedAt
+|                                         }
+|                                       }
+
+|
+|                           Then Run this and output is,
+|                                       
+|                                       RESPONSE:-
+|                                       
+|                                       {
+|                                         "data": {
+|                                           "getBlogs": [
+|                                             {
+|                                               "id": "67a462166bc9cea3fe663013",
+|                                               "title": "Welcoming Our Juniors: Freshers' Celebration",
+|                                               "body": "Freshers' 2024\" was an unexpected but memorable experience! It all started with Agam insisting we all go together. He persuaded me first, and then I passed on the idea to Arshiya. After some back-and-forth, we finally decided on what to wear. Arshiya, being her indecisive self, kept debating her outfit until the very last moment! But in the end, we all showed up, dressed to impress and ready to make memories. Sometimes, time isn’t spent—it’s invested in moments like these. 🍃✨🍂",
+|                                               "coverImageURL": "https://res.cloudinary.com/dvnn29iku/image/upload/v1738826261/blog_images/1738826256550-1736871752499-IMG-20240921-WA0157_1.jpg",
+|                                               "createdBy": "67a4618c6bc9cea3fe66300d",
+|                                               "createdAt": "2025-02-06T07:17:42.839Z",
+|                                               "updatedAt": "2025-02-06T07:17:42.839Z"
+|                                             },
+|                                             {
+|                                               "id": "67a462616bc9cea3fe66301b",
+|                                               "title": "Spontaneous Adventures: A Day of Fun and Good Company",
+|                                               "body": "The unexpected trip to Chandigarh with Aryan had to be called off because Agam had guests at his house. But instead of letting the day go to waste, we decided to make the best of it with a spontaneous visit to CP67 Mall. We spent the afternoon browsing around, chatting, and just enjoying the vibes of the place. After that, we made our way to Arshiya’s place, where the fun continued with endless conversations and some chilled-out moments. Though the original plan didn’t work out, it turned into one of those days that reminded us that sometimes, unplanned adventures bring the best memories. A day full of laughter, relaxed moments, and good company is all you need to make it worthwhile. 🌿✨🍃",
+|                                               "coverImageURL": "https://res.cloudinary.com/dvnn29iku/image/upload/v1738826336/blog_images/1738826332575-1736926509180-IMG_20240923_083304.jpg",
+|                                               "createdBy": "67a4618c6bc9cea3fe66300d",
+|                                               "createdAt": "2025-02-06T07:18:57.500Z",
+|                                               "updatedAt": "2025-02-06T07:18:57.500Z"
+|                                             },
+|                                             {
+|                                               "id": "67a462876bc9cea3fe663021",
+|                                               "title": "A Night to Remember: Food, Family, and Tim Hortons",
+|                                               "body": "This time, I had the pleasure of visiting CP67 Mall with my cousin Sunny Bhaiya and Saurav for a truly memorable night out. Sunny Bhaiya had just returned from Australia after a long time, which made the evening even more special. We spent the night cruising around in his car, creating moments that were both nostalgic and refreshing. For dinner, we stopped at Highway Green, where the food was absolutely delightful. Later, we treated ourselves to dessert at Gopal’s, which, as always, lived up to its reputation for heavenly sweets. The evening also marked a personal milestone — my first-ever visit to Tim Hortons. I tried their hot chocolate, and it was everything I had hoped for! The rich, velvety texture and perfect balance of sweetness made it a drink to remember. All in all, it was a night filled with great company, delicious food, and cherished moments. Truly, a night to savor and hold close for years to come. 🌙✨🍃",
+|                                               "coverImageURL": "https://res.cloudinary.com/dvnn29iku/image/upload/v1738826374/blog_images/1738826370381-1736927211655-IMG_20241101_215432_797.jpg",
+|                                               "createdBy": "67a4618c6bc9cea3fe66300d",
+|                                               "createdAt": "2025-02-06T07:19:35.998Z",
+|                                               "updatedAt": "2025-02-06T07:19:35.998Z"
+|                                             },
+|                                             {
+|                                               "id": "67a462c16bc9cea3fe663027",
+|                                               "title": "Wandering Through Chandigarh: A Day of Spontaneity and Discovery",
+|                                               "body": "This time, I took a trip to Chandigarh with Aryan, heading towards Agam's place. Along the way, we decided to take a little detour and picked up Agam midway. It turned into one of those spontaneous, carefree days where we just felt like exploring the city at our own pace. Instead of driving around, we opted for a leisurely walk, exploring Chandigarh's various sectors on foot. This gave us the opportunity to dive deeper into the city's charm—appreciating the beautiful architecture, lush green spaces, and the unique vibe of each sector. Walking through the streets allowed us to experience Chandigarh’s heart in a way that’s often missed when you're behind the wheel. The day was full of discovery, wandering, taking in the sights, and enjoying great conversations. It felt like the perfect way to explore the city—at a slow, unhurried pace, truly soaking in the essence of Chandigarh. 🌿🚶‍♂✨",
+|                                               "coverImageURL": "https://res.cloudinary.com/dvnn29iku/image/upload/v1738826431/blog_images/1738826427833-1736927402710-IMG-20240714-WA0038.jpg",
+|                                               "createdBy": "67a4618c6bc9cea3fe66300d",
+|                                               "createdAt": "2025-02-06T07:20:33.043Z",
+|                                               "updatedAt": "2025-02-06T07:20:33.043Z"
+|                                             }
+|                                           ]
+|                                         }
+|                                       }
+|   
+
+-------------------------------------------------------------------------------------------------------------------
+
+Now, Fetching User and todos API in Single Query:-
+
+--> Create index_4.js and Copy content on index_2.js in it.
+
+|   Now, Update typedef and add new 'type User in it'
+|   
+|                       type User {
+|                           id: ID!
+|                           name: String!
+|                           username: String!
+|                           email: String!
+|                           phone: String!
+|                           website: String!
+|                       }   
+|
+|   Now, Create a new Query named GetAllUsers in 'type Query'
+|
+|                  type Query {
+|                       getTodos: [Todo]
+|                       getAllUsers: [User]
+|                   }
+|
+|   Final typedef Code:-
+|                               typeDefs: `    
+|                                   type User {
+|                                       id: ID!
+|                                       name: String!
+|                                       username: String!
+|                                       email: String!
+|                                       phone: String!
+|                                       website: String!
+|                                   }                
+|                                   type Todo{
+|                                       id:ID!                                  
+|                                       title: String! 
+|                                       completed: Boolean
+|                                   }
+|                                   type Query {
+|                                       getTodos: [Todo]
+|                                       getAllUsers: [User]
+|                                   }
+|                               `,   
+|
+|   Now, Updating resolvers -> Query
+|
+|                       resolvers: {
+|                           Query:{
+|                               getTodos: async () =>
+|                                   (await axios.get("https://jsonplaceholder.typicode.com/todos")).data, // Calling API and Returning DATA
+|                               getAllUsers: async() =>
+|                                   (await axios.get("https://jsonplaceholder.typicode.com/users")).data,
+|                           }
+|                       },
+
+|   Now at localhost 8000/graphql whatever we ask at operation we will get it.
+
+|  
+|   Then in UI at operation we can add to-dos query 
+|               INSIDE UI:- 
+|                           WRITE OPERATION:-
+|                                       query GetAllTodos{
+|                                         getTodos {
+|                                           id
+|                                           title
+|                                         }
+|                                         getAllUsers{
+|                                           name
+|                                         }
+|                                       }
+
+|
+|                           Then Run this and output is,
+|                                       
+|                                       RESPONSE:-
+|                                               {
+|                                                 "data": {
+|                                                   "getTodos": [
+|                                                       {
+|                                                         "id": "1",
+|                                                         "title": "delectus aut autem"
+|                                                       },
+|                                                       {
+|                                                         "id": "2",
+|                                                         "title": "quis ut nam facilis et officia qui"
+|                                                       },
+|                                                       {
+|                                                         "id": "3",
+|                                                         "title": "fugiat veniam minus"
+|                                                       },
+|                                                       .
+|                                                       .
+|                                                       .
+|                                                       etc
+|                                                   ]
+|                                                   "getAllUsers": [
+|                                                       {
+|                                                         "name": "Leanne Graham"
+|                                                       },
+|                                                       {
+|                                                         "name": "Ervin Howell"
+|                                                       },
+|                                                       {
+|                                                         "name": "Clementine Bauch"
+|                                                       },
+|                                                       .
+|                                                       .
+|                                                       .
+|                                                       etc
+|                                                   ]
+|                                                 }
+|                                               }
+|
+|   ----> Got values of what we asked at operation as we had fetched both todos and users API at resolvers
+
+-------------------------------------------------------------------------------------------------------------------
+
+Now, Fetching User data whose id = 2 from both users and todos API in Single Query:-
+
+--> Create index_5.js and Copy content on index_4.js in it.
+
+|    Now Update type Query
+|                               type Query {
+|                                   getTodos: [Todo]
+|                                   getAllUsers: [User]
+|                                   getUser(id: ID!) : User   // enter user id and get it's Data
+|                               }
+|
+|    Now Update resolvers -> Query
+|
+|                               resolvers: {
+|                                   Query:{
+|                                       getTodos: async () =>
+|                                           (await axios.get("https://jsonplaceholder.typicode.com/todos")).data, // Calling API and Returning DATA
+|                                       getAllUsers: async() =>
+|                                           (await axios.get("https://jsonplaceholder.typicode.com/users")).data,
+|                                       getUser: async(parent, {id}) =>                    // ignore first parameter we will have 2nd Parameter
+|                                           (await axios.get(`https://jsonplaceholder.typicode.com/users/${id}`)).data,
+|                                   }
+|                               },
+
+|   Now at localhost 8000/graphql whatever we ask at operation we will get it.
+
+|  
+|   Then in UI at operation we can add to-dos query 
+|
+|               INSIDE UI:- 
+|                           WRITE OPERATION:-
+|                                       query GetAllTodos{
+|                                           getUser then press tab and u will get whole structure of operation
+|                                       } 
+|
+|                           WRITE OPERATION:-
+|                                       query GetAllTodos($getUserId: ID!){ 
+|                                         getUser(id: $getUserId) {
+|                                           name
+|                                           email
+|                                         }
+|                                       }
+|
+|                           VARIABLES:-
+|                                      {
+|                                        "getUserId": 2
+|                                      }
+|
+|                           Then Run this and output is,
+|                                       
+|                                       RESPONSE:-
+|                                               {
+|                                                 "data": {
+|                                                   "getUser": {
+|                                                     "name": "Ervin Howell",
+|                                                     "email": "Shanna@melissa.tv"
+|                                                   }
+|                                                 }
+|                                               }
+|
+|   ---> Got values of what we asked at operation and variable setted as we setted user_id function in resolver.
+|
+----------------------------------------------------------------------------------------------------------------
+
+Now, To Run todo and user_id query together 
+    or we can say, To run nested query To run todo and find user in single query
+
+--> Create index_6.js and Copy content on index_5.js in it.
+
+|   Now Update type Todo Add user_id to fetch user_id inside typeDefs
+|                                                   type Todo{
+|                                                       id:ID!                                  
+|                                                       title: String! 
+|                                                       completed: Boolean
+|                                                       userId: ID!
+|                                                   }
+
+|   Now at localhost 8000/graphql whatever we ask at operation we will get it.
+
+|   Then in operation Will run getTodos and getUser query together 
+| 
+|               INSIDE UI:- 
+|
+|                           WRITE OPERATION:-
+|                                       query GetAllTodos($getUserId: ID!){
+|                                         getTodos {
+|                                           title
+|                                           completed
+|                                           userId
+|                                         }
+|                                         getUser(id: $getUserId) {
+|                                           id
+|                                           name
+|                                         }
+|                                       }
+|
+|                           VARIABLES:-
+|                                      {
+|                                        "getUserId": 2
+|                                      }
+|
+|                           Then Run this and output is,
+|                                       
+|                                       RESPONSE:-
+|                                               {
+|                                                 "data": {
+|                                                   "getTodos": [
+|                                                     {
+|                                                       "title": "delectus aut autem",
+|                                                       "completed": false,
+|                                                       "userId": "1"
+|                                                     },
+|                                                     {
+|                                                       "title": "quis ut nam facilis et officia qui",
+|                                                       "completed": false,
+|                                                       "userId": "1"
+|                                                     },
+|                                                     {
+|                                                       "title": "fugiat veniam minus",
+|                                                       "completed": false,
+|                                                       "userId": "1"
+|                                                     },
+|                                                      .
+|                                                      .
+|                                                      .
+|                                                      etc
+|                                                    ],
+|                                                     "getUser": {
+|                                                       "id": "2",
+|                                                       "name": "Ervin Howell"
+|                                                     }
+|                                                   }
+|                                                }
+|
+|   ---> Got values of what we asked at operation and as we setted user_id in getTodos in typeDefs we had also got 
+|        name of user according to variable value decided at Variables.
+|
+But, the Problem is we are still calling two different-different APIs
+
+----------------------------------------------------------------------------------------------------------------
+
+Now, To Solve the Problem of calling different-different APIs. 
+
+--> Create index_7.js and Copy content on index_6.js in it.
+
+|   Now, Instead of user id can also fetch user directly. in type Todo of typeDefs
+|
+|                                                           type Todo{
+|                                                               id:ID!                                  
+|                                                               title: String! 
+|                                                               completed: Boolean
+|                                                               user: User
+|                                                           }
+|
+|   And also Now Added Todo at resolver and return the user By getting user id from todo.id
+|
+|               resolvers: {
+|                           Todo:{ // if anyone try to fetch user of Todo then whatever Todo u are fetching that Todo will be available over here
+|                               // user: (todo) => (await axios.get(`https://jsonplaceholder.typicode.com/users/${id}`)).data, // Copied the code of getUser Below
+|                               user: async (todo) => 
+|                                   (await axios.get(`https://jsonplaceholder.typicode.com/users/${todo.id}`)).data,
+|                           },
+|                           Query:{
+|                               getTodos: async () =>
+|                                   (await axios.get("https://jsonplaceholder.typicode.com/todos")).data, // Calling API and Returning DATA
+|                               getAllUsers: async() =>
+|                                   (await axios.get("https://jsonplaceholder.typicode.com/users")).data,
+|                               getUser: async(parent, {id}) =>                    // ignore first parameter we will have 2nd Parameter
+|                                   (await axios.get(`https://jsonplaceholder.typicode.com/users/${id}`)).data,
+|                           }
+|                       },
+|
+|   Here, we got user: User 
+|   Then,  Resolvers -> Todo says that in 
+|                                           user: async (todo)
+|                        GraphQL says that will give you parent just give me it's user. So we replied by calling an 
+|                        API inside axios.get and getting user from it by todo.id
+
+|   Now at localhost 8000/graphql whatever we ask at operation we will get it.
+
+|  
+|   Then in operation Will run nested query of getTodos and user to write all in one query 
+| 
+|               INSIDE UI:- 
+|
+|                           WRITE OPERATION:-
+|                                       query GetAllTodos{
+|                                         getTodos {
+|                                           id
+|                                           title
+|                                           completed
+|                                           user {
+|                                             name
+|                                             email
+|                                           }
+|                                         }
+|                                       }
+|
+|                           Then Run this and output is,
+|                                       
+|                                       RESPONSE:-
+|                                                {
+|                                                  "errors": [...
+|                                                  ],
+|                                                  "data": {
+|                                                    "getTodos": [
+|                                                      {
+|                                                        "id": "1",
+|                                                        "title": "delectus aut autem",
+|                                                        "completed": false,
+|                                                        "user": {
+|                                                          "name": "Leanne Graham"
+|                                                          "email": "Sincere@april.biz"
+|                                                        }
+|                                                      },
+|                                                      {
+|                                                        "id": "2",
+|                                                        "title": "quis ut nam facilis et officia qui",
+|                                                        "completed": false,
+|                                                        "user": {
+|                                                          "name": "Ervin Howell"
+|                                                          "email": "Shanna@melissa.tv"
+|                                                        }
+|                                                      },
+|                                                      {
+|                                                        "id": "3",
+|                                                        "title": "fugiat veniam minus",
+|                                                        "completed": false,
+|                                                        "user": {
+|                                                          "name": "Clementine Bauch"
+|                                                          "email": "Nathan@yesenia.net"
+|                                                        }
+|                                                      },
+|                                                      {
+|                                                        "id": "4",
+|                                                        "title": "et porro tempora",
+|                                                        "completed": true,
+|                                                        "user": {
+|                                                          "name": "Patricia Lebsack"
+|                                                          "email": "Julianne.OConner@kory.org"
+|                                                        }
+|                                                      },
+|                                                      .
+|                                                      .
+|                                                      .
+|                                                      etc
+|                                                     ]
+|                                                   }
+|                                                 }
+|
+|   ---> Got values of what we asked at operation by nested query as we added user:User in type Todo Typedef also 
+|        added Todo in resolvers
+
+Done Backend
+
+----------------------------------------------------------------------------------------------------------------
+
+FrontEnd with HTML
+
+--> At client folder Created index.html
+
+|       CODE:-
+|                   <!DOCTYPE html>
+|                   <html lang="en">
+|                   <head>
+|                       <meta charset="UTF-8">
+|                       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+|                       <title>GraphQL Client</title>
+|                   </head>
+|                   <body>
+|                   
+|                       <h2>GraphQL Client</h2>
+|                   
+|                       <button onclick="fetchTodos()">Fetch Todos</button>
+|                       <button onclick="fetchUsers()">Fetch Users</button>
+|                       
+|                       <div>
+|                           <input type="text" id="userId" placeholder="Enter User ID">
+|                           <button onclick="fetchUserById()">Get User</button>
+|                       </div>
+|                   
+|                       <div id="result">Results will be displayed here...</div>
+|                   
+|                       <script>
+|                           const API_URL = "http://localhost:8000/graphql";
+|                   
+|                           async function fetchTodos() {
+|                               const query = `{
+|                                   getTodos {
+|                                       id
+|                                       title
+|                                       completed
+|                                   }
+|                               }`;
+|                               fetchGraphQL(query);
+|                           }
+|                   
+|                           async function fetchUsers() {
+|                               const query = `{
+|                                   getAllUsers {
+|                                       id
+|                                       name
+|                                       email
+|                                   }
+|                               }`;
+|                               fetchGraphQL(query);
+|                           }
+|                   
+|                           async function fetchUserById() {
+|                               const userId = document.getElementById("userId").value;
+|                               if (!userId) {
+|                                   alert("Please enter a User ID");
+|                                   return;
+|                               }
+|                               const query = `{
+|                                   getUser(id: "${userId}") {
+|                                       id
+|                                       name
+|                                       email
+|                                       phone
+|                                   }
+|                               }`;
+|                               fetchGraphQL(query);
+|                           }
+|                   
+|                           async function fetchGraphQL(query) {
+|                               const response = await fetch(API_URL, {
+|                                   method: "POST",
+|                                   headers: { "Content-Type": "application/json" },
+|                                   body: JSON.stringify({ query })
+|                               });
+|                   
+|                               const result = await response.json();
+|                               document.getElementById("result").innerText = JSON.stringify(result, null, 2);
+|                           }
+|                       </script>
+|                   
+|                   </body>
+|                   </html>
+
+
+|    How It Works:
+|       --> Buttons
+|       
+|               "Fetch Todos" → Fetches all todos from the GraphQL API.
+|               "Fetch Users" → Fetches all users.
+|               "Get User" → Fetches a user by entering their ID.
+|       
+|       -->Input Field
+|       
+|               Enter a User ID to fetch their details.
+|       
+|       -->Results Section
+|       
+|               Displays the response from the GraphQL API in JSON format.
+
+|    How to Run:
+|        --> Start the GraphQL Server
+|                                    node server/index.js
+|        --> Open client/index.html in a browser
+|                                    Click buttons to fetch data.
+|                                    View results in the #result section.
+
+----------------------------------------------------------------------------------------------------------------
