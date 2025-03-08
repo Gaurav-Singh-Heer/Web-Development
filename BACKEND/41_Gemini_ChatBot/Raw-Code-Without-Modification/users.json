@@ -1,0 +1,38 @@
+[
+  {
+    "email": "admin@gmail.com",
+    "password": "admin"
+  },
+  {
+    "email": "user2@example.com",
+    "password": "securepassword"
+  },
+  {
+    "email": "gauravheer2005@gmail.com",
+    "password": "gaurav23"
+  },
+  {
+    "email": "agamin@gmail.com",
+    "password": "Agam"
+  },
+  {
+    "email": "gaurav2005@gmail.com",
+    "password": "Gaurav"
+  },
+  {
+    "email": "jethalal@gmail.com",
+    "password": "12345"
+  },
+  {
+    "email": "champak@example.com",
+    "password": "12345"
+  },
+  {
+    "email": "badmas@gmail.com",
+    "password": "adamin"
+  },
+  {
+    "email": "sam2@gmail.com",
+    "password": "admin"
+  }
+]

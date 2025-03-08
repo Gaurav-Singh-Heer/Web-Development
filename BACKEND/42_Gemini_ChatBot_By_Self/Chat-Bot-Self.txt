@@ -1,0 +1,205 @@
+# Chatbot Implementation Guide
+
+## Important Links
+
+1. **AI Google Dev Gemini API Node.js**: [Documentation](https://ai.google.dev/gemini-api/docs#node.js)
+2. **Get GEMINI API Key**: [Get API Key](https://aistudio.google.com/apikey)
+
+## Installation Steps
+
+```sh
+npm i @google/generative-ai dotenv express cors body-parser
+```
+
+## .env File Configuration
+
+```env
+GEMINI_API_KEY=your_google_api_key_here
+```
+
+## 1. Setting Up the Server (server.js)
+
+### 1.1 Import Required Modules
+
+```javascript
+const express = require('express');
+const path = require('path');
+const sahayakRoutes = require('./routes/sahayakRoutes');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+require('dotenv').config();
+```
+
+### 1.2 Initialize Express Application
+
+```javascript
+const app = express();
+const PORT = process.env.PORT || 3000;
+```
+
+### 1.3 Middleware Configuration
+
+```javascript
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
+app.use(bodyParser.json());
+```
+
+### 1.4 Using Routes
+
+```javascript
+app.use('/api', sahayakRoutes);
+```
+
+### 1.5 Serve Home Page
+
+```javascript
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'home.html'));
+});
+```
+
+### 1.6 Start the Server
+
+```javascript
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}/`);
+});
+```
+
+---
+
+## 2. Setting Up Google Generative AI (sahayakController.js)
+
+### 2.1 Import Required Modules
+
+```javascript
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+```
+
+### 2.2 Initialize Google Generative AI Model
+
+```javascript
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+```
+
+### 2.3 Handle Incoming User Messages
+
+```javascript
+exports.sendMessage = async (req, res) => {
+    try {
+        const { userMessage, followUp } = req.body;
+        const prompt = `You are Sahayak, an assistant for health-related queries...\nPrevious conversation: ${followUp}\nUser's new query: ${userMessage}`;
+        
+        const result = await model.generateContent(prompt);
+        res.json({ message: result.response.text() });
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+```
+
+---
+
+## 3. Creating Routes (sahayakRoutes.js)
+
+### 3.1 Import Required Modules
+
+```javascript
+const express = require('express');
+const { sendMessage } = require('../controller/sahayakController');
+```
+
+### 3.2 Create Router and Define Route
+
+```javascript
+const router = express.Router();
+router.post('/sahayak', sendMessage);
+```
+
+### 3.3 Export Router
+
+```javascript
+module.exports = router;
+```
+
+---
+
+## 4. Creating Chatbot Interface (home.html)
+
+### 4.1 Basic HTML Structure
+
+```html
+<header>
+    <h1>Welcome to Sahayak Chatbot</h1>
+</header>
+```
+
+### 4.2 Chatbot UI Elements
+
+```html
+<div class="chatbot-btn" id="chatbot-btn">TALK TO AI</div>
+<div class="chatbot-container" id="chatbot-container">
+```
+
+### 4.3 JavaScript for Chatbot Interaction
+
+```javascript
+const chatbotBtn = document.getElementById('chatbot-btn');
+const chatbotContainer = document.getElementById('chatbot-container');
+const chatbotCloseBtn = document.getElementById('chatbot-close-btn');
+
+chatbotBtn.addEventListener('click', function () {
+    chatbotContainer.style.display = 'block';
+});
+chatbotCloseBtn.addEventListener('click', function () {
+    chatbotContainer.style.display = 'none';
+});
+```
+
+### 4.4 Send Message to Backend
+
+```javascript
+async function sendMessageToBackend(userMessage, followUp) {
+    try {
+        const response = await fetch('http://localhost:3000/api/sahayak', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userMessage, followUp }),
+        });
+        
+        const data = await response.json();
+        return data.message;
+    } catch (error) {
+        console.error("Error:", error);
+        return "Error connecting to the server.";
+    }
+}
+```
+
+### 4.5 Display Response
+
+```javascript
+const chatbotBody = document.getElementById('chatbot-body');
+async function handleUserMessage() {
+    const userMessage = document.getElementById('chat-input').value;
+    chatbotBody.innerHTML += `<div class='user-message'>${userMessage}</div>`;
+    
+    const chatbotResponse = await sendMessageToBackend(userMessage, "");
+    chatbotBody.innerHTML += `<div class='chatbot-message'>${chatbotResponse}</div>`;
+}
+```
+
+---
+
+## Summary
+- **server.js**: Configures Express server and integrates chatbot routes.
+- **sahayakController.js**: Handles AI model interaction.
+- **sahayakRoutes.js**: Defines chatbot API route.
+- **home.html**: Provides chatbot UI and handles user interactions.
+- **Final Outcome**: A working chatbot that responds to user queries using Google Generative AI.
+

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PGIMER</title>
+    <link rel="stylesheet" href="../home.css">
+    <style>
+        /* Department */
+        .features h2 {
+            font-size: 32px;
+            color: white;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            border: solid white 3px;
+            box-shadow: 7px 10px 9px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Styling for the scrolling cards */
+        .cards {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 20px 0px;
+            scroll-snap-type: x mandatory;
+        }
+
+        .card {
+            flex: 0 0 auto;
+            width: 250px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card img {
+            width: 95%;
+            border-radius: 15px;
+        }
+
+        .cards::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .cards::-webkit-scrollbar-thumb {
+            background: #4cc9f0;
+            border-radius: 10px;
+        }
+
+        .cards::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        /* Form styles */
+        #appointments {
+            padding: 5%;
+            text-align: center;
+            background-image: linear-gradient(180deg, #36428f, transparent);
+            box-shadow: 1px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #appointments h2 {
+            font-size: 32px;
+            color: white;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            border: solid white 3px;
+            box-shadow: 7px 10px 9px rgba(0, 0, 0, 0.3);
+        }
+
+        .appointment-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .appointment-form label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            align-self: flex-start;
+            color: #333;
+        }
+
+        .appointment-form input,
+        .appointment-form select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        .appointment-form button {
+            padding: 12px 20px;
+            font-size: 18px;
+            background-color: #4cc9f0;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .appointment-form button:hover {
+            background-color: #3aafc0;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            #appointments {
+                padding: 30px 20px;
+            }
+
+            .appointment-form {
+                max-width: 100%;
+                padding: 15px;
+            }
+
+            .appointment-form h2 {
+                font-size: 24px;
+            }
+
+            .appointment-form input,
+            .appointment-form select {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .appointment-form button {
+                font-size: 16px;
+                padding: 10px 15px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .appointment-form {
+                max-width: 100%;
+                padding: 10px;
+            }
+
+            .appointment-form h2 {
+                font-size: 20px;
+            }
+
+            .appointment-form input,
+            .appointment-form select {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            .appointment-form button {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+        }
+
+        /* Contact Section */
+        #contact {
+            background-color: #f7f8fc;
+            padding: 5%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* border-radius: 10px; */
+            text-align: center;
+            background-image: linear-gradient(180deg, #4f7bc3, #9cc3c9);
+        }
+
+        #contact h2 {
+            font-size: 32px;
+            color: white;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            border: solid white 3px;
+            box-shadow: 6px 9px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .info-item {
+            background: rgba(255, 255, 255, 0.8);
+            /* Light background for info sections */
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-item strong {
+            color: #4065b5;
+        }
+
+        .info-item p {
+            font-size: 1em;
+            color: #4cc9f0;
+        }
+
+        .info-item a {
+            text-decoration: none;
+            color: #4cc9f0;
+            /* Link color */
+        }
+
+        .location-map iframe {
+            border-radius: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .contact-info {
+                flex-direction: row;
+                /* For larger screens, show items in a row */
+                justify-content: space-around;
+            }
+
+            .info-item {
+                width: 30%;
+                /* Limit width for each info item */
+            }
+        }
+
+        @media (max-width: 767px) {
+            .contact-info {
+                flex-direction: column;
+            }
+
+            .info-item {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">Group of Hospitals</div>
+        <nav>
+            <ul>
+                <!-- <li><a href="/">Hospitals</a></li> -->
+                <li><a href="/home">Home</a></li>
+                <li><a href="#departments">Our Departments</a></li>
+                <li><a href="#appointments">Appointment</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="content">
+            <h1>PGIMER Chandigarh</h1>
+            <p>North India's No.1 Multi-speciallity Government Hospital</p>
+        </div>
+        <img src="../assets/pgimerMain.png" alt="GMCH">
+    </section>
+
+    <section class="features" id="departments">
+        <h2>Our Departments</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>Cardiology</h3>
+                <img src="../assets/gmchCardiology.png" alt="Cardiology">
+                <p>Comprehensive heart care services.</p>
+            </div>
+            <div class="card">
+                <h3>Neurology</h3>
+                <img src="../assets/gmchNeurology.png" alt="Neurology">
+                <p>Specialized care for brain and nervous system disorders.</p>
+            </div>
+            <div class="card">
+                <h3>Orthopedics</h3>
+                <img src="../assets/pgimerortho.png" alt="Orthopedics">
+                <p>Advanced treatments for bones and joints.</p>
+            </div>
+            <div class="card">
+                <h3>Radiology</h3>
+                <img src="../assets/gmchRadiology.png" alt="Cardiology">
+                <p>Imaging and diagnostics.</p>
+            </div>
+            <div class="card">
+                <h3>Neurology</h3>
+                <img src="../assets/gmchNeurology.png" alt="Neurology">
+                <p>Specialized care for brain and nervous system disorders.</p>
+            </div>
+            <div class="card">
+                <h3>ENT (Ear, Nose, Throat)</h3>
+                <img src="../assets/gmchENT.png" alt="Orthopedics">
+                <p>Specialized care for conditions affecting the ear, nose, and throat.</p>
+            </div>
+            <div class="card">
+                <h3>Cardiology</h3>
+                <img src="../assets/gmchCardiology.png" alt="Cardiology">
+                <p>Comprehensive heart care services.</p>
+            </div>
+            <div class="card">
+                <h3>Orthopedics</h3>
+                <img src="../assets/gmchOrthopedics.png" alt="Neurology">
+                <p>Advanced treatments for bones and joints.</p>
+            </div>
+            <div class="card">
+                <h3>Gastroenterology</h3>
+                <img src="../assets/gmchGastroenterology.png" alt="Orthopedics">
+                <p>It specializes in the diagnosis and treatment of digestive system disorders.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="appointments">
+        <h2>Book an Appointment</h2>
+        <form action="/home" method="POST" class="appointment-form">
+            <label for="name"><b>Name:</b></label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+    
+            <label for="age"><b>Age:</b></label>
+            <input type="number" id="age" name="age" min="1" max="120" placeholder="Enter your age" required>
+    
+            <label for="gender"><b>Gender:</b></label>
+            <select id="gender" name="gender" required>
+                <option value="" disabled selected>Select your gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+    
+            <label for="email"><b>Email:</b></label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+    
+            <label for="department"><b>Choose Department:</b></label>
+            <select id="department" name="department" required>
+                <option value="" disabled selected>Select a department</option>
+                <option value="cardiology">Cardiology</option>
+                <option value="neurology">Neurology</option>
+                <option value="orthopedics">Orthopedics</option>
+                <option value="radiology">Radiology</option>
+                <option value="ent">ENT (Ear, Nose, Throat)</option>
+                <option value="gastroenterology">Gastroenterology</option>
+            </select>
+    
+            <label for="date"><b>Preferred Date:</b></label>
+            <input type="date" id="date" name="date" required>
+    
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+
+    <section id="contact">
+        <div class="contact-content">
+            <h2>Contact & Location</h2>
+            <div class="contact-info">
+                <div class="info-item">
+                    <strong>Address:</strong>
+                    <p>Sector-12, Chandigarh, PIN- 160 012.</p>
+                </div>
+                <div class="info-item">
+                    <strong>Phone:</strong>
+                    <p><a href="mailto:[Hospital Email]">EPBAX: 0091-172-2746018, 2756565, 2747585 <br> Fax Nos. <br> 0091-172-2744401, 2745078</a></p>
+                </div>
+                <div class="info-item">
+                    <strong>Email:</strong>
+                    <p><a href="mailto:[Hospital Email]">pgimer@chd.nic.in</a></p>
+                </div>
+            </div>
+            <div class="location-map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3428.489246866646!2d76.77264457460126!3d30.760845284275202!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fed813c972735%3A0xa1298c583db5cbc3!2sPGI%20HOSPITAL%20CHANDIGARH%2C%20POST%20GRADUATE%20INSTITUTE%20OF%20MEDICAL%20EDUCATION%20%26%20RESEARCH%2C%20Sector%2012%2C%20Chandigarh%2C%20160012!5e0!3m2!1sen!2sin!4v1735118265352!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
+
+    <footer>
+        <p>&copy; 2024 Group Of Hospitals. All Rights Reserved.</p>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Sahayak Chatbot</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Sahayak Chatbot</h1>
+    </header>
+    
+    <main>
+        <p>Interact with our AI-powered chatbot to get instant assistance.</p>
+    </main>
+
+    <!-- Chatbot Button -->
+    <div class="chatbot-btn" id="chatbot-btn">
+       TALK TO AI
+    </div>
+
+    <!-- Chatbot Container -->
+    <div class="chatbot-container" id="chatbot-container">
+        <div class="chatbot-header">
+            Chatbot - Sahayak
+            <button class="chatbot-close-btn" id="chatbot-close-btn">&times;</button>
+        </div>
+        <div class="chatbot-body" id="chatbot-body">
+            <div class="chatbot-message">Hello! How can I help you today?</div>
+        </div>
+        <div class="chatbot-footer">
+            <input type="text" class="chatbot-input" id="user-input" placeholder="Type your message..." />
+            <button class="chatbot-send-btn" id="send-btn">Send</button>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const chatbotBtn = document.getElementById('chatbot-btn');
+    const chatbotContainer = document.getElementById('chatbot-container');
+    const closeBtn = document.getElementById('chatbot-close-btn');
+    const sendBtn = document.getElementById('send-btn');
+    const userInput = document.getElementById('user-input');
+    const chatbotBody = document.getElementById('chatbot-body');
+
+    // Show chatbot on button click
+    chatbotBtn.addEventListener('click', function () {
+        chatbotContainer.style.display = 'block';
+    });
+
+    // Hide chatbot on close button click
+    closeBtn.addEventListener('click', function () {
+        chatbotContainer.style.display = 'none';
+    });
+
+    // Send message to chatbot
+    async function sendMessageToBackend(userMessage, followUp) {
+        try {
+            const response = await fetch('http://localhost:3000/sahayak/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userMessage, followUp }),
+            });
+            const data = await response.json();
+            return data.message.replace("```html", "").replace("```", "");
+        } catch (error) {
+            console.error('Error:', error);
+            return "Sorry, I couldn't reach the server. Try again later.";
+        }
+    }
+
+    sendBtn.addEventListener('click', async function () {
+        const userMessage = userInput.value.trim();
+        const followUp = Array.from(chatbotBody.children).map(child => child.textContent);
+
+        if (userMessage) {
+            chatbotBody.innerHTML += `<div class='user-message'>${userMessage}</div>`;
+            userInput.value = '';
+            const chatbotResponse = await sendMessageToBackend(userMessage, followUp);
+            chatbotBody.innerHTML += `<div class='chatbot-message'>${chatbotResponse}</div>`;
+        }
+    });
+});
+
+    </script>
+</body>
+</html>

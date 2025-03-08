@@ -1,0 +1,26 @@
+[
+  {
+    "name": "gopi",
+    "age": "56",
+    "gender": "male",
+    "email": "agaminbtech@gmail.com",
+    "department": "cardiology",
+    "date": "2025-03-22"
+  },
+  {
+    "name": "cg",
+    "age": "68",
+    "gender": "male",
+    "email": "adg2@gmail.com",
+    "department": "cardiology",
+    "date": "2025-03-29"
+  },
+  {
+    "name": "yamo",
+    "age": "23",
+    "gender": "male",
+    "email": "agaa@gmail.com",
+    "department": "neurology",
+    "date": "2025-03-28"
+  }
+]
