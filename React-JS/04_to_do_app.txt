@@ -1,0 +1,46 @@
+Creating To Do App Design to Learn more about components 
+
+![Design](04_to_do_app/Design.jpg)
+
+At App.jsx Remove The default Code then add:-
+
+|               import React from "react";
+|               
+|               const App = () =>{
+|                 return <p>Todoie App</p>
+|               }
+|               
+|               export default App;
+
+Now, 
+Create Components Folder To Add All Components There Then update App.jsx Accordingly
+
+--> Created Header.jsx
+
+--> Created TodoItem.jsx
+
+|              import React from "react";
+|              
+|              const TodoItem = () => {
+|                  return (
+|                      <input type="checkbox" />
+|                      <p>Eat</p>
+|                      <p>...</p>
+|                  )
+|              }
+
+Gave Error as here at return we did n't had common parent we were returning 3 Things
+
+|               import React from "react";
+|               
+|               const TodoItem = () => {
+|                   return (
+|                       <li>
+|                           <input type="checkbox" />
+|                           <p>Eat</p>
+|                           <p>...</p>
+|                       </li>
+|                   )
+|               }
+
+--> Created Button.jsx for button
