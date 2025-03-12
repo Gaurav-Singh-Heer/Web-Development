@@ -1,0 +1,39 @@
+Everthing is a Component :- Button, Icon, Section
+
+How To Make Component:-
+
+Example :-  Hello World   ==> import React from "react";
+|                             function HelloWorld(){
+|                                 return <h3> Hello World </h3>
+|                             }
+
+So, in react a component is just a function
+
+Rules to Make Component:-
+
+1) Should return jsx
+
+example: -  CORRECT :- function HelloWorldComponent(){
+|                          return <h3> Hello World </h3>
+|                      }
+
+|           INCORRECT :- function HelloWorldComponent(){
+|                            return 'Hello World';
+|                        }
+
+
+2) Component Name must Start with Uppercase Letter
+
+example: -  CORRECT :- function HelloWorldComponent(){
+|                          return <h3> Hello World </h3>
+|                      }
+
+|           INCORRECT :- function helloWorldComponent(){
+|                            return <h3> Hello World </h3>;
+|                        }
+
+
+CREATED 
+2-Components:- 1) HelloWorld in App.jsx 
+|              2) Biography as Biography.jsx 
+In Folder :- 03_Component/src
