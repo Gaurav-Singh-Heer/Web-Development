@@ -1,0 +1,310 @@
+Hooks are the most Important Thing in React
+
+Life Cycle of a component:-
+
+    ----------> Constructed ----------
+    |                                |
+    |                                V
+ Un-Mounted                       Mounted
+    ^                                |
+    |                                |
+    ---------- Constructed <---------
+
+Contructed means Component is Made
+Mounted means To Render Component made on Screen
+Updated means when component is mounted on Screen then it re-render many times "Basically" it updates many Times
+|       example:- when we press on add add add.. item on cart then price is Updated many time 
+
+Un-Mounted means Component is Removed from the Screen.
+
+Life Cycle Understanding was important as, 
+
+
+--> Use-State Hook 
+
+What is a State?
+A state of a component is a variable that holds some information that may change over the lifetime of the component.
+Whenever the value of the state changes, the component re-renders itself with updated values.
+
+Every Component has it's own state
+
+Use-State Hook code:-
+
+import React, {useState} from 'react';
+
+function CounterComponent(){
+    const [count, setCount] = useState(0);         // 0 is initial value of count   // At, [count, setCount] here at 0th index we have count (variable) and at index 1 we have function with which we can update the value of count
+
+    return(
+        <div>
+            <p> Count is {count} </p>
+            <button onClick = {()=> setCount(count+1)}>Increment</button>
+        </div>
+    )
+}
+
+Whenever we will tap at Increment button count will increase.
+
+Now, Will new folder '06_Hooks_and_UseState_Hooks' and Copy paste all things of Folder '05_Props_todo_item' in it.
+
+At component folder will make a new Component named 'CounterComponent.jsx'
+
+Code:-
+
+|               import React, {useState} from "react";
+|               
+|               const CounterComponent = () =>{
+|                   const val = useState(0);
+|               
+|                   console.log(val);   // just to check what useState returns
+|               
+|                   return (
+|                       <div>
+|                           <p> Count Component</p>
+|                       </div>
+|                   )
+|               }
+|               
+|               export default CounterComponent;
+
+Update App.jsx:-
+
+import CounterComponent from "../components/CounterComponent"
+       <CounterComponent />
+
+Output:-
+
+![Output_Design_Counter](06_Hooks_and_UseState_Hooks/Output_Design_Counter.jpg)
+
+Here we can see at console
+|                   console.log(val);   // just to check what useState returns
+
+Now Updating components/CounterComponent.jsx
+
+|                           import React, {useState} from "react";
+|                           
+|                           const CounterComponent = () =>{
+|                               const [count, setCount] = useState(15);
+|                           
+|                               return (
+|                                   <div>
+|                                       <p> Count Component = {count}</p>
+|                                       <button onClick={()=>setCount(45)}>Increment</button>
+|                                   </div>
+|                               )
+|                           }
+|                           
+|                           export default CounterComponent;
+
+By this we will intially see count as 15
+![Output_Design_Counter](06_Hooks_and_UseState_Hooks/Screenshot/1.jpg)
+
+After Click on Increment will see count as 45
+![Output_Design_Counter](06_Hooks_and_UseState_Hooks/Screenshot/2.jpg)
+
+
+**Now, Adding Decrement Button Also
+
+--> Now Updating components/CounterComponent.jsx
+
+|                   import React, {useState} from "react";
+|                   
+|                   const CounterComponent = () =>{
+|                       const [count, setCount] = useState(15);
+|                   
+|                       return (
+|                           <div>
+|                               <p> Count Component = {count}</p>
+|                               <button onClick={()=>setCount(45)}>Increment</button>
+|                               <button onClick={()=>setCount(15)}>Decrement</button>
+|                           </div>
+|                       )
+|                   }
+|                   
+|                   export default CounterComponent;
+
+Initially:-
+![Output_Design_Counter](06_Hooks_and_UseState_Hooks/Screenshot/3.jpg)
+Increment:-
+![Output_Design_Counter](06_Hooks_and_UseState_Hooks/Screenshot/4.jpg)
+Decrement:-
+![Output_Design_Counter](06_Hooks_and_UseState_Hooks/Screenshot/5.jpg)
+
+How we will get to know what is a Hook ?
+All the Hooks in React Starts with the "use" example useState,useCallback,useMemo..etc
+
+Good Practise :- Use "set" in the prefix of the function of the Hook example:- [count, setCount] here we do setCount with prefix "set". As this makes it more clear that setCount will set the value of the count variable.
+
+Now, Incrementing and Decrementing Count Properly by 1. So, Created components/CounterComponent_2.jsx
+
+Code:-
+|               import React, {useState} from "react";
+|               
+|               const CounterComponent = () =>{
+|                   const [count, setCount] = useState(0);
+|               
+|                   return (
+|                       <div>
+|                           <p> Count Component = {count}</p>
+|                           <button onClick={()=>setCount(count+1)}>Increment</button>
+|                           <button onClick={()=>setCount(count-1)}>Decrement</button>
+|                       </div>
+|                   )
+|               }
+|               
+|               export default CounterComponent;
+
+Also updated App.jsx:-
+
+|              import CounterComponent from "../components/CounterComponent_2"
+
+Initially:-
+![Output_Design_Counter](06_Hooks_and_UseState_Hooks/Screenshot/6.jpg)
+Increment by 5:-
+![Output_Design_Counter](06_Hooks_and_UseState_Hooks/Screenshot/7.jpg)
+Now Decrement by 8:-
+![Output_Design_Counter](06_Hooks_and_UseState_Hooks/Screenshot/8.jpg)
+
+Now Added console.log("Hello",count) at CounterComponent_2
+To Prove Page re-renders each time. Whenever the value of the state changes.
+
+Here, is The ScreenShot of the Proof;
+![Output_Design_Counter](06_Hooks_and_UseState_Hooks/Screenshot/9.jpg)
+
+Now, One Component Can Have Multiple State as Well.
+
+so, Created CounterComponent_3.jsx and pasted Code of CounterComponent_2 in it.
+
+Updated Code:-
+
+|               import React, {useState} from "react";
+|               
+|               const CounterComponent = () =>{
+|                   const [count, setCount] = useState(0);
+|                   const [value, setValue] = useState('Piyush is Teacher of Gaurav');
+|               
+|                   return (
+|                       <div>
+|                           <p> Count Component = {count}</p>
+|                           <h3>Value is {value} </h3>
+|                           <button onClick={()=>setCount(count+1)}>Increment</button>
+|                           <button onClick={()=>setCount(count-1)}>Decrement</button>
+|                       </div>
+|                   )
+|               }
+|               
+|               export default CounterComponent;
+
+Now, Updated App.jsx;
+
+|               import CounterComponent from "../components/CounterComponent_3"
+
+Output:-
+![Output_Design_Counter](06_Hooks_and_UseState_Hooks/Screenshot/10.jpg)
+
+Now, Adding Button To Change value on Click:-
+
+Updated Code:-
+|
+|               import React, {useState} from "react";
+|               
+|               const CounterComponent = () =>{
+|                   const [count, setCount] = useState(0);
+|                   const [value, setValue] = useState('Piyush is Teacher of Gaurav');
+|               
+|                   return (
+|                       <div>
+|                           <p> Count Component = {count}</p>
+|                           <h3>Value is {value} </h3>
+|                           <button onClick={()=>setValue("Gaurav is Student of Piyush")}>Change VALUE</button>
+|                           <br />
+|                           <br />
+|                           <button onClick={()=>setCount(count+1)}>Increment</button>
+|                           <button onClick={()=>setCount(count-1)}>Decrement</button>
+|                       </div>
+|                   )
+|               }
+|               
+|               export default CounterComponent;
+
+Initial Output:-
+![Output_Design_Counter](06_Hooks_and_UseState_Hooks/Screenshot/11.jpg)
+
+OnClick Changed Output:-
+![Output_Design_Counter](06_Hooks_and_UseState_Hooks/Screenshot/12.jpg)
+
+ASSIGNMENT:-
+
+Now, Create CounterComponent_Assignment:-
+There Set value as Odd if Counter Value is Odd and Even if Counter value is Even 
+
+Code:-
+
+|               import React, { useState } from "react";
+|               
+|               const CounterComponent = () => {
+|                   const [count, setCount] = useState(0);
+|                   // const [value, setValue] = useState("Even");
+|               
+|                   return (
+|                       <div>
+|                           <p> Count Component = {count}</p>
+|                           <h3>Value is {count % 2 === 0 ? "Even" : "Odd"} </h3>
+|                           <button onClick={() => setCount(count + 1)}>Increment</button>
+|                           <button onClick={() => setCount(count - 1)}>Decrement</button>
+|                       </div>
+|                   );
+|               };
+|               
+|               export default CounterComponent;
+|               
+|               // OR
+|               
+|               /*
+|               import React, { useState } from "react";
+|               
+|               const CounterComponent = () => {
+|                   const [count, setCount] = useState(0);
+|                   const [value, setValue] = useState("Even");
+|               
+|                   const handleIncrement = () => {
+|                       const newCount = count + 1;
+|                       setCount(newCount);
+|                       setValue(newCount % 2 === 0 ? "Even" : "Odd");
+|                   };
+|               
+|                   const handleDecrement = () => {
+|                       const newCount = count - 1;
+|                       setCount(newCount);
+|                       setValue(newCount % 2 === 0 ? "Even" : "Odd");
+|                   };
+|               
+|                   return (
+|                       <div>
+|                           <p> Count Component = {count}</p>
+|                           <h3>Value is {value} </h3>
+|                           <button onClick={handleIncrement}>Increment</button>
+|                           <button onClick={handleDecrement}>Decrement</button>
+|                       </div>
+|                   );
+|               };
+|               
+|               export default CounterComponent;
+|               */
+
+Updated App.jsx:-
+|               import CounterComponent from "../components/CounterComponent_Assignment"
+
+Initial Output:-
+![Output_Design_Counter](06_Hooks_and_UseState_Hooks/Screenshot/13.jpg)
+
+OnClick Changed Count to 1:-
+![Output_Design_Counter](06_Hooks_and_UseState_Hooks/Screenshot/14.jpg)
+
+OnClick Changed Count to -2:-
+![Output_Design_Counter](06_Hooks_and_UseState_Hooks/Screenshot/15.jpg)
+
+So, this is the Power of React whenever the State Changes Value Changes Automatically. It Automaically Re-Renders.
+In JavaScript we needed to do this Manually.
+
+For More About Hooks Visit:-    reactjs.org (https://legacy.reactjs.org/docs/cdn-links.html) at RHS there is DropDown of Hooks Which U can see
