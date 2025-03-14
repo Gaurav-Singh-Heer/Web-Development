@@ -1,0 +1,140 @@
+Props:- Props are like parameteres of a function
+
+In Todoie App at 04_to_do_app
+We had output as ,
+![Design](04_to_do_app/Output_Design.jpg)
+
+In this eat task was repeating Blindly as we wrote in Code 
+
+We, Don't have a Way to control this it is just rendering what we had said 
+
+To Control this problem we have Props
+
+Till now we had used function without focusing at the Parameter. Now will add parameter's at function to make it generic which is called as Props.
+
+
+Function Without Parameter:
+
+|               function MyHeader(){
+|                   return <h1>Hello World</h1>
+|               }
+
+Function With Parameter: Prop
+
+|               function MyHeader(props){
+|                   return <h1>{props.title}</h1>
+|               }
+|               
+|               <Myheader title="This is my Heading"/>
+
+Now, Created 05_Props_todo_item Folder and kept things of 04_to_do_app folder in it
+
+Then will modify components/TodoItem.jsx in it.
+
+This time our goal is that todo list must not contain same item :-
+
+Earlier:- ![Design](04_to_do_app/Output_Design.jpg)         Goal:-![Goal_Design](05_Props_todo_item/Design.jpg)
+
+Earlier Code:- TodoItem
+
+|                       import React from "react";
+|                       
+|                       const TodoItem = () => {
+|                           return (
+|                               <li className="todo-item">
+|                                   <span>
+|                                       <input type="checkbox" />
+|                                       <span className="todo-item-text">Eat</span>
+|                                   </span>
+|                                   <p>...</p>
+|                               </li>
+|                           )
+|                       }
+|                       
+|                       export default TodoItem;
+
+New Code:- TodoItem
+
+|                       import React from "react";
+|                       
+|                       const TodoItem = (props) => {
+|                           return (
+|                               <li className="todo-item">
+|                                   <span>
+|                                       <input type="checkbox" />
+|                                       <span className="todo-item-text">{props.text}</span>
+|                                   </span>
+|                                   <p>...</p>
+|                               </li>
+|                           )
+|                       }
+|                       
+|                       export default TodoItem;
+
+Updated App.jsx
+
+|                       Earlier:-
+|                       
+|                             <TodoItem />
+|                             <TodoItem />
+|                             <TodoItem />
+|                             <TodoItem />
+|                       
+|                       Now:- 
+|                       
+|                             <TodoItem text="Eat"/>
+|                             <TodoItem text="Code"/>
+|                             <TodoItem text="Sleep"/>
+|                             <TodoItem text="Repeat"/>
+|                       
+
+New_Output:- ![Design](05_Props_todo_item/New_Output_Design.jpg)
+
+**We can Also pass More than one Attribute at App.jsx**
+
+Conditionally Rendering at components/TodoItem.jsx to not show the task which are completed:-
+
+|                       {props.completed ? <></> : <input type="checkbox" />}
+|                       <span className="todo-item-text">{props.text}</span>
+|
+
+Here, props.completed is a boolean value either True or False
+if task completed render nothing else render checkbox
+
+Now passing Code as Completed at App.jsx:-
+
+|      <TodoItem completed={true} text="Code"/>
+
+New_Output:- ![Design](05_Props_todo_item/New_Output_Design_2.jpg)
+
+Now, Changing components/Headers.jsx So that we can Give nice name to our tasks :-
+
+Earlier Code:- Headers
+
+|                       import React from "react";
+|                       
+|                       const Header = () =>{
+|                           return <h1 className="todo-header">Todo</h1>
+|                       }
+|                       
+|                       export default Header;
+
+New Code:- Headers
+
+|                       import React from "react";
+|                       
+|                       const Header = (props) =>{
+|                           return <h1 className="todo-header">{props.title}</h1>
+|                       }
+|                       
+|                       export default Header;
+
+Updated App.jsx:-
+
+|      <Header title="Just Do These"/>
+
+![Dynamic_Heading](05_Props_todo_item/Dynamic_Heading.jpg)
+
+Updated App.jsx:-
+
+|      <Header title="Todoie App"/>
