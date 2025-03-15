@@ -375,7 +375,7 @@ export default MyComponent;
 
 ---
 
-# Updating My_Component_3
+## Updating My_Component_3
 
 ```jsx
 import React, { useEffect, useState } from "react";
