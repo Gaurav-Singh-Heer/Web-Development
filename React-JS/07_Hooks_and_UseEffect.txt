@@ -1,0 +1,421 @@
+# React Hooks and useEffect Hook
+
+## Life Cycle of a React Component
+
+```
+    ----------> Constructed ----------
+    |                                |
+    |                                V
+ Un-Mounted                       Mounted
+    ^                                |
+    |                                |
+    ---------- Constructed <---------
+                    OR
+                  Update
+```
+
+UseEffect Hook is For eg we need to run a piece of code(function(){}) between this lifecycle when the function will be mounted on the screen 
+
+For example we have a Card of Blog Page. So when we will mount Page on screen we will call a function which will fetch content of Blog and display them
+
+UseEffect Hook :- Run code during the change in lifecycle of a component
+
+--> It's Code is as:-
+
+import React, {useEffect} from 'react';
+
+const MyComponent(){
+    
+    useEffect(() =>{
+        console,log('Hello');
+    },[])
+
+    return (
+        <div>
+            <p> Hey There </p>
+        </div>
+    )
+}
+
+useEffect(() =>{console,log('Hello')},[])         
+
+Here First Argument:- {console,log('Hello')} is function that runs when state changes
+     Second Argument:- [] is a Dependency Array.
+
+
+Now Created a Folder named "07_Hooks_and_UseEffect_Hooks"
+
+Removed Code of App.jsx and Wrote this code:-
+
+|                       import React, { useEffect } from 'react'
+|                       import './App.css'
+|                       
+|                       function App() {
+|                       
+|                         useEffect(() =>{
+|                           console.log ("App Component is Mounting.... ")
+|                         }, [])
+|                       
+|                         return <div className='App'></div>
+|                       }
+|                       
+|                       export default App
+
+By this, whenever we will display Our App/Component on Screen this will run :-  console.log ("I am Mounting.... ")
+
+![Mounting..](./07_Hooks_and_UseEffect_Hook/screenshots/1.jpg)
+
+Now, Create Folder components there Created My_Component.jsx
+
+Code:- 
+
+|                   import React, {useEffect} from "react";
+|                   
+|                   const MyComponent = () => {
+|                   
+|                       useEffect (()=>{
+|                           console.log('My Component is Mounting')
+|                       }, [])
+|                   
+|                       return (
+|                           <h2>My COMPONENT</h2>
+|                       )
+|                   }
+
+Updating App.jsx:- import MyComponent from '../components/My_Component' and added it on return as 
+
+|                   import React, { useEffect } from 'react'
+|                   import './App.css'
+|                   
+|                   import MyComponent from '../components/My_Component'
+|                   
+|                   function App() {
+|                   
+|                     useEffect(() =>{
+|                       console.log ("App Component is Mounting.... ")
+|                     }, [])
+|                   
+|                     return <div className='App'>
+|                       <MyComponent />
+|                     </div>
+|                   }
+|                   
+|                   export default App
+
+OUTPUT:-
+![Component and App Mounting..](./07_Hooks_and_UseEffect_Hook/screenshots/2.jpg)
+
+Here, App Mounted -> My Component Mounted Then again -> App Mounted -> My Component Mounted
+
+---
+
+Now, How to Achieve to run my Code when state is being Updated
+
+Now have to update components/My_Component 
+So, Created components/My_Component_2:-
+Import useState also and make a counter over there:-
+
+|               import React, {useEffect, useState} from "react";
+|               
+|               const MyComponent = () => {
+|               
+|                   const [count, setCount] = useState(0);    
+|               
+|                   useEffect (()=>{
+|                       console.log('My Component is Mounting')
+|                   }, [])
+|               
+|                   return (
+|                       <div>
+|                           <p>Count is {count}</p>
+|                           <button onClick={()=> setCount(count+1)}>Increment</button>
+|                           <button onClick={()=> setCount(count-1)}>Decrement</button>
+|                       </div>
+|                   )
+|               }
+|               
+|               export default MyComponent
+
+UPDATE App.jsx:-
+
+import MyComponent from '../components/My_Component_2'
+
+OUTPUT:-
+![Before Adding useEffect at update..](./07_Hooks_and_UseEffect_Hook/screenshots/3.jpg)
+
+Here u can see that, We are updating our count but there is nothing new coming at console. 
+Here Update is being done but useEffect is not running it is Running only one time when this component was mounted.
+
+Now we want that UseEffect must run then also when our state is being updated
+
+So, Now will Create new UseEffect at /components/My_Component_2
+
+|                       import React, {useEffect, useState} from "react";
+|                       
+|                       const MyComponent = () => {
+|                       
+|                           const [count, setCount] = useState(0);    
+|                       
+|                           useEffect (()=>{
+|                               console.log('My Component is Mounting')
+|                           }, [])
+|                       
+|                           useEffect (()=>{
+|                               console.log("Count got updated", count)
+|                           }, [count]);                         // Now when count update this function will run  // Dependency Array means when to run this Component
+|                       
+|                           return (
+|                               <div>
+|                                   <p>Count is {count}</p>
+|                                   <button onClick={()=> setCount(count+1)}>Increment</button>
+|                                   <button onClick={()=> setCount(count-1)}>Decrement</button>
+|                               </div>
+|                           )
+|                       }
+|                       
+|                       export default MyComponent
+
+OUTPUT of Using useEffect at Update:-
+![After Adding useEffect at update..](./07_Hooks_and_UseEffect_Hook/screenshots/4.jpg)
+
+Creating count_2 to show how dependency Array matter for useEffect
+
+Code:-
+|                   import React, {useEffect, useState} from "react";
+|                   
+|                   const MyComponent = () => {
+|                   
+|                       const [count, setCount] = useState(0);    
+|                       const [count_2, setCount_2] = useState(40);    
+|                   
+|                       useEffect (()=>{
+|                           console.log('My Component is Mounting')
+|                       }, [])
+|                   
+|                       useEffect (()=>{
+|                           console.log("Count got updated", count)
+|                       }, [count]);                         // Now when count update this function will run  // Dependency Array means when to run this Component
+|                   
+|                       return (
+|                           <div>
+|                               <p>Count is {count}</p>
+|                               <button onClick={()=> setCount(count+1)}>Increment</button>
+|                               <button onClick={()=> setCount(count-1)}>Decrement</button>
+|                               
+|                               <p>Count_2 value is {count_2}</p>
+|                               <button onClick={()=> setCount_2(count_2+1)}>Increment count_2</button>
+|                               <button onClick={()=> setCount_2(count_2-1)}>Decrement count_2</button>
+|                           </div>
+|                       )
+|                   }
+|                   
+|                   export default MyComponent
+
+Output:- Here we Increment value of Count_2 from 40 to 44 but not displaying it as we hadn't added it on dependency Array
+
+![Before Adding Count_2 at Dependecy Array..](./07_Hooks_and_UseEffect_Hook/screenshots/5.jpg)
+
+
+After adding count_2 in Dependency Array
+
+|               useEffect (()=>{
+|                   console.log("Count got updated", count)
+|                   console.log("Count_2 got updated", count_2)
+|               }, [count,count_2]);                         // Now when count update this function will run  // Dependency Array means when to run this Component
+|           
+
+Output:- Here we Decrement value of Count_2 from 40 to 39 and it is displayed at console as we added it on dependency Array
+
+![After Adding Count_2 at Dependecy Array..](./07_Hooks_and_UseEffect_Hook/screenshots/6.jpg)
+
+
+SUMMARY:-
+
+1) When Dependency Array is Empty :- It Runs when component is Mounted 
+2) Added Variable at Dependecy Array :- It Runs when component is Updated
+
+---
+
+Now, Using useEffect when Component is unmounted. Then i have to do some Cleanup Thing
+
+So, Created new file components/My_Component_3
+
+Adding UseState at App.jsx
+
+App.jsx BEFORE:-
+|                       import React, { useEffect } from 'react'
+|                       import './App.css'
+|                       
+|                       import MyComponent from '../components/My_Component_2'
+|                       
+|                       function App() {
+|                         
+|                         useEffect(() =>{
+|                           console.log ("App Component is Mounting.... ")
+|                         }, [])
+|                       
+|                         return <div className='App'>
+|                           <MyComponent />
+|                         </div>
+|                       }
+|                       
+|                       export default App
+
+App.jsx Now:-
+|                       import React, { useEffect, useState } from 'react'
+|                       import './App.css'
+|                       
+|                       import MyComponent from '../components/My_Component_3'
+|                       
+|                       function App() {
+|                       
+|                         const [isVisible, setVisible] = useState(true);
+|                       
+|                         useEffect(() =>{
+|                           console.log ("App Component is Mounting.... ")
+|                         }, [])
+|                       
+|                         return <div className='App'>
+|                           
+|                           {isVisible ? <MyComponent />: <></>}         
+|                           <br></br>
+|                           <button onClick={()=> setVisible(!isVisible)}>TOGGLE</button>
+|                         </div>
+|                       }
+|                       
+|                       export default App
+|                       
+
+Here, if now we Click on Toggle Component Hides and when we Again Click on Toggle it is Displayed Back Again. 
+
+Initially:- Displaying All
+
+![Initially..](./07_Hooks_and_UseEffect_Hook/screenshots/7.jpg)
+
+
+After Click on Toggle:- Displaying Nothing
+![Display None..](./07_Hooks_and_UseEffect_Hook/screenshots/8.jpg)
+
+Now, we have to do some clean up When Displaying Nothing
+
+At My_Component_3 will create a function which will run during Clean-up or Unmount
+
+ADDED THIS:-
+
+|           return function(){
+|               console.log('UnMounting.......................')
+|           }
+
+WHOLE CODE:-
+
+|                       import React, {useEffect, useState} from "react";
+|                       
+|                       const MyComponent = () => {
+|                       
+|                           const [count, setCount] = useState(0);    
+|                           const [count_2, setCount_2] = useState(40);    
+|                       
+|                           useEffect (()=>{
+|                               console.log('My Component is Mounting')
+|                       
+|                               return function(){
+|                                   console.log('UnMounting.......................')
+|                               }
+|                       
+|                           }, [])
+|                       
+|                           useEffect (()=>{
+|                               console.log("Count got updated", count)
+|                               console.log("Count_2 got updated", count_2)
+|                           }, [count,count_2]);                         // Now when count update this function will run  // Dependency Array means when to run this Component
+|                       
+|                           return (
+|                               <div>
+|                                   <p>Count is {count}</p>
+|                                   <button onClick={()=> setCount(count+1)}>Increment</button>
+|                                   <button onClick={()=> setCount(count-1)}>Decrement</button>
+|                                   
+|                                   <p>Count_2 value is {count_2}</p>
+|                                   <button onClick={()=> setCount_2(count_2+1)}>Increment count_2</button>
+|                                   <button onClick={()=> setCount_2(count_2-1)}>Decrement count_2</button>
+|                               </div>
+|                           )
+|                       }
+|                       
+|                       export default MyComponent
+
+INITIALLY:-
+![Initially..](./07_Hooks_and_UseEffect_Hook/screenshots/9.jpg)
+
+Here Unmount as 
+
+TOGGLE DISPLAY NONE:-
+![AT TOGGLE..](./07_Hooks_and_UseEffect_Hook/screenshots/10.jpg)
+with Clear Console
+![AT TOGGLE..](./07_Hooks_and_UseEffect_Hook/screenshots/11.jpg)
+
+TOGGLE DISPLAY:-
+![AT TOGGLE..](./07_Hooks_and_UseEffect_Hook/screenshots/12.jpg)
+
+---
+
+Now, Updating My_Component_3
+
+|                   useEffect (()=>{
+|                       console.log("Count got updated", count)
+|                       console.log("Count_2 got updated", count_2)
+|               
+|                       return function(){
+|                           console.log('UnMounting When Count is Updated')
+|                       }
+|               
+|                   }, [count,count_2]);                         // Now when count update this function will run  // Dependency Array means when to run this Component
+|               
+
+WHOLE CODE :-
+
+|               import React, {useEffect, useState} from "react";
+|               
+|               const MyComponent = () => {
+|               
+|                   const [count, setCount] = useState(0);    
+|                   const [count_2, setCount_2] = useState(40);    
+|               
+|                   useEffect (()=>{
+|                       console.log('My Component is Mounting')
+|               
+|                       return function(){
+|                           console.log('UnMounting.......................')
+|                       }
+|               
+|                   }, [])
+|               
+|                   useEffect (()=>{
+|                       console.log("Count got updated", count)
+|                       console.log("Count_2 got updated", count_2)
+|               
+|                       return function(){
+|                           console.log('UnMounting When Count is Updated')
+|                       }
+|               
+|                   }, [count,count_2]);                         // Now when count update this function will run  // Dependency Array means when to run this Component
+|               
+|                   return (
+|                       <div>
+|                           <p>Count is {count}</p>
+|                           <button onClick={()=> setCount(count+1)}>Increment</button>
+|                           <button onClick={()=> setCount(count-1)}>Decrement</button>
+|                           
+|                           <p>Count_2 value is {count_2}</p>
+|                           <button onClick={()=> setCount_2(count_2+1)}>Increment count_2</button>
+|                           <button onClick={()=> setCount_2(count_2-1)}>Decrement count_2</button>
+|                       </div>
+|                   )
+|               }
+|               
+|               export default MyComponent
+
+### At updating page gets Re-Render so first it is unmounted then mounted when we update the value of count
+  ![AT Updating..](./07_Hooks_and_UseEffect_Hook/screenshots/13.jpg)
+
+For more about Hooks, visit: [ReactJS Hooks Documentation](https://legacy.reactjs.org/docs/cdn-links.html) (Check the dropdown on the RHS).
