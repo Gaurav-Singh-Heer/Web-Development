@@ -1,0 +1,481 @@
+#For Tic Tac Toe
+
+We need 2 Components:-
+1) Board
+2) Square in Board
+
+component/Square.jsx;
+import React from "react";
+
+const Square = (props) => {
+    return (
+        <div 
+        onClick={props.onClick}
+        style={{
+            border: '1px solid ',
+            height: '100px',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+            
+        }}
+        className="square">
+            <h5>{props.value}</h5>
+        </div>
+    )
+}
+
+App.jsx
+
+import React, { useState } from 'react';
+import './App.css';
+
+import Board from '../components/Board';
+
+function App() {
+  return <div className='App'>
+    <Board />
+  </div>
+}
+
+export default App;
+
+
+export default Square;
+
+Sure! Let's break it down clearly:
+
+### The issue:
+In **React**, when you use `useState()`, you should **never directly modify the state array/object**, because React depends on immutability to detect changes and re-render components correctly.
+
+### Your `state` is an array:
+
+```js
+const [state, setState] = useState(Array(9).fill(null));
+```
+
+So, `state` looks like this initially:
+
+```js
+[null, null, null, null, null, null, null, null, null]
+```
+
+---
+
+### Why `copyState`?
+
+When the user clicks a square, we need to "mark" it with `"X"` or `"O"`. But instead of doing this:
+```js
+state[index] = "X"; // ❌ BAD (Direct mutation)
+```
+
+We do:
+```js
+const copyState = [...state]; // ✅ GOOD (Create a shallow copy)
+copyState[index] = isXTurn ? "X" : "O"; // Modify the copy
+setState(copyState); // Update the state
+```
+
+### Explanation of `const copyState = [...state];`
+
+`[...state]` is the **spread operator** which creates a shallow copy of the `state` array. It’s like saying:
+
+```js
+const copyState = Array.from(state);
+```
+
+This ensures you don’t mutate the original `state` array directly. React will now recognize that a new array reference has been created and trigger a re-render.
+
+---
+
+### Quick Analogy:
+
+Think of `state` like an "official record book". You don't scribble directly on the official book; instead, you make a **photocopy**, mark changes on the copy, and then replace the old book with the updated version!
+
+---
+
+### Why React cares:
+React uses **shallow comparison** (`===`) to check if your state has changed. If you mutate `state` directly, the array reference doesn’t change, and React might skip re-rendering.
+
+---
+
+Would you like me to also show a visual example of this in the browser console for better understanding? 🚀
+
+import React, {useState} from "react";
+import Square from "./Square";
+
+const Board = () => {
+    const [state, setState] = useState(Array(9).fill(null))
+    const [isXTurn, setIsXTurn] = useState(true);
+
+    const handleClick = (index) => {
+        if (state[index]) return; // Prevent overwriting a square
+
+        console.log("Clicked on Index", index);
+        
+        const copyState = [...state];
+        copyState[index] = isXTurn ? "X" : "O";
+        setState(copyState);
+        setIsXTurn(!isXTurn);
+    };
+
+    console.log("State", state);
+
+    return (
+        <div className="board-container">
+            <div className="board-row">
+                <Square onClick={() => handleClick(0)} value={state[0]}/>
+                <Square onClick={() => handleClick(1)} value={state[1]}/>
+                <Square onClick={() => handleClick(2)} value={state[2]}/>
+            </div>
+            <div className="board-row">
+                <Square onClick={() => handleClick(3)} value={state[3]}/>
+                <Square onClick={() => handleClick(4)} value={state[4]}/>
+                <Square onClick={() => handleClick(5)} value={state[5]}/>
+            </div>
+            <div className="board-row">
+                <Square onClick={() => handleClick(6)} value={state[6]}/>
+                <Square onClick={() => handleClick(7)} value={state[7]}/>
+                <Square onClick={() => handleClick(8)} value={state[8]}/>
+            </div>
+        </div>
+    )
+}
+
+export default Board;
+
+// Now adding CheckWinner
+
+Now adding Logic if no one won
+
+![Draw game](./09_Tic_Tac_Toe/Screenshot/1.jpg)
+
+import React, {useState} from "react";
+import Square from "./Square";
+
+const Board = () => {
+    const [state, setState] = useState(Array(9).fill(null))
+    const [isXTurn, setIsXTurn] = useState(true);
+
+    const checkWinner = () =>{
+        const winnerLogic = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [0, 4, 8],
+            [2, 4, 6],
+        ]
+
+        for (let logic of winnerLogic) {
+            const [a, b, c] = logic;
+
+            if(state[a] === state[b] && state[a] === state[c]){
+                return state[a];
+            }
+        }
+        return false;
+    }
+
+    const isWinner = checkWinner();
+    const isDraw = !isWinner && state.every((square) => square !== null);
+
+    const handleClick = (index) => {
+        if (state[index]) return; // Prevent overwriting a square
+
+        console.log("Clicked on Index", index);
+        
+        const copyState = [...state];
+        copyState[index] = isXTurn ? "X" : "O";
+        setState(copyState);
+        setIsXTurn(!isXTurn);
+    };
+
+    console.log("State", state);
+
+    const resetGame = () => {
+        setState(Array(9).fill(null));
+        setIsXTurn(true);
+    };
+
+    return (
+        <div className="board-container">
+            {isWinner ? (
+                <div className="result">
+                    <h2>🎉 {isWinner} won the game!</h2>
+                    <button className="restart-btn" onClick={resetGame}>
+                        Play Again
+                    </button>
+                </div>
+            ) : isDraw ? (
+                <div className="result">
+                    <h2>🤝 It's a Draw!</h2>
+                    <button className="restart-btn" onClick={resetGame}>
+                        Restart Game
+                    </button>
+                </div>
+            ) : (
+            <>
+              <h3>Next Turn: {isXTurn ? "X" : "O"}</h3>
+              <div className="board-row">
+                <Square onClick={() => handleClick(0)} value={state[0]} />
+                <Square onClick={() => handleClick(1)} value={state[1]} />
+                <Square onClick={() => handleClick(2)} value={state[2]} />
+              </div>
+              <div className="board-row">
+                <Square onClick={() => handleClick(3)} value={state[3]} />
+                <Square onClick={() => handleClick(4)} value={state[4]} />
+                <Square onClick={() => handleClick(5)} value={state[5]} />
+              </div>
+              <div className="board-row">
+                <Square onClick={() => handleClick(6)} value={state[6]} />
+                <Square onClick={() => handleClick(7)} value={state[7]} />
+                <Square onClick={() => handleClick(8)} value={state[8]} />
+              </div>
+            </>
+            )}
+        </div>
+    );
+}
+
+export default Board;
+
+Now,
+Display Play Again and Restart game Button below the tic tac toe game
+
+import React, {useState} from "react";
+import Square from "./Square";
+
+const Board = () => {
+    const [state, setState] = useState(Array(9).fill(null))
+    const [isXTurn, setIsXTurn] = useState(true);
+
+    const checkWinner = () =>{
+        const winnerLogic = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [0, 4, 8],
+            [2, 4, 6],
+        ]
+
+        for (let logic of winnerLogic) {
+            const [a, b, c] = logic;
+
+            if(state[a] === state[b] && state[a] === state[c]){
+                return state[a];
+            }
+        }
+        return false;
+    }
+
+    const isWinner = checkWinner();
+    const isDraw = !isWinner && state.every((square) => square !== null);
+
+    const handleClick = (index) => {
+        if (state[index]) return; // Prevent overwriting a square
+
+        console.log("Clicked on Index", index);
+        
+        const copyState = [...state];
+        copyState[index] = isXTurn ? "X" : "O";
+        setState(copyState);
+        setIsXTurn(!isXTurn);
+    };
+
+    console.log("State", state);
+
+    const resetGame = () => {
+        setState(Array(9).fill(null));
+        setIsXTurn(true);
+    };
+
+    return (
+        <div className="board-container">
+            {isWinner ? (
+                <div className="result">
+                    <h2>🎉 {isWinner} won the game!</h2>
+                </div>
+            ) : isDraw ? (
+                <div className="result">
+                    <h2>🤝 It's a Draw!</h2>
+                </div>
+            ) : (
+                <h3>Next Turn: {isXTurn ? "X" : "O"}</h3>
+            )}
+
+            <div className="board-row">
+                <Square onClick={() => handleClick(0)} value={state[0]} />
+                <Square onClick={() => handleClick(1)} value={state[1]} />
+                <Square onClick={() => handleClick(2)} value={state[2]} />
+            </div>
+            <div className="board-row">
+                <Square onClick={() => handleClick(3)} value={state[3]} />
+                <Square onClick={() => handleClick(4)} value={state[4]} />
+                <Square onClick={() => handleClick(5)} value={state[5]} />
+            </div>
+            <div className="board-row">
+                <Square onClick={() => handleClick(6)} value={state[6]} />
+                <Square onClick={() => handleClick(7)} value={state[7]} />
+                <Square onClick={() => handleClick(8)} value={state[8]} />
+            </div>
+
+            {/* Always show button here */}
+            <button className="restart-btn" onClick={resetGame} style={{ marginTop: '20px' }}>
+                {isWinner || isDraw ? "Play Again" : "Restart Game"}
+            </button>
+        </div>
+    );
+}
+
+export default Board;
+
+Now,
+
+Add 
+if won then will not be able to draw more O and X
+
+const handleClick = (index) => {
+    if (state[index] || isWinner) return; // Prevent clicking on filled square or after win
+    const copyState = [...state];
+    copyState[index] = isXTurn ? "X" : "O";
+    setState(copyState);
+    setIsXTurn(!isXTurn);
+};
+
+
+Whole Code For components/Board.jsx
+
+import React, {useState} from "react";
+import Square from "./Square";
+
+const Board = () => {
+    const [state, setState] = useState(Array(9).fill(null))
+    const [isXTurn, setIsXTurn] = useState(true);
+
+    const checkWinner = () =>{
+        const winnerLogic = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [0, 4, 8],
+            [2, 4, 6],
+        ]
+
+        for (let logic of winnerLogic) {
+            const [a, b, c] = logic;
+
+            if(state[a] === state[b] && state[a] === state[c]){
+                return state[a];
+            }
+        }
+        return false;
+    }
+
+    const isWinner = checkWinner();
+    const isDraw = !isWinner && state.every((square) => square !== null);
+
+    const handleClick = (index) => {
+        // if (state[index]) return; // Prevent overwriting a square
+        if (state[index] || isWinner) return; // Prevent clicking on filled square or after win
+
+
+        console.log("Clicked on Index", index);
+        
+        const copyState = [...state];
+        copyState[index] = isXTurn ? "X" : "O";
+        setState(copyState);
+        setIsXTurn(!isXTurn);
+    };
+
+    console.log("State", state);
+
+    const resetGame = () => {
+        setState(Array(9).fill(null));
+        setIsXTurn(true);
+    };
+
+    return (
+        <div className="board-container">
+            {isWinner ? (
+                <div className="result">
+                    <h2>🎉 {isWinner} won the game!</h2>
+                </div>
+            ) : isDraw ? (
+                <div className="result">
+                    <h2>🤝 It's a Draw!</h2>
+                </div>
+            ) : (
+                <h3>Next Turn: {isXTurn ? "X" : "O"}</h3>
+            )}
+
+            <div className="board-row">
+                <Square onClick={() => handleClick(0)} value={state[0]} />
+                <Square onClick={() => handleClick(1)} value={state[1]} />
+                <Square onClick={() => handleClick(2)} value={state[2]} />
+            </div>
+            <div className="board-row">
+                <Square onClick={() => handleClick(3)} value={state[3]} />
+                <Square onClick={() => handleClick(4)} value={state[4]} />
+                <Square onClick={() => handleClick(5)} value={state[5]} />
+            </div>
+            <div className="board-row">
+                <Square onClick={() => handleClick(6)} value={state[6]} />
+                <Square onClick={() => handleClick(7)} value={state[7]} />
+                <Square onClick={() => handleClick(8)} value={state[8]} />
+            </div>
+
+            {/* Always show button here */}
+            <button className="restart-btn" onClick={resetGame} style={{ marginTop: '20px' }}>
+                {isWinner || isDraw ? "Play Again" : "Restart Game"}
+            </button>
+        </div>
+    );
+}
+
+export default Board;
+
+component/Square.jsx;
+import React from "react";
+
+const Square = (props) => {
+    return (
+        <div 
+        onClick={props.onClick}
+        style={{
+            border: '1px solid ',
+            height: '100px',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+            
+        }}
+        className="square">
+            <h5>{props.value}</h5>
+        </div>
+    )
+}
+
+export default Square;
+
+App.jsx
+
+import React, { useState } from 'react';
+import './App.css';
+
+import Board from '../components/Board';
+
+function App() {
+  return <div className='App'>
+    <Board />
+  </div>
+}
+
+export default App;
