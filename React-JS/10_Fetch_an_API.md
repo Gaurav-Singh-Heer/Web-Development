@@ -223,30 +223,344 @@ export default App;
 
 ---
 
----
-
 # 🚀 Example 2: Random User Generator API
 
-## 🎯 New Task:
+## 🎯 Task Overview
 
-We will now use the **Random User Generator API**:  
-🌐 `https://randomuser.me/`
+We will now use the **Random User Generator API** to dynamically fetch and display random user data.
 
-## 🔨 Steps:
+## 🌐 API Reference
 
-1. **Create a new Vite + React app**  
-   Directory: `10_Random_User_Generator`
-
-> Next, you will fetch random user data from this API and display it dynamically on the screen.
+> **API URL:** [https://randomuser.me/api/](https://randomuser.me/api/)
+> **Reference Site:** [https://randomuser.me/](https://randomuser.me/)
 
 ---
 
-### 💡 Note:
+## 🔧 Steps to Implement
 
-- The approach will be similar:
-  - Create an API utility file.
-  - Create a UserCard component.
-  - Fetch and map data into the component.
-  - Style it nicely.
+### 1️⃣ Setup Directory Structure
+
+- Create a directory named `10_Random_User_Generator`.
+- Copy all content from the existing `10_Fetch_an_API` directory into this new folder.
+
+---
+
+### 2️⃣ API Utility (`components/api.jsx`)
+
+Add a new function `getRandomUser` to fetch user data:
+
+```javascript
+export const getPosts = async () => {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts', { method: 'GET' });
+    return await response.json();
+}
+
+export const getRandomUser = async () => {
+    const response = await fetch('https://randomuser.me/api/', { method: 'GET' });
+    return await response.json();
+}
+```
+
+---
+
+### 3️⃣ Update `App.jsx`
+
+- Import the new API function.
+- Create a new `useEffect` to fetch the random user and log it.
+
+```javascript
+import React, { useState, useEffect } from 'react';
+import { getPosts, getRandomUser } from '../components/api';
+import PostCard from '../components/postcard';
+import './App.css';
+
+function App() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    getPosts().then(posts => setData(posts));
+  }, []);
+
+  useEffect(() => {
+    getRandomUser().then(user => console.log(user));
+  }, []);
+
+  return (
+    <div className='App'>
+      {
+        data ? data.map(e => <PostCard title={e.title} body={e.body} />) : <p>Loading data....</p>
+      }
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+### 4️⃣ Create `components/UserCard.jsx`
+
+Create a simple user card component with hardcoded data for now:
+
+```javascript
+import React from "react";
+
+const UserCard = () => {
+    return (
+        <div className="user-card">
+            <img className="user-img" alt="user" />
+            <h3>Gaurav</h3>
+            <p>+91 99998989898</p>
+            <p>User Address</p>
+        </div>
+    );
+}
+
+export default UserCard;
+```
+
+---
+
+### 5️⃣ Render `UserCard` in `App.jsx`
+
+Update the return statement of `App.jsx`:
+
+```javascript
+import UserCard from '../components/UserCard';
+
+return (
+    <div className='App'> 
+      <UserCard />
+      {
+        data ? data.map(e => <PostCard title={e.title} body={e.body} />) : <p>Loading data....</p>
+      }
+    </div>
+);
+```
+
+### ✅ Full Updated `App.jsx`
+
+```javascript
+import React, { useState, useEffect } from 'react';
+import { getPosts, getRandomUser } from '../components/api';
+import PostCard from '../components/postcard';
+import UserCard from '../components/UserCard';
+import './App.css';
+
+function App() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    getPosts().then(posts => setData(posts));
+  }, []);
+
+  useEffect(() => {
+    getRandomUser().then(user => console.log(user));
+  }, []);
+
+  return (
+    <div className='App'> 
+      <UserCard />
+      {
+        data ? data.map(e => <PostCard title={e.title} body={e.body} />) : <p>Loading data....</p>
+      }
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+## 🎉 Output
+
+> The `UserCard` component currently shows **hardcoded user details**.
+
+![Output Screenshot](./10_Random_User_Generator/Screenshot/1.jpg)
+
+---
+
+## 📝 Notes:
+
+- Currently, user data is hardcoded.
+- In the next step, you will dynamically inject data fetched from the **Random User Generator API** into the `UserCard` component.
+
+---
+
+## Now, Updating App.jsx to give Details of Random User. by useState at App.jsx and Giving props at components/userCard.jsx
+
+### UserCard.jsx
+
+```jsx
+import React from "react";
+
+const UserCard = (props) => {
+    if (!props.data) return <p>Loading user...</p>;
+    
+    console.log(props.data);
+    
+    return (
+        <div className="user-card">
+            <img className="user-img" src={props.data.picture.large} alt="User" />
+            <h3>{props.data.name.first}</h3>
+            <p>{props.data.phone}</p>
+            <p>{props.data.location.city}, {props.data.location.state}</p>
+        </div>
+    );
+}
+
+export default UserCard;
+```
+
+---
+
+## App.jsx
+
+### Change Made:
+- **Old Code:**  
+  `getRandomUser().then((user)=> setUserData(user.results[0]));`
+
+- **New Code:**  
+  `getRandomUser().then((user)=> setUserData(user));`
+
+> This will allow us to use:
+```jsx
+const user = props.data.results[0];
+
+return (
+    <div className="user-card">
+        <img className="user-img" src={user.picture.large} alt="User" />
+        <h3>{user.name.first} {user.name.last}</h3>
+        <p>{user.phone}</p>
+        <p>{user.location.city}, {user.location.state}</p>
+    </div>
+);
+```
+
+---
+
+### Full App.jsx Code (Before Refresh Button)
+
+```jsx
+import React, { useState, useEffect } from 'react';
+import { getPosts, getRandomUser } from '../components/api';
+import PostCard from '../components/postcard';
+import UserCard from '../components/UserCard';
+import './App.css';
+
+function App() {
+
+  const [data, setData] = useState(null);
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    getPosts().then(posts => setData(posts));
+  }, []);
+
+  useEffect(() => {
+    getRandomUser().then((user) => setUserData(user.results[0]));
+  }, []);
+
+  return (
+    <div className='App'> 
+      <UserCard data={userData} />
+      {
+        data ? data.map(e => <PostCard title={e.title} body={e.body} />) : <p>Loading data....</p>
+      }
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+### Output:
+- **Initial Load:**  
+  ![OUTPUT](./10_Random_User_Generator/Screenshot/2.jpg)
+
+- **After Refresh (Page reload):**  
+  ![OUTPUT](./10_Random_User_Generator/Screenshot/3.jpg)
+
+---
+
+## Adding Refresh Button
+
+### Updated Code Snippet:
+
+```jsx
+const refersh = () => {
+  getRandomUser().then((user) => setUserData(user.results[0]));
+}
+
+return (
+  <div className='App'> 
+    <UserCard data={userData} />
+    <button onClick={refersh}>Refresh User</button>
+    {
+      data ? data.map(e => <PostCard title={e.title} body={e.body} />) : <p>Loading data....</p>
+    }
+  </div>
+);
+```
+
+---
+
+### Full App.jsx Code (With Refresh Button)
+
+```jsx
+import React, { useState, useEffect } from 'react';
+import { getPosts, getRandomUser } from '../components/api';
+import PostCard from '../components/postcard';
+import UserCard from '../components/UserCard';
+import './App.css';
+
+function App() {
+
+  const [data, setData] = useState(null);
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    getPosts().then(posts => setData(posts));
+  }, []);
+
+  useEffect(() => {
+    getRandomUser().then((user) => setUserData(user.results[0]));
+  }, []);
+
+  const refersh = () => {
+    getRandomUser().then((user) => setUserData(user.results[0]));
+  }
+
+  return (
+    <div className='App'> 
+      <UserCard data={userData} />
+      <button onClick={refersh}>Refresh User</button>
+      {
+        data ? data.map(e => <PostCard title={e.title} body={e.body} />) : <p>Loading data....</p>
+      }
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+### Output:
+- **Initial Load:**  
+  ![OUTPUT](./10_Random_User_Generator/Screenshot/4.jpg)
+
+- **After Clicking Refresh Button:**  
+  ![OUTPUT](./10_Random_User_Generator/Screenshot/5.jpg)
+
+---
+
+✅ **Result:**  
+Random user is being generated each time we click the refresh button.
 
 ---
