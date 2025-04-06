@@ -1,0 +1,323 @@
+Why do we need Context API:-
+Suppose we made an App in React and we have some components and we are rendering them A inside B , C inside B, D inside C.
+
+|Component A ----
+|               |
+|               V
+|          Component B ----
+|                         |
+|                         V
+|                   Component C ----
+|                                  |
+|                                  V
+|                               Component D ----
+|                                              |
+|                                              V
+
+Now lets say we have a state :-
+with key as :- Value 1 and setCount()
+
+Now lets say this state is present at Component A and we have to Access it from Component B.
+
+Way 1 :- Give this state From Component A to Component B through Prop
+|        Component B will give this to Component C through Prop
+|        Component C will give this to Component D through Prop. So, this is the way 1 to Drill Down the state From A to D 
+
+
+This is Prop Drilling we should not do this because if we have to render this Component D to another component due to which we have to change our whole component tree which is a Bad Practice
+![Way 1](./11_Context_API/Screenshot/1.jpg)
+
+
+To Solve this problem we use Context API 
+
+---
+
+Now, will see how context API will Handle Above Problem:-
+
+![Way-2 By Context API](./11_Context_API/Screenshot/2.jpg)
+
+Way 2 :- Here we will keep that state in Context (React-Context) Now Component A can also access it and
+|        also Component D can access it. Without any Prop Drilling
+|        Now Both Component A and D can Read and write the State inside the Context
+|        As no Prop-Drilling So we can render Component D anywhere in the Component Tree as Now it is not 
+|        Dependent on Component A for the State. Now if Component A Changed it's State then Component D 
+|        will Also Re-Render. 
+|        This is Beauty of Context that if component A Changed itself Component D will Auto render itself. 
+
+To give access of context to components we have to wrap them inside context provider
+
+![Way-2 By Context API](./11_Context_API/Screenshot/3.jpg)
+
+If we not did this then these components cannot access this context
+
+Now all components A,B,C,D are wrapped inside this context Provider and they can read and Write this Context. 
+
+---
+
+--> Updated App.jsx in src folder:-
+
+import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+      <h1>Context API</h1>
+    </div>
+  )
+}
+
+export default App;
+
+--> Created components/Counter.jsx:-
+
+import React from "react";
+
+const Counter = () => {
+    return (
+        <div>
+            <button>Increment</button>
+            <button>Decrement</button>
+        </div>
+    )
+}
+
+export default Counter;
+
+--> Updated App.jsx:-
+
+import './App.css';
+import Counter from '../components/Counter';
+
+function App() {
+  return (
+    <div className="App">
+      <h1>Context API</h1>
+      <h1>Count is 0</h1>
+      <Counter />
+      <Counter />
+      <Counter />
+      <Counter />
+    </div>
+  )
+}
+
+export default App;
+
+--> Created context/Counter.jsx
+
+import {createContext} from 'react'
+
+export const ConterContext = createContext(null);
+
+Now , we have to make Providal for this context so that our each component have access of this state as below
+
+![Like This](./11_Context_API/Screenshot/3.jpgQ)
+
+--> Updated context/Counter.jsx
+
+import {createContext} from 'react'
+
+export const ConterContext = createContext(null);
+export const CounterProvider = (props) => {
+    return (
+        <CounterProvider.Provider>
+            <h1>Okay</h1>
+        </CounterProvider.Provider>
+    )
+}
+
+--> Updated context/Counter.jsx
+
+import {createContext} from 'react'
+
+export const ConterContext = createContext(null);
+export const CounterProvider = (props) => {
+    return (
+        <CounterProvider.Provider>
+            {
+                props.children
+            }
+        </CounterProvider.Provider>
+    )
+}
+
+--> Default main.jsx
+
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
+
+--> Updated main.jsx added CounterProvider
+
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+
+import { CounterProvider } from '../context/Counter.jsx'
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <CounterProvider>
+      <App />
+    </CounterProvider>
+  </StrictMode>,
+)
+
+--> Updated context/Counter.jsx , Added useState
+
+import {createContext, useState} from 'react'
+
+export const CounterContext = createContext(null);
+export const CounterProvider = (props) => {
+    const [count, setCount] = useState(0);
+    return (
+        <CounterContext.Provider value={{ count }}>
+            {
+                props.children
+            }
+        </CounterContext.Provider>
+    )
+}
+
+--> Updated App.jsx, added useContext,CounterContext
+
+import { useContext } from 'react';
+import './App.css';
+import Counter from '../components/Counter';
+import { CounterContext } from '../context/Counter';
+
+function App() {
+
+  const couterState = useContext(CounterContext);
+
+  console.log("Context", couterState);
+
+  return (
+    <div className="App">
+      <h1>Context API</h1>
+      <h1>Count is 0</h1>
+
+      <Counter />
+      <Counter />
+      <Counter />
+      <Counter />
+    </div>
+  )
+}
+
+Output At Console
+![Before](./11_Context_API/Screenshot/9.jpg)
+
+export default App;
+
+--> Updated context/Counter.jsx , Added name:"Piyush" to our Context
+
+    return (
+        <CounterContext.Provider value={{ count, name: "Piyush" }}>
+            {
+                props.children
+            }
+        </CounterContext.Provider>
+    )
+
+--> Updated App.jsx, added useContext,CounterContext
+```
+   <h1>Count is 0</h1>  is Changed to <h1>Count is {couterState.count}</h1>
+```
+
+when useState is 0 at context/Counter.jsx
+then Count is 0
+
+![Count 0](./11_Context_API/Screenshot/4.jpg)
+
+when useState is 5 at context/Counter.jsx
+then Count is 5
+
+![Count 5](./11_Context_API/Screenshot/5.jpg)
+
+This 5 is coming as now it os reading it's State From Context
+
+Similarly at context/Counter.jsx we have a method setCount which will change the value of the count
+--> Now adding setCount at our Context, Updated context/Counter.jsx
+
+    return (
+        <CounterContext.Provider value={{ count, setCount,name: "Piyush" }}>
+            {
+                props.children
+            }
+        </CounterContext.Provider>
+    )
+
+--> Now Updating components/Counter.jsx added useContext. There,
+
+Before:-
+|           import React from "react";
+|           
+|           const Counter = () => {
+|               return (
+|                   <div>
+|                       <button>Increment</button>
+|                       <button>Decrement</button>
+|                   </div>
+|               )
+|           }
+|           
+|           export default App;
+
+After:-
+|       import React, { useContext } from "react";
+|       import { CounterContext } from "../context/Counter";
+|       
+|       const Counter = () => {
+|       
+|           const counterContext = useContext(CounterContext)
+|       
+|           return (
+|               <div>
+|                   <button onClick={() => counterContext.setCount(counterContext.count + 1)}>
+|                       Increment
+|                   </button>
+|                   <button onClick={() => counterContext.setCount(counterContext.count - 1)}>
+|                       Decrement
+|                    </button>
+|               </div>
+|           )
+|       }
+|       
+|       export default Counter;
+
+Incremented Count from 5 to 8
+![Increment](./11_Context_API/Screenshot/6.jpg)
+
+Decremented Count from 8 to 3
+![Decrement](./11_Context_API/Screenshot/7.jpg)
+
+On Refresh Count value is again set to 5 as useState inside counter-context is 5 
+    "const [count, setCount] = useState(5);"
+![Refresh](./11_Context_API/Screenshot/8.jpg)
+
+Before Applying Operations of Increment and Decrement 
+![Before](./11_Context_API/Screenshot/9.jpg)
+
+After Applying Operations of Increment and Decrement
+![After](./11_Context_API/Screenshot/10.jpg)
+
+Summary:-
+
+We made a Context. By createContext which we use in React then we made a provider of Counter so that we can give access to our App-Component of this particular Context.
+So, we made a Provider in which we wrapped all the child as CounterContext.Provider
+
+So, if we go at main.jsx there we rendered CounterProvider inside that the App-Component will 
+render at props.child of context/Counter.jsx thenwe added 3 values at our CounterProvider 
+(count, setCount, name) a function to update our count and 3rd we added name for testing called 
+Piyush
+At app.jsx we imported useContext from react to read the value of Context from react and the we imported our actual context "./context/Counter" over there and we consoled the output then on increment and decrement without using prop at Component/Counter.jsx we directly used the state from useContext then at there we called setCount function and incremented and decremented the value of Count from reading it from counterContext.count.
+So, we made a direct connection and we haven't done anytype of pop-passing or pop-drilling.
