@@ -321,3 +321,396 @@ render at props.child of context/Counter.jsx thenwe added 3 values at our Counte
 Piyush
 At app.jsx we imported useContext from react to read the value of Context from react and the we imported our actual context "./context/Counter" over there and we consoled the output then on increment and decrement without using prop at Component/Counter.jsx we directly used the state from useContext then at there we called setCount function and incremented and decremented the value of Count from reading it from counterContext.count.
 So, we made a direct connection and we haven't done anytype of pop-passing or pop-drilling.
+
+---
+
+## UnderStanding More on Context API using E-Commerce Cart Example.
+
+Updated App.jsx
+
+``` jsx
+import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+    </div>
+  )
+}
+
+export default App;
+```
+
+Updated Main.jsx
+```jsx
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+      <App />
+  </StrictMode>,
+)
+```
+
+Create components/Item.jsx
+
+```
+import React, { useContext } from "react";
+
+const Item = () => {
+
+    return (
+        <div className="item-card">
+            <h4>Item Name</h4>
+            <p>Price: $10</p>
+            <button>Add To Cart</button>
+        </div>
+    )
+}
+
+export default Item;
+```
+
+Now Import this Item.jsx to App.jsx, So update App.jsx
+
+import Item from "../components/Item";
+import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+      <Item /> 
+    </div>
+  )
+}
+
+export default App;
+
+OUTPUT:-
+![Output](./11_Context_API_Cart/Screenshot/1.jpg)
+
+Now to Give Item name and Price Different we will Dynamically use Props at components/Item.jsx
+
+Updated components/Item.jsx:-
+
+import React, { useContext } from "react";
+
+const Item = (props) => {
+
+    return (
+        <div className="item-card">
+            <h4>{props.name}</h4>
+            <p>Price: ${props.price}</p>
+            <button>Add To Cart</button>
+        </div>
+    )
+}
+
+export default Item;
+
+Updated Item Declaration at App.jsx:-
+
+```
+import Item from "../components/Item";
+import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+      <Item name="MacBook Pro" price={100000}/> 
+      <Item name="PenDrive" price={1000}/> 
+      <Item name="Pen" price={100}/> 
+    </div>
+  )
+}
+
+export default App;
+```
+OUTPUT:- Dynamic Cart
+![Cart Dynamic](./11_Context_API_Cart/Screenshot/2.jpg)
+
+So, we created 3 items in cart.
+
+Now we want another component "cart" which will tell cart items and Quantity and Price 
+
+Creating components/Cart.jsx:-
+
+import React from "react";
+
+const Cart = () =>{
+    return (
+        <div className='cart'>
+            <li>MacbookPro - $10000</li>
+
+            <h4>Total Bill: $</h4>
+        </div>
+    )
+}
+
+export default Cart;
+
+Now, Updating App.jsx to Add Cart.jsx component
+
+```
+import Item from "../components/Item";
+import Cart from "../components/Cart";
+import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+      <Item name="MacBook Pro" price={100000}/> 
+      <Item name="PenDrive" price={1000}/> 
+      <Item name="Pen" price={100}/> 
+
+      <Cart />
+    </div>
+  )
+}
+
+export default App;
+```
+
+OUTPUT:- Cart
+![Cart](./11_Context_API_Cart/Screenshot/3.jpg)
+
+Now will Create context/Cart.jsx:-
+```
+import {createContext, useState} from 'react'          // Use-State is used to show the state of our context
+
+export const CartContext = createContext(null);
+
+export const CartProvider = (props) => {
+
+    const [items, setItems] = useState([]);  // By Default array is empty as cart will also be empty by default
+
+    return (
+        <CartContext.Provider value={{items, setItems}}>   // Added Set Item here so that we can change cart Item by this SetItem
+            {
+                props.children
+            }
+        </CartContext.Provider> 
+    )
+}
+```
+
+So our context is made now at main.jsx file will import CartProvider from context/Cart
+Wrapped app component inside cart provider now all child components inside this app can read and write this context 
+
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+
+import {CartProvider} from '../context/Cart.jsx'
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <CartProvider>
+      <App />
+    </CartProvider>
+  </StrictMode>
+)
+
+
+Now go at item and code add to cart button to change setitem value by on click on this button
+
+We Added:- useContext and Cart Context
+import React, { useContext } from "react";
+import { CartContext } from "../context/Cart";
+
+    const cart = useContext(CartContext);
+    console.log('Cart', cart);
+
+By this at Console we get Empty Array named Items and a function called setItems
+
+![Console_Output](./11_Context_API_Cart/Screenshot/4.jpg)
+
+Now Updating Add to Cart Button to Add Item in Cart On Click
+
+<button onClick={()=> cart.setItems([...cart.items, {name: props.name, price: props.price}])}>Add To Cart</button>
+
+In this OnClick we did setItems '...cart.items' in this '...' means keep previous item as it is and add new item with name and Price in Cart  
+
+Output:-
+![Console_Output](./11_Context_API_Cart/Screenshot/5.jpg)
+![Console_Output](./11_Context_API_Cart/Screenshot/6.jpg)
+![Console_Output](./11_Context_API_Cart/Screenshot/7.jpg)
+
+So we are able to send data Properly
+
+Now we have to read that data and add it to our cart
+
+Updating components/Cart.jsx
+Before:- Hard-Coded Cart
+|                       import React from "react";
+|                       
+|                       const Cart = () =>{
+|                           return (
+|                               <div className='cart'>
+|                                   <li>MacbookPro - $10000</li>
+|                       
+|                                   <h4>Total Bill: $</h4>
+|                               </div>
+|                           )
+|                       }
+|                       
+|                       export default Cart;
+
+After:- Added useContext and imported CartContext then displayed cart if(cart is present and it has Items) using map
+
+|                       import React, {useContext} from "react";
+|                       import { CartContext } from "../context/Cart";
+|                       
+|                       const Cart = () =>{
+|                           const cart = useContext(CartContext);
+|                           return (
+|                               <div className='cart'>
+|                                   <h1>CART</h1>
+|                                   {
+|                                       cart && cart.items.map((item) => <li>{item.name}-${item.price}</li>)
+|                                   }
+|                       
+|                                   <h4>Total Bill: $</h4>
+|                               </div>
+|                           )
+|                       }
+|                       
+|                       export default Cart;
+
+Now in start we said whenever our context changes Which-ever Component is dependent over that context that comes afer re-render.
+
+So, whenever we add item in cart By (components/Item.jsx) then our cart (components/Cart.jsx) automatically re-renders with the new value
+
+OUTPUT:-
+![Listed Cart Items](./11_Context_API_Cart/Screenshot/8.jpg)
+
+Now to show Total amount, Updated components/Cart.jsx
+
+    const total = cart.items.reduce((a,b) => a + b.price, 0);   // Here add b.price(price of item in a) with initial value of a as 0
+
+Whole Code:-
+|                       import React, {useContext} from "react";
+|                       import { CartContext } from "../context/Cart";
+|                       
+|                       const Cart = () =>{
+|                           const cart = useContext(CartContext);
+|                       
+|                           const total = cart.items.reduce((a,b) => a + b.price, 0);
+|                       
+|                           return (
+|                               <div className='cart'>
+|                                   <h1>CART</h1>
+|                                   {
+|                                       cart && cart.items.map((item) => <li>{item.name}-${item.price}</li>)
+|                                   }
+|                       
+|                                   <h4>Total Bill: ${total}</h4>
+|                               </div>
+|                           )
+|                       }
+|                       
+|                       export default Cart;
+
+OUTPUT:-
+![Listed Cart Items](./11_Context_API_Cart/Screenshot/9.jpg)
+
+---
+BEST PRACTICES:-
+We are each Time First importing UseContext then CartContext this is very painful to simplify this we will first go at our 
+context/Cart and we will make a hook there named useCart
+
+Before:-
+|           import {createContext, useState} from 'react'
+|           
+|           export const CartContext = createContext(null);
+|           
+|           export const CartProvider = (props) => {
+|           
+|               const [items, setItems] = useState([]);  // By Default array is empty as cart will also be empty by default
+|           
+|               return (
+|                   <CartContext.Provider value={{items, setItems}}>   
+|                       {props.children}
+|                   </CartContext.Provider> 
+|               )
+|           }
+
+After:-
+|           import {createContext, useState, useContext} from 'react'
+|           
+|           export const CartContext = createContext(null);
+|           
+|           export const useCart = () =>{
+|               // Now paste     const cart = useContext(CartContext); from components/Cart     
+|               const cart = useContext(CartContext);
+|               return cart
+|           }
+|           
+|           export const CartProvider = (props) => {
+|           
+|               const [items, setItems] = useState([]);  // By Default array is empty as cart will also be empty by default
+|           
+|               return (
+|                   <CartContext.Provider value={{items, setItems}}>   
+|                       {props.children}
+|                   </CartContext.Provider> 
+|               )
+|           }
+
+So basically instead of importing both of the things at components/Cart we have clubbed it at context/Cart
+
+So updated components/Cart (Previous approach is commented)   ---> New way:- const cart = useCart();
+
+|             // import React, {useContext} from "react";
+|             // import { CartContext } from "../context/Cart";
+|             import React from "react";
+|             import { useCart } from "../context/Cart";
+|             
+|             const Cart = () =>{
+|                 // const cart = useContext(CartContext);
+|                 const cart = useCart();
+|             
+|                 const total = cart.items.reduce((a,b) => a + b.price, 0);
+|             
+|                 return (
+|                     <div className='cart'>
+|                         <h1>CART</h1>
+|                         {
+|                             cart && cart.items.map((item) => <li>{item.name}-${item.price}</li>)
+|                         }
+|             
+|                         <h4>Total Bill: ${total}</h4>
+|                     </div>
+|                 )
+|             }
+
+export default Cart;
+
+Also updated components/Item (Previous approach is commented)   ---> New way:- const cart = useCart();
+
+|           // import React, { useContext } from "react";
+|           // import { CartContext } from "../context/Cart";
+|           import React from "react";
+|           import { useCart } from "../context/Cart";
+|           
+|           const Item = (props) => {
+|           
+|               // const cart = useContext(CartContext);
+|               const cart = useCart();
+|               console.log('Cart', cart);
+|           
+|               return (
+|                   <div className="item-card">
+|                       <h4>{props.name}</h4>
+|                       <p>Price: ${props.price}</p>
+|                       <button onClick={()=> cart.setItems([...cart.items, {name: props.name, price: props.price}])}>Add To Cart</button>
+|                   </div>
+|               )
+|           }
+|           
+|           export default Item;
