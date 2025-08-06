@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TMKOC | Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            background-color: #ff9800;
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: #000 !important;
+            font-weight: 500;
+        }
+
+        .hero {
+            background: linear-gradient(to right, #212121, #333333);
+            padding: 80px 20px;
+            text-align: center;
+            color: #ffca28;
+            border-bottom: 3px solid #ff9800;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #e0e0e0;
+            margin-top: 15px;
+        }
+
+        .section-title {
+            color: #ffb300;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: #1f1f1f;
+            color: #fff;
+            border: none;
+            box-shadow: 0 0 10px rgba(255, 152, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+        }
+
+        .carousel-inner {
+            padding: 20px 0;
+        }
+
+        .footer {
+            background-color: #ff9800;
+            color: #000;
+            text-align: center;
+            padding: 15px;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">TMKOC</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon bg-light"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Welcome to Gokuldham Society</h1>
+            <p>The official fan hub of India's longest-running comedy show – Taarak Mehta Ka Ooltah Chashmah</p>
+        </div>
+    </section>
+
+    <!-- TMKOC Characters Carousel -->
+    <div class="container mt-5">
+        <h2 class="text-center section-title">Meet Your Favourite Characters</h2>
+
+        <div id="tmkocCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+
+                <!-- Slide 1 -->
+                <div class="carousel-item active">
+                    <div class="d-flex justify-content-center gap-3">
+                        <div class="card p-3 text-center">
+                            <h5>Jethalal Gada</h5>
+                            <p>The hilarious businessman from Gada Electronics who always finds himself in trouble!</p>
+                        </div>
+                        <div class="card p-3 text-center">
+                            <h5>Daya Ben</h5>
+                            <p>Jethalal's loving wife known for her Garba, fun phrases, and "Hey Maa, Mataji!"</p>
+                        </div>
+                        <div class="card p-3 text-center">
+                            <h5>Taarak Mehta</h5>
+                            <p>Jethalal’s best friend and his “Fire Brigade” — a voice of reason and calm wisdom.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="carousel-item">
+                    <div class="d-flex justify-content-center gap-3">
+                        <div class="card p-3 text-center">
+                            <h5>Tapu Sena</h5>
+                            <p>The fun-loving kids of Gokuldham, known for their adventures and mischief!</p>
+                        </div>
+                        <div class="card p-3 text-center">
+                            <h5>Sundarlal</h5>
+                            <p>Daya’s mischievous brother from Ahmedabad, always bringing chaos to Jethalal’s life.</p>
+                        </div>
+                        <div class="card p-3 text-center">
+                            <h5>Natu Kaka</h5>
+                            <p>The loyal and funny employee at Gada Electronics, always calling Jethalal “Bapuji ke
+                                bete.”</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="carousel-item">
+                    <div class="d-flex justify-content-center gap-3">
+                        <div class="card p-3 text-center">
+                            <h5>Bagha</h5>
+                            <p>The enthusiastic assistant at Gada Electronics, often creating funny problems with Natu
+                                Kaka.</p>
+                        </div>
+                        <div class="card p-3 text-center">
+                            <h5>Babita Iyer</h5>
+                            <p>The charming and kind-hearted neighbor admired by Jethalal.</p>
+                        </div>
+                        <div class="card p-3 text-center">
+                            <h5>Krishnan Subramaniam Iyer</h5>
+                            <p>A scientist by profession and Babita’s husband — always locking horns with Jethalal.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Indicators -->
+            <div class="carousel-indicators mt-3">
+                <button type="button" data-bs-target="#tmkocCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#tmkocCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#tmkocCarousel" data-bs-slide-to="2"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer mt-5">
+        <p>&copy; 2025 TMKOC Fan Page | Created by Gaurav Singh Heer</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

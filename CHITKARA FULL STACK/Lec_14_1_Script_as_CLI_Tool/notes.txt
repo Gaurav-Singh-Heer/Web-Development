@@ -1,0 +1,35 @@
+Steps for running node.js script a CLI tool:
+===========================================
+Step1:
+npm init -y
+Step 2:
+Write the js file
+Step 3:
+Write in package.json
+{
+  "name": "lec10",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin":{
+    "cliTool":"app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
+
+Step 4:
+npm link
+
+Step 5:
+write the command with two values
+Command:- 
+D:\GAURAV   CODING\WEB DEVELOPMENT\FULL STACK\Full Stack Chitkara\Lec_14_1_Script_as_CLI_Tool>cliTool 5 6
+
+OUTPUT:-
+You have enter values :5
+You have enter values :6

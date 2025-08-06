@@ -1,0 +1,27 @@
+RESTful APIs (Representational State Transfer):
+===============================================
+- You require client and server for APIs.
+- Statelessness: 
+- Cacheability: Responses should be explicitly cacheable or non-cacheable.
+- Layered: everything should be controlled.
+
+Designing Your own API:
+=======================
+It means:
+1. How your api communicate with others
+2. What routes
+3. Structuring data
+4. Applying REST principle
+
+Tech Stack:
+Node
+Express
+Postman
+
+Example:
+Student Management API-
+1. add Student
+2. get list
+3. get a student by ID
+4. update student data
+5. delete student

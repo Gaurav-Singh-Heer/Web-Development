@@ -1,0 +1,49 @@
+Lab Activity
+
+Modular Structure
+
+Create separate modules fr
+
+tackManagerjs: Handles task creation, updating, deletion, and retrieval flettandlers: Reads and writes data to a MON file using the fs module.
+
+Handles command-ne input using an NPM package kar yargs or inquires
+
+Tack Properties:
+
+Bach task should have
+
+site strong
+
+description streg
+
+status: eman (pending, in progress, done
+
+Operations to Support:
+
+ant Add a new task
+
+Bst: List all tasks
+
+update: Change task status or description
+
+delete Remove a task by ID
+
+search: Filter tasks by status or keyword
+
+Handling (with f
+
+Tasks must be steunt persistently in a tasks jan file rations should be handlest Read and write operations
+
+anynchronously
+
+Use of NPM Packages (choose one or morw
+
+chaltar color ferminal output
+
+yanpo parse command line arguments
+
+inquirer-to build interactive CLI prompts
+
+for generating unique task
+
+tonsate lince title arener

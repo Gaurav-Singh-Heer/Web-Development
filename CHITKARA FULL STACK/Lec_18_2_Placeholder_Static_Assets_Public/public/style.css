@@ -1,0 +1,101 @@
+body {
+  margin: 0;
+  font-family: 'Georgia', serif;
+  background-color: #fdfdfd;
+  color: #333;
+}
+
+header {
+  background-color: #222;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+nav a {
+  color: #ddd;
+  margin: 0 1rem;
+  text-decoration: none;
+}
+
+footer {
+  background-color: #222;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+main {
+  padding: 2rem;
+}
+
+.poem h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.poem p {
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+/* Home Page Styling */
+main.home {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.92);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.home section {
+  margin-bottom: 2.5rem;
+}
+
+.home h2, .home h3 {
+  color: #4e342e;
+  margin-bottom: 1rem;
+}
+
+.poem-highlight {
+  background-color: #f7f3f0;
+  padding: 1rem 1.5rem;
+  border-left: 5px solid #d4a373;
+  border-radius: 8px;
+}
+
+.poem-highlight a {
+  color: #8b4513;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.read-btn {
+  display: inline-block;
+  margin-top: 0.5rem;
+  background-color: #8b4513;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.read-btn:hover {
+  background-color: #5a2d0c;
+}
+
+.about-author p,
+.explore p,
+.explore ul {
+  font-size: 1rem;
+  color: #444;
+}
+
+.explore ul {
+  list-style-type: square;
+  margin-left: 1.5rem;
+}

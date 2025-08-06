@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Book List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+    }
+    .available {
+      color: green;
+    }
+    .out-of-stock {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Book List</h1>
+
+  <ul>
+    <% books.forEach(book => { %>
+      <li>
+        <strong><%= book.title %></strong> by <%= book.author %><br>
+        <% if (book.available) { %>
+          <span class="available">Available</span>
+        <% } else { %>
+          <span class="out-of-stock">Out of stock</span>
+        <% } %>
+      </li>
+      <br>
+    <% }) %>
+  </ul>
+</body>
+</html>

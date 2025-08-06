@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="display1"></h1>
+    <h1 id="display2"></h1>
+    <script>
+        var object1 = JSON.parse('{"rollno":101,"name":"Mayank", "age":20}')
+        document.getElementById('display1').innerHTML=object1.rollno
+        document.getElementById('display2').innerHTML=JSON.stringify(object1)
+    </script>
+</body>
+</html>

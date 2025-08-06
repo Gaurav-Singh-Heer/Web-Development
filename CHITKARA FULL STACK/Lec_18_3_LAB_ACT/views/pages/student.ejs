@@ -1,0 +1,24 @@
+<%- include('../partials/header') %>
+<%- include('../partials/navbar') %>
+
+<div class="student-profile container">
+  <h2 class="student-name"><%= student.name %>'s Profile</h2>
+
+  <div class="student-details">
+    <p><strong>Age:</strong> <span><%= student.age %></span></p>
+    <p><strong>Course:</strong> <span><%= student.course %></span></p>
+    
+    <div class="student-hobbies">
+      <p><strong>Hobbies:</strong></p>
+      <ul>
+        <% student.hobbies.forEach(hobby => { %>
+          <li><%= hobby %></li>
+        <% }) %>
+      </ul>
+    </div>
+  </div>
+
+  <a href="/" class="back-link">← Back to Directory</a>
+</div>
+
+<%- include('../partials/footer') %>

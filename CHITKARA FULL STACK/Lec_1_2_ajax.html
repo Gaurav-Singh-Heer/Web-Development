@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AJAX Load</title>
+  <script>
+    function loadDoc() {
+      var xhttp = new XMLHttpRequest();
+
+      xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+          document.getElementById("demo").innerHTML = this.responseText;
+        }
+      };
+
+      xhttp.open("GET", "mydata.txt", true);
+      xhttp.send();
+    }
+  </script>
+</head>
+<body onload="loadDoc()">
+
+  <p id="demo">Loading content...</p>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f3f3f3;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #0F4C75;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.container {
+    padding: 2rem;
+}
+
+.student-list {
+    list-style: none;
+    padding: 0;
+}
+
+.student-list li {
+    margin: 10px 0;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background: #3282B8;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.student-name {
+  font-size: 2rem;
+  color: #0F4C75;
+  margin-bottom: 1rem;
+}
+
+.student-details p {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.student-hobbies ul {
+  padding-left: 1.2rem;
+  list-style-type: disc;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 1.5rem;
+  color: #3282B8;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
